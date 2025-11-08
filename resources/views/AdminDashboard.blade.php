@@ -7,12 +7,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>MQuest-AdminSide</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="icon" type="image/png" href="{{ asset('assets/img/Login_Logo.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,500,600,800&display=swap">
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    
 </head>
 
 <body>
@@ -1155,6 +1158,102 @@
                                     </div>
                                     <div id="imagequiz-container"></div>
                                     <button class="btn mb-3 add-game" id="addImageQuizBtn" type="button">Add Another Image Quiz</button>
+                                </div>
+                                <!-- Create Badge Button -->
+                                <button id="createBagde" class="btn mb-3 createBadge-btn" type="button" onclick="addQuestion()">
+                                    <svg class="bi bi-plus-circle me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
+                                    </svg>Create Badge
+                                </button>
+                            </section>
+
+                            <!-- Badge Creation -->
+                             <section class="main-container-lesson">
+                                <div class="left-panel">
+                                    <div class="badge-card">
+                                        <h5>Badge Details</h5>
+                                        <div class="form-group badge-form-group"><label class="form-label">Badge Title</label><input id="badgeTitle" class="input-field" type="text" value="Excellence" /></div>
+                                        <div class="form-group badge-form-group"><label class="form-label">Subtitle</label><input id="badgeSubtitle" class="input-field" type="text" value="Achievement Award" /></div>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="badge-card">
+                                                    <h5>Select Icon</h5>
+                                                    <div class="icon-selector">
+                                                        <div class="icon-option selected" data-icon="award">
+                                                            <ion-icon name="ribbon-outline"></ion-icon>
+                                                            <span>Award</span>
+                                                        </div>
+                                                        <div class="icon-option" data-icon="shield">
+                                                            <ion-icon name="shield-outline"></ion-icon>
+                                                            <span>Shield</span>
+                                                        </div>
+                                                        <div class="icon-option" data-icon="star">
+                                                            <ion-icon name="star-outline"></ion-icon>
+                                                            <span>Star</span>
+                                                        </div>
+                                                        <div class="icon-option" data-icon="zap">
+                                                            <ion-icon name="flash-outline"></ion-icon>
+                                                            <span>Zap</span>
+                                                        </div>
+                                                        <div class="icon-option" data-icon="trophy">
+                                                            <ion-icon name="trophy-outline"></ion-icon>
+                                                            <span>Trophy</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="badge-card">
+                                                    <h5>Color Palette</h5>
+                                                    <div class="color-picker"><span class="color-label">Background Color</span><input id="bgColor" class="color-input" type="color" value="#ec4899" /><input id="bgColorValue" class="color-value" type="text" value="#ec4899" /></div>
+                                                    <div class="color-picker"><span class="color-label">Text Color</span><input id="textColor" class="color-input" type="color" value="#131150" /><input id="textColorValue" class="color-value" type="text" value="#ffffff" /></div>
+                                                    <div class="quick-presets">
+                                                        <div class="preset-button" style="background-color: #3b82f6;" data-color="#3b82f6" data-text="#ffffff"><span>Blue</span></div>
+                                                        <div class="preset-button" style="background-color: #10b981;" data-color="#10b981" data-text="#ffffff"><span>Green</span></div>
+                                                        <div class="preset-button" style="background-color: #f59e0b;" data-color="#f59e0b" data-text="#ffffff"><span>Orange</span></div>
+                                                        <div class="preset-button" style="background-color: #ef4444;" data-color="#ef4444" data-text="#ffffff"><span>Red</span></div>
+                                                        <div class="preset-button" style="background-color: #8b5cf6;" data-color="#8b5cf6" data-text="#ffffff"><span>Purple</span></div>
+                                                        <div class="preset-button" style="background-color: #ec4899;" data-color="#ec4899" data-text="#ffffff"><span>Pink</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right-panel">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="badge-card">
+                                                    <h5>Preview</h5>
+                                                    <div class="preview-container">
+                                                        <div id="previewBadge" class="badge-preview">
+                                                            <div class="badge-icon">
+                                                                <ion-icon name="ribbon-outline"></ion-icon>
+                                                            </div>
+                                                            <div class="badge-title"><span>Excellence</span></div>
+                                                            <div class="badge-subtitle"><span>Achievement Award</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="badge-card">
+                                                    <h5>Badge Specifications</h5>
+                                                    <div class="specifications">
+                                                        <div class="spec-row"><span class="spec-label">Title:</span><span id="specTitle" class="spec-value">Excellence</span></div>
+                                                        <div class="spec-row"><span class="spec-label">Subtitle:</span><span id="specSubtitle" class="spec-value">Achievement Award</span></div>
+                                                        <div class="spec-row"><span class="spec-label">Icon:</span><span id="specIcon" class="spec-value">Award</span></div>
+                                                        <div class="spec-row"><span class="spec-label">Background:</span><span class="spec-value"><span id="specBgColorIndicator" class="color-indicator" style="background-color: #ec4899;"></span><span id="specBgColor">#ec4899</span></span></div>
+                                                        <div class="spec-row"><span class="spec-label">Text:</span><span class="spec-value"><span id="specTextColorIndicator" class="color-indicator" style="background-color: #ffffff;"></span><span id="specTextColor">#ffffff</span></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                             <section class="main-container-lesson">
