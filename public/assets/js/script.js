@@ -570,6 +570,15 @@ document.addEventListener("click", function (e) {
         <div class="text-muted form-text small"><span>Answer is case-insensitive when played. Max 11 characters.</span></div>
     </div>
     <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">3</span> Last Phrase (after blank) </label><input class="form-control phrase last-phrase" type="text" placeholder="e.g. , known for its art." /></div>
+    <div class="col-12 phrase">
+        <label class="fw-semibold d-flex form-label">
+            <span class="badge me-2 phrase-badge">4</span> Definition (optional)
+        </label>
+        <textarea class="form-control definition-input" rows="2" placeholder="e.g. The capital city of France, famous for the Eiffel Tower and art museums."></textarea>
+        <div class="text-muted form-text small">
+            <span>Shown to students after answering correctly (optional).</span>
+        </div>
+    </div>
 </div>
 
         <div class="bg-light border rounded-2 p-3 mt-4">

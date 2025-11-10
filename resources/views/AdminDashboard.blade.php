@@ -1083,10 +1083,12 @@
                             <!-- Games Builder -->
                             <section class="main-container-lesson">
                                 <h6><span>3</span>Games Builder (Optional)</h6>
-                                <p class="text-muted mb-2">Create a game activity with 5–10 items (Matching, Flashcard, Fill in the Blank, Spelling, Speak, Image Quiz).</p>
-                                <div class="mb-3 quiz"><label class="form-label" for="gametype">Choose a Game Type</label>
+                                <p class="text-muted mb-2">Create a game activity with 5–10 items …</p>
+
+                                <div class="mb-3 quiz">
+                                    <label class="form-label" for="gameSelect">Choose a Game Type</label>
                                     <select class="mb-2 form-select" id="gameSelect">
-                                        <option value="" selected="">Select Type</option>
+                                        <option value="" selected>Select Type</option>
                                         <option value="matching">Matching</option>
                                         <option value="flashcard">Flash Card</option>
                                         <option value="spelling">Spelling</option>
@@ -1159,70 +1161,64 @@
                                     <div id="imagequiz-container"></div>
                                     <button class="btn mb-3 add-game" id="addImageQuizBtn" type="button">Add Another Image Quiz</button>
                                 </div>
-                                <!-- Create Badge Button -->
-                                <button id="createBagde" class="btn mb-3 createBadge-btn" type="button" onclick="addQuestion()">
-                                    <svg class="bi bi-plus-circle me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
-                                    </svg>Create Badge
-                                </button>
                             </section>
 
-                            <!-- Badge Creation -->
-                             <section class="main-container-lesson">
+                            <!-- ==================== BADGE SECTION (hidden by default) ==================== -->
+                            <section class="main-container-lesson badge-section" id="badgeSection" style="display:none;">
                                 <div class="left-panel">
                                     <div class="badge-card">
                                         <h5>Badge Details</h5>
-                                        <div class="form-group badge-form-group"><label class="form-label">Badge Title</label><input id="badgeTitle" class="input-field" type="text" value="Excellence" /></div>
-                                        <div class="form-group badge-form-group"><label class="form-label">Subtitle</label><input id="badgeSubtitle" class="input-field" type="text" value="Achievement Award" /></div>
+                                        <div class="form-group badge-form-group">
+                                            <label class="form-label">Badge Title</label>
+                                            <input id="badgeTitle" class="input-field" type="text" value="Excellence" />
+                                        </div>
+                                        <div class="form-group badge-form-group">
+                                            <label class="form-label">Subtitle</label>
+                                            <input id="badgeSubtitle" class="input-field" type="text" value="Achievement Award" />
+                                        </div>
                                     </div>
+
                                     <div class="container">
                                         <div class="row">
+                                            <!-- ICON SELECTOR -->
                                             <div class="col-md-6">
                                                 <div class="badge-card">
                                                     <h5>Select Icon</h5>
                                                     <div class="icon-selector">
-                                                        <div class="icon-option selected" data-icon="award">
-                                                            <ion-icon name="ribbon-outline"></ion-icon>
-                                                            <span>Award</span>
-                                                        </div>
-                                                        <div class="icon-option" data-icon="shield">
-                                                            <ion-icon name="shield-outline"></ion-icon>
-                                                            <span>Shield</span>
-                                                        </div>
-                                                        <div class="icon-option" data-icon="star">
-                                                            <ion-icon name="star-outline"></ion-icon>
-                                                            <span>Star</span>
-                                                        </div>
-                                                        <div class="icon-option" data-icon="zap">
-                                                            <ion-icon name="flash-outline"></ion-icon>
-                                                            <span>Zap</span>
-                                                        </div>
-                                                        <div class="icon-option" data-icon="trophy">
-                                                            <ion-icon name="trophy-outline"></ion-icon>
-                                                            <span>Trophy</span>
-                                                        </div>
+                                                        <div class="icon-option" data-icon="ribbon" data-label="Award"><ion-icon name="ribbon-outline"></ion-icon><span>Award</span></div>
+                                                        <div class="icon-option" data-icon="shield" data-label="Shield"><ion-icon name="shield-outline"></ion-icon><span>Shield</span></div>
+                                                        <div class="icon-option selected" data-icon="star" data-label="Star"><ion-icon name="star-outline"></ion-icon><span>Star</span></div>
+                                                        <div class="icon-option" data-icon="flash"  data-label="Zap"><ion-icon name="flash-outline"></ion-icon><span>Zap</span></div>
+                                                        <div class="icon-option" data-icon="trophy" data-label="Trophy"><ion-icon name="trophy-outline"></ion-icon><span>Trophy</span></div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- BACKGROUND COLOR ONLY -->
                                             <div class="col-md-6">
                                                 <div class="badge-card">
                                                     <h5>Color Palette</h5>
-                                                    <div class="color-picker"><span class="color-label">Background Color</span><input id="bgColor" class="color-input" type="color" value="#ec4899" /><input id="bgColorValue" class="color-value" type="text" value="#ec4899" /></div>
-                                                    <div class="color-picker"><span class="color-label">Text Color</span><input id="textColor" class="color-input" type="color" value="#131150" /><input id="textColorValue" class="color-value" type="text" value="#ffffff" /></div>
+                                                    <div class="color-picker">
+                                                        <span class="color-label">Background Color</span>
+                                                        <input id="bgColor" class="color-input" type="color" value="#ec4899" />
+                                                        <input id="bgColorValue" class="color-value" type="text" value="#ec4899" />
+                                                    </div>
+
                                                     <div class="quick-presets">
-                                                        <div class="preset-button" style="background-color: #3b82f6;" data-color="#3b82f6" data-text="#ffffff"><span>Blue</span></div>
-                                                        <div class="preset-button" style="background-color: #10b981;" data-color="#10b981" data-text="#ffffff"><span>Green</span></div>
-                                                        <div class="preset-button" style="background-color: #f59e0b;" data-color="#f59e0b" data-text="#ffffff"><span>Orange</span></div>
-                                                        <div class="preset-button" style="background-color: #ef4444;" data-color="#ef4444" data-text="#ffffff"><span>Red</span></div>
-                                                        <div class="preset-button" style="background-color: #8b5cf6;" data-color="#8b5cf6" data-text="#ffffff"><span>Purple</span></div>
-                                                        <div class="preset-button" style="background-color: #ec4899;" data-color="#ec4899" data-text="#ffffff"><span>Pink</span></div>
+                                                        <div class="preset-button selected" style="background-color:#3b82f6;" data-color="#3b82f6"><span>Blue</span></div>
+                                                        <div class="preset-button" style="background-color:#10b981;" data-color="#10b981"><span>Green</span></div>
+                                                        <div class="preset-button" style="background-color:#f59e0b;" data-color="#f59e0b"><span>Orange</span></div>
+                                                        <div class="preset-button" style="background-color:#ef4444;" data-color="#ef4444"><span>Red</span></div>
+                                                        <div class="preset-button" style="background-color:#8b5cf6;" data-color="#8b5cf6"><span>Purple</span></div>
+                                                        <div class="preset-button" style="background-color:#ec4899;" data-color="#ec4899"><span>Pink</span></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- RIGHT PANEL – PREVIEW + SPECS -->
                                 <div class="right-panel">
                                     <div class="container">
                                         <div class="row">
@@ -1231,24 +1227,27 @@
                                                     <h5>Preview</h5>
                                                     <div class="preview-container">
                                                         <div id="previewBadge" class="badge-preview">
-                                                            <div class="badge-icon">
-                                                                <ion-icon name="ribbon-outline"></ion-icon>
-                                                            </div>
-                                                            <div class="badge-title"><span>Excellence</span></div>
-                                                            <div class="badge-subtitle"><span>Achievement Award</span></div>
+                                                            <div class="badge-icon"><ion-icon id="previewIcon" name="star-outline"></ion-icon></div>
+                                                            <div class="badge-title"><span id="previewTitle">Excellence</span></div>
+                                                            <div class="badge-subtitle"><span id="previewSubtitle">Achievement Award</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-6">
                                                 <div class="badge-card">
                                                     <h5>Badge Specifications</h5>
                                                     <div class="specifications">
-                                                        <div class="spec-row"><span class="spec-label">Title:</span><span id="specTitle" class="spec-value">Excellence</span></div>
-                                                        <div class="spec-row"><span class="spec-label">Subtitle:</span><span id="specSubtitle" class="spec-value">Achievement Award</span></div>
-                                                        <div class="spec-row"><span class="spec-label">Icon:</span><span id="specIcon" class="spec-value">Award</span></div>
-                                                        <div class="spec-row"><span class="spec-label">Background:</span><span class="spec-value"><span id="specBgColorIndicator" class="color-indicator" style="background-color: #ec4899;"></span><span id="specBgColor">#ec4899</span></span></div>
-                                                        <div class="spec-row"><span class="spec-label">Text:</span><span class="spec-value"><span id="specTextColorIndicator" class="color-indicator" style="background-color: #ffffff;"></span><span id="specTextColor">#ffffff</span></span></div>
+                                                        <div class="spec-row"><span class="spec-label">Title:</span><span id="specTitle">Excellence</span></div>
+                                                        <div class="spec-row"><span class="spec-label">Subtitle:</span><span id="specSubtitle">Achievement Award</span></div>
+                                                        <div class="spec-row"><span class="spec-label">Icon:</span><span id="specIcon">Star</span></div>
+                                                        <div class="spec-row"><span class="spec-label">Background:</span>
+                                                            <span class="spec-value">
+                                                                <span id="specBgColorIndicator" class="color-indicator" style="background-color:#ec4899;"></span>
+                                                                <span id="specBgColor">#ec4899</span>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1256,6 +1255,7 @@
                                     </div>
                                 </div>
                             </section>
+
                             <section class="main-container-lesson">
                                 <div class="row">
                                     <div class="mb-3 col-12 col-md-6">
@@ -2015,6 +2015,7 @@
     <script src="{{ asset('assets/js/confetti.browser.min.js') }}"></script>
     <script src="{{ asset('assets/js/taskManager.js') }}"></script>
     <script src="{{ asset('assets/js/toast-manager.js') }}"></script>
+    <script src="{{ asset('assets/js/badge-manager.js') }}"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -2528,7 +2529,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const first = item.querySelector('.first-phrase')?.value || '';
                     const answer = item.querySelector('.answer-input')?.value || '';
                     const last = item.querySelector('.last-phrase')?.value || '';
-                    if (first || answer || last) items.push({ first, answer, last });
+                    const definition = item.querySelector('.definition-input')?.value || '';
+                    if (first || answer || last) items.push({ first, answer, last, definition });
                 }
 
                 if (type === 'speak') {
@@ -2614,6 +2616,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const postTestQuestions = typeof fetchPostTestQuestions === 'function' ? fetchPostTestQuestions() : [];
         const gameData = await fetchGames();
         const uploadData = fetchUploads();
+        const allBadges = typeof window.getAllBadgeData === 'function' ? window.getAllBadgeData() : {};
+
+        // FILTER: Only include games with >1 item AND their badges
+        const filteredGames = {};
+        const badges = {};
+
+        Object.keys(gameData).forEach(type => {
+            const items = gameData[type];
+            if (items && items.length > 1) {
+                filteredGames[type] = items;
+                badges[type] = allBadges[type]; // Only send badge if game has 2+ items
+            }
+        });
 
         return {
             lesson_title: lessonTitle.value.trim(),
@@ -2622,8 +2637,9 @@ document.addEventListener('DOMContentLoaded', () => {
             selected_subject: selectedSubject.value,
             pretest_questions: preTestQuestions,
             posttest_questions: postTestQuestions,
-            games: gameData,
+            games: filteredGames,
             uploads: uploadData,
+            badges: badges,
             status
         };
     }
@@ -2681,6 +2697,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         formData.append('games', JSON.stringify(data.games));
+        formData.append('badges', JSON.stringify(data.badges));
         formData.append('status', data.status);
 
         // Uploads
@@ -2736,6 +2753,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("👥 Subject Users:", @json($subjectUsers));
         console.log("👥 Users by Subject:", @json($usersBySubject));
     </scrip>
+
+    
 
     
 </body>
