@@ -28,6 +28,7 @@ class AdminDashboardController extends Controller
         $activeRatePercent = 0;
         $subjectSummaries = [];
         $subjectUsers = [];
+        $teachersWithSections = [];
 
         $token = session('node_token');
 
@@ -120,6 +121,68 @@ class AdminDashboardController extends Controller
                     $subjectUsers = [];
                 }
 
+                // ✅ 4. Fetch ALL Lessons & Contents (Pretest first, Posttest last)
+                $lessonsFetched = session('lessons_fetched', false);
+                $allLessons = session('all_lessons', []);
+                $allContents = session('all_contents', []);
+
+                if (!$lessonsFetched) {
+                    $lessonsResponse = Http::withToken($token)
+                        ->timeout(10)
+                        ->get("{$this->apiUrl}/admin/subjects/lessons");
+
+                    if ($lessonsResponse->successful() && $lessonsResponse->json('success')) {
+                        $responseData = $lessonsResponse->json();
+
+                        $allLessons = $responseData['lessons'] ?? [];
+                        $allContents = $responseData['contents'] ?? [];
+
+                        // Save to session to avoid refetching
+                        session([
+                            'all_lessons' => $allLessons,
+                            'all_contents' => $allContents,
+                            'lessons_fetched' => true
+                        ]);
+
+                        Log::info('Fetched all lessons & contents', [
+                            'lessons_count' => count($allLessons),
+                            'contents_count' => count($allContents)
+                        ]);
+                    } else {
+                        Log::warning('Failed to fetch lessons', [
+                            'status' => $lessonsResponse->status(),
+                            'body' => $lessonsResponse->body()
+                        ]);
+                    }
+                } else {
+                    Log::info('Lessons already in session, skipping API call');
+                }
+
+                try {
+                    $teachersResponse = Http::withToken($token)
+                        ->timeout(10)
+                        ->get("{$this->apiUrl}/admin/teachers/sections");
+
+                    if ($teachersResponse->successful() && $teachersResponse->json('success')) {
+                        $fullResponse = $teachersResponse->json();
+                        $teachersWithSections = $fullResponse['data'] ?? [];
+                        Log::info('👩‍🏫 Teachers with Sections fetched', [
+                            'count' => count($teachersWithSections),
+                            'sample' => array_slice($teachersWithSections, 0, 3)
+                        ]);
+                    } else {
+                        Log::warning('⚠️ Failed to fetch teachers with sections', [
+                            'status' => $teachersResponse->status(),
+                            'body' => $teachersResponse->body()
+                        ]);
+                    }
+                } catch (\Exception $e) {
+                    Log::error('💥 Error fetching teachers with sections', [
+                        'message' => $e->getMessage()
+                    ]);
+                }
+
+
             } catch (\Exception $e) {
                 Log::error('💥 Error connecting to Node.js API', [
                     'message' => $e->getMessage(),
@@ -138,6 +201,7 @@ class AdminDashboardController extends Controller
 
         // ✅ Save in session for later use
         session(['usersBySubject' => $usersBySubject]);
+        session(['teachersWithSections' => $teachersWithSections]);
 
         return view('AdminDashboard', compact(
             'lessonsCount',
@@ -151,7 +215,10 @@ class AdminDashboardController extends Controller
             'activeRatePercent',
             'subjectSummaries',
             'subjectUsers',
-            'usersBySubject'
+            'usersBySubject',
+            'allLessons',     
+            'allContents',
+            'teachersWithSections'
         ));
     }
 

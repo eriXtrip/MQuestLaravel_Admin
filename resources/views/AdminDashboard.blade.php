@@ -1583,47 +1583,11 @@
                 <!-- People Tab-->
                 <div id="tab3" class="tab-content">
                     <div class="p-3 people-main-container">
-                        <div class="mb-4 teacher-ab">
-                            <div class="student-header">
-                                <div style="display: flex ;     flex-grow: 1;     flex-wrap: wrap;     align-items: baseline;">
-                                    <h2 class="student-title">Teachers</h2>
-                                </div>
-                            </div>
-                            <div class="teacher-item"><img class="img-fluid avatar-teacher" alt="Man with laptop and woman playing cello" width="1080" height="1080" src="assets/img/photo-1755541516453-201559bec161.jpg">
-                                <p class="mb-0 teacher-name">Jeffrey Belson</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="student-ab">
-                            <div class="student-header">
-                                <div class="justify-content-between" style="display: flex ;     flex-grow: 1;     flex-wrap: wrap;     align-items: baseline;">
-                                    <h2 class="student-title">Pupils Enrolled</h2>
-                                    <div class="text-muted" style="padding-right: 1rem;">
-                                        <p>34 Pupils</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pupil-item"><img class="img-fluid avatar-pupil" width="200" height="200" src="assets/img/6.png">
-                                <p class="mb-0 student-name">Anna</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
-                                </svg>
-                            </div>
-                            <div class="pupil-item"><img class="img-fluid avatar-pupil" width="200" height="200" src="assets/img/2.png">
-                                <p class="mb-0 student-name">Bella</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
-                                </svg>
-                            </div>
-                            <div class="pupil-item"><img class="img-fluid avatar-pupil" width="200" height="200" src="assets/img/10.png">
-                                <p class="mb-0 student-name">Joseph Marco</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
-                                </svg>
-                            </div>
-                        </div>
+                        <!-- Teachers -->
+                        <div class="mb-4 teacher-ab" id="teachersContainer"></div>
+
+                        <!-- Pupils -->
+                        <div class="student-ab" id="pupilsContainer"></div>
                     </div>
                 </div>
             </div>
@@ -2241,24 +2205,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const subjectDisplay = document.getElementById('subjectDisplay');
-            const lessonSection = document.getElementById('lessonSection');
+            const subjectDisplay      = document.getElementById('subjectDisplay');
+            const lessonSection       = document.getElementById('lessonSection');
             const selectedSubjectInput = document.getElementById('selected-subject-input');
 
-            // Handle subject link clicks
+            // ---------- SUBJECT LINKS ----------
             document.querySelectorAll('#subject-list .sidebar-link').forEach(link => {
-                link.addEventListener('click', (e) => {
+                link.addEventListener('click', e => {
                     e.preventDefault();
 
-                    const subject = link.dataset.subject; // e.g. 'Filipino'
-                    const lower = subject.toLowerCase();  // 'filipino'
+                    const subject = link.dataset.subject;           // e.g. "Filipino"
+                    const lower   = subject.toLowerCase();
 
-                    // 🟢 Make sure lesson section is visible
-                    if (lessonSection.classList.contains('d-none')) {
-                        lessonSection.classList.remove('d-none');
-                    }
+                    // 1. Show lesson area
+                    lessonSection.classList.remove('d-none');
 
-                    // 🟢 Update the subject display area
+                    // 2. Update header card
                     subjectDisplay.innerHTML = `
                         <div class="mb-2 card ${lower}-subject-card">
                             <div class="subject-title">
@@ -2267,23 +2229,26 @@
                         </div>
                     `;
 
-                    // 🟢 Update hidden input value for selected subject
+                    // 3. **IMPORTANT** – keep hidden input in sync
                     selectedSubjectInput.value = subject;
 
-                    // 🟢 Visually highlight active subject
-                    document.querySelectorAll('#subject-list .sidebar-link').forEach(link2 => link2.classList.remove('active'));
+                    // 4. Highlight active link
+                    document.querySelectorAll('#subject-list .sidebar-link')
+                            .forEach(l => l.classList.remove('active'));
                     link.classList.add('active');
+
+                    // 5. **RE-RENDER LESSONS** for the newly selected subject
+                    const activeQuarter = document.querySelector('.quarter-tab.active')?.dataset.quarter || 'Q1';
+                    window.renderLessons?.(activeQuarter);
                 });
             });
 
-            // 🟢 When "Curriculum & Lessons" is clicked, show English by default
-            document.getElementById('curriculumLink').addEventListener('click', (e) => {
+            // ---------- CURRICULUM LINK (default = English) ----------
+            document.getElementById('curriculumLink').addEventListener('click', e => {
                 const defaultSubject = 'English';
                 const lower = defaultSubject.toLowerCase();
 
-                if (lessonSection.classList.contains('d-none')) {
-                    lessonSection.classList.remove('d-none');
-                }
+                lessonSection.classList.remove('d-none');
 
                 subjectDisplay.innerHTML = `
                     <div class="mb-2 card ${lower}-subject-card">
@@ -2293,451 +2258,612 @@
                     </div>
                 `;
 
-                // 🟢 Also reset hidden input to English
                 selectedSubjectInput.value = defaultSubject;
+
+                // also render English lessons
+                const activeQuarter = document.querySelector('.quarter-tab.active')?.dataset.quarter || 'Q1';
+                window.renderLessons?.(activeQuarter);
             });
         });
     </script>
 
-<!-- <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const publishBtn = document.querySelector('.publish-btn');
-    const draftBtn = document.querySelector('.save-draft-btn');
-    const lessonTitle = document.getElementById('lesson-title');
-    const lessonDescription = document.getElementById('lesson-description');
-    const selectedQuarter = document.getElementById('selected-quarter-input');
-    const selectedSubject = document.getElementById('selected-subject-input');
-    const preQuestionType = document.getElementById('questionType');
-    const postQuestionType = document.getElementById('questionType2');
 
-    async function fetchGames() {
-        const games = {};
-        const gameTypes = ['matching', 'flashcard', 'spelling', 'speak', 'imagequiz'];
 
-        for (const type of gameTypes) {
-            const container = document.getElementById(`${type}-container`);
-            if (!container) continue;
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const publishBtn = document.querySelector('.publish-btn');
+            const draftBtn = document.querySelector('.save-draft-btn');
+            const lessonTitle = document.getElementById('lesson-title');
+            const lessonDescription = document.getElementById('lesson-description');
+            const selectedQuarter = document.getElementById('selected-quarter-input');
+            const selectedSubject = document.getElementById('selected-subject-input');
 
-            const items = [];
-            const itemGroups = container.querySelectorAll('.item-group');
+            async function fetchGames() {
+                const games = {};
+                const gameTypes = ['matching', 'flashcard', 'spelling', 'speak', 'imagequiz'];
 
-            for (const item of itemGroups) {
-                if (type === 'matching') {
-                    const term = item.querySelector('.matching-container-item input')?.value || '';
-                    const definition = item.querySelector('.matching-container-item textarea')?.value || '';
-                    if (term || definition) items.push({ term, definition });
-                }
+                for (const type of gameTypes) {
+                    const container = document.getElementById(`${type}-container`);
+                    if (!container) continue;
 
-                if (type === 'flashcard') {
-                    const front = item.querySelector('.matching-container-item input')?.value || '';
-                    const back = item.querySelector('.matching-container-item textarea')?.value || '';
-                    if (front || back) items.push({ front, back });
-                }
+                    const items = [];
+                    const itemGroups = container.querySelectorAll('.item-group');
 
-                if (type === 'spelling') {
-                    const first = item.querySelector('.first-phrase')?.value || '';
-                    const answer = item.querySelector('.answer-input')?.value || '';
-                    const last = item.querySelector('.last-phrase')?.value || '';
-                    if (first || answer || last) items.push({ first, answer, last });
-                }
+                    for (const item of itemGroups) {
+                        if (type === 'matching') {
+                            const term = item.querySelector('.matching-container-item input')?.value || '';
+                            const definition = item.querySelector('.matching-container-item textarea')?.value || '';
+                            if (term || definition) items.push({ term, definition });
+                        }
 
-                if (type === 'speak') {
-                    const prompt = item.querySelector('.speech-text-form input')?.value || '';
-                    if (prompt) items.push({ prompt });
-                }
+                        if (type === 'flashcard') {
+                            const front = item.querySelector('.matching-container-item input')?.value || '';
+                            const back = item.querySelector('.matching-container-item textarea')?.value || '';
+                            if (front || back) items.push({ front, back });
+                        }
 
-                if (type === 'imagequiz') {
-                    const imgElement = item.querySelector('.preview-image-compact');
-                    const question = item.querySelector('.question-input')?.value || '';
-                    const choices = Array.from(item.querySelectorAll('.choices-wrapper input')).map(c => c.value);
-                    const correct = item.querySelector('.correct-select')?.value || '';
-                    let image = imgElement?.src || '';
+                        if (type === 'spelling') {
+                            const first = item.querySelector('.first-phrase')?.value || '';
+                            const answer = item.querySelector('.answer-input')?.value || '';
+                            const last = item.querySelector('.last-phrase')?.value || '';
+                            const definition = item.querySelector('.definition-input')?.value || '';
+                            if (first || answer || last) items.push({ first, answer, last, definition });
+                        }
 
-                    // Convert blob URL to File object
-                    if (image.startsWith('blob:')) {
-                        try {
-                            const blob = await fetch(image).then(res => res.blob());
-                            const file = new File([blob], `imagequiz_${Date.now()}.png`, { type: blob.type });
-                            image = file; // send actual file, not blob URL
-                        } catch (err) {
-                            console.warn('Failed to convert blob image:', err.message);
+                        if (type === 'speak') {
+                            const prompt = item.querySelector('.speech-text-form input')?.value || '';
+                            if (prompt) items.push({ prompt });
+                        }
+
+                        if (type === 'imagequiz') {
+                            const imgElement = item.querySelector('.preview-image-compact');
+                            const question   = item.querySelector('.question-input')?.value || '';
+                            const correct    = item.querySelector('.correct-select')?.value || '';
+
+                            // 1. Get all choice wrappers
+                            const choiceWrappers = item.querySelectorAll('.choice-item');
+                            const fileInputs = item.querySelectorAll('.choice-image-input');
+
+                            const choices = [];
+
+                            choiceWrappers.forEach((wrapper, idx) => {
+                                const textInput = wrapper.querySelector('.choices-wrapper input');
+                                const fileInput = fileInputs[idx];
+
+                                const textValue = textInput?.value.trim() || '';
+                                const hasFile = fileInput?.files?.[0];
+
+                                // Only include if:
+                                // - Has real file OR
+                                // - Has non-empty text AND is not a fake path
+                                if (hasFile) {
+                                    choices.push(hasFile); // Real File object
+                                } else if (textValue && !textValue.startsWith('C:\\fakepath\\')) {
+                                    choices.push(textValue); // Real text
+                                }
+                                // Skip: empty or fake path
+                            });
+
+                            // Convert question image blob → File
+                            let image = imgElement?.src || '';
+                            if (image.startsWith('blob:')) {
+                                try {
+                                    const blob = await fetch(image).then(r => r.blob());
+                                    image = new File([blob], `imagequiz_${Date.now()}.png`, { type: blob.type });
+                                } catch (e) {
+                                    console.warn('Failed to convert question image:', e);
+                                }
+                            }
+
+                            // Only push if we have question or image or choices
+                            if (question || image || choices.length > 0) {
+                                items.push({ image, question, choices, correct });
+                            }
                         }
                     }
 
-                    items.push({ image, question, choices, correct });
+                    if (items.length) games[type] = items;
+                }
+                return games;
+            }
+
+            function fetchUploads() {
+                const fileInput = document.getElementById('fileInput');
+                const fileTitle = document.getElementById('file-title')?.value.trim() || '';
+                const fileSubtitle = document.getElementById('file-title-1')?.value.trim() || '';
+                const uploadedFile = fileInput?.files[0] || null;
+
+                const videoInput = document.getElementById('videoInput');
+                const videoTitle = document.getElementById('file-title-2')?.value.trim() || '';
+                const videoSubtitle = document.getElementById('video-title')?.value.trim() || '';
+                const uploadedVideo = videoInput?.files[0] || null;
+                const videoUrl = document.getElementById('urlInput')?.value.trim() || '';
+
+                return {
+                    files: uploadedFile ? { title: fileTitle, subtitle: fileSubtitle, file: uploadedFile } : null,
+                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, file: uploadedVideo } : null,
+                    video_url: videoUrl || null,
+                    video_url_title: videoTitle || '',
+                    video_url_subtitle: videoSubtitle || ''
+                };
+            }
+
+            async function getLessonData(status) {
+                const preTestQuestions = typeof fetchPreTestQuestions === 'function' ? fetchPreTestQuestions() : [];
+                const postTestQuestions = typeof fetchPostTestQuestions === 'function' ? fetchPostTestQuestions() : [];
+                const gameData = await fetchGames();
+                const uploadData = fetchUploads();
+                const allBadges = typeof window.getAllBadgeData === 'function' ? window.getAllBadgeData() : {};
+
+                // FILTER: Only include games with >1 item AND their badges
+                const filteredGames = {};
+                const badges = {};
+
+                Object.keys(gameData).forEach(type => {
+                    const items = gameData[type];
+                    if (items && items.length > 1) {
+                        filteredGames[type] = items;
+                        badges[type] = allBadges[type]; // Only send badge if game has 2+ items
+                    }
+                });
+
+                return {
+                    lesson_title: lessonTitle.value.trim(),
+                    lesson_description: lessonDescription.value.trim(),
+                    selected_quarter: selectedQuarter.value,
+                    selected_subject: selectedSubject.value,
+                    pretest_questions: preTestQuestions,
+                    posttest_questions: postTestQuestions,
+                    games: filteredGames,
+                    uploads: uploadData,
+                    badges: badges,
+                    status
+                };
+            }
+
+            async function submitLesson(status) {
+                const data = await getLessonData(status);
+                console.log('Submitting lesson:', data);
+
+                const formData = new FormData();
+                formData.append('lesson_title', data.lesson_title);
+                formData.append('lesson_description', data.lesson_description);
+                formData.append('selected_quarter', data.selected_quarter);
+                formData.append('selected_subject', data.selected_subject);
+                formData.append('pretest_questions', JSON.stringify(data.pretest_questions));
+                formData.append('posttest_questions', JSON.stringify(data.posttest_questions));
+
+                // Process imagequiz: question + choice images
+                if (data.games.imagequiz && data.games.imagequiz.length) {
+                    for (let i = 0; i < data.games.imagequiz.length; i++) {
+                        const quiz = data.games.imagequiz[i];
+
+                        // 1. Question Image
+                        if (quiz.image instanceof File) {
+                            console.log(`Question Image [Item ${i}]:`, {
+                                name: quiz.image.name,
+                                size: `${(quiz.image.size / 1024).toFixed(2)} KB`,
+                                type: quiz.image.type
+                            });
+
+                            formData.append('imagequiz_images[]', quiz.image);
+                            quiz.image = `imagequiz_images[${i}]`;
+                        }
+
+                        // 2. Choice Images
+                        for (let c = 0; c < quiz.choices.length; c++) {
+                            const choice = quiz.choices[c];
+                            if (choice instanceof File) {
+                                // LOG THE ACTUAL FILE BEFORE REPLACING IT
+                                console.log(`Choice Image File [Item ${i}, Choice ${c}]:`, {
+                                    name: choice.name,
+                                    size: `${(choice.size / 1024).toFixed(2)} KB`,
+                                    type: choice.type,
+                                    lastModified: new Date(choice.lastModified).toLocaleString()
+                                });
+
+                                // Use global index for unique placeholder
+                                if (!window._imageIndex) window._imageIndex = 0;
+                                const idx = window._imageIndex++;
+
+                                formData.append('imagequiz_images[]', choice);
+                                quiz.choices[c] = `imagequiz_images[${idx}]`;
+                            }
+                        }
+                    }
+                }
+
+                formData.append('games', JSON.stringify(data.games));
+                formData.append('badges', JSON.stringify(data.badges));
+                formData.append('status', data.status);
+
+                // Uploads
+                if (data.uploads.files) {
+                    formData.append('fileTitle', data.uploads.files.title || '');
+                    formData.append('fileSubtitle', data.uploads.files.subtitle || '');
+                    if (data.uploads.files.file) formData.append('fileInput', data.uploads.files.file);
+                }
+
+                if (data.uploads.videos) {
+                    formData.append('videoTitle', data.uploads.videos.title || '');
+                    formData.append('videoSubtitle', data.uploads.videos.subtitle || '');
+                    if (data.uploads.videos.file) formData.append('videoInput', data.uploads.videos.file);
+                }
+
+                if (data.uploads.video_url) {
+                    formData.append('videoUrl', data.uploads.video_url);
+                    formData.append('videoUrlTitle', data.uploads.video_url_title || '');
+                    formData.append('videoUrlSubtitle', data.uploads.video_url_subtitle || '');
+                }
+
+                try {
+                    const token = '{{ session("node_token") }}';
+                    const response = await fetch('{{ env("API_URL") }}/admin/lessons/upload', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    console.log('API Response:', result);
+                    alert(result.success ? 'Lesson uploaded successfully!' : 'Upload failed.');
+                } catch (err) {
+                    console.error('Upload error:', err);
+                    alert('Error uploading lesson.');
                 }
             }
 
-            if (items.length) games[type] = items;
-        }
+            publishBtn.addEventListener('click', () => submitLesson('published'));
+            draftBtn.addEventListener('click', () => submitLesson('draft'));
+        });
+    </script>
 
-        return games;
-    }
+    <script>
+    // All lessons and contents are already available from Laravel
+        console.log('All Lessons:', @json($allLessons));
+        console.log('All Contents:', @json($allContents));
 
-    function fetchUploads() {
-        const fileInput = document.getElementById('fileInput');
-        const fileTitle = document.getElementById('file-title')?.value.trim() || '';
-        const fileSubtitle = document.getElementById('file-title-1')?.value.trim() || '';
-        const uploadedFile = fileInput?.files[0] || null;
+        // Optional: Group contents by lesson
+        const contentsByLesson = @json($allContents).reduce((acc, content) => {
+            if (!acc[content.lesson_belong]) acc[content.lesson_belong] = [];
+            acc[content.lesson_belong].push(content);
+            return acc;
+        }, {});
 
-        const videoInput = document.getElementById('videoInput');
-        const videoTitle = document.getElementById('file-title-2')?.value.trim() || '';
-        const videoSubtitle = document.getElementById('video-title')?.value.trim() || '';
-        const uploadedVideo = videoInput?.files[0] || null;
-        const videoUrl = document.getElementById('urlInput')?.value.trim() || '';
+        console.log('Contents grouped by lesson:', contentsByLesson);
+    </script>
 
-        return {
-            files: uploadedFile ? { title: fileTitle, subtitle: fileSubtitle, file: uploadedFile } : null,
-            videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, file: uploadedVideo } : null,
-            // Keep the video URL and its own title/subtitle
-            video_url: videoUrl || null,
-            video_url_title: videoTitle || '',
-            video_url_subtitle: videoSubtitle || ''
+    <script>
+        console.log("📘 Subject Summaries:", @json($subjectSummaries));
+        console.log("👥 Subject Users:", @json($subjectUsers));
+        console.log("👥 Users by Subject:", @json($usersBySubject));
+        console.log("👩‍🏫 Teachers with Sections:", @json($teachersWithSections));
+
+        window.allLessons = {!! json_encode($allLessons) !!};
+        window.allContents = {!! json_encode($allContents) !!};
+        window.usersBySubject = @json($usersBySubject);
+        window.teachersWithSections = @json($teachersWithSections);
+        window.totalPupils = Object.values(window.usersBySubject)
+        .flat()
+        .length;
+
+        /* Mapping: subject_id → subject name (used for filtering) */
+        window.subjectIdToName = {
+            '1': 'English',
+            '2': 'Filipino',
+            '3': 'Mathematics',
+            '4': 'Science'
         };
-    }
+    </script>
 
-    async function getLessonData(status) {
-        let preTestQuestions = typeof fetchPreTestQuestions === 'function' ? fetchPreTestQuestions() : [];
-        let postTestQuestions = typeof fetchPostTestQuestions === 'function' ? fetchPostTestQuestions() : [];
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('selected-subject-input');
 
-        const gameData = await fetchGames(); // await here
-        const uploadData = fetchUploads();
+            document.querySelectorAll('#subject-list a[data-subject]').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();                     // stop # jump
+                    const subj = link.getAttribute('data-subject');
+                    input.value = subj;                     // <-- THIS updates the hidden field
+                    console.log('Subject selected →', subj);
 
-        return {
-            lesson_title: lessonTitle.value.trim(),
-            lesson_description: lessonDescription.value.trim(),
-            selected_quarter: selectedQuarter.value,
-            selected_subject: selectedSubject.value,
-            pretest_questions: preTestQuestions,
-            posttest_questions: postTestQuestions,
-            games: gameData, // now a plain object, not Promise
-            uploads: uploadData,
-            status
-        };
-    }
+                    // optional visual feedback
+                    document.querySelectorAll('#subject-list a').forEach(a => a.classList.remove('active'));
+                    link.classList.add('active');
 
-    async function submitLesson(status) {
-        const data = await getLessonData(status);
-        console.log('Submitting lesson:', data);
+                    // re-render current quarter
+                    const activeQ = document.querySelector('.quarter-tab.active')?.dataset.quarter || 'Q1';
+                    window.renderLessons?.(activeQ);        // call the function defined below
+                });
+            });
+        });
+    </script>
 
-        const formData = new FormData();
-        formData.append('lesson_title', data.lesson_title);
-        formData.append('lesson_description', data.lesson_description);
-        formData.append('selected_quarter', data.selected_quarter);
-        formData.append('selected_subject', data.selected_subject);
-        formData.append('pretest_questions', JSON.stringify(data.pretest_questions));
-        formData.append('posttest_questions', JSON.stringify(data.posttest_questions));
+    <script>
+        /* --------------------------------------------------------------
+        GLOBAL RENDER FUNCTION – called from subject selector above
+        -------------------------------------------------------------- */
+        window.renderLessons = function renderLessons(quarter) {
+            const lessonMenu = document.getElementById('lessonMenu');
+            if (!lessonMenu) return;
 
-        if (data.games.imagequiz && data.games.imagequiz.length) {
-            for (let i = 0; i < data.games.imagequiz.length; i++) {
-                let item = data.games.imagequiz[i];
+            // ---- dispose old collapses ------------------------------------------------
+            lessonMenu.querySelectorAll('.collapse').forEach(el => {
+                const inst = bootstrap.Collapse.getInstance(el);
+                if (inst) inst.dispose();
+            });
+            lessonMenu.innerHTML = '';
 
-                if (item.image && typeof item.image === 'string' && item.image.startsWith('blob:')) {
-                    const blob = await fetch(item.image).then(r => r.blob());
-                    const file = new File([blob], `imagequiz_${i}_${Date.now()}.png`, { type: blob.type });
-                    item.image = file;
-                }
+            const subj = (document.getElementById('selected-subject-input')?.value || '').trim().toLowerCase();
+            const qNum = Number(quarter.replace('Q', ''));
 
-                if (item.image instanceof File) {
-                    formData.append('imagequiz_images[]', item.image); // <- send same field for all images
-                    item.image = `imagequiz_images[${i}]`; // keep placeholder for backend mapping
-                }
-            }
-        }
-
-        formData.append('games', JSON.stringify(data.games));
-        formData.append('status', data.status);
-
-        if (data.uploads.files) {
-            formData.append('fileTitle', data.uploads.files.title || '');
-            formData.append('fileSubtitle', data.uploads.files.subtitle || '');
-            if (data.uploads.files.file) formData.append('fileInput', data.uploads.files.file);
-        }
-
-        if (data.uploads.videos) {
-            formData.append('videoTitle', data.uploads.videos.title || '');
-            formData.append('videoSubtitle', data.uploads.videos.subtitle || '');
-            if (data.uploads.videos.file) formData.append('videoInput', data.uploads.videos.file);
-        }
-
-        if (data.uploads.video_url) {
-            formData.append('videoUrl', data.uploads.video_url);
-            formData.append('videoUrlTitle', data.uploads.video_url_title || '');
-            formData.append('videoUrlSubtitle', data.uploads.video_url_subtitle || '');
-        }
-
-        try {
-            const token = '{{ session("node_token") }}'; // your Node.js API token from Laravel session
-            const response = await fetch('{{ env("API_URL") }}/admin/lessons/upload', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                body: formData
+            const lessons = (window.allLessons || []).filter(l => {
+                const s = (l.subject_name || '').trim().toLowerCase();
+                return s === subj && Number(l.quarter) === qNum;
             });
 
-            const result = await response.json();
-            console.log('Response from Node.js API:', result);
-            alert(result.success ? 'Lesson uploaded successfully!' : 'Failed to upload lesson.');
-        } catch (err) {
-            console.error('Error uploading lesson:', err);
-            alert('Error uploading lesson, check console.');
-        }
-    }
+            console.log(`renderLessons → ${lessons.length} lesson(s) for "${subj}" – Q${qNum}`);
 
-    publishBtn.addEventListener('click', () => submitLesson('published'));
-    draftBtn.addEventListener('click', () => submitLesson('draft'));
-});
-</script> -->
+            if (lessons.length === 0) {
+                lessonMenu.innerHTML = `<div class="text-center text-muted p-4">No lessons for this quarter.</div>`;
+                return;
+            }
 
+            /* ------------------- helper ------------------------------------------------ */
+            function getContentLabel(c) {
+                const type = (c.content_type || '').toLowerCase();
+                const title = c.title || 'Untitled';
+                const low = title.toLowerCase();
 
+                if (type === 'quiz') {
+                    if (low.includes('pretest')) return `Lesson Start: ${title}`;
+                    if (low.includes('posttest')) return `Lesson End: ${title}`;
+                    return `Quiz: ${title}`;
+                }
+                if (type === 'pdf') return `PDF Guide: ${title}`;
+                if (type === 'ppt') return `PPT Guide: ${title}`;
+                if (type.startsWith('game')) {
+                    const map = { match:'Matching Game', flash:'Flashcard Game',
+                                speak:'Speaking Game', comp:'Comprehension Game',
+                                img:'Image-Based Game' };
+                    for (const [k,v] of Object.entries(map)) if (type.includes(k)) return `${v}: ${title}`;
+                    return `Game: ${title}`;
+                }
+                if (type === 'video') return `Video: ${title}`;
+                if (type === 'url')   return `URL Link: ${title}`;
+                return title;
+            }
+
+            /* ------------------- render each lesson ----------------------------------- */
+            lessons.forEach((lesson, idx) => {
+                const id      = lesson.lesson_id;
+                const title   = lesson.lesson_title || `Lesson ${lesson.lesson_number || idx+1}`;
+                const desc    = lesson.description   || 'No description.';
+                const comps   = lesson.learning_competencies || [];
+
+                const contents = (window.allContents || []).filter(c => String(c.lesson_belong) === String(id));
+
+                const materials = contents.length
+                    ? contents.map(c => `
+                        <li class="material-item">
+                            ${getContentLabel(c)}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                viewBox="0 0 16 16" class="bi bi-box-arrow-up-right">
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"></path>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"></path>
+                            </svg>
+                        </li>`).join('')
+                    : '<li class="text-muted">No materials yet.</li>';
+
+                const compHtml = comps.length
+                    ? `<h6>At the end of the lesson, the learner will be able to:</h6>
+                    <ul class="obj-list">${comps.map(o=>`<li>${o}</li>`).join('')}</ul>`
+                    : '';
+
+                const html = `
+                    <div class="lesson-item ${idx===0?'active':''}" id="${quarter}${id}">
+                        <div class="lesson-header d-flex justify-content-between align-items-center"
+                            data-bs-toggle="collapse" data-bs-target="#content${id}"
+                            aria-expanded="false" aria-controls="content${id}">
+                            <div class="header-left">
+                                <h2>Lesson ${lesson.lesson_number || idx+1}</h2>
+                                <p>${title}</p>
+                            </div>
+                            <div class="header-right"><span>+</span></div>
+                        </div>
+
+                        <div id="content${id}" class="collapse">
+                            <div class="lesson-content">
+                                <div class="part-1 mb-3">
+                                    <div class="mb-2 part-intro">
+                                        <h6>Lesson Overview</h6>
+                                        <p class="text-muted small">${desc}</p>
+                                    </div>
+                                    <div class="mb-2 part-1-obj">
+                                        ${compHtml}
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 part-2">
+                                    <p>Learning Materials Included:</p>
+                                    <ul class="list-unstyled part-2 materials">
+                                        ${materials}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                lessonMenu.insertAdjacentHTML('beforeend', html);
+
+                const el = document.getElementById(`content${id}`);
+                if (el) new bootstrap.Collapse(el, { toggle: false });
+            });
+        };
+
+        /* --------------------------------------------------------------
+        QUARTER TABS – also call the global renderer
+        -------------------------------------------------------------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const quarterTabs = document.querySelectorAll('.quarter-tab');
+
+            quarterTabs.forEach(tab => {
+                tab.addEventListener('click', e => {
+                    e.preventDefault();
+                    quarterTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    window.renderLessons(tab.dataset.quarter);
+                });
+            });
+
+            // initial load (default quarter)
+            const startQ = document.querySelector('.quarter-tab.active')?.dataset.quarter || 'Q1';
+            window.renderLessons(startQ);
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const teachersContainer = document.getElementById('teachersContainer');
+            const pupilsContainer   = document.getElementById('pupilsContainer');
+
+            const teachers = window.teachersWithSections || [];
+            const pupilsBySubject = window.usersBySubject || {};
+            const totalPupils = window.totalPupils || 0;
+
+            /* ==============================================================
+            1. RENDER TEACHERS
+            ============================================================== */
+            if (teachers.length === 0) {
+                teachersContainer.innerHTML = `<p class="text-muted">No teachers assigned.</p>`;
+            } else {
+                const teacherHeader = `
+                    <div class="student-header">
+                        <div style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;">
+                            <h2 class="student-title">Teachers</h2>
+                        </div>
+                    </div>`;
+
+                const teacherItems = teachers.map(t => `
+                    <div class="teacher-item">
+                        <img class="img-fluid avatar-teacher" 
+                            src="${t.thumbnail}" 
+                            alt="${t.teacher_name}" 
+                            width="1080" height="1080">
+                        <p class="mb-0 teacher-name">${t.teacher_name}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                            viewBox="0 0 16 16" class="bi bi-envelope email-icon">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                        </svg>
+                    </div>`).join('');
+
+                teachersContainer.innerHTML = teacherHeader + teacherItems;
+            }
+
+            /* ==============================================================
+            2. RENDER PUPILS
+            ============================================================== */
+            const allPupils = Object.values(pupilsBySubject).flat();
+
+            const pupilHeader = `
+                <div class="student-header">
+                    <div class="justify-content-between" style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;">
+                        <h2 class="student-title">Pupils Enrolled</h2>
+                        <div class="text-muted" style="padding-right:1rem;">
+                            <p>${totalPupils} Pupil${totalPupils !== 1 ? 's' : ''}</p>
+                        </div>
+                    </div>
+                </div>`;
+
+            if (allPupils.length === 0) {
+                pupilsContainer.innerHTML = pupilHeader + `<p class="text-muted">No pupils enrolled.</p>`;
+            } else {
+                const pupilItems = allPupils.map(p => `
+                    <div class="pupil-item">
+                        <img class="img-fluid avatar-pupil" 
+                            src="${p.avatar_thumbnail}" 
+                            alt="${p.first_name} ${p.last_name}" 
+                            width="200" height="200">
+                        <p class="mb-0 student-name">${p.first_name} ${p.last_name}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                            viewBox="0 0 16 16" class="bi bi-envelope email-icon">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                        </svg>
+                    </div>`).join('');
+
+                pupilsContainer.innerHTML = pupilHeader + pupilItems;
+            }
+        });
+    </script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const publishBtn = document.querySelector('.publish-btn');
-    const draftBtn = document.querySelector('.save-draft-btn');
-    const lessonTitle = document.getElementById('lesson-title');
-    const lessonDescription = document.getElementById('lesson-description');
-    const selectedQuarter = document.getElementById('selected-quarter-input');
-    const selectedSubject = document.getElementById('selected-subject-input');
+    const teachersContainer = document.getElementById('teachersContainer');
+    const pupilsContainer   = document.getElementById('pupilsContainer');
+    const selectedInput     = document.getElementById('selected-subject-input');
 
-    async function fetchGames() {
-        const games = {};
-        const gameTypes = ['matching', 'flashcard', 'spelling', 'speak', 'imagequiz'];
+    if (!selectedInput) return;
 
-        for (const type of gameTypes) {
-            const container = document.getElementById(`${type}-container`);
-            if (!container) continue;
+    const teachers = window.teachersWithSections || [];
+    const pupilsBySubject = window.usersBySubject || {};
+    const subjectIdMap = window.subjectIdToName || {};
 
-            const items = [];
-            const itemGroups = container.querySelectorAll('.item-group');
+    function renderPeople() {
+        const selectedSubject = selectedInput.value.trim();
+        if (!selectedSubject) return;
 
-            for (const item of itemGroups) {
-                if (type === 'matching') {
-                    const term = item.querySelector('.matching-container-item input')?.value || '';
-                    const definition = item.querySelector('.matching-container-item textarea')?.value || '';
-                    if (term || definition) items.push({ term, definition });
-                }
+        const selectedSubjectId = Object.keys(subjectIdMap).find(id => 
+            subjectIdMap[id].toLowerCase() === selectedSubject.toLowerCase()
+        );
 
-                if (type === 'flashcard') {
-                    const front = item.querySelector('.matching-container-item input')?.value || '';
-                    const back = item.querySelector('.matching-container-item textarea')?.value || '';
-                    if (front || back) items.push({ front, back });
-                }
+        // === TEACHERS ===
+        const matchingTeachers = selectedSubjectId
+            ? teachers.filter(t => String(t.subject_id) === selectedSubjectId)
+            : [];
 
-                if (type === 'spelling') {
-                    const first = item.querySelector('.first-phrase')?.value || '';
-                    const answer = item.querySelector('.answer-input')?.value || '';
-                    const last = item.querySelector('.last-phrase')?.value || '';
-                    const definition = item.querySelector('.definition-input')?.value || '';
-                    if (first || answer || last) items.push({ first, answer, last, definition });
-                }
+        const teacherHeader = `<div class="student-header"><div style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Teachers</h2></div></div>`;
 
-                if (type === 'speak') {
-                    const prompt = item.querySelector('.speech-text-form input')?.value || '';
-                    if (prompt) items.push({ prompt });
-                }
-
-                if (type === 'imagequiz') {
-                    const imgElement = item.querySelector('.preview-image-compact');
-                    const question   = item.querySelector('.question-input')?.value || '';
-                    const correct    = item.querySelector('.correct-select')?.value || '';
-
-                    // 1. Get all choice wrappers
-                    const choiceWrappers = item.querySelectorAll('.choice-item');
-                    const fileInputs = item.querySelectorAll('.choice-image-input');
-
-                    const choices = [];
-
-                    choiceWrappers.forEach((wrapper, idx) => {
-                        const textInput = wrapper.querySelector('.choices-wrapper input');
-                        const fileInput = fileInputs[idx];
-
-                        const textValue = textInput?.value.trim() || '';
-                        const hasFile = fileInput?.files?.[0];
-
-                        // Only include if:
-                        // - Has real file OR
-                        // - Has non-empty text AND is not a fake path
-                        if (hasFile) {
-                            choices.push(hasFile); // Real File object
-                        } else if (textValue && !textValue.startsWith('C:\\fakepath\\')) {
-                            choices.push(textValue); // Real text
-                        }
-                        // Skip: empty or fake path
-                    });
-
-                    // Convert question image blob → File
-                    let image = imgElement?.src || '';
-                    if (image.startsWith('blob:')) {
-                        try {
-                            const blob = await fetch(image).then(r => r.blob());
-                            image = new File([blob], `imagequiz_${Date.now()}.png`, { type: blob.type });
-                        } catch (e) {
-                            console.warn('Failed to convert question image:', e);
-                        }
-                    }
-
-                    // Only push if we have question or image or choices
-                    if (question || image || choices.length > 0) {
-                        items.push({ image, question, choices, correct });
-                    }
-                }
-            }
-
-            if (items.length) games[type] = items;
-        }
-        return games;
-    }
-
-    function fetchUploads() {
-        const fileInput = document.getElementById('fileInput');
-        const fileTitle = document.getElementById('file-title')?.value.trim() || '';
-        const fileSubtitle = document.getElementById('file-title-1')?.value.trim() || '';
-        const uploadedFile = fileInput?.files[0] || null;
-
-        const videoInput = document.getElementById('videoInput');
-        const videoTitle = document.getElementById('file-title-2')?.value.trim() || '';
-        const videoSubtitle = document.getElementById('video-title')?.value.trim() || '';
-        const uploadedVideo = videoInput?.files[0] || null;
-        const videoUrl = document.getElementById('urlInput')?.value.trim() || '';
-
-        return {
-            files: uploadedFile ? { title: fileTitle, subtitle: fileSubtitle, file: uploadedFile } : null,
-            videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, file: uploadedVideo } : null,
-            video_url: videoUrl || null,
-            video_url_title: videoTitle || '',
-            video_url_subtitle: videoSubtitle || ''
-        };
-    }
-
-    async function getLessonData(status) {
-        const preTestQuestions = typeof fetchPreTestQuestions === 'function' ? fetchPreTestQuestions() : [];
-        const postTestQuestions = typeof fetchPostTestQuestions === 'function' ? fetchPostTestQuestions() : [];
-        const gameData = await fetchGames();
-        const uploadData = fetchUploads();
-        const allBadges = typeof window.getAllBadgeData === 'function' ? window.getAllBadgeData() : {};
-
-        // FILTER: Only include games with >1 item AND their badges
-        const filteredGames = {};
-        const badges = {};
-
-        Object.keys(gameData).forEach(type => {
-            const items = gameData[type];
-            if (items && items.length > 1) {
-                filteredGames[type] = items;
-                badges[type] = allBadges[type]; // Only send badge if game has 2+ items
-            }
-        });
-
-        return {
-            lesson_title: lessonTitle.value.trim(),
-            lesson_description: lessonDescription.value.trim(),
-            selected_quarter: selectedQuarter.value,
-            selected_subject: selectedSubject.value,
-            pretest_questions: preTestQuestions,
-            posttest_questions: postTestQuestions,
-            games: filteredGames,
-            uploads: uploadData,
-            badges: badges,
-            status
-        };
-    }
-
-    async function submitLesson(status) {
-        const data = await getLessonData(status);
-        console.log('Submitting lesson:', data);
-
-        const formData = new FormData();
-        formData.append('lesson_title', data.lesson_title);
-        formData.append('lesson_description', data.lesson_description);
-        formData.append('selected_quarter', data.selected_quarter);
-        formData.append('selected_subject', data.selected_subject);
-        formData.append('pretest_questions', JSON.stringify(data.pretest_questions));
-        formData.append('posttest_questions', JSON.stringify(data.posttest_questions));
-
-        // Process imagequiz: question + choice images
-        if (data.games.imagequiz && data.games.imagequiz.length) {
-            for (let i = 0; i < data.games.imagequiz.length; i++) {
-                const quiz = data.games.imagequiz[i];
-
-                // 1. Question Image
-                if (quiz.image instanceof File) {
-                    console.log(`Question Image [Item ${i}]:`, {
-                        name: quiz.image.name,
-                        size: `${(quiz.image.size / 1024).toFixed(2)} KB`,
-                        type: quiz.image.type
-                    });
-
-                    formData.append('imagequiz_images[]', quiz.image);
-                    quiz.image = `imagequiz_images[${i}]`;
-                }
-
-                // 2. Choice Images
-                for (let c = 0; c < quiz.choices.length; c++) {
-                    const choice = quiz.choices[c];
-                    if (choice instanceof File) {
-                        // LOG THE ACTUAL FILE BEFORE REPLACING IT
-                        console.log(`Choice Image File [Item ${i}, Choice ${c}]:`, {
-                            name: choice.name,
-                            size: `${(choice.size / 1024).toFixed(2)} KB`,
-                            type: choice.type,
-                            lastModified: new Date(choice.lastModified).toLocaleString()
-                        });
-
-                        // Use global index for unique placeholder
-                        if (!window._imageIndex) window._imageIndex = 0;
-                        const idx = window._imageIndex++;
-
-                        formData.append('imagequiz_images[]', choice);
-                        quiz.choices[c] = `imagequiz_images[${idx}]`;
-                    }
-                }
-            }
+        if (matchingTeachers.length === 0) {
+            teachersContainer.innerHTML = teacherHeader + `<p class="text-muted">No teachers assigned to ${selectedSubject}.</p>`;
+        } else {
+            const items = matchingTeachers.map(t => `
+                <div class="teacher-item">
+                    <img class="img-fluid avatar-teacher" src="${t.thumbnail || 'assets/img/default-avatar.png'}" alt="${t.teacher_name}">
+                    <p class="mb-0 teacher-name">${t.teacher_name}</p>
+                    <a href="mailto:${t.email}" class="email-link" title="Email ${t.teacher_name}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                        </svg>
+                    </a>
+                </div>`).join('');
+            teachersContainer.innerHTML = teacherHeader + items;
         }
 
-        formData.append('games', JSON.stringify(data.games));
-        formData.append('badges', JSON.stringify(data.badges));
-        formData.append('status', data.status);
+        // === PUPILS ===
+        const pupils = pupilsBySubject[selectedSubjectId] || [];
+        const total = pupils.length;
+        const pupilHeader = `<div class="student-header"><div class="justify-content-between" style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Pupils Enrolled</h2><div class="text-muted" style="padding-right:1rem;"><p>${total} Pupil${total !== 1 ? 's' : ''}</p></div></div></div>`;
 
-        // Uploads
-        if (data.uploads.files) {
-            formData.append('fileTitle', data.uploads.files.title || '');
-            formData.append('fileSubtitle', data.uploads.files.subtitle || '');
-            if (data.uploads.files.file) formData.append('fileInput', data.uploads.files.file);
-        }
-
-        if (data.uploads.videos) {
-            formData.append('videoTitle', data.uploads.videos.title || '');
-            formData.append('videoSubtitle', data.uploads.videos.subtitle || '');
-            if (data.uploads.videos.file) formData.append('videoInput', data.uploads.videos.file);
-        }
-
-        if (data.uploads.video_url) {
-            formData.append('videoUrl', data.uploads.video_url);
-            formData.append('videoUrlTitle', data.uploads.video_url_title || '');
-            formData.append('videoUrlSubtitle', data.uploads.video_url_subtitle || '');
-        }
-
-        try {
-            const token = '{{ session("node_token") }}';
-            const response = await fetch('{{ env("API_URL") }}/admin/lessons/upload', {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: formData
-            });
-
-            const result = await response.json();
-            console.log('API Response:', result);
-            alert(result.success ? 'Lesson uploaded successfully!' : 'Upload failed.');
-        } catch (err) {
-            console.error('Upload error:', err);
-            alert('Error uploading lesson.');
+        if (pupils.length === 0) {
+            pupilsContainer.innerHTML = pupilHeader + `<p class="text-muted">No pupils enrolled in ${selectedSubject}.</p>`;
+        } else {
+            const items = pupils.map(p => `
+                <div class="pupil-item">
+                    <img class="img-fluid avatar-pupil" src="${p.avatar_thumbnail || 'assets/img/default-pupil.png'}" alt="${p.first_name} ${p.last_name}">
+                    <p class="mb-0 student-name">${p.first_name} ${p.last_name}</p>
+                    <a href="mailto:${p.email}" class="email-link" title="Email ${p.first_name} ${p.last_name}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                        </svg>
+                    </a>
+                </div>`).join('');
+            pupilsContainer.innerHTML = pupilHeader + items;
         }
     }
 
-    publishBtn.addEventListener('click', () => submitLesson('published'));
-    draftBtn.addEventListener('click', () => submitLesson('draft'));
+    renderPeople();
+    selectedInput.addEventListener('change', renderPeople);
+    new MutationObserver(renderPeople).observe(selectedInput, { attributes: true, attributeFilter: ['value'] });
 });
 </script>
 
@@ -2745,14 +2871,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
     
 
-    <script>
-        console.log("📘 Subject Summaries:", @json($subjectSummaries));
-        console.log("👥 Subject Users:", @json($subjectUsers));
-        console.log("👥 Users by Subject:", @json($usersBySubject));
-    </scrip>
+    
 
     
 

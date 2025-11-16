@@ -70,8 +70,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
+            // Get token & user
             $token = $request->bearerToken() ?? $request->input('token');
-            $user = $request->input('user');
+            $user  = $request->input('user');
 
             if (! $token) {
                 return response()->json(['error' => 'No token provided'], 400);
@@ -81,18 +82,35 @@ class AuthController extends Controller
                 return response()->json(['error' => 'No user_id provided'], 400);
             }
 
+            // 1. Call your external API logout
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$token}"
             ])->post("{$this->apiUrl}/auth/logout", [
                 'user_id' => $user['server_id']
             ]);
 
-            $payload = $response->json();
-            return response()->json($payload, $response->status());
+            // 2. Clear Laravel session completely
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            // 3. Clear cookies (if stored)
+            $cookie = cookie()->forget('token');
+            $cookie2 = cookie()->forget('auth');
+
+            // 4. Optional: Clear cache related to this user
+            Cache::forget("user_{$user['server_id']}");
+
+            return response()->json([
+                'message' => 'Logged out successfully'
+            ], 200)->withCookie($cookie)->withCookie($cookie2);
+
         } catch (\Throwable $e) {
-            return response()->json(['error' => $e->getMessage() ?: 'Logout failed'], 500);
+            return response()->json([
+                'error' => $e->getMessage() ?: 'Logout failed'
+            ], 500);
         }
     }
+
 
     // Confirm admin login
     public function confirmAdminLogin(Request $request)
