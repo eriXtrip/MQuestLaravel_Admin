@@ -131,3 +131,18 @@
             return response()->file(public_path('images/default-avatar.jpg'));
         }
     });
+
+
+    //Added teacher side routes
+
+    Route::get('/teacher/homepage', function () {
+        return view('TeacherSide.Homepage');
+    })->name('teacher.homepage');
+
+    Route::get('/teacher/notifications', function () {
+        return view('TeacherSide.Notifications-Section');
+    })->name('teacher.notifications');
+
+    Route::get('/teacher/profile', function () {
+        return view('TeacherSide.Profile-Section');
+    })->name('teacher.profile');
