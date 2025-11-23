@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initProfilePhotoManager(); // function to change profile in Profile Section
   initEditableSections(); // function to edit each section in Profile Section
   initSectionsManager(); // Function to create section in Pupil Management
+  initStudentsTable(); // Function to display and filter the pupil progress analytics - Analytics Page
 });
 
 /* ===========================
@@ -1596,6 +1597,213 @@ function initSectionsManager() {
 }
 
 
+
+/* ===========================
+   Student Performance Analytics - Analytics Page
+=========================== */
+function initStudentsTable() {
+  const students = [
+    {id:1, name:"Juan Dela Cruz", section:"Grade 7-A", avg:"92.5%", progress:75, lastScore:"95%", time:24.5, badges:12, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-11-20"},
+    {id:2, name:"Maria Garcia", section:"Grade 7-B", avg:"88.3%", progress:75, lastScore:"90%", time:18.2, badges:10, status:"Good", trend:"up", subject:"English", lastActivityDate:"2025-11-15"},
+    {id:3, name:"Pedro Santos", section:"Grade 7-A", avg:"85.7%", progress:67, lastScore:"88%", time:21.3, badges:8, status:"Good", trend:"up", subject:"Science", lastActivityDate:"2025-10-05"},
+    {id:4, name:"Ana Reyes", section:"Grade 8-C", avg:"94.2%", progress:86, lastScore:"96%", time:19.8, badges:15, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-09-02"},
+    {id:5, name:"Carlos Rivera", section:"Grade 7-B", avg:"96.8%", progress:83, lastScore:"98%", time:22.1, badges:18, status:"Excellent", trend:"up", subject:"Science", lastActivityDate:"2025-11-10"},
+    {id:6, name:"Sofia Martinez", section:"Grade 7-A", avg:"78.5%", progress:58, lastScore:"75%", time:15.4, badges:5, status:"Needs Attention", trend:"down", subject:"English", lastActivityDate:"2025-11-22"},
+    {id:7, name:"Miguel Santos", section:"Grade 8-C", avg:"72.3%", progress:50, lastScore:"70%", time:12.7, badges:4, status:"Needs Attention", trend:"flat", subject:"Filipino", lastActivityDate:"2025-06-18"},
+    {id:8, name:"Isabella Cruz", section:"Grade 7-B", avg:"90.1%", progress:80, lastScore:"92%", time:20.5, badges:11, status:"Excellent", trend:"up", subject:"English", lastActivityDate:"2025-11-02"}
+  ];
+
+  const tbody = document.getElementById('studentsTbody');
+
+  function renderRow(s) {
+    const progressWidth = Math.max(6, Math.min(100, s.progress));
+    const pillClass = s.status === 'Excellent' ? 'excellent' : (s.status === 'Good' ? 'good' : 'attention');
+    
+    let trendIcon;
+    if (s.trend === 'up') trendIcon = `<svg class="bi bi-graph-up trend-icon-small progress-trend-up" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"></path>
+    </svg>`;
+    else if (s.trend === 'down') trendIcon = `<svg class="bi bi-graph-down trend-icon small progress-trend-down" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 11.887a.5.5 0 0 0 .07-.704l-4.5-5.5a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61 4.15 5.073a.5.5 0 0 0 .704.07Z"></path>
+    </svg>`;
+    else trendIcon = `<svg class="trend-icon-small progress-trend-"neutral viewBox="0 0 24 24" width="18" height="18"><use href="#trend-flat"></use></svg>`;
+
+    const progressBar = `
+      <div class="d-flex align-items-center">
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" style="width:${progressWidth}%;"></div>
+        </div>
+        <div class="progress-label tiny ms-2">${s.progress}%</div>
+      </div>
+    `;
+
+    const statusPill = `<span class="pill ${pillClass}">${escapeHtml(s.status)}</span>`;
+
+    return `
+      <tr data-subject="${escapeHtml(s.subject)}"
+          data-section="${escapeHtml(s.section)}"
+          data-time="${s.time}"
+          data-status="${escapeHtml(s.status)}"
+          data-name="${escapeHtml(s.name)}"
+          data-avg="${escapeHtml(s.avg)}"
+          data-lastactivity="${escapeHtml(s.lastActivityDate)}">
+        
+        <td></td>
+        <td data-label="Student">${escapeHtml(s.name)}<br><small class="text-muted">${escapeHtml(s.subject)}</small></td>
+        <td data-label="Section">${escapeHtml(s.section)}</td>
+        <td data-label="Avg. Score" style="font-weight:700">${escapeHtml(s.avg)}</td>
+        <td data-label="Progress">${progressBar}</td>
+        <td data-label="Last Score">${escapeHtml(s.lastScore)}</td>
+        <td data-label="Time Spent" class="time-text">${s.time}h</td>
+        <td data-label="Badges"><span class="tiny"><svg class="bi bi-award" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z"></path>
+      <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z"></path>
+    </svg> ${s.badges}</span></td>
+        <td data-label="Status">${statusPill}</td>
+        <td data-label="Trend">${trendIcon}</td>
+      </tr>
+    `;
+  }
+
+  function renderAllRows(){
+    tbody.innerHTML = students.map(s => renderRow(s)).join('');
+  }
+  renderAllRows();
+
+  function escapeHtml(str){
+    if(str == null) return '';
+    return String(str).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'<','>':'>','"':'&quot;',"'":'&#39;'}[m]; });
+  }
+
+  function startOfWeek(date){
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = (day + 6) % 7;
+    const res = new Date(d);
+    res.setHours(0,0,0,0);
+    res.setDate(d.getDate() - diff);
+    return res;
+  }
+  function startOfMonth(date){
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth(), 1, 0,0,0,0);
+  }
+  function startOfQuarter(date){
+    const d = new Date(date);
+    const q = Math.floor(d.getMonth()/3);
+    return new Date(d.getFullYear(), q*3, 1, 0,0,0,0);
+  }
+  function startOfYear(date){
+    const d = new Date(date);
+    return new Date(d.getFullYear(), 0, 1, 0,0,0,0);
+  }
+
+  function isWithinRange(dateString, rangeType){
+    if(!rangeType) return true;
+    if(!dateString) return false;
+    const date = new Date(dateString + 'T00:00:00');
+    if(isNaN(date)) return false;
+    const now = new Date();
+    now.setHours(0,0,0,0);
+    switch(rangeType){
+      case 'week':
+        return date >= startOfWeek(now);
+      case 'month':
+        return (date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear());
+      case 'quarter':
+        return (Math.floor(date.getMonth()/3) === Math.floor(now.getMonth()/3) && date.getFullYear() === now.getFullYear());
+      case 'year':
+        return (date.getFullYear() === now.getFullYear());
+      default:
+        return true;
+    }
+  }
+
+  const searchInput = document.getElementById('searchInput');
+  const subjectFiltering = document.getElementById('pupilSubjectFilter');
+  const sectionFilter = document.getElementById('sectionFilter');
+  const perfFilter = document.getElementById('performanceFilter');
+  const timeRangeFilter = document.getElementById('pupilTimeRangeFilter');
+  const sortByName = document.getElementById('sortByName');
+  const clearFilters = document.getElementById('resetFilters');
+
+  function filterRows() {
+    const q = searchInput.value.trim().toLowerCase();
+    const subject = subjectFiltering.value;
+    const section = sectionFilter.value;
+    const perf = perfFilter.value;
+    const timeRange = timeRangeFilter.value;
+    const sortBy = sortByName.value;
+
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    let visibleRows = [];
+
+    rows.forEach(row => {
+      const name = (row.dataset.name || '').toLowerCase();
+      const subj = row.dataset.subject || '';
+      const sect = row.dataset.section || '';
+      const avg = (row.dataset.avg || '').toLowerCase();
+      const status = row.dataset.status || '';
+      const dateStr = row.dataset.lastactivity || '';
+
+      let matchesSearch = q === '' || name.includes(q) || subj.toLowerCase().includes(q) || sect.toLowerCase().includes(q) || avg.includes(q);
+      let matchesSubject = subject === '' || subj === subject;
+      let matchesSection = section === '' || sect === section;
+      let matchesPerf = perf === '' || status === perf;
+      let matchesTime = isWithinRange(dateStr, timeRange);
+
+      const visible = matchesSearch && matchesSubject && matchesSection && matchesPerf && matchesTime;
+      row.style.display = visible ? '' : 'none';
+      if (visible) visibleRows.push(row);
+    });
+
+    // 👇 Sorting logic (only added part)
+    if (sortBy === 'asc') {
+      visibleRows.sort((a, b) => (a.dataset.name || '').localeCompare(b.dataset.name || ''));
+    } else if (sortBy === 'desc') {
+      visibleRows.sort((a, b) => (b.dataset.name || '').localeCompare(a.dataset.name || ''));
+    } else if (sortBy === 'oldest') {
+      visibleRows.sort((a, b) => new Date(a.dataset.lastactivity) - new Date(b.dataset.lastactivity));
+    } else if (sortBy === 'newest') {
+      visibleRows.sort((a, b) => new Date(b.dataset.lastactivity) - new Date(a.dataset.lastactivity));
+    }
+
+    visibleRows.forEach(row => tbody.appendChild(row));
+
+    const noResultsDiv = document.getElementById('noResultsFound');
+    if (noResultsDiv) {
+      noResultsDiv.style.display = visibleRows.length === 0 ? 'block' : 'none';
+    }
+  }
+
+  // 👇 Added sortByName to event listeners
+  [searchInput, subjectFiltering, sectionFilter, perfFilter, timeRangeFilter, sortByName].forEach(el => {
+    el.addEventListener('input', filterRows);
+    el.addEventListener('change', filterRows);
+  });
+
+  clearFilters.addEventListener('click', () => {
+    searchInput.value = '';
+    subjectFiltering.value = '';
+    sectionFilter.value = '';
+    perfFilter.value = '';
+    timeRangeFilter.value = '';
+    sortByName.value = '';
+    filterRows();
+    searchInput.focus();
+  });
+
+  filterRows();
+
+  searchInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){
+      searchInput.value = '';
+      filterRows();
+    }
+  });
+}
+
+
 // ===========================
 // Initialize all tab & metric scripts
 // ===========================
@@ -1606,6 +1814,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfilePhotoManager();
     initEditableSections();
     initSectionsManager();
+    initStudentsTable();
     initNotifications();
 });
 
