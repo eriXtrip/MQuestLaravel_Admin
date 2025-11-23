@@ -175,7 +175,7 @@
                                 </span>
                                 <span class="d-none d-sm-inline-block nav-icon">
                                     <a class="nav-link dropdown-toggle" href="#" aria-expanded="false" role="button" data-bs-toggle="dropdown">
-                                        <img class="rounded-circle img-fluid me-1 profile" width="32" height="32" src="{{ asset('TeacherSide/assets/img/8.png') }}" alt="Profile">
+                                        <img class="rounded-circle img-fluid me-1 profile" width="32" height="32"  src="{{ asset('TeacherSide/assets/img/8.png') }}" alt="Profile">
                                         <span style="font-size: 14px;">Chris Evans</span>
                                     </a>
                                 </span>
@@ -1622,167 +1622,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--Pupil Performance Filtering -->
-                        <div class="mb-3 pupil-search-filter-bar">
-                            <div class="row align-items-center">
-                                <div class="col-12 col-lg-4 mb-2 mb-lg-0">
-                                    <input type="text" id="searchInput" class="pupil-search-lesson-input" placeholder="Search student, subject, section...">
-                                </div>
-                                <div class="col-12 col-lg-8">
-                                    <div class="row g-2 pupil-filters-group">
-                                        <div class="col-12 col-sm-2">
-                                            <select class="form-select-sm form-select" id="pupilSubjectFilter">
-                                                <option value="">All Subjects</option>
-                                                <option value="">Math</option>
-                                                <option value="">Science</option>
-                                                <option value="">English</option>
-                                                <option value="">Filipino</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <select class="form-select-sm form-select" id="sectionFilter">
-                                                <optgroup label="Sort by:">
-                                                    <option value="">All Sections</option>
-                                                    <option value="">Grade 7-A</option>
-                                                    <option value="">Grade 7-B</option>
-                                                    <option value="">Grade 8-C</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <select class="form-select-sm form-select" id="pupilTimeRangeFilter">
-                                                <optgroup label="Sort by:">
-                                                    <option value="">Default</option>
-                                                    <option value="month">This Month</option>
-                                                    <option value="week">This Week</option>
-                                                    <option value="quarter">This Quarter</option>
-                                                    <option value="year">This Year</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <select class="form-select-sm form-select" id="performanceFilter">
-                                                <optgroup label="Sort by:">
-                                                    <option value="">All Peformance</option>
-                                                    <option value="Excellent">Excellent</option>
-                                                    <option value="Good">Good</option>
-                                                    <option value="Needs Attention">Needs Attention</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <select class="form-select-sm form-select" id="sortByName">
-                                                <optgroup label="Sort by:">
-                                                    <option value="">Default</option>
-                                                    <option value="asc">Name (A-Z)</option>
-                                                    <option value="desc">Name (Z-A)</option>
-                                                    <option value="oldest">Oldest</option>
-                                                    <option value="newest">Newest</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-sm-2">
-                                            <button class="btn btn-outline-secondary btn-sm w-100 reset-btn" id="resetFilters" type="button"> 
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-clockwise me-1">
-                                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"></path>
-                                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"></path>
-                                                </svg>Reset 
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pupil Performance Table-->
-                        <div class="mb-3 pupil-list card">
-                            <div class="card-header list-header">
-                                <h2>Pupil Performance Tracking</h2>
-                            </div>
-                            <div class="mb-2 table-responsive table-list-users">
-                                <div>
-                                    <table class="table table-hover mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Student</th>
-                                                <th>Section</th>
-                                                <th>Avg score</th>
-                                                <th>Progress</th>
-                                                <th>Last score</th>
-                                                <th>Time spent</th>
-                                                <th>Bagdes</th>
-                                                <th>Status</th>
-                                                <th>&nbsp;Trend</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="studentsTbody">
-                                            <tr data-active="false">
-                                                <td></td>
-                                                <td data-label="Student"></td>
-                                                <td data-label="Section"></td>
-                                                <td data-label="Avg. Score"></td>
-                                                <td data-label="Progress"></td>
-                                                <td data-label="Last Score"></td>
-                                                <td data-label="Time Spent"></td>
-                                                <td data-label="Badges"></td>
-                                                <td data-label="Status"></td>
-                                                <td data-label="Trend"></td>
-                                            </tr>
-                                            <tr data-active="true">
-                                                <td></td>
-                                                <td data-label="Student"></td>
-                                                <td data-label="Section"></td>
-                                                <td data-label="Section"></td>
-                                                <td data-label="Progress"></td>
-                                                <td data-label="Last Score"></td>
-                                                <td data-label="Last Score"></td>
-                                                <td data-label="Badges"></td>
-                                                <td data-label="Status"></td>
-                                                <td data-label="Trend"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="text-center text-muted p-4" id="noResultsFound" style="display:none;">
-                                <span> No matching results found.</span>
-                            </div>
-                            <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
-                                <div class="text-muted small">
-                                    <span> Showing </span>
-                                    <span id="startCount-2">1</span>
-                                    <span> to </span><span id="endCount-2">3</span>
-                                    <span> of </span><span id="totalCount-2">50</span>
-                                    <span> users </span>
-                                </div>
-                                <nav aria-label="User list pagination">
-                                    <ul class="mb-0 pagination pagination-sm">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="#">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-
-                        <!--Lesson Progress Chart - Line Chart-->
                         <div class="mb-4 chart-card">
                             <div class="chart-header">
                                 <div class="chart-header-content">
@@ -1808,8 +1647,6 @@
                             </div>
                         </div>
                         <div class="bar-radar-row">
-
-                            <!--Bar Graph - Quarterly Performance-->
                             <div class="chart-card">
                                 <div class="chart-header">
                                     <div class="chart-header-content">
@@ -1828,8 +1665,6 @@
                                     <span> Viewing Mathematics progress for Quarter 1 — steady improvement observed from Lesson 1 to Lesson 8. </span>
                                 </div>
                             </div>
-
-                            <!--Radar Chart - Engagement vs Mastery-->
                             <div class="chart-card">
                                 <div class="chart-header">
                                     <div class="mb-2 chart-header-content">
