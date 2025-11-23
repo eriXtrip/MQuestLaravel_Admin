@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/Login_Logo.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/index_style.css') }}">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -122,7 +123,7 @@
 
                     } else if (user.role_id === 2) {
                         showAlert(`Login successful! Welcome, ${user.first_name}!`);
-                        window.location.href = "{{ route('home_teacher') }}";
+                        window.location.href = `/teacher/homepage?token=${data.token}`;
                     } else if (user.role_id === 3) {
                         const userId = user.server_id;
                         const token = data.token;

@@ -185,6 +185,9 @@ if (quarterFilter) {
   });
 }
 
+const genderStats = window.dashboardData?.gender_stats ?? { male: 0, female: 0, prefer_not_to_say: 0 };
+
+
 // ================================
 // 2. Doughnut Chart - FIXED
 // ================================
@@ -193,7 +196,11 @@ chartManager.createChart('genderChart', {
   data: {
     labels: ['Male', 'Female', 'Others'],
     datasets: [{
-      data: [180, 130, 10],
+      data: [
+        genderStats.male ?? 0,
+        genderStats.female ?? 0,
+        genderStats.prefer_not_to_say ?? 0
+      ],
       backgroundColor: ['#131150', '#e83e8c', '#858796'],
       borderColor: '#fff',
       borderWidth: 2

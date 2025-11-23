@@ -154,6 +154,9 @@ class AuthController extends Controller
                 $status = $response->status() ?: 400;
                 return response()->json($data, $status);
             }
+            
+            // mirror the JS mapping exactly
+            $user = $data['user'] ?? [];
 
             // ✅ STORE TOKEN IN LARAVEL SESSION HERE
             $token = $data['token'] ?? null;
@@ -161,8 +164,10 @@ class AuthController extends Controller
                 session(['node_token' => $token]);
             }
 
-            // mirror the JS mapping exactly
-            $user = $data['user'] ?? [];
+            // ✅ STORE TEACHER/SERVER ID IN LARAVEL SESSION
+            if (!empty($user['id'])) {
+                session(['user_id' => $user['id']]);
+            }
 
             $userDataForSync = [
                 'server_id'   => $user['id'] ?? null,

@@ -6,6 +6,8 @@
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\AdminDashboardController;
 
+    use App\Http\Controllers\TeacherDashboardController;
+
     use Illuminate\Support\Facades\Http;
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\DB;
@@ -135,9 +137,9 @@
 
     //Added teacher side routes
 
-    Route::get('/teacher/homepage', function () {
-        return view('TeacherSide.Homepage');
-    })->name('teacher.homepage');
+    // Route::get('/teacher/homepage', function () {
+    //     return view('TeacherSide.Homepage');
+    // })->name('teacher.homepage');
 
     Route::get('/teacher/notifications', function () {
         return view('TeacherSide.Notifications-Section');
@@ -146,3 +148,8 @@
     Route::get('/teacher/profile', function () {
         return view('TeacherSide.Profile-Section');
     })->name('teacher.profile');
+
+    Route::get('/teacher/homepage', [TeacherDashboardController::class, 'stats'])
+     ->name('teacher.homepage');
+
+

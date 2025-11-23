@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>MQuest Teacher-Side</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/Login_Logo.png') }}">
     <link rel="stylesheet" href="{{ asset('TeacherSide/assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300i,400,400i,500,600,800&amp;display=swap">
     <link rel="stylesheet" href="{{ asset('TeacherSide/assets/css/bootstrap.min.css') }}">
@@ -175,8 +176,8 @@
                                 </span>
                                 <span class="d-none d-sm-inline-block nav-icon">
                                     <a class="nav-link dropdown-toggle" href="#" aria-expanded="false" role="button" data-bs-toggle="dropdown">
-                                        <img class="rounded-circle img-fluid me-1 profile" width="32" height="32" src="{{ asset('TeacherSide/assets/img/8.png') }}" alt="Profile">
-                                        <span style="font-size: 14px;">Chris Evans</span>
+                                        <img class="rounded-circle img-fluid me-1 profile" width="32" height="32" id="TeacherProfile" alt="Profile">
+                                        <span style="font-size: 14px;" id="TeacherName">...</span>
                                     </a>
                                 </span>
                                 <div class="dropdown-menu dropdown-menu3 dropdown-menu-end" data-bs-popper="static" style="width:180px;">
@@ -192,13 +193,13 @@
                                         </svg>
                                         <span>Dark Mode</span>
                                     </a>
+
                                     <hr class="dropdown-divider">
-                                    <a class="dropdown-item" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-box-arrow-right">
+
+                                    <a class="dropdown-item" href="#" id="logout-btn"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-box-arrow-right">
                                             <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"></path>
                                             <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
-                                        </svg>
-                                        <span>Sign out</span>
+                                        </svg><span>Sign out</span>
                                     </a>
                                 </div>
                             </div>
@@ -215,9 +216,10 @@
                         <div class="text-end mb-3 date-section"><span class="text-muted" id="currentDate">Friday, August 20, 2025</span></div>
                         <div class="rounded-3 d-flex justify-content-between align-items-center p-4 mb-4 welcome-card">
                             <div class="welcome-text">
-                                <h4 class="fw-bold mb-2" style="color: #131150;">Welcome back, Ms. Cruz</h4>
+                                <h4 class="fw-bold mb-2" style="color: #131150;" id='TeacherLname'>Welcome back, Ms. Cruz</h4>
                                 <p class="text-muted mb-1">Stay updated on your students’ learning journey in this subject with access to their lessons and progress.</p>
-                                <p class="mb-2">You have<strong> <span style="color: rgb(19, 17, 80);">10 pending enrollment request</span></strong> waiting for your review today.&nbsp;</p><button class="btn rounded-pill px-4 gotolessons-btn">Go to Lessons</button>
+                                <!-- <p class="mb-2">You have<strong> <span style="color: rgb(19, 17, 80);">10 pending enrollment request</span></strong> waiting for your review today.&nbsp;</p> -->
+                                 <button class="btn rounded-pill px-4 gotolessons-btn">Go to Lessons</button>
                             </div>
                             <div class="ms-3 welcome-img"><img src="{{ asset('TeacherSide/assets/img/undraw_books_wxzz.svg') }}" style="max-width: 150px;" widt=""></div>
                         </div>
@@ -232,50 +234,50 @@
                                     <div class="stats-grid row g-3">
                                         <div class="card stat-card-2">
                                             <div class="text-center card-body-2">
-                                                <p class="text-end text-success" style="font-size: 0.75rem;">
+                                                <!-- <p class="text-end text-success" style="font-size: 0.75rem;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up me-1">
                                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                                     </svg>+2&nbsp;&nbsp;
-                                                </p>
+                                                </p> -->
                                                 <div class="mb-3 mx-auto stat-icon bg-lessons">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
                                                         <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"></path>
                                                     </svg>
                                                 </div>
-                                                <h5 class="fw-bold card-title-2">127</h5>
+                                                <h5 class="fw-bold card-title-2" id="total-pupils">...</h5>
                                                 <p class="text-muted mb-1 card-text-2">Number of pupils</p>
                                             </div>
                                         </div>
                                         <div class="card stat-card-2">
                                             <div class="text-center card-body-2">
-                                                <p class="text-end text-success" style="font-size: 0.75rem;">
+                                                <!-- <p class="text-end text-success" style="font-size: 0.75rem;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up me-1">
                                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                                     </svg>+2&nbsp;&nbsp;
-                                                </p>
+                                                </p> -->
                                                 <div class="mb-3 mx-auto stat-icon bg-lessons">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-graph-up">
                                                         <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"></path>
                                                     </svg>
                                                 </div>
-                                                <h5 class="fw-bold card-title-2">87%</h5>
+                                                <h5 class="fw-bold card-title-2" id="avg-score">...</h5>
                                                 <p class="text-muted mb-1 card-text-2">Avg. class score</p>
                                             </div>
                                         </div>
                                         <div class="card stat-card-2">
                                             <div class="text-center card-body-2">
-                                                <p class="text-end text-danger" style="font-size: 0.75rem;">
+                                                <!-- <p class="text-end text-danger" style="font-size: 0.75rem;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-down me-1">
                                                         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"></path>
                                                     </svg>+2&nbsp;&nbsp;
-                                                </p>
+                                                </p> -->
                                                 <div class="mb-3 mx-auto stat-icon bg-lessons">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-clock">
                                                         <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"></path>
                                                         <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"></path>
                                                     </svg>
                                                 </div>
-                                                <h5 class="fw-bold card-title-2">42m</h5>
+                                                <h5 class="fw-bold card-title-2" id="avg-session-time">...</h5>
                                                 <p class="text-muted mb-0 card-text-2">Avg. session time</p>
                                             </div>
                                         </div>
@@ -293,12 +295,12 @@
                                 <!--Enrollment Request Section-->
                                 <div class="enrollment-container">
                                     <div class="enrollment-header">
-                                        <h4 class="text-muted d-flex justify-content-center align-items-center">Enrollment Request&nbsp;<span class="enrollment-count-bagde">10</span></h4>
-                                        <button class="btn btn-sm view-all-list-btn" id="viewAllRequest" data-bs-toggle="modal" data-bs-target="#viewAllEnrollmentReq">
+                                        <h4 class="text-muted d-flex justify-content-center align-items-center">Recent Enrollment&nbsp;<span class="enrollment-count-bagde">10</span></h4>
+                                        <!-- <button class="btn btn-sm view-all-list-btn" id="viewAllRequest" data-bs-toggle="modal" data-bs-target="#viewAllEnrollmentReq">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-list me-1">
                                                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"></path>
                                             </svg>View All
-                                        </button>
+                                        </button> -->
                                     </div>
                                     <div id="enrollmentList">
                                         <div class="enrollment-item flex">
@@ -427,157 +429,22 @@
                                 <!--Recently Added Materials Section-->
                                 <div class="recently-added-container">
                                     <div class="recently-added-header">
-                                        <h4 class="text-muted d-flex align-items-center">Recently Added Materials&nbsp;<span class="new-materials-count-bagde">5</span></h4>
+                                        <h4 class="text-muted d-flex align-items-center">
+                                            Recently Added Materials&nbsp;<span class="new-materials-count-bagde">5</span>
+                                        </h4>
                                     </div>
-                                    <div class="material-lists">
-                                        <div class="material-item">
-                                            <div class="recently-added-material-icon video-item">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-camera-video">
-                                                    <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="recently-material-info">
-                                                <div class="recently-material-title"><span><span class="text-muted">Lesson 1:&nbsp;</span>Fractions Comprehensive Guide</span></div>
-                                                <div class="text-muted recently-material-meta">
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                                        </svg>Admin
-                                                    </span>
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
-                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
-                                                        </svg>Aug 18
-                                                    </span><span>30 mins ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="recently-material-action">
-                                                <button class="btn recently-btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye me-2">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                                                    </svg>View
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="material-item">
-                                            <div class="recently-added-material-icon assessment-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-                                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
-                                                </svg></div>
-                                            <div class="recently-material-info">
-                                                <div class="recently-material-title"><span><span class="text-muted">Lesson 1:&nbsp;</span>Pretest: Reproductieve System</span></div>
-                                                <div class="text-muted recently-material-meta">
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                                        </svg>Admin
-                                                    </span>
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
-                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
-                                                        </svg>Aug 18
-                                                    </span><span>1 hr ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="recently-material-action">
-                                                <button class="btn recently-btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye me-2">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                                                    </svg>View
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="material-item">
-                                            <div class="recently-added-material-icon assessment-item">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-                                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="recently-material-info">
-                                                <div class="recently-material-title"><span><span class="text-muted">Lesson 2:&nbsp;</span>Posttest: Reproductieve System</span></div>
-                                                <div class="text-muted recently-material-meta">
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                                        </svg>Admin
-                                                    </span>
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
-                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
-                                                        </svg>Aug 18
-                                                    </span><span>3 min ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="recently-material-action"><button class="btn recently-btn-view"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye me-2">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                                                    </svg>View</button></div>
-                                        </div>
-                                        <div class="material-item">
-                                            <div class="recently-added-material-icon interactive-item">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-puzzle">
-                                                    <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="recently-material-info">
-                                                <div class="recently-material-title"><span><span class="text-muted">Lesson 2:&nbsp;</span>Filipino Grammar Game</span></div>
-                                                <div class="text-muted recently-material-meta">
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                                        </svg>Admin
-                                                    </span>
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
-                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
-                                                        </svg>Aug 18
-                                                    </span><span>30 min ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="recently-material-action">
-                                                <button class="btn recently-btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye me-2">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                                                    </svg>View
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="material-item">
-                                            <div class="recently-added-material-icon lesson-item2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-files">
-                                                    <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1M3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="recently-material-info">
-                                                <div class="recently-material-title"><span><span class="text-muted">Lesson 3:&nbsp;</span>Shapes</span></div>
-                                                <div class="text-muted recently-material-meta">
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                                        </svg>Admin
-                                                    </span>
-                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
-                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
-                                                        </svg>Aug 18
-                                                    </span><span>1 day ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="recently-material-action">
-                                                <button class="btn recently-btn-view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye me-2">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                                                    </svg>View
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="material-lists" id="materialLists"></div>
                                 </div>
-                            </div>
+
                             <div class="right-column">
 
                                 <!-- Top Scorers Section -->
                                 <div class="top-scorers-section">
                                     <div class="mb-2 top-scorers-header">
-                                        <h4 class="text-muted mb-1">Top Performers - Science</h4>
-                                        <div class="top-performers-context"><span>Showing Top 5 of 42 Pupils</span></div>
+                                        <h4 class="text-muted mb-1">Top Performers</h4>
+                                        <!-- <div class="top-performers-context"><span>Showing Top 5 of 42 Pupils</span></div> -->
                                     </div>
-                                    <div class="text-muted d-flex justify-content-between subject-summary small">
+                                    <!-- <div class="text-muted d-flex justify-content-between subject-summary small">
                                         <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trophy">
                                                 <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"></path>
                                             </svg>&nbsp; Avg Top 5 Score: 88%
@@ -592,8 +459,8 @@
                                                 <path d="M7.009 12.139a7.632 7.632 0 0 1-1.804-1.352A7.568 7.568 0 0 1 3.794 8.86c-1.102.992-1.965 5.054-1.839 5.18.125.126 3.936-.896 5.054-1.902Z"></path>
                                             </svg>&nbsp; Most Improved: Jane Rose (+12%)
                                         </span>
-                                    </div>
-                                    <div class="filter-and-view">
+                                    </div> -->
+                                    <!-- <div class="filter-and-view">
                                         <div class="top-performers-filter">
                                             <select class="form-select-sm form-select" id="timeRangeFilter">
                                                 <option value="today" selected="">Today</option>
@@ -619,7 +486,7 @@
                                                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"></path>
                                             </svg>View All
                                         </button>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Leaderboard Items -->
                                     <div id="mainLeaderboard" class="leaderboard">
@@ -985,7 +852,7 @@
                                 </div>
 
                                 <!--Recent Activity Section-->
-                                <div class="recent-activity-container">
+                                <!-- <div class="recent-activity-container">
                                     <div class="recent-activity-header">
                                         <h4 class="text-muted">Recent Activity</h4>
                                     </div>
@@ -1079,7 +946,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> -->
+                                <div class="recent-activity-container">
+                                    <div class="recent-activity-header">
+                                        <h4 class="text-muted">Recent Activity</h4>
+                                    </div>
+
+                                    <div class="activity-feed" id="activityFeed"></div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -2969,10 +2844,485 @@
     <script src="{{ asset('TeacherSide/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/chart.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script> window.dashboardData = @json($stats ?? []); </script>
     <script src="{{ asset('TeacherSide/assets/js/allcharts.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/script.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/time.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/toast-manager.js') }}"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userData = sessionStorage.getItem("user");
+            const token = sessionStorage.getItem("token");
+
+            console.log("User data:", userData);
+            console.log("Token:", token);
+
+            if (userData) {
+                const user = JSON.parse(userData);
+
+                // Update UI
+                const TeacherName = document.getElementById("TeacherName");
+                const TeacherLname = document.getElementById("TeacherLname");
+
+                if (TeacherName) {
+                    TeacherName.textContent = user.first_name;
+                }
+
+                if (TeacherLname) {
+                    let title = "Mx."; // default neutral
+                if (user.gender === "Male") {
+                    title = "Mr.";
+                } else if (user.gender === "Female") {
+                    title = "Ms.";
+                }
+                    TeacherLname.textContent = `Welcome back, ${title} ${user.last_name}`;
+                }
+
+                // Avatar handling
+                const profileSmall = document.getElementById("TeacherProfile");
+
+                const avatarUrl = user.avatar?.thumbnail || "assets/img/default-avatar.png";
+                const avatarAlt = user.avatar?.avatar || "Avatar";
+
+                [profileSmall].forEach(img => {
+                    if (!img) return;
+                    img.src = avatarUrl;
+                    img.alt = avatarAlt;
+
+                    // fallback to circle avatar on error
+                    img.onerror = () => {
+                        const firstChar = user.first_name?.charAt(0).toUpperCase() || "?";
+                        const colors = ["#FEDB7C", "#F16A43", "#C5C13C", "#FBB315"];
+                        const bgColor = colors[firstChar.charCodeAt(0) % colors.length];
+
+                        const canvas = document.createElement("canvas");
+                        canvas.width = 100;
+                        canvas.height = 100;
+                        const ctx = canvas.getContext("2d");
+
+                        ctx.fillStyle = bgColor;
+                        ctx.beginPath();
+                        ctx.arc(50, 50, 50, 0, 2 * Math.PI);
+                        ctx.fill();
+
+                        ctx.fillStyle = "white";
+                        ctx.font = "bold 50px Arial";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "middle";
+                        ctx.fillText(firstChar, 50, 55);
+
+                        img.src = canvas.toDataURL("image/png");
+                    };
+                });
+            } else {
+                // redirect if not logged in
+                window.location.href = "{{ route('login') }}";
+            }
+
+            
+        });
+    </script>
+
+
+    <script>
+        // Sign out logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const logoutBtn = document.getElementById("logout-btn");
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", async function (e) {
+                    e.preventDefault();
+
+                    console.log("Sign out clicked.");
+
+                    const userData = sessionStorage.getItem("user");
+                    const token = sessionStorage.getItem("token");
+
+                    if (!userData || !token) {
+                        console.warn("⚠️ No user logged in");
+                        sessionStorage.clear();
+                        window.location.href = "{{ route('login') }}";
+                        return;
+                    }
+
+                    const user = JSON.parse(userData);
+
+                    try {
+                        const response = await fetch("{{ route('logout') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + token,
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify({ user, token })
+                        });
+
+                        const data = await response.json();
+                        console.log("🔌 Logout response:", data);
+
+                        sessionStorage.clear();
+                        window.location.href = "{{ route('login') }}";
+                    } catch (error) {
+                        console.error("❌ Logout failed:", error);
+                        sessionStorage.clear();
+                        window.location.href = "{{ route('login') }}";
+                    }
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const enrollmentList = document.getElementById('enrollmentList');
+            const recentEnrollees = window.dashboardData?.recent_enrollees ?? [];
+
+            // Clear existing dummy items
+            enrollmentList.innerHTML = '';
+
+            if (recentEnrollees.length === 0) {
+                document.querySelector('.enrollment-empty-state').classList.remove('d-none');
+                return;
+            }
+
+            document.querySelector('.enrollment-empty-state').classList.add('d-none');
+
+            recentEnrollees.forEach(enrollee => {
+                // Format date nicely
+                const submittedDate = new Date(enrollee.enrollment_date);
+                const formattedDate = submittedDate.toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: '2-digit'
+                }) + ' · ' + submittedDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                const enrollmentItem = document.createElement('div');
+                enrollmentItem.classList.add('enrollment-item', 'flex');
+
+                enrollmentItem.innerHTML = `
+                    <div class="pupil-information">
+                        <div class="pupil-profile">
+                            <img class="img-fluid" width="200" height="200" src="${enrollee.thumbnail ?? '{{ asset('TeacherSide/assets/img/default.png') }}'}">
+                        </div>
+                        <div class="pupil-details">
+                            <h5>${enrollee.fullname}</h5>
+                            <p>LRN: ${enrollee.lrn ?? 'N/A'}</p>
+                            <p class="text-muted mb-0">
+                                <small>Enrolled date: <span class="submission-time" data-timestamp="${enrollee.enrollment_date}">${formattedDate}</span></small>
+                            </p>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="teacher-actions">
+                        <button class="btn btn-to-view" data-bs-toggle="modal" data-bs-target="#openViewPupilModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                            </svg>
+                        </button>
+                        <button class="btn btn-to-approve" data-action="approve" data-pupil="${enrollee.fullname}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-check2">
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                            </svg>
+                        </button>
+                        <button class="btn btn-to-decline" data-action="decline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-x-lg">
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    -->
+                `;
+
+                enrollmentList.appendChild(enrollmentItem);
+            });
+
+            // Update enrollment count badge
+            const countBadge = document.querySelector('.enrollment-count-bagde');
+            if (countBadge) countBadge.textContent = recentEnrollees.length;
+        });
+    </script>
+
+    <script>
+        const materials = window.dashboardData.recentMaterials;
+
+        function getMaterialIcon(type) {
+            switch(type) {
+                case 'video':
+                case 'url':
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-camera-video">
+                                <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"></path>
+                            </svg>`;
+                case 'quiz':
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
+                            </svg>`;
+                case 'game_match':
+                case 'game_flash':
+                case 'game_comp':
+                case 'game_speak':
+                case 'game_img':
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-puzzle">
+                                <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557z"></path>
+                            </svg>`;
+                case 'ppt':
+                case 'pdf':
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-files">
+                                <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1M3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
+                            </svg>`;
+                default:
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-file-earmark-text">
+                                <path d="M5 10.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6.5L14 4.5zm-3-.5V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4h-2z"/>
+                            </svg>`;
+            }
+        }
+
+        const container = document.getElementById('materialLists');
+        materials.forEach((m, idx) => {
+            const itemHTML = `
+            <div class="material-item">
+                <div class="recently-added-material-icon">${getMaterialIcon(m.type)}</div>
+                <div class="recently-material-info">
+                    <div class="recently-material-title"><span>${m.title}</span></div>
+                    <div class="text-muted recently-material-meta">
+                        <span>Admin</span>
+                        <span>${new Date(m.uploaded_at).toLocaleDateString()}</span>
+                        <span>${Math.floor((Date.now() - new Date(m.uploaded_at)) / 60000)} mins ago</span>
+                    </div>
+                </div>
+                <!--
+                <div class="recently-material-action">
+                    <button class="btn recently-btn-view">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye me-2">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                        </svg>View
+                    </button>
+                </div>
+                -->
+            </div>
+            `;
+            container.insertAdjacentHTML('beforeend', itemHTML);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const list = window.dashboardData?.pupil_progress || [];
+            const leaderboard = document.getElementById("mainLeaderboard");
+
+            leaderboard.innerHTML = ""; // remove static items
+
+            if (!list.length) {
+                leaderboard.innerHTML = `<p class="text-muted">No pupil progress found.</p>`;
+                return;
+            }
+
+            list.forEach((pupil, index) => {
+                const rank = index + 1;
+                const score = pupil.overall_progress || 0;
+
+                const item = `
+                    <div class="top-pupil-item" data-range="today" data-name="${pupil.fullname}" data-score="${score}">
+                        <div class="top-pupil-rank ${rank === 1 ? "rank-1" : rank <= 3 ? "rank-3" : "rank-other"}">
+                            <span>${rank}</span>
+                        </div>
+
+                        <div class="top-pupil-info">
+                            <div class="top-pupil-name">
+                                <span class="student-name">${pupil.fullname}</span>
+                                <span class="grade-badge">Grade 4</span>
+                            </div>
+                            <div class="student-meta">
+                                <span class="text-muted"><strong>Last Accessed</strong></span>
+                                <span>${new Date(pupil.last_accessed).toLocaleDateString()}</span>
+                            </div>
+
+                            <div class="top-pupil-progress">
+                                <div class="progress-bar top-progress-bar" style="width:${score}%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="top-pupil-stats">
+                            <div class="top-pupil-score"><span>${score}%</span></div>
+                        </div>
+                    </div>
+                `;
+
+                leaderboard.insertAdjacentHTML("beforeend", item);
+            });
+        });
+    </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const activities = window.dashboardData.recentActivity || [];
+    const feed = document.getElementById("activityFeed");
+
+    if (!feed) return;
+
+    feed.innerHTML = ""; 
+
+    activities.forEach(item => {
+        const iconClass = getIconClass(item.type);
+        const badgeClass = getBadgeClass(item.type);
+        const formattedDate = formatDate(item.date);
+
+        const html = `
+            <div class="activity-item">
+                <div class="activity-icon ${iconClass}">
+                    ${getIconSVG(item.type)}
+                </div>
+
+                <div class="activity-content">
+                    <div class="activity-header">
+                        <span class="activity-title-text">${item.title}</span>
+                        <span class="activity-type ${badgeClass}">${capitalize(item.type)}</span>
+                    </div>
+
+                    <div class="activity-description">
+                        <span>${item.fullname} — ${item.subtitle ?? ''}</span>
+                    </div>
+
+                    <div class="activity-time">
+                        <span>${formattedDate}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        feed.insertAdjacentHTML("beforeend", html);
+    });
+});
+
+// -------------------
+// HELPER FUNCTIONS
+// -------------------
+
+function getIconClass(type) {
+    return {
+        quiz: "icon-assessment",
+        game_comp: "icon-game",
+        game_match: "icon-game",
+        game_img: "icon-game",
+        game_speak: "icon-game",
+        achievement: "icon-achievement",
+        enrollment: "icon-enrollment"
+    }[type] || "icon-default";
+}
+
+function getBadgeClass(type) {
+    return {
+        quiz: "badge-assessment",
+        game_comp: "badge-game",
+        game_match: "badge-game",
+        game_img: "badge-game",
+        game_speak: "badge-game",
+        achievement: "badge-achievement",
+        enrollment: "badge-enrollment"
+    }[type] || "badge-default";
+}
+
+function getIconSVG(type) {
+    const icons = {
+        quiz: `
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-circle">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
+            </svg>
+        `,
+
+        game_comp: puzzleIcon(),
+        game_match: puzzleIcon(),
+        game_img: puzzleIcon(),
+        game_speak: puzzleIcon(),
+
+        achievement: `
+             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trophy">
+                <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"></path>
+            </svg>
+        `,
+
+        enrollment: `
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-plus">
+                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
+                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"></path>
+            </svg>
+        `
+    };
+
+    return icons[type] || `<svg></svg>`;
+}
+
+// same puzzle icon for all game types
+function puzzleIcon() {
+    return `
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-puzzle">
+            <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557z"></path>
+        </svg>
+    `;
+}
+
+function capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+</script>
+
+
+
+    
+<script>
+    // This is EXACTLY how your Admin dashboard injects data → copy-paste
+    window.dashboardData = @json($stats ?? []);
+
+    console.log("Teacher Dashboard Data:", window.dashboardData);
+    console.log("Total Pupils:", window.dashboardData.total_pupils ?? 'N/A');
+    console.log("Average Score:", window.dashboardData.avg_score ?? 'N/A');
+    console.log("Average Session Time:", window.dashboardData.avg_session_time ?? 'N/A');
+    console.log("Gender Stats:", window.dashboardData.gender_stats ?? {});
+    console.log("Recent Enrollee", window.dashboardData.recent_enrollees ?? {});
+    console.log("Recent Materials", window.dashboardData.recentMaterials ?? {});
+    console.log("Pupil Progress", window.dashboardData.pupil_progress ?? {})
+    console.log("Recent Activity", window.dashboardData.recentActivity ?? {})
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const data = window.dashboardData;
+
+        if (data.total_pupils !== undefined) {
+            document.getElementById('total-pupils') && 
+                (document.getElementById('total-pupils').textContent = data.total_pupils);
+
+            document.getElementById('avg-score') && 
+                (document.getElementById('avg-score').textContent = (data.avg_score || 0) + '%');
+
+            document.getElementById('avg-session-time') && 
+                (document.getElementById('avg-session-time').textContent = (data.avg_session_time || 0) + ' mins');
+        }
+    });
+</script>
+
+
+
+
+
+
 </body>
 
 </html>
