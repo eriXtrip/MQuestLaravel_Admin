@@ -56,7 +56,7 @@
         </nav>
         <div class="main-content">
             <nav class="d-flex justify-content-between align-items-center p-3 navbar-main navbar navbar-expand navbar-light">
-                <form class="d-sm-inline-block" inline="true">
+                <!-- <form class="d-sm-inline-block" inline="true">
                     <div class="input-group-navbar input-group search-bar">
                         <input class="form-control" type="text" placeholder="Search here..." aria-label="Search">
                         <button class="btn search-btn" type="button">
@@ -65,7 +65,7 @@
                             </svg>
                         </button>
                     </div>
-                </form>
+                </form> -->
                 <div class="navbar-collapse collapse">
                     <div class="ms-auto navbar-align navbar-nav">
                         <div class="position-relative d-flex me-2 nav-item dropdown">
@@ -295,7 +295,7 @@
                                 <!--Enrollment Request Section-->
                                 <div class="enrollment-container">
                                     <div class="enrollment-header">
-                                        <h4 class="text-muted d-flex justify-content-center align-items-center">Recent Enrollment&nbsp;<span class="enrollment-count-bagde">10</span></h4>
+                                        <h4 class="text-muted d-flex justify-content-center align-items-center">Recent Enrollment&nbsp;<span class="enrollment-count-bagde">0</span></h4>
                                         <!-- <button class="btn btn-sm view-all-list-btn" id="viewAllRequest" data-bs-toggle="modal" data-bs-target="#viewAllEnrollmentReq">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-list me-1">
                                                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"></path>
@@ -421,8 +421,8 @@
                                                 <path d="M13.879 10.414a2.501 2.501 0 0 0-3.465 3.465zm.707.707-3.465 3.465a2.501 2.501 0 0 0 3.465-3.465m-4.56-1.096a3.5 3.5 0 1 1 4.949 4.95 3.5 3.5 0 0 1-4.95-4.95ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4"></path>
                                             </svg>
                                         </div>
-                                        <h5 class="text-muted mb-2">No Enrollment Requests</h5>
-                                        <p class="text-muted mb-3">All enrollment requests have been processed.</p>
+                                        <h5 class="text-muted mb-2">No Enrollment Yet</h5>
+                                        <!-- <p class="text-muted mb-3">All enrollment requests have been processed.</p> -->
                                     </div>
                                 </div>
 
@@ -842,13 +842,13 @@
                                         </div>
                                     </div>
                                     <div class="line-chart-body"><canvas id="performanceChart"></canvas></div>
-                                    <div class="d-flex justify-content-center align-items-center mt-2" style="font-size: 0.75rem;">
+                                    <!-- <div class="d-flex justify-content-center align-items-center mt-2" style="font-size: 0.75rem;">
                                         <p class="text-success">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-graph-up-arrow me-2">
                                                 <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"></path>
                                             </svg>+14 pts. Improvement
                                         </p>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <!--Recent Activity Section-->
@@ -1898,13 +1898,14 @@
                                                     <th>Grade</th>
                                                     <th>Age</th>
                                                     <th>Status</th>
-                                                    <th>Parent</th>
+                                                    <th>Email</th>
+                                                    <th>Section</th>
                                                     <th>Last Active</th>
-                                                    <th>actions</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody id="userTableBody">
-                                                <tr data-active="false">
+                                                <!-- <tr data-active="false">
                                                     <td></td>
                                                     <td data-label="Profile"><img class="img-fluid pupil-avatar" width="200" height="200" src="{{ asset('TeacherSide/assets/img/12.png') }}"></td>
                                                     <td data-label="Name">Richard Bilan</td>
@@ -1938,7 +1939,7 @@
                                                             </svg>
                                                         </button>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -2802,7 +2803,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="mb-3 create-section-part">
+                                                <div class="mb-3 create-section-part" style="display:none">
                                                     <label class="form-label" for="sectionName-1">Subject</label>
                                                     <select class="form-select form-control" id="pupil-subject">
                                                         <option value="Mathematics" selected="">Mathematics</option>
@@ -2846,9 +2847,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <script> window.dashboardData = @json($stats ?? []); </script>
     <script src="{{ asset('TeacherSide/assets/js/allcharts.js') }}"></script>
-    <script src="{{ asset('TeacherSide/assets/js/script.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/time.js') }}"></script>
+    <script src="{{ asset('TeacherSide/assets/js/script.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/toast-manager.js') }}"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
 
 
     <script>
@@ -3161,129 +3164,215 @@
     </script>
 
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const activities = window.dashboardData.recentActivity || [];
-    const feed = document.getElementById("activityFeed");
+        document.addEventListener("DOMContentLoaded", () => {
+            const activities = window.dashboardData.recentActivity || [];
+            const feed = document.getElementById("activityFeed");
 
-    if (!feed) return;
+            if (!feed) return;
 
-    feed.innerHTML = ""; 
+            feed.innerHTML = ""; 
 
-    activities.forEach(item => {
-        const iconClass = getIconClass(item.type);
-        const badgeClass = getBadgeClass(item.type);
-        const formattedDate = formatDate(item.date);
+            activities.forEach(item => {
+                const iconClass = getIconClass(item.type);
+                const badgeClass = getBadgeClass(item.type);
+                const formattedDate = formatDate(item.date);
 
-        const html = `
-            <div class="activity-item">
-                <div class="activity-icon ${iconClass}">
-                    ${getIconSVG(item.type)}
-                </div>
+                const html = `
+                    <div class="activity-item">
+                        <div class="activity-icon ${iconClass}">
+                            ${getIconSVG(item.type)}
+                        </div>
 
-                <div class="activity-content">
-                    <div class="activity-header">
-                        <span class="activity-title-text">${item.title}</span>
-                        <span class="activity-type ${badgeClass}">${capitalize(item.type)}</span>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-title-text">${item.title}</span>
+                                <span class="activity-type ${badgeClass}">${capitalize(item.type)}</span>
+                            </div>
+
+                            <div class="activity-description">
+                                <span>${item.fullname} — ${item.subtitle ?? ''}</span>
+                            </div>
+
+                            <div class="activity-time">
+                                <span>${formattedDate}</span>
+                            </div>
+                        </div>
                     </div>
+                `;
 
-                    <div class="activity-description">
-                        <span>${item.fullname} — ${item.subtitle ?? ''}</span>
-                    </div>
+                feed.insertAdjacentHTML("beforeend", html);
+            });
+        });
 
-                    <div class="activity-time">
-                        <span>${formattedDate}</span>
-                    </div>
-                </div>
-            </div>
-        `;
+        // -------------------
+        // HELPER FUNCTIONS
+        // -------------------
 
-        feed.insertAdjacentHTML("beforeend", html);
-    });
-});
+        function getIconClass(type) {
+            return {
+                quiz: "icon-assessment",
+                game_comp: "icon-game",
+                game_match: "icon-game",
+                game_img: "icon-game",
+                game_speak: "icon-game",
+                achievement: "icon-achievement",
+                enrollment: "icon-enrollment"
+            }[type] || "icon-default";
+        }
 
-// -------------------
-// HELPER FUNCTIONS
-// -------------------
+        function getBadgeClass(type) {
+            return {
+                quiz: "badge-assessment",
+                game_comp: "badge-game",
+                game_match: "badge-game",
+                game_img: "badge-game",
+                game_speak: "badge-game",
+                achievement: "badge-achievement",
+                enrollment: "badge-enrollment"
+            }[type] || "badge-default";
+        }
 
-function getIconClass(type) {
-    return {
-        quiz: "icon-assessment",
-        game_comp: "icon-game",
-        game_match: "icon-game",
-        game_img: "icon-game",
-        game_speak: "icon-game",
-        achievement: "icon-achievement",
-        enrollment: "icon-enrollment"
-    }[type] || "icon-default";
-}
+        function getIconSVG(type) {
+            const icons = {
+                quiz: `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-circle">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
+                    </svg>
+                `,
 
-function getBadgeClass(type) {
-    return {
-        quiz: "badge-assessment",
-        game_comp: "badge-game",
-        game_match: "badge-game",
-        game_img: "badge-game",
-        game_speak: "badge-game",
-        achievement: "badge-achievement",
-        enrollment: "badge-enrollment"
-    }[type] || "badge-default";
-}
+                game_comp: puzzleIcon(),
+                game_match: puzzleIcon(),
+                game_img: puzzleIcon(),
+                game_speak: puzzleIcon(),
 
-function getIconSVG(type) {
-    const icons = {
-        quiz: `
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-circle">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
-            </svg>
-        `,
+                achievement: `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trophy">
+                        <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"></path>
+                    </svg>
+                `,
 
-        game_comp: puzzleIcon(),
-        game_match: puzzleIcon(),
-        game_img: puzzleIcon(),
-        game_speak: puzzleIcon(),
+                enrollment: `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-plus">
+                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
+                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"></path>
+                    </svg>
+                `
+            };
 
-        achievement: `
-             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trophy">
-                <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"></path>
-            </svg>
-        `,
+            return icons[type] || `<svg></svg>`;
+        }
 
-        enrollment: `
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-plus">
-                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"></path>
-            </svg>
-        `
-    };
+        // same puzzle icon for all game types
+        function puzzleIcon() {
+            return `
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-puzzle">
+                    <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557z"></path>
+                </svg>
+            `;
+        }
 
-    return icons[type] || `<svg></svg>`;
-}
+        function capitalize(text) {
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        }
 
-// same puzzle icon for all game types
-function puzzleIcon() {
-    return `
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-puzzle">
-            <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557z"></path>
-        </svg>
-    `;
-}
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+    </script>
 
-function capitalize(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-}
 
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-}
-</script>
+    <script>
+        document.getElementById('createSectionSubmit').addEventListener('click', async () => {
+
+            const school_name  = document.getElementById('schoolName').value.trim();
+            const school_year  = document.getElementById('schoolYear').value.trim();
+            const section_name = document.getElementById('sectionName').value.trim();
+
+            if (!school_name || !school_year || !section_name) {
+                alert("All fields are required.");
+                return;
+            }
+
+            const token = "{{ session('node_token') }}";
+            const teacherId = "{{ session('user_id') }}";
+
+            try {
+                const response = await fetch("{{ env('API_URL') }}/teacher/create/section", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        teacherId: teacherId,
+                        school_name,
+                        school_year,
+                        section_name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.error || "Failed to create section.");
+                }
+
+                // 2️⃣ AFTER SUCCESS → FETCH UPDATED LIST
+                await fetchSections();
+
+            } catch (err) {
+                console.error(err);
+                alert("Something went wrong.");
+            }
+
+        });
+    </script>
+
+    <script>
+        async function fetchSections() {
+            const token = "{{ session('node_token') }}";
+            const teacherId = "{{ session('user_id') }}";
+
+            try {
+                const res = await fetch("{{ env('API_URL') }}/teacher/fetch-sections-and-pupils", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ teacherId })
+                });
+
+                const result = await res.json();
+
+                console.log("📌 Updated Sections:", result.sections);
+                console.log("📌 Updated Pupils:", result.pupils);
+
+                // Pass the fetched data to initSectionsManager
+                initSectionsManager(result.sections || [], result.pupils || []);
+
+            } catch (err) {
+                console.error("Fetch Error:", err);
+            }
+        }
+
+        // Trigger fetchSections on page load
+        document.addEventListener('DOMContentLoaded', fetchSections);
+    </script>
+    
+
+
+
+    
+
 
 
 
@@ -3299,8 +3388,9 @@ function formatDate(dateString) {
     console.log("Gender Stats:", window.dashboardData.gender_stats ?? {});
     console.log("Recent Enrollee", window.dashboardData.recent_enrollees ?? {});
     console.log("Recent Materials", window.dashboardData.recentMaterials ?? {});
-    console.log("Pupil Progress", window.dashboardData.pupil_progress ?? {})
-    console.log("Recent Activity", window.dashboardData.recentActivity ?? {})
+    console.log("Pupil Progress", window.dashboardData.pupil_progress ?? {});
+    console.log("Recent Activity", window.dashboardData.recentActivity ?? {});
+    console.log("Subject Progress", window.dashboardData.quarterlyProgress ?? {});
 
     document.addEventListener('DOMContentLoaded', () => {
         const data = window.dashboardData;

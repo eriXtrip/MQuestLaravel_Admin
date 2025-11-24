@@ -229,102 +229,67 @@ chartManager.createChart('genderChart', {
   }
 });
 
-
 // ================================
 // 3. LINE CHART
 // ================================
 
 let performanceChart = null;
 
-// Sample data for all quarters and subjects
-const quarterlyData = {
-  q1: {
-    math: [75, 78, 82, 85, 88, 90, 92, 95],
-    science: [80, 82, 85, 87, 84, 88, 86, 92],
-    english: [85, 83, 86, 89, 87, 90, 88, 91],
-    filipino: [78, 80, 83, 85, 87, 89, 90, 93]
-  },
-  q2: {
-    math: [78, 80, 85, 88, 90, 92, 94, 96],
-    science: [82, 84, 87, 89, 86, 90, 88, 94],
-    english: [87, 85, 88, 91, 89, 92, 90, 93],
-    filipino: [80, 82, 85, 87, 89, 91, 92, 95]
-  },
-  q3: {
-    math: [80, 83, 87, 90, 92, 94, 95, 97],
-    science: [84, 86, 89, 91, 88, 92, 90, 95],
-    english: [89, 87, 90, 93, 91, 94, 92, 95],
-    filipino: [82, 84, 87, 89, 91, 93, 94, 96]
-  },
-  q4: {
-    math: [82, 85, 89, 92, 94, 96, 97, 98],
-    science: [86, 88, 91, 93, 90, 94, 92, 96],
-    english: [91, 89, 92, 95, 93, 96, 94, 97],
-    filipino: [84, 86, 89, 91, 93, 95, 96, 97]
+// Use dashboard data instead of hardcoded data
+const rawQuarterlyData = window.dashboardData.quarterlyProgress || {};
+
+// Normalize subjects to lowercase keys for chart consistency
+const quarterlyData = {};
+['q1', 'q2', 'q3', 'q4'].forEach(q => {
+  quarterlyData[q] = {};
+  const subjects = rawQuarterlyData[q] || {};
+  for (let key in subjects) {
+    // Convert "Mathematics" to "math" for consistent chart keys
+    const normalizedKey = key.toLowerCase() === 'mathematics' ? 'math' : key.toLowerCase();
+    quarterlyData[q][normalizedKey] = subjects[key];
   }
-};
+});
+
 
 // Professional Academic Color Palette
 const subjectColors = {
-     math: '#FFC107',      
-  english: '#2196F3',   
-  science: '#4CAF50',   
-  filipino: '#607D8B'   
+  math: '#FFC107',
+  english: '#2196F3',
+  science: '#4CAF50',
+  filipino: '#607D8B'
 };
 
-// Initial chart configuration with professional colors
+// Default labels (lessons)
+const labels = ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4', 'Lesson 5', 'Lesson 6', 'Lesson 7', 'Lesson 8'];
+
+// Function to create datasets from quarter data
+function createDatasets(quarterData, subjectFilter = 'all') {
+  const datasets = [];
+  const subjectsToUse = subjectFilter === 'all' ? Object.keys(subjectColors) : [subjectFilter];
+
+  subjectsToUse.forEach(subject => {
+    const data = quarterData[subject] || []; // fallback empty array
+    datasets.push({
+      label: subject.charAt(0).toUpperCase() + subject.slice(1),
+      data: data,
+      borderColor: subjectColors[subject],
+      backgroundColor: `rgba(${hexToRgb(subjectColors[subject])}, 0.1)`,
+      borderWidth: 3,
+      pointBackgroundColor: subjectColors[subject],
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      fill: true,
+      tension: 0.3
+    });
+  });
+
+  return datasets;
+}
+
+// Initial chart configuration using Q1 by default
 const initialData = {
-  labels: ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4', 'Lesson 5', 'Lesson 6', 'Lesson 7', 'Lesson 8'],
-  datasets: [
-    {
-      label: 'Mathematics',
-      data: [75, 78, 82, 85, 88, 90, 92, 95],
-      borderColor: subjectColors.math,
-      backgroundColor: 'rgba(255, 193, 7, 0.1)',
-      borderWidth: 3,
-      pointBackgroundColor: subjectColors.math,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      fill: true,
-      tension: 0.3
-    },
-      {
-      label: 'English',
-      data: [85, 83, 86, 89, 87, 90, 88, 91],
-      borderColor: subjectColors.english,
-      backgroundColor: 'rgba(33, 150, 243, 0.1)',
-      borderWidth: 3,
-      pointBackgroundColor: subjectColors.english,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      fill: true,
-      tension: 0.3
-    },
-    {
-      label: 'Science',
-      data: [80, 82, 85, 87, 84, 88, 86, 92],
-      borderColor: subjectColors.science,
-      backgroundColor: 'rgba(76, 175, 80, 0.1)',
-      borderWidth: 3,
-      pointBackgroundColor: subjectColors.science,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      fill: true,
-      tension: 0.3
-    },
-    {
-      label: 'Filipino',
-      data: [78, 80, 83, 85, 87, 89, 90, 93],
-      borderColor: subjectColors.filipino,
-      backgroundColor: 'rgba(96, 125, 139, 0.1)',
-      borderWidth: 3,
-      pointBackgroundColor: subjectColors.filipino,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      fill: true,
-      tension: 0.3
-    }
-  ]
+  labels: labels,
+  datasets: createDatasets(quarterlyData.q1 || {})
 };
 
 // Create the line chart
@@ -343,7 +308,7 @@ if (performanceCtx) {
       scales: {
         y: {
           beginAtZero: false,
-          min: 70,
+          min: 0,
           max: 100,
           title: { display: true, text: 'Score (%)' },
           grid: { color: 'rgba(0, 0, 0, 0.1)' }
@@ -353,7 +318,7 @@ if (performanceCtx) {
     }
   });
 
-  // Add event listeners for filters (only if elements exist)
+  // Event listeners for filters
   const subjectFilter = document.getElementById('line-chart-subject-filter');
   const quarterFilter = document.getElementById('line-chart-quarter-filter');
 
@@ -367,88 +332,11 @@ if (performanceCtx) {
 function updatePerformanceChart() {
   if (!performanceChart) return;
 
-  const subject = document.getElementById('line-chart-subject-filter')?.value || 'all';
+  const subject = document.getElementById('line-chart-subject-filter')?.value.toLowerCase() || 'all';
   const quarter = document.getElementById('line-chart-quarter-filter')?.value || 'q1';
+  const quarterData = quarterlyData[quarter] || {};
 
-  const quarterData = quarterlyData[quarter] || quarterlyData.q1;
-
-  let filteredData = { ...initialData };
-
-  if (subject === 'all') {
-    filteredData.datasets = [
-      {
-        label: 'Mathematics',
-        data: quarterData.math,
-        borderColor: subjectColors.math,
-        backgroundColor: 'rgba(255, 193, 7, 0.1)',
-        borderWidth: 3,
-        pointBackgroundColor: subjectColors.math,
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: true,
-        tension: 0.3
-      },
-         {
-        label: 'English',
-        data: quarterData.english,
-        borderColor: subjectColors.english,
-        backgroundColor: 'rgba(33, 150, 243, 0.1)',
-        borderWidth: 3,
-        pointBackgroundColor: subjectColors.english,
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: true,
-        tension: 0.3
-      },
-      {
-        label: 'Science',
-        data: quarterData.science,
-        borderColor: subjectColors.science,
-        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-        borderWidth: 3,
-        pointBackgroundColor: subjectColors.science,
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: true,
-        tension: 0.3
-      },
-      {
-        label: 'Filipino',
-        data: quarterData.filipino,
-        borderColor: subjectColors.filipino,
-        backgroundColor: 'rgba(96, 125, 139, 0.1)',
-        borderWidth: 3,
-        pointBackgroundColor: subjectColors.filipino,
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        fill: true,
-        tension: 0.3
-      }
-    ];
-  } else {
-    const subjectMap = {
-      'math': { label: 'Mathematics', data: quarterData.math, color: subjectColors.math },
-      'science': { label: 'Science', data: quarterData.science, color: subjectColors.science },
-      'english': { label: 'English', data: quarterData.english, color: subjectColors.english },
-      'filipino': { label: 'Filipino', data: quarterData.filipino, color: subjectColors.filipino }
-    };
-
-    const subjectInfo = subjectMap[subject];
-    filteredData.datasets = [{
-      label: subjectInfo.label,
-      data: subjectInfo.data,
-      borderColor: subjectInfo.color,
-      backgroundColor: `rgba(${hexToRgb(subjectInfo.color)}, 0.1)`,
-      borderWidth: 3,
-      pointBackgroundColor: subjectInfo.color,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      fill: true,
-      tension: 0.3
-    }];
-  }
-
-  performanceChart.data = filteredData;
+  performanceChart.data.datasets = createDatasets(quarterData, subject);
   performanceChart.update();
 }
 
@@ -457,6 +345,7 @@ function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '37, 99, 235';
 }
+
 
 
 // ================================

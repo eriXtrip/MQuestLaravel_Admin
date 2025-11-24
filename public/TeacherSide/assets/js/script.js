@@ -1389,8 +1389,7 @@ icons.forEach(icon => icon.style.display = 'none');
 /* ===========================
    19. Edit Personal Information - Profile section
 =========================== */
-function initSectionsManager() {
-
+function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
     const createSectionBtn = document.getElementById('createSectionBtn');
     const createSectionModalEl = document.getElementById('createSectionModal');
     const createSectionModal = createSectionModalEl ? new bootstrap.Modal(createSectionModalEl) : null;
@@ -1403,29 +1402,34 @@ function initSectionsManager() {
     const viewListBtn = document.getElementById('viewListBtn');
     const userTableBody = document.getElementById('userTableBody');
 
+    const pupilSearchInput = document.getElementById('pupil-search');
+    const pupilStatusFilter = document.getElementById('pupilStatusFilter');
+    const pupilSort = document.getElementById('pupilSort');
+    const resetFiltersBtn = document.querySelector('#advancedFilters .reset-btn');
+
     if (!createSectionBtn || !createSectionForm || !sectionsGrid || !userTableBody) return;
 
-    const rows = Array.from(userTableBody.querySelectorAll('tr'));
-
-    let sections = [];
+    // -------------------------------
+    // Data
+    // -------------------------------
+    let sections = [...fetchedSections];  // sections array including newly created
+    let pupils = [...fetchedPupils];      // copy of fetched pupils
     let currentSelectedSection = null;
     let isShowingAll = false;
     let currentView = 'cards';
 
-    // -----------------------------
+    // -------------------------------
     // Helpers
-    // -----------------------------
-
+    // -------------------------------
     function generateEnrollmentCode(length = 6) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
     }
 
     function formatDate(date) {
-        return `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+        return `${String(date.getMonth() + 1).padStart(2,'0')}/${String(date.getDate()).padStart(2,'0')}/${date.getFullYear()}`;
     }
 
-    // Card template
     function createSectionCard(section) {
         const card = document.createElement('div');
         card.className = 'pupil-section-card';
@@ -1434,56 +1438,40 @@ function initSectionsManager() {
         card.innerHTML = `
             <div class="pupil-section-header">
                 <div>
-                    <h6 class="pupil-section-title">${section.name}</h6>
-                    <div class="pupil-section-subject">${section.subject}</div>
-                    <div class="pupil-section-school mt-2 d-flex align-items-center gap-2">
+                    <h6 class="pupil-section-title">${section.section_name}</h6>
+                    <!-- <div class="pupil-section-school mt-2 d-flex align-items-center gap-2">
                         <svg class="bi bi-building" width="1em" height="1em" fill="currentColor"><use href="#icon-building"/></svg>
-                        <span>${section.schoolName}</span>
-                    </div>
+                         <span>${section.section_name}</span> 
+                    </div> -->
                     <div class="pupil-section-school-year mt-1 d-flex align-items-center gap-2">
                         <svg class="bi bi-calendar" width="1em" height="1em" fill="currentColor"><use href="#icon-calendar"/></svg>
-                        <span>${section.schoolYear}</span>
+                        <span>${section.school_year}</span>
                     </div>
                 </div>
-                <span class="enrolled-count">0 enrolled</span>
+                <span class="enrolled-count">${section.noEnrolled} enrolled</span>
             </div>
 
             <div class="enrollment-code-container">
                 <div>
                     <div class="enrollment-code-label">Enrollment Code</div>
-                    <div class="enrollment-code">${section.code}</div>
+                    <div class="enrollment-code">${section.enrollment_code}</div>
                 </div>
-                <button class="copy-icon" data-code="${section.code}" title="Copy to clipboard">
+                <button class="copy-icon" data-code="${section.enrollment_code}" title="Copy to clipboard">
                     <svg class="bi bi-copy" width="1em" height="1em" fill="currentColor"><use href="#icon-copy"/></svg>
                 </button>
             </div>
 
             <div class="section-created">
-                Created: ${section.date}
+                Created: ${section.created_at}
                 <span class="selected-badge" style="display:none;">Selected</span>
             </div>
         `;
         return card;
     }
 
-    // Filtering students table by subject
-    function filterStudents(sectionSubject = null) {
-        rows.forEach(row => {
-            row.style.display = (!sectionSubject || row.dataset.section === sectionSubject) ? '' : 'none';
-        });
-
-        const visible = rows.filter(r => r.style.display !== 'none').length;
-
-        document.getElementById('endCount').textContent = visible;
-        document.getElementById('totalCount').textContent = rows.length;
-
-        document.getElementById('noResults').style.display = visible ? 'none' : 'block';
-    }
-
-    // Render section cards
     function updateSectionsDisplay() {
         const showAll = isShowingAll || sections.length <= 3;
-        const toShow = showAll ? sections : sections.slice(0, 3);
+        const toShow = showAll ? sections : sections.slice(0,3);
 
         sectionsGrid.innerHTML = '';
 
@@ -1506,38 +1494,147 @@ function initSectionsManager() {
                     c.querySelector('.selected-badge').style.display = 'none';
                 });
 
-                if (currentSelectedSection === section.subject) {
+                if (currentSelectedSection === section.name) {
                     currentSelectedSection = null;
                     filterStudents(null);
                 } else {
                     card.classList.add('selected');
                     card.querySelector('.selected-badge').style.display = 'inline-block';
-                    currentSelectedSection = section.subject;
-                    filterStudents(section.subject);
+                    currentSelectedSection = section.name;
+                    filterStudents(section.name);
                 }
             });
 
-            if (currentSelectedSection === section.subject) {
+            if (currentSelectedSection === section.name) {
                 card.classList.add('selected');
                 card.querySelector('.selected-badge').style.display = 'inline-block';
             }
         });
 
         sectionsGrid.className = 'sections-grid ' + currentView + '-view';
-
         showAllBtn.style.display = sections.length > 3 ? 'block' : 'none';
         if (sections.length > 3) {
             showAllBtn.textContent = isShowingAll ? 'Show Less' : 'Show All Sections';
         }
     }
 
-    // -----------------------------
-    // Event Bindings
-    // -----------------------------
+    function filterStudents(sectionName = null) {
+        userTableBody.innerHTML = '';
 
+        let filteredPupils = sectionName 
+            ? pupils.filter(p => p.section_name === sectionName)
+            : [...pupils];
+
+        // Filter by status
+        const statusValue = pupilStatusFilter?.value;
+        if (statusValue && statusValue !== 'all') {
+            filteredPupils = filteredPupils.filter(p => {
+                const status = p.active_status === 1 ? 'active' : 'inactive';
+                return status === statusValue;
+            });
+        }
+
+        // Filter by search
+        const searchTerm = pupilSearchInput?.value.toLowerCase().trim();
+        if (searchTerm) {
+            filteredPupils = filteredPupils.filter(p => 
+                p.fullname.toLowerCase().includes(searchTerm) ||
+                p.LRN.toLowerCase().includes(searchTerm) ||
+                (p.section_name && p.section_name.toLowerCase().includes(searchTerm))
+            );
+        }
+
+        // Sort
+        if (pupilSort) {
+            switch (pupilSort.value) {
+                case 'asc':
+                    filteredPupils.sort((a,b) => a.fullname.localeCompare(b.fullname));
+                    break;
+                case 'desc':
+                    filteredPupils.sort((a,b) => b.fullname.localeCompare(a.fullname));
+                    break;
+                case 'newest':
+                    filteredPupils.sort((a,b) => new Date(b.enrollment_date) - new Date(a.enrollment_date));
+                    break;
+                case 'oldest':
+                    filteredPupils.sort((a,b) => new Date(a.enrollment_date) - new Date(b.enrollment_date));
+                    break;
+            }
+        }
+
+        // No results
+        if (!filteredPupils.length) {
+            document.getElementById('noResults').style.display = 'block';
+        } else {
+            document.getElementById('noResults').style.display = 'none';
+        }
+
+        // Render pupils
+        filteredPupils.forEach(pupil => {
+            const status = pupil.active_status === 1 ? 'Active' : 'Inactive';
+            const tr = document.createElement('tr');
+            tr.dataset.section = pupil.section_name;
+            tr.dataset.active = pupil.active_status === 1;
+
+            tr.innerHTML = `
+                <td></td>
+                <td data-label="Profile">
+                    <img class="img-fluid pupil-avatar" width="200" height="200" src="${pupil.thumbnail || '/path/to/default.png'}">
+                </td>
+                <td data-label="Name">${pupil.fullname}</td>
+                <td data-label="LRN">${pupil.LRN}</td>
+                <td data-label="Grade">Grade 4</td>
+                <td data-label="Age">${pupil.age}</td>
+                <td data-label="Status">
+                    <span class="status-badge status-${status.toLowerCase()}">${status}</span>
+                </td>
+                <td data-label="Email">${pupil.email}</td>
+                <td data-label="Section">${pupil.section_name}</td>
+                <td data-label="Enrollment Date">${new Date(pupil.enrollment_date).toLocaleDateString()}</td>
+                <td data-label="Actions">
+                    <button class="btn action-btn view" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewPupilModal" data-id="${pupil.user_id}">
+                        <svg class="bi bi-eye" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewbox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                        </svg>
+                    </button>
+                </td>
+            `;
+            userTableBody.appendChild(tr);
+        });
+
+        window.currentFilteredPupils = filteredPupils;
+
+        document.getElementById('endCount').textContent = filteredPupils.length;
+        document.getElementById('totalCount').textContent = pupils.length;
+    }
+
+
+
+    // -------------------------------
+    // Events
+    // -------------------------------
     createSectionBtn.addEventListener('click', () => {
         if (createSectionModal) createSectionModal.show();
     });
+
+    // Search input
+    pupilSearchInput?.addEventListener('input', () => filterStudents(currentSelectedSection));
+
+    // Status filter
+    pupilStatusFilter?.addEventListener('change', () => filterStudents(currentSelectedSection));
+
+    // Sort
+    pupilSort?.addEventListener('change', () => filterStudents(currentSelectedSection));
+
+    // Reset button
+    resetFiltersBtn?.addEventListener('click', () => {
+        pupilSearchInput.value = '';
+        pupilStatusFilter.value = 'all';
+        pupilSort.value = 'asc';
+        filterStudents(currentSelectedSection);
+    });
+
 
     createSectionSubmit.addEventListener('click', () => {
         if (!createSectionForm.checkValidity()) {
@@ -1560,23 +1657,21 @@ function initSectionsManager() {
         };
 
         sections.push(newSection);
+        fetchedSections.push(newSection); // keep fetched in sync
         isShowingAll = false;
 
         updateSectionsDisplay();
+        filterStudents(null); // refresh pupil table
         yourSectionsContainer.classList.add('show');
 
         createSectionForm.reset();
         createSectionForm.classList.remove('was-validated');
-
         if (createSectionModal) createSectionModal.hide();
 
         showToast('success', 'Saved', 'Section created successfully!');
     });
 
-    createSectionForm.addEventListener('submit', e => {
-        e.preventDefault();
-        createSectionSubmit.click();
-    });
+    createSectionForm.addEventListener('submit', e => e.preventDefault());
 
     viewCardsBtn?.addEventListener('click', () => {
         currentView = 'cards';
@@ -1593,8 +1688,36 @@ function initSectionsManager() {
         updateSectionsDisplay();
     });
 
+    if (sections.length) yourSectionsContainer.classList.add('show');
+
+    const exportBtn = document.getElementById('exportBtn');
+
+    exportBtn?.addEventListener('click', () => {
+      const dataToExport = window.currentFilteredPupils || [];
+      if (!dataToExport.length) return showToast('info', 'No Data', 'No pupils to export');
+
+      const exportData = dataToExport.map(p => ({
+          "Full Name": p.fullname,
+          "LRN": p.LRN,
+          "Age": p.age,
+          "Gender": p.gender,
+          "Email": p.email,
+          "Status": p.active_status === 1 ? "Active" : "Inactive",
+          "Enrollment Date": new Date(p.enrollment_date).toLocaleDateString(),
+          "Section": p.section_name
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(exportData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Pupils");
+      XLSX.writeFile(wb, "Pupils.xlsx");
+  });
+
+
+    updateSectionsDisplay();
     filterStudents(null);
 }
+
 
 
 

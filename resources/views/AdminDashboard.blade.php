@@ -2221,13 +2221,16 @@
                     lessonSection.classList.remove('d-none');
 
                     // 2. Update header card
+                    const displayName = subject.toLowerCase() === 'math' ? 'Mathematics' : subject;
+
                     subjectDisplay.innerHTML = `
-                        <div class="mb-2 card ${lower}-subject-card">
+                        <div class="mb-2 card ${subject.toLowerCase()}-subject-card">
                             <div class="subject-title">
-                                <h3>${subject} 4</h3>
+                                <h3>${displayName} 4</h3>
                             </div>
                         </div>
                     `;
+
 
                     // 3. **IMPORTANT** – keep hidden input in sync
                     selectedSubjectInput.value = subject;
@@ -2552,6 +2555,7 @@
             '1': 'English',
             '2': 'Filipino',
             '3': 'Mathematics',
+            '3': 'Math',
             '4': 'Science'
         };
     </script>
@@ -2587,14 +2591,27 @@
             const lessonMenu = document.getElementById('lessonMenu');
             if (!lessonMenu) return;
 
-            // ---- dispose old collapses ------------------------------------------------
+            // ---- dispose old collapses
             lessonMenu.querySelectorAll('.collapse').forEach(el => {
                 const inst = bootstrap.Collapse.getInstance(el);
                 if (inst) inst.dispose();
             });
             lessonMenu.innerHTML = '';
 
-            const subj = (document.getElementById('selected-subject-input')?.value || '').trim().toLowerCase();
+            let subj = (document.getElementById('selected-subject-input')?.value || '').trim().toLowerCase();
+
+            // map user-friendly names → actual names in dataset
+            const subjectMap = {
+                'math': 'mathematics',
+                'mathematics': 'mathematics',
+                'eng': 'english',
+                'english': 'english',
+                'filipino': 'filipino',
+                'science': 'science'
+            };
+
+            subj = subjectMap[subj] || subj; // default to original if no mapping
+
             const qNum = Number(quarter.replace('Q', ''));
 
             const lessons = (window.allLessons || []).filter(l => {
@@ -2609,7 +2626,7 @@
                 return;
             }
 
-            /* ------------------- helper ------------------------------------------------ */
+            /* ------------------- helper function (unchanged) ------------------------- */
             function getContentLabel(c) {
                 const type = (c.content_type || '').toLowerCase();
                 const title = c.title || 'Untitled';
@@ -2630,69 +2647,54 @@
                     return `Game: ${title}`;
                 }
                 if (type === 'video') return `Video: ${title}`;
-                if (type === 'url')   return `URL Link: ${title}`;
+                if (type === 'url') return `URL Link: ${title}`;
                 return title;
             }
 
-            /* ------------------- render each lesson ----------------------------------- */
+            /* ------------------- render lessons (unchanged) ------------------------- */
             lessons.forEach((lesson, idx) => {
                 const id      = lesson.lesson_id;
                 const title   = lesson.lesson_title || `Lesson ${lesson.lesson_number || idx+1}`;
-                const desc    = lesson.description   || 'No description.';
+                const desc    = lesson.description || 'No description.';
                 const comps   = lesson.learning_competencies || [];
 
                 const contents = (window.allContents || []).filter(c => String(c.lesson_belong) === String(id));
 
                 const materials = contents.length
-                    ? contents.map(c => `
-                        <li class="material-item">
-                            ${getContentLabel(c)}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                viewBox="0 0 16 16" class="bi bi-box-arrow-up-right">
-                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"></path>
-                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"></path>
-                            </svg>
-                        </li>`).join('')
+                    ? contents.map(c => `<li class="material-item">${getContentLabel(c)} ...</li>`).join('')
                     : '<li class="text-muted">No materials yet.</li>';
 
                 const compHtml = comps.length
                     ? `<h6>At the end of the lesson, the learner will be able to:</h6>
-                    <ul class="obj-list">${comps.map(o=>`<li>${o}</li>`).join('')}</ul>`
+                    <ul class="obj-list">${comps.map(o => `<li>${o}</li>`).join('')}</ul>`
                     : '';
 
-                const html = `
-                    <div class="lesson-item ${idx===0?'active':''}" id="${quarter}${id}">
-                        <div class="lesson-header d-flex justify-content-between align-items-center"
-                            data-bs-toggle="collapse" data-bs-target="#content${id}"
-                            aria-expanded="false" aria-controls="content${id}">
-                            <div class="header-left">
-                                <h2>Lesson ${lesson.lesson_number || idx+1}</h2>
-                                <p>${title}</p>
-                            </div>
-                            <div class="header-right"><span>+</span></div>
-                        </div>
-
-                        <div id="content${id}" class="collapse">
-                            <div class="lesson-content">
-                                <div class="part-1 mb-3">
-                                    <div class="mb-2 part-intro">
-                                        <h6>Lesson Overview</h6>
-                                        <p class="text-muted small">${desc}</p>
+                const html = `<div class="lesson-item ${idx===0?'active':''}" id="${quarter}${id}">
+                                <div class="lesson-header d-flex justify-content-between align-items-center"
+                                    data-bs-toggle="collapse" data-bs-target="#content${id}"
+                                    aria-expanded="false" aria-controls="content${id}">
+                                    <div class="header-left">
+                                        <h2>Lesson ${lesson.lesson_number || idx+1}</h2>
+                                        <p>${title}</p>
                                     </div>
-                                    <div class="mb-2 part-1-obj">
-                                        ${compHtml}
+                                    <div class="header-right"><span>+</span></div>
+                                </div>
+                                <div id="content${id}" class="collapse">
+                                    <div class="lesson-content">
+                                        <div class="part-1 mb-3">
+                                            <div class="mb-2 part-intro">
+                                                <h6>Lesson Overview</h6>
+                                                <p class="text-muted small">${desc}</p>
+                                            </div>
+                                            <div class="mb-2 part-1-obj">${compHtml}</div>
+                                        </div>
+                                        <div class="mb-2 part-2">
+                                            <p>Learning Materials Included:</p>
+                                            <ul class="list-unstyled part-2 materials">${materials}</ul>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="mb-2 part-2">
-                                    <p>Learning Materials Included:</p>
-                                    <ul class="list-unstyled part-2 materials">
-                                        ${materials}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+                            </div>`;
 
                 lessonMenu.insertAdjacentHTML('beforeend', html);
 
@@ -2700,6 +2702,7 @@
                 if (el) new bootstrap.Collapse(el, { toggle: false });
             });
         };
+
 
         /* --------------------------------------------------------------
         QUARTER TABS – also call the global renderer
