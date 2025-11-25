@@ -1389,6 +1389,8 @@ icons.forEach(icon => icon.style.display = 'none');
 /* ===========================
    19. Edit Personal Information - Profile section
 =========================== */
+let globalPupils = []; 
+
 function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
     const createSectionBtn = document.getElementById('createSectionBtn');
     const createSectionModalEl = document.getElementById('createSectionModal');
@@ -1409,6 +1411,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
 
     if (!createSectionBtn || !createSectionForm || !sectionsGrid || !userTableBody) return;
 
+    
+
     // -------------------------------
     // Data
     // -------------------------------
@@ -1417,6 +1421,10 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
     let currentSelectedSection = null;
     let isShowingAll = false;
     let currentView = 'cards';
+
+    globalPupils = pupils;
+
+    console.log(globalPupils);
 
     // -------------------------------
     // Helpers
@@ -1457,12 +1465,14 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                     <div class="enrollment-code">${section.enrollment_code}</div>
                 </div>
                 <button class="copy-icon" data-code="${section.enrollment_code}" title="Copy to clipboard">
-                    <svg class="bi bi-copy" width="1em" height="1em" fill="currentColor"><use href="#icon-copy"/></svg>
+                    <svg class="bi bi-copy" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"></path>
+                    </svg>
                 </button>
             </div>
 
             <div class="section-created">
-                Created: ${section.created_at}
+                Created: ${section.created_at.split("T")[0]}
                 <span class="selected-badge" style="display:none;">Selected</span>
             </div>
         `;
@@ -1618,6 +1628,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
         if (createSectionModal) createSectionModal.show();
     });
 
+
     // Search input
     pupilSearchInput?.addEventListener('input', () => filterStudents(currentSelectedSection));
 
@@ -1718,38 +1729,257 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
     filterStudents(null);
 }
 
+window.fillPupilModal = function(pupil) {
+    document.getElementById("pupilProfileImg").src = pupil.thumbnail;
+    document.getElementById("pupilProfileName").textContent = pupil.fullname;
+    document.getElementById("pupilProfileLRN").textContent = "LRN: " + pupil.LRN;
+
+    document.getElementById("badgeSection").textContent = pupil.section_name;
+    document.getElementById("badgeBirthDate").textContent = pupil.birth_date.split("T")[0];
+    document.getElementById("badgeAge").textContent = pupil.age + " Y/O";
+    document.getElementById("badgeGender").textContent = pupil.gender;
+    
+
+    document.getElementById("pupilEmail").textContent = pupil.email;
+    document.getElementById("pupilEnrollmentDate").textContent =
+        new Date(pupil.enrollment_date).toLocaleDateString();
+
+   // CSS variables
+    const rootStyles = getComputedStyle(document.documentElement);
+    const successColor = rootStyles.getPropertyValue('--success-color').trim();
+    const warningColor = rootStyles.getPropertyValue('--warning-color').trim();
+    const dangerColor = rootStyles.getPropertyValue('--danger-color').trim();
+
+    // Performance Summary
+    // Avg. Mastery
+    document.getElementById("avgMasteryValue").textContent = pupil.avg_mastery + "%";
+    document.getElementById("avgMasteryTrend").textContent = (pupil.avg_mastery_change >= 0 ? "▲ " : "▼ ") + Math.abs(pupil.avg_mastery_change) + "%";
+    document.getElementById("avgMasteryStatus").textContent = pupil.mastery_status;
+    document.getElementById("avgMasteryStatus").style.color =
+        pupil.mastery_status === "Improving" ? successColor :
+        pupil.mastery_status === "Slight Dip" ? warningColor :
+        dangerColor;
+
+    // Engagement
+    document.getElementById("engagementValue").textContent = pupil.engagement_sessions;
+    document.getElementById("engagementTrend").textContent = (pupil.engagement_change >= 0 ? "▲ " : "▼ ") + Math.abs(pupil.engagement_change || 0);
+    document.getElementById("engagementStatus").textContent = pupil.engagement_status;
+    document.getElementById("engagementStatus").style.color =
+        pupil.engagement_status === "Active" ? successColor :
+        pupil.engagement_status === "Slight Dip" ? warningColor :
+        dangerColor;
+
+    // Avg. Session
+    document.getElementById("avgSessionValue").textContent = pupil.avg_session_minutes + " min";
+    document.getElementById("avgSessionTrend").textContent = (pupil.avg_session_minutes_change >= 0 ? "▲ " : "▼ ") + Math.abs(pupil.avg_session_minutes_change || 0) + " min";
+    document.getElementById("avgSessionStatus").textContent = pupil.avg_session_status;
+    document.getElementById("avgSessionStatus").style.color =
+        pupil.avg_session_status === "Slight Dip" ? warningColor :
+        pupil.avg_session_status === "Improving" ? successColor :
+        dangerColor;
+
+    // Badges
+    document.getElementById("badgesValue").textContent = pupil.badges_earned;
+    document.getElementById("badgesTrend").textContent = (pupil.badges_change >= 0 ? "▲ " : "▼ ") + Math.abs(pupil.badges_change || 0);
+    document.getElementById("badgesStatus").textContent = pupil.badges_status;
+    document.getElementById("badgesStatus").style.color =
+        pupil.badges_status === "Motivated" ? successColor :
+        pupil.badges_status === "Slight Dip" ? warningColor :
+        dangerColor;
+    
+    // Populate Recent Activity
+    const recentActivityContainer = document.getElementById("recent-activities");
+    if (!recentActivityContainer) return;
+
+    // Clear previous items
+    recentActivityContainer.innerHTML = "";
+
+    if (pupil.recent_activity && pupil.recent_activity.length > 0) {
+        pupil.recent_activity.forEach(notif => {
+            // Determine badge color based on type
+            let badgeClass = "bg-secondary"; // default
+            if (notif.type.includes("achievement")) badgeClass = "bg-warning";
+            else if (notif.type === "activity" || notif.type === "completed") badgeClass = "bg-success";
+            else if (notif.type === "alert" || notif.type === "warning") badgeClass = "bg-danger";
+
+            // Format date/time nicely
+            const notifDate = new Date(notif.created_at);
+            const now = new Date();
+            const timeDiff = Math.floor((now - notifDate) / (1000 * 60 * 60 * 24));
+            let timeText = timeDiff === 0 ? "Today" : timeDiff === 1 ? "Yesterday" : notifDate.toLocaleDateString();
+
+            // Create HTML
+            const div = document.createElement("div");
+            div.className = "pupil-activity-item";
+
+            div.innerHTML = `
+                <span class="me-2 badge ${badgeClass}">${notif.type.replace("_"," ")}</span>
+                <div class="pupil-activity-content">
+                    <p class="pupil-activity-title">${notif.message}</p>
+                    <p class="text-muted pupil-activity-timestamp small">${timeText}</p>
+                </div>
+            `;
+
+            recentActivityContainer.appendChild(div);
+        });
+    } else {
+        recentActivityContainer.innerHTML = `<p class="text-muted small mb-0">No recent activity</p>`;
+    }
+
+    // Populate Learning Progress
+    const learningProgressContainer = document.getElementById("learningProgressContainer");
+
+    if (learningProgressContainer && pupil.subject_progress && pupil.subject_progress.length > 0) {
+        // Remove previous subject progress items (but keep the insight banner)
+        learningProgressContainer.querySelectorAll(".subject-progress-item").forEach(el => el.remove());
+
+        pupil.subject_progress.forEach(subj => {
+            let barClass = "progress-bar-warning"; // default
+            let trendHTML = '';
+            let statusText = subj.status;
+
+            if (subj.status === "Above class avg" || subj.status === "Top performer" || subj.status === "On track") {
+                barClass = "progress-bar-success";
+                trendHTML = `<span class="trend up">▲ ${Math.round(subj.progress_percent - subj.class_avg)}%</span>`;
+            } else if (subj.status === "Below class avg") {
+                barClass = "progress-bar-warning";
+                trendHTML = `<span class="trend down">▼ ${Math.round(subj.class_avg - subj.progress_percent)}%</span>`;
+            }
+
+            const div = document.createElement("div");
+            div.className = "mb-4 subject-progress-item";
+
+            div.innerHTML = `
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="fw-medium learning-subject">${subj.subject_name}</span>
+                    <span class="fw-bold learning-score">${subj.progress_percent.toFixed(0)}% ${trendHTML}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar ${barClass}" style="width:${subj.progress_percent.toFixed(0)}%;"></div>
+                </div>
+                <small class="text-muted mt-1">${statusText} • Class avg (${subj.class_avg.toFixed(0)}%)</small>
+            `;
+
+            // Insert before insight banner
+            const insightBanner = learningProgressContainer.querySelector(".insight-banner");
+            if (insightBanner) {
+                learningProgressContainer.insertBefore(div, insightBanner);
+            } else {
+                learningProgressContainer.appendChild(div);
+            }
+        });
+    }
+
+    // Generate dynamic insight text
+    function generateInsight(subjectProgress) {
+        if (!subjectProgress || !subjectProgress.length) return "No data available.";
+
+        const strongSubjects = [];
+        const weakSubjects = [];
+
+        subjectProgress.forEach(subj => {
+            if (subj.progress_percent >= subj.class_avg) {
+                strongSubjects.push(subj.subject_name);
+            } else {
+                weakSubjects.push(subj.subject_name);
+            }
+        });
+
+        let insightText = "";
+
+        if (strongSubjects.length > 0) {
+            insightText += `Strong in ${strongSubjects.join(" & ")}. `;
+        }
+
+        if (weakSubjects.length > 0) {
+            insightText += `${weakSubjects.join(" & ")} need reinforcement through targeted practice.`;
+        }
+
+        return insightText.trim();
+    }
+
+    // Populate the insight banner
+    const insightBanner = document.getElementById("pupilInsight");
+    if (insightBanner) {
+        insightBanner.innerHTML = `<strong>Insight:</strong> ${generateInsight(pupil.subject_progress)}`;
+    }
+};
+
+//  View button
+  document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".action-btn.view");
+      if (!btn) return;
+
+      const pupilId = parseInt(btn.dataset.id);
+      const pupil = globalPupils.find(p => p.user_id === pupilId);
+
+      if (!pupil) return;
+
+      fillPupilModal(pupil);
+  });
 
 
 
 /* ===========================
    Student Performance Analytics - Analytics Page
 =========================== */
-function initStudentsTable() {
-  const students = [
-    {id:1, name:"Juan Dela Cruz", section:"Grade 7-A", avg:"92.5%", progress:75, lastScore:"95%", time:24.5, badges:12, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-11-20"},
-    {id:2, name:"Maria Garcia", section:"Grade 7-B", avg:"88.3%", progress:75, lastScore:"90%", time:18.2, badges:10, status:"Good", trend:"up", subject:"English", lastActivityDate:"2025-11-15"},
-    {id:3, name:"Pedro Santos", section:"Grade 7-A", avg:"85.7%", progress:67, lastScore:"88%", time:21.3, badges:8, status:"Good", trend:"up", subject:"Science", lastActivityDate:"2025-10-05"},
-    {id:4, name:"Ana Reyes", section:"Grade 8-C", avg:"94.2%", progress:86, lastScore:"96%", time:19.8, badges:15, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-09-02"},
-    {id:5, name:"Carlos Rivera", section:"Grade 7-B", avg:"96.8%", progress:83, lastScore:"98%", time:22.1, badges:18, status:"Excellent", trend:"up", subject:"Science", lastActivityDate:"2025-11-10"},
-    {id:6, name:"Sofia Martinez", section:"Grade 7-A", avg:"78.5%", progress:58, lastScore:"75%", time:15.4, badges:5, status:"Needs Attention", trend:"down", subject:"English", lastActivityDate:"2025-11-22"},
-    {id:7, name:"Miguel Santos", section:"Grade 8-C", avg:"72.3%", progress:50, lastScore:"70%", time:12.7, badges:4, status:"Needs Attention", trend:"flat", subject:"Filipino", lastActivityDate:"2025-06-18"},
-    {id:8, name:"Isabella Cruz", section:"Grade 7-B", avg:"90.1%", progress:80, lastScore:"92%", time:20.5, badges:11, status:"Excellent", trend:"up", subject:"English", lastActivityDate:"2025-11-02"}
-  ];
+function initStudentsTable(pupils) {
+  // const students = [
+  //   {id:1, name:"Juan Dela Cruz", section:"Grade 7-A", avg:"92.5%", progress:75, lastScore:"95%", time:24.5, badges:12, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-11-20"},
+  //   {id:2, name:"Maria Garcia", section:"Grade 7-B", avg:"88.3%", progress:75, lastScore:"90%", time:18.2, badges:10, status:"Good", trend:"up", subject:"English", lastActivityDate:"2025-11-15"},
+  //   {id:3, name:"Pedro Santos", section:"Grade 7-A", avg:"85.7%", progress:67, lastScore:"88%", time:21.3, badges:8, status:"Good", trend:"up", subject:"Science", lastActivityDate:"2025-10-05"},
+  //   {id:4, name:"Ana Reyes", section:"Grade 8-C", avg:"94.2%", progress:86, lastScore:"96%", time:19.8, badges:15, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-09-02"},
+  //   {id:5, name:"Carlos Rivera", section:"Grade 7-B", avg:"96.8%", progress:83, lastScore:"98%", time:22.1, badges:18, status:"Excellent", trend:"up", subject:"Science", lastActivityDate:"2025-11-10"},
+  //   {id:6, name:"Sofia Martinez", section:"Grade 7-A", avg:"78.5%", progress:58, lastScore:"75%", time:15.4, badges:5, status:"Needs Attention", trend:"down", subject:"English", lastActivityDate:"2025-11-22"},
+  //   {id:7, name:"Miguel Santos", section:"Grade 8-C", avg:"72.3%", progress:50, lastScore:"70%", time:12.7, badges:4, status:"Needs Attention", trend:"flat", subject:"Filipino", lastActivityDate:"2025-06-18"},
+  //   {id:8, name:"Isabella Cruz", section:"Grade 7-B", avg:"90.1%", progress:80, lastScore:"92%", time:20.5, badges:11, status:"Excellent", trend:"up", subject:"English", lastActivityDate:"2025-11-02"}
+  // ];
 
   const tbody = document.getElementById('studentsTbody');
+
+  const students = pupils.map(p => {
+    const progress = Math.round(p.overall_progress_percent); // overall progress
+    let status;
+    if (progress >= 80) status = 'Excellent';
+    else if (progress >= 50) status = 'Good';
+    else status = 'Attention';
+
+    return {
+      id: p.user_id,
+      name: p.fullname,
+      section: p.section_name,
+      avg: Number(p.avg_mastery).toFixed(2) + '%',
+      progress: progress,
+      lastScore: p.engagement_sessions,
+      time: Number(p.avg_session_minutes),
+      badges: p.badges_earned,
+      status: status, // derived from progress
+      trend: p.avg_mastery_change > 0 ? 'up' : (p.avg_mastery_change < 0 ? 'down' : 'flat'),
+      subject: p.subject_progress?.[0]?.subject_name || '',
+      lastActivityDate: p.recent_activity?.[0]?.created_at || ''
+    };
+  });
 
   function renderRow(s) {
     const progressWidth = Math.max(6, Math.min(100, s.progress));
     const pillClass = s.status === 'Excellent' ? 'excellent' : (s.status === 'Good' ? 'good' : 'attention');
     
+    // ✅ Standardized trend icons
     let trendIcon;
-    if (s.trend === 'up') trendIcon = `<svg class="bi bi-graph-up trend-icon-small progress-trend-up" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"></path>
-    </svg>`;
-    else if (s.trend === 'down') trendIcon = `<svg class="bi bi-graph-down trend-icon small progress-trend-down" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 11.887a.5.5 0 0 0 .07-.704l-4.5-5.5a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61 4.15 5.073a.5.5 0 0 0 .704.07Z"></path>
-    </svg>`;
-    else trendIcon = `<svg class="trend-icon-small progress-trend-"neutral viewBox="0 0 24 24" width="18" height="18"><use href="#trend-flat"></use></svg>`;
+    if (s.status === 'Excellent') {
+        trendIcon = `<svg class="bi bi-graph-up trend-icon progress-trend-up" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
+        </svg>`;
+    } else if (s.status === 'Attention') {
+        trendIcon = `<svg class="bi bi-graph-down trend-icon progress-trend-down" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 11.887a.5.5 0 0 0 .07-.704l-4.5-5.5a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61 4.15 5.073a.5.5 0 0 0 .704.07Z"/>
+        </svg>`;
+    } else { // flat
+        trendIcon = `<svg class="trend-icon progress-trend-flat" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+          <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        </svg>`;
+    }
+    
 
     const progressBar = `
       <div class="d-flex align-items-center">
@@ -1763,8 +1993,7 @@ function initStudentsTable() {
     const statusPill = `<span class="pill ${pillClass}">${escapeHtml(s.status)}</span>`;
 
     return `
-      <tr data-subject="${escapeHtml(s.subject)}"
-          data-section="${escapeHtml(s.section)}"
+      <tr data-section="${escapeHtml(s.section)}"
           data-time="${s.time}"
           data-status="${escapeHtml(s.status)}"
           data-name="${escapeHtml(s.name)}"
@@ -1772,11 +2001,11 @@ function initStudentsTable() {
           data-lastactivity="${escapeHtml(s.lastActivityDate)}">
         
         <td></td>
-        <td data-label="Student">${escapeHtml(s.name)}<br><small class="text-muted">${escapeHtml(s.subject)}</small></td>
+        <td data-label="Student">${escapeHtml(s.name)}</td>
         <td data-label="Section">${escapeHtml(s.section)}</td>
         <td data-label="Avg. Score" style="font-weight:700">${escapeHtml(s.avg)}</td>
         <td data-label="Progress">${progressBar}</td>
-        <td data-label="Last Score">${escapeHtml(s.lastScore)}</td>
+        
         <td data-label="Time Spent" class="time-text">${s.time}h</td>
         <td data-label="Badges"><span class="tiny"><svg class="bi bi-award" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
       <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z"></path>

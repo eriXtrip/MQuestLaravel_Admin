@@ -1429,15 +1429,15 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span>84%</span></div>
+                                    <div class="metric-value"><span id="performanceValue">84%</span></div>
                                     <div class="metric-label"><span>Overall Performance</span></div>
                                     <div class="metric-sublabel"><span>Subject average peformance</span></div>
                                 </div>
-                                <div class="trend-indicator trend-up">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up">
+                                <div class="trend-indicator trend-up" id="performanceTrendWrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up" id="performanceTrendIcon">
                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                     </svg>
-                                    <span> +6% </span>
+                                    <span id="performanceTrendText"> +6% </span>
                                 </div>
                             </div>
                             <div class="metric-card">
@@ -1447,15 +1447,15 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span>89%</span></div>
+                                    <div class="metric-value"><span id="engagementValue">89%</span></div>
                                     <div class="metric-label"><span>Engagement Rate</span></div>
                                     <div class="metric-sublabel"><span>Students actively participating</span></div>
                                 </div>
-                                <div class="trend-indicator trend-up">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up">
+                                <div class="trend-indicator trend-up" id="engagementTrendWrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up" id="engagementTrendIcon">
                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                     </svg>
-                                    <span> +3% </span>
+                                    <span id="engagementTrendText"> +3% </span>
                                 </div>
                             </div>
                             <div class="metric-card">
@@ -1466,15 +1466,15 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span>76%</span></div>
+                                    <div class="metric-value"><span id="completionValue">76%</span></div>
                                     <div class="metric-label"><span>Completion Rate</span></div>
                                     <div class="metric-sublabel"><span>Lessons completed on time</span></div>
                                 </div>
-                                <div class="trend-indicator trend-down">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-down">
+                                <div class="trend-indicator trend-down" id="completionTrendWrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-down" id="completionTrendIcon">
                                         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"></path>
                                     </svg>
-                                    <span> -2% </span>
+                                    <span id="completionTrendText"> -2% </span>
                                 </div>
                             </div>
                             <div class="metric-card">
@@ -1485,15 +1485,15 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span>42 min</span></div>
+                                    <div class="metric-value"><span id="studyTimeValue">42 min</span></div>
                                     <div class="metric-label"><span>Avg. Study Time</span></div>
                                     <div class="metric-sublabel"><span>Per student per day</span></div>
                                 </div>
-                                <div class="trend-indicator trend-up">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up">
+                                <div class="trend-indicator trend-up" id="studyTrendWrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up" id="studyTrendIcon">
                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                     </svg>
-                                    <span> +5 min</span>
+                                    <span id="studyTrendText"> +5 min</span>
                                 </div>
                             </div>
                         </div>
@@ -1505,17 +1505,17 @@
                                     <input type="text" id="searchInput" class="pupil-search-lesson-input" placeholder="Search student, subject, section...">
                                 </div>
                                 <div class="col-12 col-lg-8">
-                                    <div class="row g-2 pupil-filters-group">
-                                        <div class="col-12 col-sm-2">
+                                     <div class="row g-2 pupil-filters-group">
+                                        <div class="col-12 col-sm-2" style="display: none;">
                                             <select class="form-select-sm form-select" id="pupilSubjectFilter">
                                                 <option value="">All Subjects</option>
-                                                <option value="">Math</option>
+                                                <option value="">Mathematics</option>
                                                 <option value="">Science</option>
                                                 <option value="">English</option>
                                                 <option value="">Filipino</option>
                                             </select>
                                         </div>
-                                        <div class="col-12 col-sm-2">
+                                        <div class="col-12 col-sm-2" style="display: none;">
                                             <select class="form-select-sm form-select" id="sectionFilter">
                                                 <optgroup label="Sort by:">
                                                     <option value="">All Sections</option>
@@ -1525,7 +1525,7 @@
                                                 </optgroup>
                                             </select>
                                         </div>
-                                        <div class="col-12 col-sm-2">
+                                        <div class="col-12 col-sm-3">
                                             <select class="form-select-sm form-select" id="pupilTimeRangeFilter">
                                                 <optgroup label="Sort by:">
                                                     <option value="">Default</option>
@@ -1536,7 +1536,7 @@
                                                 </optgroup>
                                             </select>
                                         </div>
-                                        <div class="col-12 col-sm-2">
+                                        <div class="col-12 col-sm-3">
                                             <select class="form-select-sm form-select" id="performanceFilter">
                                                 <optgroup label="Sort by:">
                                                     <option value="">All Peformance</option>
@@ -1546,7 +1546,7 @@
                                                 </optgroup>
                                             </select>
                                         </div>
-                                        <div class="col-12 col-sm-2">
+                                        <div class="col-12 col-sm-3">
                                             <select class="form-select-sm form-select" id="sortByName">
                                                 <optgroup label="Sort by:">
                                                     <option value="">Default</option>
@@ -1557,7 +1557,7 @@
                                                 </optgroup>
                                             </select>
                                         </div>
-                                        <div class="col-12 col-sm-2">
+                                        <div class="col-12 col-sm-3 ">
                                             <button class="btn btn-outline-secondary btn-sm w-100 reset-btn" id="resetFilters" type="button"> 
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-clockwise me-1">
                                                     <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"></path>
@@ -1583,9 +1583,8 @@
                                                 <th></th>
                                                 <th>Student</th>
                                                 <th>Section</th>
-                                                <th>Avg score</th>
+                                                <th>Avg mastery</th>
                                                 <th>Progress</th>
-                                                <th>Last score</th>
                                                 <th>Time spent</th>
                                                 <th>Bagdes</th>
                                                 <th>Status</th>
@@ -1666,8 +1665,11 @@
                                 </div>
                                 <div class="chart-filters">
                                     <select class="form-select-sm form-select" id="subjectView">
-                                        <option value="single" selected="">Mathematics Only</option>
-                                        <option value="all">All Subjects</option>
+                                        <option value="all" selected="">All Subject</option>
+                                        <option value="mathematics">Mathematics</option>
+                                        <option value="english">English</option>
+                                        <option value="science">Science</option>
+                                        <option value="filipino">Filipino</option>
                                     </select>
                                     <select class="form-select-sm form-select" id="quarterFilter">
                                         <option value="1" selected="">Quarter 1</option>
@@ -1693,8 +1695,11 @@
                                     </div>
                                     <div class="chart-filters">
                                         <select class="form-select-sm form-select" id="bar-subjectView">
-                                            <option value="math" selected="">Mathematics Only</option>
-                                            <option value="all">All Subjects</option>
+                                            <option value="all" selected="">All Subject</option> 
+                                            <option value="mathematics">Mathematics</option> 
+                                            <option value="english">English</option> 
+                                            <option value="science">Science</option> 
+                                            <option value="filipino">Filipino</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1705,7 +1710,7 @@
                             </div>
 
                             <!--Radar Chart - Engagement vs Mastery-->
-                            <div class="chart-card">
+                            <!-- <div class="chart-card">
                                 <div class="chart-header">
                                     <div class="mb-2 chart-header-content">
                                         <h4 class="chart-title">Mastery vs Engagement</h4>
@@ -1718,13 +1723,16 @@
                                         </p>
                                     </div>
                                     <div class="chart-filters">
-                                        <select class="form-select-sm form-select" id="radar-subjectView">
-                                            <option value="math" selected="">Mathematics Only</option>
+                                          <select class="form-select-sm form-select" id="radar-subjectView">
                                             <option value="all">All Subjects</option>
+                                            <option value="Mathematics">Mathematics</option>
+                                            <option value="Science">Science</option>
+                                            <option value="English">English</option>
+                                            <option value="Filipino">Filipino</option>
                                         </select>
                                         <select class="form-select-sm form-select" id="radar-quarterView">
                                             <option value="1" selected="">Quarter 1</option>
-                                            <option value="2">Quarter 2</option>
+                                            <option value="2">Quarter 2 </option>
                                             <option value="3">Quarter 3</option>
                                             <option value="4">Quarter 4</option>
                                         </select>
@@ -1734,7 +1742,7 @@
                                 <div id="radar-chartInsights" class="chart-insights">
                                     <span> Viewing Mathematics progress for Quarter 1 — steady improvement observed from Lesson 1 to Lesson 8. </span>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!--Insights-->
@@ -2477,23 +2485,23 @@
                             <div class="modal-header teacher-modal-header">
                                 <div>
                                     <h5 class="modal-title">Pupil Details</h5>
-                                    <p class="text-light small">LRN: 1124958365832</p>
+                                    <p class="text-light small" id="pupilProfileLRN"></p>
                                 </div>
-                                <button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 12px;"></button>
+                                <!-- <button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 12px;"></button> -->
                             </div>
                             <div class="modal-body pupil-modal-body">
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="profile-header">
-                                            <img class="img-fluid profile-img" width="200" height="200" src="{{ asset('TeacherSide/assets/img/6.png') }}">
+                                            <img class="img-fluid profile-img" id="pupilProfileImg" width="200" height="200">
                                             <div class="profile-name-container">
-                                                <h1 class="profile-name">Kia Ysabelle Baynas</h1>
+                                                <h1 class="profile-name" id="pupilProfileName"></h1>
                                                 <span class="status-dot online"></span>
                                             </div>
                                             <div class="profile-meta">
                                                 <span class="profile-badge">Grade 4</span>
-                                                <span class="profile-badge">8 Y/O</span>
-                                                <span class="profile-badge">Male</span></div>
+                                                <span class="profile-badge" id="badgeAge"></span>
+                                                <span class="profile-badge" id="badgeGender"></span></div>
                                         </div>
                                         <div class="pupil-info-card">
                                             <div class="pupil-info-card-header">
@@ -2502,20 +2510,20 @@
                                             <div class="pupil-info-card-body">
                                                 <div class="pupil-info-row">
                                                     <div class="info-label"><span>Email</span></div>
-                                                    <div class="info-value"><span>john@example.com</span></div>
+                                                    <div class="info-value" id="pupilEmail"><span>john@example.com</span></div>
                                                 </div>
-                                                <div class="pupil-info-row">
+                                                <!-- <div class="pupil-info-row">
                                                     <div class="info-label"><span>Contact Number</span></div>
                                                     <div class="info-value"><span>+689 7472 472 2847</span></div>
-                                                </div>
+                                                </div> -->
                                                 <div class="pupil-info-row">
-                                                    <div class="info-label"><span>Address</span></div>
-                                                    <div class="info-value"><span>Abuyog, Sorsogon City</span></div>
+                                                    <div class="info-label"><span>Section</span></div>
+                                                    <div class="info-value" id="badgeSection"><span></span></div>
                                                 </div>
-                                                <div class="pupil-info-row">
+                                                <!-- <div class="pupil-info-row">
                                                     <div class="info-label"><span>Parent</span></div>
                                                     <div class="info-value"><span>Ana Bell</span></div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="pupil-info-card">
@@ -2525,11 +2533,11 @@
                                             <div class="pupil-info-card-body">
                                                 <div class="pupil-info-row">
                                                     <div class="info-label"><span>Date of Birth</span></div>
-                                                    <div class="info-value"><span>05/15/2015</span></div>
+                                                    <div class="info-value" id="badgeBirthDate"><span></span></div>
                                                 </div>
                                                 <div class="pupil-info-row">
                                                     <div class="info-label"><span>Enrolled</span></div>
-                                                    <div class="info-value"><span>05/15/2025</span></div>
+                                                    <div class="info-value" id="pupilEnrollmentDate"><span></span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2547,49 +2555,49 @@
                                             <div id="overview" class="tab-pane fade active show">
                                                 <div class="pupil-info-card">
                                                     <div class="pupil-info-card-header">
-                                                        <h6>Performance Summary - Science</h6>
+                                                        <h6>Performance Summary</h6>
                                                         <p class="text-muted mb-0 small">Compared to last month</p>
                                                     </div>
                                                     <div class="p-0 pupil-info-card-body">
                                                         <div class="row g-0 performance-stats-grid">
-                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom">
+                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom" id="avgMasteryCard">
                                                                 <div class="d-flex h-100 flex-column p-3">
                                                                     <small class="text-muted">Avg. Mastery</small>
                                                                     <div class="mt-1">
-                                                                        <span class="fw-bold mb-0 h5">87%</span>
-                                                                        <span class="ms-1 trend up">▲ 4%</span>
+                                                                        <span class="fw-bold mb-0 h5" id="avgMasteryValue">87%</span>
+                                                                        <span class="ms-1 trend up" id="avgMasteryTrend">▲ 4%</span>
                                                                     </div>
-                                                                    <small class="text-success mt-1 stats-comment">Improving</small>
+                                                                    <small class="text-success mt-1 stats-comment" id="avgMasteryStatus">Improving</small>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom">
+                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom" id="engagementCard">
                                                                 <div class="d-flex h-100 flex-column p-3">
                                                                     <small class="text-muted">Engagement&nbsp;</small>
                                                                     <div class="mt-1">
-                                                                        <span class="fw-bold mb-0 h5">92%</span>
-                                                                        <span class="ms-1 trend up">▲ 2%</span>
+                                                                        <span class="fw-bold mb-0 h5" id="engagementValue">92%</span>
+                                                                        <span class="ms-1 trend up" id="engagementTrend">▲ 2%</span>
                                                                     </div>
-                                                                    <small class="text-success mt-1 stats-comment">Active</small>
+                                                                    <small class="text-success mt-1 stats-comment" id="engagementStatus">Active</small>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom">
+                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom" id="avgSessionCard">
                                                                 <div class="d-flex h-100 flex-column p-3">
                                                                     <small class="text-muted">Avg. Session</small>
                                                                     <div class="mt-1">
-                                                                        <span class="fw-bold mb-0 h5">22 min</span>
-                                                                        <span class="ms-1 trend down">▼ 1 min</span>
+                                                                        <span class="fw-bold mb-0 h5" id="avgSessionValue">22 min</span>
+                                                                        <span class="ms-1 trend down" id="avgSessionTrend">▼ 1 min</span>
                                                                     </div>
-                                                                    <small class="text-warning mt-1 stats-comment">Slight Dip</small>
+                                                                    <small class="text-warning mt-1 stats-comment" id="avgSessionStatus">Slight Dip</small>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom">
+                                                            </div> 
+                                                            <div class="col-6 col-md-3 stats-item border-end border-bottom" id="badgesCard">
                                                                 <div class="d-flex h-100 flex-column p-3">
                                                                     <small class="text-muted">Badges Earned</small>
                                                                     <div class="mt-1">
-                                                                        <span class="fw-bold mb-0 h5">7</span>
-                                                                        <span class="ms-1 trend up">▲ 2</span>
+                                                                        <span class="fw-bold mb-0 h5" id="badgesValue">7</span>
+                                                                        <span class="ms-1 trend up" id="badgesTrend">▲ 2</span>
                                                                     </div>
-                                                                    <small class="text-success mt-1 stats-comment">Motivated</small>
+                                                                    <small class="text-success mt-1 stats-comment" id="badgesStatus">Motivated</small>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2599,7 +2607,7 @@
                                                     <div class="pupil-info-card-header">
                                                         <h6>Recent Activity</h6>
                                                     </div>
-                                                    <div class="pupil-info-card-body">
+                                                    <!-- <div class="pupil-info-card-body">
                                                         <div class="recent">
                                                             <div class="pupil-activity-item">
                                                                 <span class="me-2 badge badge-warning">Achievement</span>
@@ -2627,6 +2635,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div> -->
+                                                    <div class="pupil-info-card-body">
+                                                        <div class="recent" id="recent-activities"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2639,14 +2650,17 @@
                                                         </div>
                                                         <div class="filter-group">
                                                             <select class="form-select-sm form-select" id="pupilSubjectfilter">
-                                                                <option value="math" selected="">Mathematics Only</option>
                                                                 <option value="all">All Subjects</option>
+                                                                <option value="Mathematics">Mathematics</option>
+                                                                <option value="Science">Science</option>
+                                                                <option value="English">English</option>
+                                                                <option value="Filipino">Filipino</option>
                                                             </select>
                                                             <select class="form-select-sm form-select" id="pupilquarterFilter">
-                                                                <option value="Q1" selected="">Quarter 1</option>
-                                                                <option value="Q2">Quarter 2 </option>
-                                                                <option value="Q3">Quarter 3</option>
-                                                                <option value="Q4">Quarter 4</option>
+                                                                <option value="1" selected="">Quarter 1</option>
+                                                                <option value="2">Quarter 2 </option>
+                                                                <option value="3">Quarter 3</option>
+                                                                <option value="4">Quarter 4</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -2662,8 +2676,8 @@
                                                         <h6>Learning Progress</h6>
                                                         <small class="text-muted">vs Class Average</small>
                                                     </div>
-                                                    <div class="pupil-info-card-body">
-                                                        <div class="mb-4 subject-progress-item">
+                                                    <div class="pupil-info-card-body" id="learningProgressContainer">
+                                                        <!-- <div class="mb-4 subject-progress-item">
                                                             <div class="d-flex justify-content-between mb-1">
                                                                 <span class="fw-medium learning-subject">Science</span>
                                                                 <span class="fw-bold learning-score">85% <span class="trend down">▼ 3%</span></span>
@@ -2702,18 +2716,19 @@
                                                                 <div class="progress-bar progress-bar-success" style="width:92%;"></div>
                                                             </div>
                                                             <small class="text-muted mt-1">Top performer • Exceeds class avg (87%)</small>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="insight-banner">
                                                             <div class="d-flex align-items-start">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16" class="bi bi-lightbulb text-warning me-1">
                                                                     <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"></path>
                                                                 </svg>
-                                                                <small><strong>Insight:</strong> Strong in Math &amp; English. Science and Filipino need reinforcement through targeted practice.</small>
+                                                                <small id="pupilInsight"><strong>Insight:</strong> Strong in Math &amp; English. Science and Filipino need reinforcement through targeted practice.</small>
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
-                                                <div class="pupil-info-card" style="height: 350px; overflow: hidden; display: flex;   flex-direction: column;   height: 350px;">
+                                                <!-- <div class="pupil-info-card" style="height: 350px; overflow: hidden; display: flex;   flex-direction: column;   height: 350px;">
                                                     <div class="pupil-info-card-header">
                                                         <h6>Recent Quizzes</h6>
                                                     </div>
@@ -2753,7 +2768,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -3359,6 +3374,16 @@
                 // Pass the fetched data to initSectionsManager
                 initSectionsManager(result.sections || [], result.pupils || []);
 
+                if (result.pupils && result.pupils.length) {
+                    // pick the first pupil initially
+                    const firstPupil = result.pupils[0];
+                    initRadarChartForPupil(firstPupil, 'all', 1);
+                    initStudentsTable(result.pupils);
+
+                    // Optional: store globally for later filtering
+                    //window.globalPupils = result.pupils;
+                }
+
             } catch (err) {
                 console.error("Fetch Error:", err);
             }
@@ -3367,6 +3392,8 @@
         // Trigger fetchSections on page load
         document.addEventListener('DOMContentLoaded', fetchSections);
     </script>
+
+
     
 
 
@@ -3391,6 +3418,7 @@
     console.log("Pupil Progress", window.dashboardData.pupil_progress ?? {});
     console.log("Recent Activity", window.dashboardData.recentActivity ?? {});
     console.log("Subject Progress", window.dashboardData.quarterlyProgress ?? {});
+    console.log("Over all Stats", window.dashboardData.overall_progress ?? {});
 
     document.addEventListener('DOMContentLoaded', () => {
         const data = window.dashboardData;
@@ -3406,6 +3434,89 @@
                 (document.getElementById('avg-session-time').textContent = (data.avg_session_time || 0) + ' mins');
         }
     });
+</script>
+
+
+<script>
+    window.dashboardData = @json($stats ?? []);
+
+    console.log("Dashboard Data:", window.dashboardData);
+
+    function updateDashboardMetrics(data) {
+        document.getElementById("performanceValue").textContent = data.performance + "%";
+        document.getElementById("engagementValue").textContent = data.engagement_rate + "%";
+        document.getElementById("completionValue").textContent = data.completion_rate + "%";
+        document.getElementById("studyTimeValue").textContent = data.avg_study_time + " min";
+
+        updateTrend("performance", data.performance, data.lastWeekPerformance);
+        updateTrend("engagement", data.engagement_rate, data.lastWeekEngagement);
+        updateTrend("completion", data.completion_rate, data.lastWeekCompletion);
+        updateTrend("study", data.avg_study_time, data.lastWeekStudyTime);
+    }
+
+    // RUN IMMEDIATELY — NOT inside DOMContentLoaded
+    if (window.dashboardData?.overall_progress) {
+        updateDashboardMetrics(window.dashboardData.overall_progress);
+    }
+
+    function setArrow(icon, direction) {
+        const parent = icon.parentNode;
+        let newSvg;
+
+        if (direction === "up") {
+            newSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
+            </svg>`;
+        } else if (direction === "down") {
+            newSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"></path>
+            </svg>`;
+        }
+
+        parent.replaceChild(new DOMParser().parseFromString(newSvg, "text/html").body.firstChild, icon);
+    }
+
+
+    function updateTrend(name, current, lastWeek) {
+        const wrapper = document.getElementById(name + "TrendWrapper");
+        const icon = document.getElementById(name + "TrendIcon");
+        const text = document.getElementById(name + "TrendText");
+
+        current = Number(current);
+        lastWeek = Number(lastWeek);
+
+        const diff = current - lastWeek;
+        const positive = diff > 0;
+        const equal = diff === 0;
+        const negative = diff < 0;
+
+        text.textContent =
+            (diff > 0 ? "+" : "") +
+            diff.toFixed(1) +
+            (name === "study" ? " min" : "%");
+
+        wrapper.classList.remove("trend-up", "trend-down", "trend-neutral");
+
+        if (positive) {
+            wrapper.style.color = "var(--success-color)";
+            wrapper.classList.add("trend-up");
+            setArrow(icon, "up");
+        }
+        else if (negative) {
+            wrapper.style.color = "var(--danger-color)";
+            wrapper.classList.add("trend-down");
+            setArrow(icon, "down");
+        }
+        else {
+            wrapper.style.color = "var(--warning-color)";
+            wrapper.classList.add("trend-neutral");
+            icon.innerHTML = `
+                <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5z"></path>
+            `;
+        }
+    }
+
+
 </script>
 
 
