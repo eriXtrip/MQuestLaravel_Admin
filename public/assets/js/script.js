@@ -959,7 +959,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 🔹 CSV Export
   // =============================================================
   function exportAtRiskCSV(students) {
-    if (!students.length) return alert('No data available for export.');
+    //if (!students.length) return alert('No data available for export.');
 
     const csvContent = [
       ['Name', 'Last Active (days ago)', 'Progress (%)', 'Subject', 'Quarter', 'Avg. Session (min)', 'Status'],

@@ -81,6 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ================================
   // CLASS PERFORMANCE LINE CHART
   // ================================
+
+  // Get raw data
+  const raw = window.subjectPerformance || {};
+
+  // Define subjects & colors
   const subjectColors = {
     math: '#FFC107',
     english: '#2196F3',
@@ -88,78 +93,185 @@ document.addEventListener('DOMContentLoaded', () => {
     filipino: '#607D8B'
   };
 
-  const quarterlyData = {
-    q1: {
-      math: [75, 78, 82, 85, 88, 90, 92, 95],
-      science: [80, 82, 85, 87, 84, 88, 86, 92],
-      english: [85, 83, 86, 89, 87, 90, 88, 91],
-      filipino: [78, 80, 83, 85, 87, 89, 90, 93]
-    },
-    q2: {
-      math: [78, 80, 85, 88, 90, 92, 94, 96],
-      science: [82, 84, 87, 89, 86, 90, 88, 94],
-      english: [87, 85, 88, 91, 89, 92, 90, 93],
-      filipino: [80, 82, 85, 87, 89, 91, 92, 95]
-    },
-    q3: {
-      math: [80, 83, 87, 90, 92, 94, 95, 97],
-      science: [84, 86, 89, 91, 88, 92, 90, 95],
-      english: [89, 87, 90, 93, 91, 94, 92, 95],
-      filipino: [82, 84, 87, 89, 91, 93, 94, 96]
-    },
-    q4: {
-      math: [82, 85, 89, 92, 94, 96, 97, 98],
-      science: [86, 88, 91, 93, 90, 94, 92, 96],
-      english: [91, 89, 92, 95, 93, 96, 94, 97],
-      filipino: [84, 86, 89, 91, 93, 95, 96, 97]
+  const totalLessons = 8; // maximum lessons per quarter (from your data)
+
+  // Zero-fill quarterly data
+  const quarterlyData = { q1: {}, q2: {}, q3: {}, q4: {} };
+
+  Object.keys(subjectColors).forEach(subject => {
+    for (let q = 1; q <= 4; q++) {
+      const quarterKey = `q${q}`;
+
+      // Map lowercase keys to raw object keys
+      let rawKey = subject;
+      if (subject === 'math') rawKey = 'Mathematics';
+      if (subject === 'english') rawKey = 'English';
+      if (subject === 'science') rawKey = 'Science';
+      if (subject === 'filipino') rawKey = 'Filipino';
+
+      const lessons = (raw[rawKey] && raw[rawKey][q]) || [];
+
+      // Use the actual number of lessons in this quarter
+      const progressArray = lessons.map(l => Number(l.avg_progress || 0));
+
+      quarterlyData[quarterKey][subject] = progressArray;
     }
-  };
+  });
 
+  console.log("🔥 Final quarterlyData for Charts:", quarterlyData);
+  console.log("🔥 Raw subjectPerformance data:", raw);
+
+  // const quarterlyData = {
+  //   q1: {
+  //     math: [75, 78, 82, 85, 88, 90, 92, 95],
+  //     science: [80, 82, 85, 87, 84, 88, 86, 92],
+  //     english: [85, 83, 86, 89, 87, 90, 88, 91],
+  //     filipino: [78, 80, 83, 85, 87, 89, 90, 93]
+  //   },
+  //   q2: {
+  //     math: [78, 80, 85, 88, 90, 92, 94, 96],
+  //     science: [82, 84, 87, 89, 86, 90, 88, 94],
+  //     english: [87, 85, 88, 91, 89, 92, 90, 93],
+  //     filipino: [80, 82, 85, 87, 89, 91, 92, 95]
+  //   },
+  //   q3: {
+  //     math: [80, 83, 87, 90, 92, 94, 95, 97],
+  //     science: [84, 86, 89, 91, 88, 92, 90, 95],
+  //     english: [89, 87, 90, 93, 91, 94, 92, 95],
+  //     filipino: [82, 84, 87, 89, 91, 93, 94, 96]
+  //   },
+  //   q4: {
+  //     math: [82, 85, 89, 92, 94, 96, 97, 98],
+  //     science: [86, 88, 91, 93, 90, 94, 92, 96],
+  //     english: [91, 89, 92, 95, 93, 96, 94, 97],
+  //     filipino: [84, 86, 89, 91, 93, 95, 96, 97]
+  //   }
+  // };
+
+  // const initialData = {
+  //   labels: ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4', 'Lesson 5', 'Lesson 6', 'Lesson 7', 'Lesson 8'],
+  //   datasets: [
+  //     {
+  //       label: 'Mathematics',
+  //       data: quarterlyData.q1.math,
+  //       borderColor: subjectColors.math,
+  //       backgroundColor: 'rgba(255, 193, 7, 0.1)',
+  //       borderWidth: 3,
+  //       fill: true,
+  //       tension: 0.3
+  //     },
+  //     {
+  //       label: 'English',
+  //       data: quarterlyData.q1.english,
+  //       borderColor: subjectColors.english,
+  //       backgroundColor: 'rgba(33, 150, 243, 0.1)',
+  //       borderWidth: 3,
+  //       fill: true,
+  //       tension: 0.3
+  //     },
+  //     {
+  //       label: 'Science',
+  //       data: quarterlyData.q1.science,
+  //       borderColor: subjectColors.science,
+  //       backgroundColor: 'rgba(76, 175, 80, 0.1)',
+  //       borderWidth: 3,
+  //       fill: true,
+  //       tension: 0.3
+  //     },
+  //     {
+  //       label: 'Filipino',
+  //       data: quarterlyData.q1.filipino,
+  //       borderColor: subjectColors.filipino,
+  //       backgroundColor: 'rgba(96, 125, 139, 0.1)',
+  //       borderWidth: 3,
+  //       fill: true,
+  //       tension: 0.3
+  //     }
+  //   ]
+  // };
+
+  // const performanceCtx = document.getElementById('performanceChart')?.getContext('2d');
+  // let performanceChart = null;
+
+  // if (performanceCtx) {
+  //   performanceChart = new Chart(performanceCtx, {
+  //     type: 'line',
+  //     data: initialData,
+  //     options: {
+  //       responsive: true,
+  //       maintainAspectRatio: false,
+  //       plugins: {
+  //         legend: { position: 'bottom' },
+  //         tooltip: { mode: 'index', intersect: false }
+  //       },
+  //       scales: {
+  //         y: {
+  //           min: 70,
+  //           max: 100,
+  //           beginAtZero: false
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
+  // function updatePerformanceChart() {
+  //   if (!performanceChart) return;
+  //   const subject = document.getElementById('line-chart-subject-filter')?.value || 'all';
+  //   const quarter = document.getElementById('line-chart-quarter-filter')?.value || 'q1';
+  //   const quarterData = quarterlyData[quarter] || quarterlyData.q1;
+
+  //   if (subject === 'all') {
+  //     performanceChart.data.datasets = Object.keys(quarterData).map(sub => ({
+  //       label: sub.charAt(0).toUpperCase() + sub.slice(1),
+  //       data: quarterData[sub],
+  //       borderColor: subjectColors[sub],
+  //       backgroundColor: `rgba(${hexToRgb(subjectColors[sub])}, 0.1)`,
+  //       borderWidth: 3,
+  //       fill: true,
+  //       tension: 0.3
+  //     }));
+  //   } else {
+  //     performanceChart.data.datasets = [{
+  //       label: subject.charAt(0).toUpperCase() + subject.slice(1),
+  //       data: quarterData[subject],
+  //       borderColor: subjectColors[subject],
+  //       backgroundColor: `rgba(${hexToRgb(subjectColors[subject])}, 0.1)`,
+  //       borderWidth: 3,
+  //       fill: true,
+  //       tension: 0.3
+  //     }];
+  //   }
+  //   performanceChart.update();
+  // }
+
+  // function hexToRgb(hex) {
+  //   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  //   return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '0,0,0';
+  // }
+
+  // const subjectFilterEl = document.getElementById('line-chart-subject-filter');
+  // const quarterFilterEl = document.getElementById('line-chart-quarter-filter');
+  // if (subjectFilterEl) subjectFilterEl.addEventListener('change', updatePerformanceChart);
+  // if (quarterFilterEl) quarterFilterEl.addEventListener('change', updatePerformanceChart);
+
+  // Chart setup (use the same initialData as before)
   const initialData = {
-    labels: ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4', 'Lesson 5', 'Lesson 6', 'Lesson 7', 'Lesson 8'],
-    datasets: [
-      {
-        label: 'Mathematics',
-        data: quarterlyData.q1.math,
-        borderColor: subjectColors.math,
-        backgroundColor: 'rgba(255, 193, 7, 0.1)',
-        borderWidth: 3,
-        fill: true,
-        tension: 0.3
-      },
-      {
-        label: 'English',
-        data: quarterlyData.q1.english,
-        borderColor: subjectColors.english,
-        backgroundColor: 'rgba(33, 150, 243, 0.1)',
-        borderWidth: 3,
-        fill: true,
-        tension: 0.3
-      },
-      {
-        label: 'Science',
-        data: quarterlyData.q1.science,
-        borderColor: subjectColors.science,
-        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-        borderWidth: 3,
-        fill: true,
-        tension: 0.3
-      },
-      {
-        label: 'Filipino',
-        data: quarterlyData.q1.filipino,
-        borderColor: subjectColors.filipino,
-        backgroundColor: 'rgba(96, 125, 139, 0.1)',
-        borderWidth: 3,
-        fill: true,
-        tension: 0.3
-      }
-    ]
+    labels: Array.from({ length: totalLessons }, (_, i) => `Lesson ${i + 1}`),
+    datasets: Object.keys(subjectColors).map(sub => ({
+      label: sub.charAt(0).toUpperCase() + sub.slice(1),
+      data: quarterlyData.q1[sub],
+      borderColor: subjectColors[sub],
+      backgroundColor: `rgba(${hexToRgb(subjectColors[sub])}, 0.1)`,
+      borderWidth: 3,
+      fill: true,
+      tension: 0.3
+    }))
   };
 
+  // Chart.js instance
   const performanceCtx = document.getElementById('performanceChart')?.getContext('2d');
   let performanceChart = null;
-
   if (performanceCtx) {
     performanceChart = new Chart(performanceCtx, {
       type: 'line',
@@ -167,21 +279,13 @@ document.addEventListener('DOMContentLoaded', () => {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { position: 'bottom' },
-          tooltip: { mode: 'index', intersect: false }
-        },
-        scales: {
-          y: {
-            min: 70,
-            max: 100,
-            beginAtZero: false
-          }
-        }
+        plugins: { legend: { position: 'bottom' }, tooltip: { mode: 'index', intersect: false } },
+        scales: { y: { min: 0, max: 100, beginAtZero: true } }
       }
     });
   }
 
+  // Update function (keeps the same)
   function updatePerformanceChart() {
     if (!performanceChart) return;
     const subject = document.getElementById('line-chart-subject-filter')?.value || 'all';
@@ -209,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tension: 0.3
       }];
     }
+
     performanceChart.update();
   }
 
@@ -217,10 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '0,0,0';
   }
 
-  const subjectFilterEl = document.getElementById('line-chart-subject-filter');
-  const quarterFilterEl = document.getElementById('line-chart-quarter-filter');
-  if (subjectFilterEl) subjectFilterEl.addEventListener('change', updatePerformanceChart);
-  if (quarterFilterEl) quarterFilterEl.addEventListener('change', updatePerformanceChart);
+  document.getElementById('line-chart-subject-filter')?.addEventListener('change', updatePerformanceChart);
+  document.getElementById('line-chart-quarter-filter')?.addEventListener('change', updatePerformanceChart);
 
 
   // ================================
@@ -230,8 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const qFilter = document.getElementById('completionFilterQuarter')?.value || '';
     const sFilter = document.getElementById('completionFilterSub')?.value || '';
 
-    const allQuarters = ['Q1', 'Q2', 'Q3', 'Q4'];
-    const allSubjects = new Set();
+    const raw = window.subjectPerformance || {};
+    const allQuarters = ['1', '2', '3', '4']; // quarters as numbers in strings
 
     const subjectColors = {
       Mathematics: '#FFC107',
@@ -240,83 +343,52 @@ document.addEventListener('DOMContentLoaded', () => {
       Filipino: '#607D8B'
     };
 
-    document.querySelectorAll('.lesson-data > [data-quarter]').forEach(div => {
-      const sub = div.getAttribute('data-subject');
-      if (sub) allSubjects.add(sub);
-    });
+    const subjectMap = {
+      Mathematics: 'math',
+      English: 'english',
+      Science: 'science',
+      Filipino: 'filipino'
+    };
 
-    const subjects = Array.from(allSubjects).sort();
+    const reverseSubjectMap = {
+      math: 'Mathematics',
+      english: 'English',
+      science: 'Science',
+      filipino: 'Filipino'
+    };
 
+    const allSubjects = Object.keys(subjectMap).map(s => subjectMap[s]);
+
+    // Populate dropdown
     const subjSelect = document.getElementById('completionFilterSub');
     if (subjSelect && subjSelect.options.length <= 1) {
       subjSelect.innerHTML = '<option value="">All Subjects</option>';
-      subjects.forEach(s => {
+      allSubjects.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s;
-        opt.textContent = s;
+        opt.textContent = reverseSubjectMap[s];
         subjSelect.appendChild(opt);
       });
     }
 
-    if (qFilter && sFilter) {
-      const lessons = Array.from(
-        document.querySelectorAll(`.lesson-data [data-quarter="${qFilter}"][data-subject="${sFilter}"] [data-rate]`)
-      );
-
-      const lessonLabels = lessons.map(el => el.getAttribute('data-lesson'));
-      const rates = lessons.map(el => parseInt(el.getAttribute('data-rate'), 10));
-
-      return {
-        labels: lessonLabels,
-        datasets: [{
-          label: `${sFilter} (${qFilter})`,
-          data: rates,
-          backgroundColor: subjectColors[sFilter] || '#888',
-          borderColor: '#fff',
-          borderWidth: 1.2,
-          borderRadius: 4,
-          borderSkipped: false
-        }]
-      };
-    }
-
-    if (qFilter && !sFilter) {
-      const datasets = [{
-        label: `Average Rate (${qFilter})`,
-        data: subjects.map(subject => {
-          const lessons = Array.from(
-            document.querySelectorAll(`.lesson-data [data-quarter="${qFilter}"][data-subject="${subject}"] [data-rate]`)
-          );
-          if (lessons.length === 0) return 0;
-          const rates = lessons.map(el => parseInt(el.getAttribute('data-rate'), 10));
-          return Math.round(rates.reduce((a, b) => a + b, 0) / rates.length);
-        }),
-        backgroundColor: subjects.map(s => subjectColors[s] || '#888'),
-        borderColor: '#fff',
-        borderWidth: 1.2,
-        borderRadius: 4,
-        borderSkipped: false
-      }];
-      return { labels: subjects, datasets };
-    }
-
+    // Prepare quarters for chart
     const quarters = qFilter ? [qFilter] : allQuarters;
-    const filteredSubjects = sFilter ? [sFilter] : subjects;
+    const filteredSubjects = sFilter ? [sFilter] : allSubjects;
 
     const datasets = filteredSubjects.map(subject => {
       const data = quarters.map(q => {
-        const lessons = Array.from(
-          document.querySelectorAll(`.lesson-data [data-quarter="${q}"][data-subject="${subject}"] [data-rate]`)
-        );
+        const rawSubject = reverseSubjectMap[subject];
+        const lessons = (raw[rawSubject] && raw[rawSubject][q]) || [];
         if (lessons.length === 0) return 0;
-        const rates = lessons.map(el => parseInt(el.getAttribute('data-rate'), 10));
-        return Math.round(rates.reduce((a, b) => a + b, 0) / rates.length);
+
+        const avg = lessons.map(l => Number(l.avg_progress || 0));
+        return Math.round(avg.reduce((a, b) => a + b, 0) / avg.length);
       });
 
       return {
-        label: subject,
+        label: reverseSubjectMap[subject],
         data,
-        backgroundColor: subjectColors[subject] || '#888',
+        backgroundColor: subjectColors[reverseSubjectMap[subject]] || '#888',
         borderColor: '#fff',
         borderWidth: 1.2,
         borderRadius: 4,
@@ -324,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
 
-    const labels = quarters.map(q => 'Quarter ' + q.slice(1));
+    const labels = quarters.map(q => 'Quarter ' + q);
     return { labels, datasets };
   }
 

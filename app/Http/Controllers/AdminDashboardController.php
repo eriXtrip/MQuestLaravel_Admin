@@ -27,8 +27,12 @@ class AdminDashboardController extends Controller
         $activeUsers = 0;
         $activeRatePercent = 0;
         $subjectSummaries = [];
+        $subjectPerformance = [];
         $subjectUsers = [];
         $teachersWithSections = [];
+        $Teachers_list = [];
+        $Pupils_list = [];
+        $Student_progress_Subject = [];
 
         $token = session('node_token');
 
@@ -75,6 +79,11 @@ class AdminDashboardController extends Controller
                 if ($summaryResponse->successful()) {
                     $fullResponse = $summaryResponse->json();
 
+                    $subjectPerformance = $fullResponse['subject_performance'] ?? [];
+                    $Teachers_list = $fullResponse['Teachers_list'] ?? [];
+                    $Pupils_list = $fullResponse['Pupils_list'] ?? [];
+                    $Student_progress_Subject = $fullResponse['Student_progress_Subject'] ?? [];
+
                     // ✅ Extract the 'data' array
                     if (is_array($fullResponse) && isset($fullResponse['data']) && is_array($fullResponse['data'])) {
                         $subjectSummaries = $fullResponse['data'];
@@ -92,6 +101,11 @@ class AdminDashboardController extends Controller
                         'body' => $summaryResponse->body()
                     ]);
                     $subjectSummaries = [];
+                    $subjectPerformance = [];
+                    $Teachers_list = [];
+                    $Pupils_list = [];
+                    $Student_progress_Subject = [];
+
                 }
 
                 // ✅ 3. Fetch subject users (with avatar thumbnails)
@@ -214,11 +228,15 @@ class AdminDashboardController extends Controller
             'activeUsers',
             'activeRatePercent',
             'subjectSummaries',
+            'subjectPerformance',
             'subjectUsers',
             'usersBySubject',
             'allLessons',     
             'allContents',
-            'teachersWithSections'
+            'teachersWithSections',
+            'Teachers_list',
+            'Pupils_list',
+            'Student_progress_Subject'
         ));
     }
 

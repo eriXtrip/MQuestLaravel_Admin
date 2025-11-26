@@ -87,7 +87,7 @@
                         <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"></path>
                     </svg></span>
                 <form class="d-sm-inline-block ps-4" inline="true">
-                    <div class="input-group-navbar input-group search-bar"><input class="form-control" type="text" placeholder="Search here..." aria-label="Search"><button class="btn" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search">
+                    <div class="input-group-navbar input-group search-bar" style="display:none;"><input class="form-control" type="text" placeholder="Search here..." aria-label="Search"><button class="btn" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                             </svg></button></div>
                 </form>
@@ -185,7 +185,7 @@
                             <p class="greeting-subtitle">Manage lessons, users &amp; quizzes with ease.</p>
                         </div>
                     </div>
-                    <div class="header-actions"><button class="btn btn-sm open-task-btn" id="openTaskManager" title="Open Task Manager"><i class="bi bi-calendar-check"></i> <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-list-task me-2">
+                    <div class="header-actions" style="display:none;"><button class="btn btn-sm open-task-btn" id="openTaskManager" title="Open Task Manager"><i class="bi bi-calendar-check"></i> <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-list-task me-2">
                                 <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"></path>
                                 <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"></path>
                                 <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z"></path>
@@ -406,10 +406,10 @@
                                     <div class="d-flex gap-2 completion-filter">
                                         <select class="form-select-sm form-select" id="completionFilterQuarter">
                                             <option value="" selected="">All Quarter </option>
-                                            <option value="Q1">Quarter 1</option>
-                                            <option value="Q2">Quarter 2</option>
-                                            <option value="Q3">Quarter 3</option>
-                                            <option value="Q4">Quarter 4</option>
+                                            <option value="1">Quarter 1</option>
+                                            <option value="2">Quarter 2</option>
+                                            <option value="3">Quarter 3</option>
+                                            <option value="4">Quarter 4</option>
                                         </select>
                                         <select class="form-select-sm form-select" id="completionFilterSub">
                                             <option value="" selected="">All Subjects</option>
@@ -520,7 +520,7 @@
                                 </div>
                             </div>
                             <div class="control-right">
-                                <div class="filter-select">
+                                <div class="filter-select" style="display: none;">
                                     <select id="atRiskQuarterFilter" class="form-select">
                                         <option value="" selected="">All Quarter</option>
                                         <option value="Q1">Quarter 1</option>
@@ -578,11 +578,11 @@
                                         <th>subject</th>
                                         <th>avg. session</th>
                                         <th>status</th>
-                                        <th>actions</th>
+                                        <!-- <th>actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="userTableBody-1">
-                                    <tr data-active="true">
+                                    <!-- <tr data-active="true">
                                         <td></td>
                                         <td data-label="Name" data-student="Maria Santos">Maria Santos</td>
                                         <td data-label="Last Active" data-last-active="18">18 days ago</td>
@@ -629,7 +629,7 @@
                                                 </svg>
                                             </button>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -828,7 +828,7 @@
                             <div class="control-left">
                                 <div class="search-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search search-icon">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                                    </svg><input type="text" id="searchActivity" class="form-control searchName-input" placeholder="Search here..."></div>
+                                    </svg><input type="text" id="searchActivity" class="form-control searchName-input"  placeholder="Search here..."></div>
                             </div>
                             <div class="control-right">
                                 <div class="activity-log-types"><select id="filterDate-1" class="form-select">
@@ -2538,9 +2538,15 @@
 
     <script>
         console.log("📘 Subject Summaries:", @json($subjectSummaries));
+        console.log("📗 Subject Performance:", @json($subjectPerformance));
+        window.subjectPerformance = @json($subjectPerformance);
         console.log("👥 Subject Users:", @json($subjectUsers));
         console.log("👥 Users by Subject:", @json($usersBySubject));
         console.log("👩‍🏫 Teachers with Sections:", @json($teachersWithSections));
+        console.log("Teacher List:", @json($Teachers_list));
+        console.log("Pupil List:", @json($Pupils_list));
+        console.log("Student Progress:", @json($Student_progress_Subject));
+
 
         window.allLessons = {!! json_encode($allLessons) !!};
         window.allContents = {!! json_encode($allContents) !!};
@@ -2868,6 +2874,189 @@
             selectedInput.addEventListener('change', renderPeople);
             new MutationObserver(renderPeople).observe(selectedInput, { attributes: true, attributeFilter: ['value'] });
         });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const pupils = @json($Pupils_list);
+            const studentProgress = @json($Student_progress_Subject);
+
+            const searchInput = document.getElementById("searchInput-1");
+            const quarterFilter = document.getElementById("atRiskQuarterFilter");
+            const subjectFilter = document.getElementById("atRiskSubjectFilter");
+            const sortSelect = document.getElementById("atRiskSort");
+            const clearBtn = document.getElementById("clearFiltersBtn");
+            const exportBtn = document.getElementById("exportBtn-2");
+
+            const rowsPerPage = 5;
+            let currentPage = 1;
+            let filteredStudents = [];
+
+            function updateTable() {
+                currentPage = 1; // reset to first page when filters change
+                filteredStudents = getFilteredStudents();
+                renderTablePage();
+                renderPagination();
+            }
+
+            function getFilteredStudents() {
+                const AT_RISK_THRESHOLD = 75;
+
+                let students = pupils.filter(pupil => {
+                    const progressRecords = studentProgress.filter(s => s.pupil_id === pupil.pupil_id);
+                    const atRiskRecords = progressRecords.filter(record => parseFloat(record.progress_percent) < AT_RISK_THRESHOLD);
+
+                    const subjectMatch = subjectFilter.value ? atRiskRecords.some(r => r.subject_name === subjectFilter.value) : true;
+                    const quarterMatch = quarterFilter.value ? atRiskRecords.some(r => r.quarter === quarterFilter.value) : true;
+                    const searchMatch = searchInput.value ? pupil.full_name.toLowerCase().includes(searchInput.value.toLowerCase()) : true;
+
+                    return atRiskRecords.length > 0 && subjectMatch && quarterMatch && searchMatch;
+                });
+
+                // Sort
+                if (sortSelect.value) {
+                    const [key, order] = sortSelect.value.split("-");
+                    students.sort((a, b) => {
+                        if (key === "name") return order === "asc" ? a.full_name.localeCompare(b.full_name) : b.full_name.localeCompare(a.full_name);
+                        if (key === "last-active") {
+                            const dateA = new Date(a.last_active || 0);
+                            const dateB = new Date(b.last_active || 0);
+                            return order === "asc" ? dateA - dateB : dateB - dateA;
+                        }
+                        if (key === "session") {
+                            const sessionA = a.avg_session_seconds || 0;
+                            const sessionB = b.avg_session_seconds || 0;
+                            return order === "asc" ? sessionA - sessionB : sessionB - sessionA;
+                        }
+                    });
+                }
+
+                return students;
+            }
+
+            function renderTablePage() {
+                const tableBody = document.getElementById("userTableBody-1");
+                tableBody.innerHTML = "";
+
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+                const pageStudents = filteredStudents.slice(startIndex, endIndex);
+
+                pageStudents.forEach(pupil => {
+                    const progressRecords = studentProgress.filter(s => s.pupil_id === pupil.pupil_id);
+                    progressRecords.forEach(record => {
+                        if (parseFloat(record.progress_percent) < 75) {
+                            if ((subjectFilter.value && record.subject_name !== subjectFilter.value) ||
+                                (quarterFilter.value && record.quarter !== quarterFilter.value)) return;
+
+                            const tr = document.createElement("tr");
+                            tr.innerHTML = `
+                                <td></td>
+                                <td data-label="Name">${pupil.full_name}</td>
+                                <td data-label="Last Active">${pupil.last_active ? new Date(pupil.last_active).toLocaleDateString() : "N/A"}</td>
+                                <td data-label="Progress">${record.progress_percent}%</td>
+                                <td data-label="Subject">${record.subject_name}</td>
+                                <td data-label="Avg. Session">${Math.round(pupil.avg_session_seconds / 60)}m</td>
+                                <td data-label="Status"><span class="text-white bg-danger rounded-pill px-2 py-1 badge">At Risk</span></td>
+                            `;
+                            tableBody.appendChild(tr);
+                        }
+                    });
+                });
+
+                // Update counts
+                document.getElementById("startCount-1").textContent = filteredStudents.length ? startIndex + 1 : 0;
+                document.getElementById("endCount-1").textContent = endIndex > filteredStudents.length ? filteredStudents.length : endIndex;
+                document.getElementById("totalCount-1").textContent = filteredStudents.length;
+
+                document.getElementById("noAtRiskResults").style.display = filteredStudents.length === 0 ? "block" : "none";
+            }
+
+            function renderPagination() {
+                const paginationContainer = document.querySelector(".pagination-container ul.pagination");
+                paginationContainer.innerHTML = "";
+
+                const totalPages = Math.ceil(filteredStudents.length / rowsPerPage);
+
+                const createPageItem = (label, page, disabled = false, active = false) => {
+                    const li = document.createElement("li");
+                    li.className = `page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}`;
+                    const a = document.createElement("a");
+                    a.className = "page-link";
+                    a.href = "#";
+                    a.textContent = label;
+                    a.addEventListener("click", e => {
+                        e.preventDefault();
+                        if (!disabled) {
+                            currentPage = page;
+                            renderTablePage();
+                            renderPagination();
+                        }
+                    });
+                    li.appendChild(a);
+                    return li;
+                };
+
+                // Previous
+                paginationContainer.appendChild(createPageItem("Previous", currentPage - 1, currentPage === 1));
+
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationContainer.appendChild(createPageItem(i, i, false, currentPage === i));
+                }
+
+                // Next
+                paginationContainer.appendChild(createPageItem("Next", currentPage + 1, currentPage === totalPages));
+            }
+
+            // Event listeners
+            searchInput.addEventListener("input", updateTable);
+            quarterFilter.addEventListener("change", updateTable);
+            subjectFilter.addEventListener("change", updateTable);
+            sortSelect.addEventListener("change", updateTable);
+
+            clearBtn.addEventListener("click", () => {
+                searchInput.value = "";
+                quarterFilter.value = "";
+                subjectFilter.value = "";
+                sortSelect.value = "";
+                updateTable();
+            });
+
+            exportBtn.addEventListener("click", () => {
+                // Use currently filtered students
+                const csvData = [];
+                const AT_RISK_THRESHOLD = 75;
+                filteredStudents.forEach(pupil => {
+                    const progressRecords = studentProgress.filter(s => s.pupil_id === pupil.pupil_id);
+                    progressRecords.forEach(record => {
+                        if (parseFloat(record.progress_percent) < AT_RISK_THRESHOLD) {
+                            if ((subjectFilter.value && record.subject_name !== subjectFilter.value) ||
+                                (quarterFilter.value && record.quarter !== quarterFilter.value)) return;
+
+                            csvData.push({
+                                name: pupil.full_name,
+                                lastActive: pupil.last_active ? Math.round((new Date() - new Date(pupil.last_active)) / (1000 * 60 * 60 * 24)) + " days ago" : "N/A",
+                                completionRate: record.progress_percent,
+                                subject: record.subject_name,
+                                quarter: record.quarter,
+                                sessionTime: Math.round(pupil.avg_session_seconds / 60),
+                                status: "At Risk"
+                            });
+                        }
+                    });
+                });
+
+                exportAtRiskCSV(csvData);
+            });
+
+            // Initial render
+            updateTable();
+        });
+
+
+
     </script>
 
 
