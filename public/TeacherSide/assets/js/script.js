@@ -711,26 +711,26 @@ function initLessonFooterToggle() {
    12. Dynamic Lesson List + Lesson Details + Overview/Detailed Mode
    ============================================================= */
 function initLessonListModule() {
-  const lessonsData = {
-    1: [
-      { id: 1, title: "Lesson 1: Introduction to Fractions", desc: "Learn basics of fractions.", completion: 45 },
-      { id: 2, title: "Lesson 2: Adding and Subtracting Fractions", desc: "Master adding and subtracting fractions.", completion: 80 },
-      { id: 3, title: "Lesson 3: Multiplying Fractions", desc: "Learn how to multiply fractions.", completion: 20 },
-      { id: 4, title: "Lesson 4: Dividing Fractions", desc: "Understand how to divide fractions.", completion: 60 },
-    ],
-    2: [
-      { id: 5, title: "Lesson 5: Decimals", desc: "Convert between decimals and fractions.", completion: 70 },
-      { id: 6, title: "Lesson 6: Place Value", desc: "Understand decimal places and rounding.", completion: 55 },
-    ],
-    3: [
-      { id: 7, title: "Lesson 7: Geometry Basics", desc: "Identify types of shapes and angles.", completion: 90 },
-      { id: 8, title: "Lesson 8: Area and Perimeter", desc: "Calculate the area of rectangles.", completion: 65 },
-    ],
-    4: [
-      { id: 9, title: "Lesson 9: Measurement", desc: "Explore metric units of length.", completion: 40 },
-      { id: 10, title: "Lesson 10: Data and Graphs", desc: "Interpret data using bar graphs.", completion: 75 },
-    ]
-  };
+  // const lessonsData = {
+  //   1: [
+  //     { id: 1, title: "Lesson 1: Introduction to Fractions", desc: "Learn basics of fractions.", completion: 45 },
+  //     { id: 2, title: "Lesson 2: Adding and Subtracting Fractions", desc: "Master adding and subtracting fractions.", completion: 80 },
+  //     { id: 3, title: "Lesson 3: Multiplying Fractions", desc: "Learn how to multiply fractions.", completion: 20 },
+  //     { id: 4, title: "Lesson 4: Dividing Fractions", desc: "Understand how to divide fractions.", completion: 60 },
+  //   ],
+  //   2: [
+  //     { id: 5, title: "Lesson 5: Decimals", desc: "Convert between decimals and fractions.", completion: 70 },
+  //     { id: 6, title: "Lesson 6: Place Value", desc: "Understand decimal places and rounding.", completion: 55 },
+  //   ],
+  //   3: [
+  //     { id: 7, title: "Lesson 7: Geometry Basics", desc: "Identify types of shapes and angles.", completion: 90 },
+  //     { id: 8, title: "Lesson 8: Area and Perimeter", desc: "Calculate the area of rectangles.", completion: 65 },
+  //   ],
+  //   4: [
+  //     { id: 9, title: "Lesson 9: Measurement", desc: "Explore metric units of length.", completion: 40 },
+  //     { id: 10, title: "Lesson 10: Data and Graphs", desc: "Interpret data using bar graphs.", completion: 75 },
+  //   ]
+  // };
 
   const lessonsContainer = document.getElementById('lessonsContainer');
   const lessonDetailContainer = document.getElementById('lessonDetailContainer');

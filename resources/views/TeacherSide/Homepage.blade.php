@@ -30,13 +30,27 @@
                         <span class="text-decoration-none align-middle">Dashboard</span>
                     </a>
                 </li>
-                <li><a class="text-decoration-none" href="#" data-section="lessonsection">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bookmarks" style="font-family: Poppins, sans-serif;">
+                <li class="nav-item custom-dropdown" style="position: relative;">
+                    <a class="nav-link text-decoration-none d-flex align-items-center" 
+                    href="#" 
+                    data-section="lessonsection"
+                    onclick="event.preventDefault(); this.parentNode.querySelector('.dropdown-list').style.display = (this.parentNode.querySelector('.dropdown-list').style.display === 'block' ? 'none' : 'block');">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bookmarks me-2">
                             <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1z"></path>
                             <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1"></path>
                         </svg>
-                        <span class="text-decoration-none align-middle">Lessons</span>
+                        <span class="align-middle">Lessons</span>
+                        <span class="ms-2" id="dropdown-arrow"></span>
                     </a>
+
+                    <!-- Dropdown list - hidden by default -->
+                    <ul class="dropdown-list" style="list-style: none; display:none; align-items: left;">
+                        <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="English" onclick="selectSubject(this)">English</a></li>
+                        <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="Science" onclick="selectSubject(this)">Science</a></li>
+                        <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="Mathematics" onclick="selectSubject(this)">Mathematics</a></li>
+                        <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="Filipino" onclick="selectSubject(this)">Filipino</a></li>
+                    </ul>
+
                 </li>
                 <li><a class="text-decoration-none" href="#" data-section="analyticsection">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bar-chart" style="font-family: Poppins, sans-serif;">
@@ -965,14 +979,14 @@
                     <div class="p-0 container-fluid">
                         <div class="subject">
                             <div class="mb-2 col" style="height: 15rem;     position: relative;     width: 100%;">
-                                <div class="mb-2 card math-subject-card">
+                                <div class="mb-2 card math-subject-card" id="subjectHeaderCard">
                                     <div class="subject-title">
                                         <h3>Mathematics 4</h3>
-                                        <p>2/ 8 Lessons</p>
+                                        <p id="totalLesson">8 Lessons</p>
                                     </div>
                                 </div>
                             </div>
-                            <div id="lessonsContainer" class="lessons-container">
+                            <div id="lessonsContainer" class="lessons-container" data-selected-subject="English">
                                 <div class="lessons-header">
                                     <div>
                                         <h3 class="d-flex align-items-center gap-2 p-2">Available Lessons
@@ -997,21 +1011,21 @@
 
                                 <!--High Level View-->
                                 <div class="row g-3 high-level-detail">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="q1">
                                         <div class="lesson-card">
                                             <div class="lesson-content">
                                                 <div class="d-flex justify-content-between align-items-start mb-3 quarter-lesson-header">
                                                     <div>
                                                         <h6>Quarter 1 <i class="bi bi-chevron-right"></i></h6>
                                                     </div>
-                                                    <button class="view-details-btn">View Details</button>
+                                                    <!-- <button class="view-details-btn">View Details</button> -->
                                                 </div>
                                                 <div class="lesson-progress-label">
                                                     <span>Quarter Progress</span>
-                                                    <span>75%</span>
+                                                    <span>0%</span>
                                                 </div>
                                                 <div class="quarter-progress">
-                                                    <div class="progress-bar quarter-progress-bar" style="width:75%;"></div>
+                                                    <div class="progress-bar quarter-progress-bar" id="q1-progress" style="width:0%;"></div>
                                                 </div>
                                             </div>
                                             <div class="lesson-footer">
@@ -1019,7 +1033,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-book me-2">
                                                         <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"></path>
                                                     </svg>
-                                                    <span> <span>2</span>/8 Lessons</span>
+                                                    <span id="q1Lesson">8 Lessons</span>
                                                 </div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down">
                                                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
@@ -1037,21 +1051,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="q2">
                                         <div class="lesson-card">
                                             <div class="lesson-content">
                                                 <div class="d-flex justify-content-between align-items-start mb-3 quarter-lesson-header">
                                                     <div>
                                                         <h6>Quarter 2 <i class="bi bi-chevron-right"></i></h6>
                                                     </div>
-                                                    <button class="view-details-btn">View Details</button>
+                                                    <!-- <button class="view-details-btn">View Details</button> -->
                                                 </div>
                                                 <div class="lesson-progress-label">
                                                     <span>Quarter Progress</span>
-                                                    <span>40%</span>
+                                                    <span>0%</span>
                                                 </div>
                                                 <div class="quarter-progress">
-                                                    <div class="progress-bar" style="width:40%;"></div>
+                                                    <div class="progress-bar" id="q2-progress" style="width:0%;"></div>
                                                 </div>
                                             </div>
                                             <div class="lesson-footer">
@@ -1059,7 +1073,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-book me-2">
                                                         <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"></path>
                                                     </svg>
-                                                    <span> <span>2</span>/8 Lessons</span>
+                                                    <span id="q2Lesson">8 Lessons</span>
                                                 </div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down">
                                                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
@@ -1077,21 +1091,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="q3">
                                         <div class="lesson-card">
                                             <div class="lesson-content">
                                                 <div class="d-flex justify-content-between align-items-start mb-3 quarter-lesson-header">
                                                     <div>
                                                         <h6>Quarter 3 <i class="bi bi-chevron-right"></i></h6>
                                                     </div>
-                                                    <button class="view-details-btn">View Details</button>
+                                                    <!-- <button class="view-details-btn">View Details</button> -->
                                                 </div>
                                                 <div class="lesson-progress-label">
                                                     <span>Quarter Progress</span>
-                                                    <span>15%</span>
+                                                    <span>0%</span>
                                                 </div>
                                                 <div class="quarter-progress">
-                                                    <div class="progress-bar" style="width:15%;"></div>
+                                                    <div class="progress-bar" id="q3-progress" style="width:0%;"></div>
                                                 </div>
                                             </div>
                                             <div class="lesson-footer">
@@ -1099,7 +1113,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-book me-2">
                                                         <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"></path>
                                                     </svg>
-                                                    <span> <span>2</span>/8 Lessons</span>
+                                                    <span id="q3Lesson">8 Lessons</span>
                                                 </div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down">
                                                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
@@ -1117,21 +1131,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="q4">
                                         <div class="lesson-card">
                                             <div class="lesson-content">
                                                 <div class="d-flex justify-content-between align-items-start mb-3 quarter-lesson-header">
                                                     <div>
                                                         <h6>Quarter 4 <i class="bi bi-chevron-right"></i></h6>
                                                     </div>
-                                                    <button class="view-details-btn">View Details</button>
+                                                    <!-- <button class="view-details-btn">View Details</button> -->
                                                 </div>
                                                 <div class="lesson-progress-label">
                                                     <span>Quarter Progress</span>
                                                     <span>0%</span>
                                                 </div>
                                                 <div class="quarter-progress">
-                                                    <div class="progress-bar" style="width:0%;"></div>
+                                                    <div class="progress-bar" id="q4-progress" style="width:0%;"></div>
                                                 </div>
                                             </div>
                                             <div class="lesson-footer">
@@ -1139,16 +1153,22 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-book me-2">
                                                         <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"></path>
                                                     </svg>
-                                                    <span> <span>2</span>/8 Lessons</span>
+                                                    <span id="q4Lesson">8 Lessons</span>
                                                 </div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-down">
                                                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
                                                 </svg>
                                             </div>
-                                            <div class="quarter-lesson-list"></div>
-                                            <div id="noContent">
-                                                <p class="text-center text-muted p-3">No lessons uploaded for this quarter.</p>
+                                            <div id="quarterLessonList-3" class="quarter-lesson-list">
+                                                <!-- <div id="noContent">
+                                                    <p class="text-center text-muted p-3">No lessons uploaded for this quarter.</p>
+                                                </div> -->
+                                                <div class="quarter-lesson-item">
+                                                    <h6>Lesson 2: Adding and Subtracting Fractions&nbsp;<span class="rounded-pill badge new-lesson-badge" style="font-size: 10px;">New</span></h6>
+                                                    <p>Learn how to perform basic operations with fractions having like and unlike denominators.</p>
+                                                </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -1169,7 +1189,7 @@
                                         <button class="quarter-btn" data-quarter="3">Quarter 3</button>
                                         <button class="quarter-btn" data-quarter="4">Quarter 4</button></div>
                                     <div id="lessonLists">
-                                        <div class="lesson-item" data-lesson-id="1">
+                                        <!-- <div class="lesson-item" data-lesson-id="1">
                                             <div class="lesson-header">
                                                 <h4>Lesson 1: Introduction to Fractions&nbsp;<span class="badge rounded-pill new-lesson-badge" style="font-size:10px;">New</span></h4>
                                             </div>
@@ -1222,7 +1242,7 @@
                                                     <small class="text-muted">18 of 40 students completed</small>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -1710,39 +1730,7 @@
                             </div>
 
                             <!--Radar Chart - Engagement vs Mastery-->
-                            <!-- <div class="chart-card">
-                                <div class="chart-header">
-                                    <div class="mb-2 chart-header-content">
-                                        <h4 class="chart-title">Mastery vs Engagement</h4>
-                                        <p id="chartSubtitle" class="chart-subtitle">Detailed lesson analysis for Mathematics</p>
-                                        <p class="chart-legend-hint">
-                                            <small class="text-muted"><strong>Mastery:</strong> Lesson accuracy</small>
-                                        </p>
-                                        <p class="chart-legend-hint">
-                                            <small class="text-muted"><strong>Engagement:</strong> Active time &amp; interactions </small>
-                                        </p>
-                                    </div>
-                                    <div class="chart-filters">
-                                          <select class="form-select-sm form-select" id="radar-subjectView">
-                                            <option value="all">All Subjects</option>
-                                            <option value="Mathematics">Mathematics</option>
-                                            <option value="Science">Science</option>
-                                            <option value="English">English</option>
-                                            <option value="Filipino">Filipino</option>
-                                        </select>
-                                        <select class="form-select-sm form-select" id="radar-quarterView">
-                                            <option value="1" selected="">Quarter 1</option>
-                                            <option value="2">Quarter 2 </option>
-                                            <option value="3">Quarter 3</option>
-                                            <option value="4">Quarter 4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="line-bar-radar-container"><canvas id="engagementMasteryChart"></canvas></div>
-                                <div id="radar-chartInsights" class="chart-insights">
-                                    <span> Viewing Mathematics progress for Quarter 1 — steady improvement observed from Lesson 1 to Lesson 8. </span>
-                                </div>
-                            </div> -->
+                             
                         </div>
 
                         <!--Insights-->
@@ -2856,7 +2844,7 @@
         </div>
     </div>
     <div></div>
-    <script src="{{ asset('TeacherSide/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- <script src="{{ asset('TeacherSide/assets/bootstrap/js/bootstrap.min.js') }}"></script> -->
     <script src="{{ asset('TeacherSide/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/chart.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
@@ -3419,6 +3407,7 @@
     console.log("Recent Activity", window.dashboardData.recentActivity ?? {});
     console.log("Subject Progress", window.dashboardData.quarterlyProgress ?? {});
     console.log("Over all Stats", window.dashboardData.overall_progress ?? {});
+    console.log("subjects", window.dashboardData.subjects ?? {});
 
     document.addEventListener('DOMContentLoaded', () => {
         const data = window.dashboardData;
@@ -3518,6 +3507,528 @@
 
 
 </script>
+
+<script>
+const subjectBackgrounds = {
+    "English": "../../assets/img/subject-themes/eng.png",
+    "Filipino": "../../assets/img/subject-themes/fil.png",
+    "Mathematics": "../../assets/img/subject-themes/math.png",
+    "Science": "../../assets/img/subject-themes/science.png"
+};
+
+let subjectProgress = {}; // Precomputed progress object
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Precompute progress per subject per quarter
+    computeSubjectProgress();
+
+    const defaultSubject = "English";
+
+    // Set lessonsContainer data attribute to default subject
+    const lessonsContainer = document.getElementById("lessonsContainer");
+    lessonsContainer.dataset.selectedSubject = defaultSubject;
+
+    updateSubjectCard(defaultSubject);
+    window.renderLessons?.("Q1");
+    updateQuarterlyProgressUI(defaultSubject); 
+});
+
+// Compute progress per subject per quarter
+function computeSubjectProgress() {
+    const progressData = window.dashboardData?.quarterlyProgress || {};
+    const quarters = ["q1", "q2", "q3", "q4"];
+
+    subjectProgress = {};
+
+    quarters.forEach((quarterKey) => {
+        const quarterSubjects = progressData[quarterKey] || {};
+
+        for (const subject in quarterSubjects) {
+            const scores = quarterSubjects[subject] || [];
+            const sum = scores.reduce((a, b) => a + b, 0);
+            const percent = scores.length > 0 ? Math.round(sum / scores.length) : 0;
+
+            if (!subjectProgress[subject]) subjectProgress[subject] = {};
+            subjectProgress[subject][quarterKey] = percent;
+        }
+    });
+
+    // Fill missing quarters with 0
+    const allSubjects = Object.keys(subjectProgress);
+    allSubjects.forEach(subject => {
+        quarters.forEach(q => {
+            if (subjectProgress[subject][q] === undefined) subjectProgress[subject][q] = 0;
+        });
+    });
+
+    console.log("Computed subject progress per quarter:", subjectProgress);
+}
+
+function selectSubject(link) {
+    const subject = link.getAttribute("data-subject");
+
+    // Update UI components
+    updateSubjectCard(subject);
+    updateQuarterlyProgressUI(subject);
+    renderLowLevelLessons(subject);
+
+    // Store the selected subject
+    const lessonsContainer = document.getElementById("lessonsContainer");
+    if (lessonsContainer) lessonsContainer.dataset.selectedSubject = subject;
+
+    // Close dropdown
+    const dropdownList = link.closest(".dropdown-list");
+    if (dropdownList) dropdownList.style.display = "none";
+
+    // Update hidden input
+    const selectedInput = document.getElementById("selected-subject-input");
+    if (selectedInput) selectedInput.value = subject;
+
+    // Render lessons for the active quarter
+    const activeQuarter = document.querySelector('.quarter-tab.active')?.dataset.quarter || "Q1";
+    window.renderLessons?.(activeQuarter);
+
+    // Hide lesson detail container
+    const lessonDetailContainer = document.getElementById("lessonDetailContainer");
+    if (lessonDetailContainer) lessonDetailContainer.style.display = "none";
+
+    // Show lessons list again
+    if (lessonsContainer) lessonsContainer.style.display = "block";
+}
+
+
+
+function updateSubjectCard(subject) {
+    const card = document.getElementById("subjectHeaderCard");
+    card.style.backgroundImage = `url('${subjectBackgrounds[subject]}')`;
+    card.style.backgroundSize = "cover";
+    card.style.backgroundPosition = "center";
+    card.querySelector("h3").textContent = `${subject} 4`;
+}
+
+function updateQuarterlyProgressUI(subject) {
+    const lessonsContainer = document.getElementById("lessonsContainer");
+    const selectedSubject = subject;
+
+    const quarters = ["q1", "q2", "q3", "q4"];
+    const lessonsData = window.dashboardData.subjects?.[selectedSubject]?.lessons || [];
+
+    let totalLessons = 0; // initialize total lesson count
+    let newLessonsCount = 0; // initialize new lessons count
+
+    // Current date for comparison
+    const now = new Date();
+
+    quarters.forEach((quarterKey, index) => {
+        const quarterDiv = document.getElementById(quarterKey);
+        if (!quarterDiv) return;
+
+        // Update progress
+        const percent = subjectProgress[selectedSubject]?.[quarterKey] || 0;
+        const percentLabel = quarterDiv.querySelector(".lesson-progress-label span:nth-child(2)");
+        if (percentLabel) percentLabel.textContent = percent + "%";
+
+        const progressBar = quarterDiv.querySelector(".progress-bar");
+        if (progressBar) progressBar.style.width = percent + "%";
+
+        // Render lessons
+        const quarterLessonList = quarterDiv.querySelector(".quarter-lesson-list");
+        const noContentDiv = quarterDiv.querySelector("#noContent");
+
+        if (!quarterLessonList) return;
+
+        // Clear existing lessons
+        quarterLessonList.innerHTML = "";
+
+        // Filter lessons for this quarter
+        const lessonsForQuarter = lessonsData.filter(l => `q${l.quarter}` === quarterKey);
+
+        // Update lesson count span for this quarter
+        const lessonCountSpan = document.getElementById(`${quarterKey}Lesson`);
+        if (lessonCountSpan) lessonCountSpan.textContent = lessonsForQuarter.length;
+
+        // Add to total lessons
+        totalLessons += lessonsForQuarter.length;
+
+        if (lessonsForQuarter.length === 0) {
+            if (noContentDiv) noContentDiv.style.display = "block";
+            return;
+        } else {
+            if (noContentDiv) noContentDiv.style.display = "none";
+        }
+
+        // Sort lessons by lesson_number
+        lessonsForQuarter.sort((a, b) => a.lesson_number - b.lesson_number);
+
+        // Render each lesson
+        lessonsForQuarter.forEach(lesson => {
+            const lessonItem = document.createElement("div");
+            lessonItem.classList.add("quarter-lesson-item");
+
+            const lessonTitle = lesson.lesson_title || `Lesson ${lesson.lesson_number}`;
+            const lessonDescription = lesson.description || "";
+
+            lessonItem.innerHTML = `
+                <h6>Lesson ${lesson.lesson_number}: ${lessonTitle}</h6>
+                <p>${lessonDescription}</p>
+            `;
+
+            quarterLessonList.appendChild(lessonItem);
+
+            // Check if lesson is new (within 7 days)
+            if (lesson.created_at) {
+                const lessonDate = new Date(lesson.created_at);
+                const diffDays = (now - lessonDate) / (1000 * 60 * 60 * 24);
+                if (diffDays <= 7) newLessonsCount++;
+            }
+        });
+    });
+
+    // Update total lessons
+    const totalLessonElement = document.getElementById("totalLesson");
+    if (totalLessonElement) totalLessonElement.textContent = `${totalLessons} Lessons`;
+
+    // Update new lessons badge
+    const newLessonsBadge = document.getElementById("newLessonsBadge");
+    if (newLessonsBadge) {
+        if (newLessonsCount > 0) {
+            newLessonsBadge.textContent = `${newLessonsCount} new`;
+            newLessonsBadge.style.display = "inline-block";
+        } else {
+            newLessonsBadge.style.display = "none"; // hide if no new lessons
+        }
+    }
+}
+
+function renderLowLevelLessons(subject, quarter = "1") {
+    const lessonContainer = document.getElementById("lessonLists");
+    if (!lessonContainer) return;
+
+    const lessonsData = window.dashboardData.subjects?.[subject]?.lessons || [];
+    const quarterlyProgress = window.dashboardData.quarterlyProgress || {};
+
+    const lessonsForQuarter = lessonsData.filter(l => String(l.quarter) === String(quarter));
+    const now = new Date();
+    lessonContainer.innerHTML = "";
+
+    lessonsForQuarter.sort((a, b) => a.lesson_number - b.lesson_number);
+
+    lessonsForQuarter.forEach((lesson, index) => {
+        const lessonProgress = quarterlyProgress[`q${quarter}`]?.[subject]?.[index] || 0;
+        const lessonDate = new Date(lesson.created_at);
+        const diffDays = (now - lessonDate) / (1000 * 60 * 60 * 24);
+        const isNew = diffDays <= 7;
+
+        const lessonItem = document.createElement("div");
+        lessonItem.classList.add("lesson-item");
+        lessonItem.dataset.lessonId = lesson.lesson_id || index + 1;
+
+        lessonItem.innerHTML = `
+            <div class="lesson-header">
+                <h4>
+                    Lesson ${lesson.lesson_number}: ${lesson.lesson_title || ""}
+                    ${isNew ? '<span class="badge rounded-pill new-lesson-badge" style="font-size:10px;">New</span>' : ''}
+                </h4>
+            </div>
+            <p class="lesson-description">${lesson.description || ""}</p>
+            <div class="mt-2 progress-container">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="progress-label">Student Completion</span>
+                    <span class="progress-percentage">${lessonProgress}%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" role="progressbar" style="width:${lessonProgress}%;" aria-valuenow="${lessonProgress}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        `;
+
+        // Click listener opens lesson detail
+        lessonItem.addEventListener("click", () => {
+            openLessonDetail(lesson, subject, quarter);
+        });
+
+        lessonContainer.appendChild(lessonItem);
+    });
+}
+
+// Update the quarter buttons
+document.querySelectorAll(".quarter-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        const quarter = btn.dataset.quarter;
+        const subject = document.getElementById("lessonsContainer").dataset.selectedSubject;
+        renderLowLevelLessons(subject, quarter);
+
+        // Set active class
+        document.querySelectorAll(".quarter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+    });
+});
+
+// Search and sort functionality
+document.getElementById("search-lessonInput")?.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll("#lessonLists .lesson-item").forEach(item => {
+        const title = item.querySelector(".lesson-header h4")?.textContent.toLowerCase() || "";
+        const desc = item.querySelector(".lesson-description")?.textContent.toLowerCase() || "";
+        item.style.display = title.includes(query) || desc.includes(query) ? "block" : "none";
+    });
+});
+
+document.getElementById("lesson-sortSelect")?.addEventListener("change", (e) => {
+    const val = e.target.value;
+    const lessonContainer = document.getElementById("lessonLists");
+    const items = Array.from(lessonContainer.children);
+
+    if (val === "title-asc") {
+        items.sort((a, b) => a.querySelector("h4").textContent.localeCompare(b.querySelector("h4").textContent));
+    } else if (val === "title-desc") {
+        items.sort((a, b) => b.querySelector("h4").textContent.localeCompare(a.querySelector("h4").textContent));
+    } else if (val === "completion-asc") {
+        items.sort((a, b) => parseInt(a.querySelector(".progress-percentage").textContent) - parseInt(b.querySelector(".progress-percentage").textContent));
+    } else if (val === "completion-desc") {
+        items.sort((a, b) => parseInt(b.querySelector(".progress-percentage").textContent) - parseInt(a.querySelector(".progress-percentage").textContent));
+    }
+
+    lessonContainer.innerHTML = "";
+    items.forEach(i => lessonContainer.appendChild(i));
+});
+
+// Initialize default
+document.addEventListener("DOMContentLoaded", () => {
+    const defaultQuarter = "1";
+    const subject = document.getElementById("lessonsContainer").dataset.selectedSubject || "English";
+    renderLowLevelLessons(subject, defaultQuarter);
+});
+
+function openLessonDetail(lesson, subject, quarter) {
+    const lessonsContainer = document.getElementById("lessonsContainer");
+    const container = document.getElementById("lessonDetailContainer");
+    if (!container) return;
+
+    if (lessonsContainer) lessonsContainer.style.display = "none";
+    container.style.display = "block";
+
+    // Update title and subtitle
+    document.getElementById("lessonTitle").textContent = `Lesson ${lesson.lesson_number}: ${lesson.lesson_title}`;
+    const displaySubject = subject === "Math" ? "Mathematics" : subject;
+    container.querySelector(".detail-subtitle").innerHTML = 
+        `<span class="nav-quarter-link">Quarter ${quarter}:&nbsp;</span>${displaySubject} 4`;
+
+    // === INTRODUCTION TAB ===
+    const introTab = document.getElementById("introduction");
+    if (introTab) {
+        const desc = lesson.description || "No description available.";
+        introTab.innerHTML = `
+            <div class="intro-content">
+                <p>${desc.replace(/\r\n/g, '<br>')}</p>
+            </div>`;
+    }
+
+    // === MATERIALS TAB ===
+    const materialsTab = document.getElementById("materials");
+    if (materialsTab) {
+        const materials = lesson.lessons_content?.filter(c => 
+            ["ppt", "video", "url"].includes(c.content_type)
+        ) || [];
+
+        const materialsHTML = materials.map(item => {
+            let icon = "bi-file-earmark-text";
+            let buttons = "";
+
+            if (item.content_type === "ppt") {
+                icon = "bi-file-earmark-slides";
+                buttons = `<a href="${item.url}" download class="btn btn-primary btn-sm">Download</a>`;
+            } else if (item.content_type === "video") {
+                icon = "bi-play-circle";
+                buttons = `<button class="btn btn-outline-primary btn-sm" onclick="window.open('${item.url}', '_blank')">Watch</button>`;
+            } else if (item.content_type === "url") {
+                icon = "bi-link-45deg";
+                buttons = `<a href="${item.url}" target="_blank" class="btn btn-outline-primary btn-sm">Open Link</a>`;
+            }
+
+            return `
+                <div class="material-card">
+                    <div class="material-icon"><i class="bi ${icon}"></i></div>
+                    <h5 class="material-title">${item.title}</h5>
+                    <div class="material-actions">${buttons}</div>
+                </div>`;
+        }).join("");
+
+        materialsTab.innerHTML = `
+            <h4 class="mb-3">Uploaded Materials</h4>
+            <div class="materials-grid">
+                ${materialsHTML || "<p>No materials available.</p>"}
+            </div>`;
+    }
+
+    // === PRETEST & POSTTEST TABS ===
+    const pretestTab = document.getElementById("pretest");
+    const posttestTab = document.getElementById("posttest");
+
+    if (pretestTab) pretestTab.innerHTML = "<p>Loading pretest...</p>";
+    if (posttestTab) posttestTab.innerHTML = "<p>Loading posttest...</p>";
+
+    const quizzes = lesson.lessons_content?.filter(c => c.content_type === "quiz") || [];
+    quizzes.forEach(quizContent => {
+        const isPretest = quizContent.title.toLowerCase().includes("pretest");
+        const targetTab = isPretest ? pretestTab : posttestTab;
+
+        if (!targetTab || !quizContent.quiz_data) {
+            targetTab.innerHTML = "<p>Quiz data not available.</p>";
+            return;
+        }
+
+        renderQuiz(quizContent.quiz_data, targetTab, isPretest ? "Pre-test" : "Post-test");
+    });
+
+    // === GAME PREVIEW TAB ===
+    const gameTab = document.getElementById("game");
+    if (gameTab) {
+        gameTab.innerHTML = `
+            <div class="text-center py-5">
+                <i class="bi bi-controller display-1 text-muted mb-4"></i>
+                <h4 class="text-muted">Interactive Games</h4>
+                <p class="lead text-muted">Under Construction</p>
+                <p class="text-muted">Previewing interactive games is coming soon!</p>
+            </div>
+        `;
+    }
+    // if (gameTab) {
+    //     const games = lesson.lessons_content?.filter(c => c.content_type.startsWith("game_")) || [];
+    //     if (games.length === 0) {
+    //         gameTab.innerHTML = `<p>No games available for this lesson.</p>`;
+    //     } else {
+    //         const gameCards = games.map(game => {
+    //             const gameNames = {
+    //                 game_match: "Match It Up!",
+    //                 game_flash: "Flash Recall!",
+    //                 game_comp:  "Complete the Word!",
+    //                 game_speak: "Speak Out Loud!",
+    //                 game_img:   "Picture Quiz!"
+    //             };
+    //             const title = gameNames[game.content_type] || "Interactive Game";
+    //             return `
+    //                 <div class="game-card mb-3 p-3 border rounded text-center">
+    //                     <i class="bi bi-controller display-4 text-primary"></i>
+    //                     <h5 class="mt-3">${title}</h5>
+    //                     <p class="text-muted">${game.title}</p>
+    //                     <button class="btn btn-success" onclick="window.open('${game.url}', '_blank')">
+    //                         <i class="bi bi-play-circle"></i> Play Game
+    //                     </button>
+    //                 </div>`;
+    //         }).join("");
+
+    //         gameTab.innerHTML = `
+    //             <h4 class="mb-4">Interactive Games</h4>
+    //             <div class="row">${gameCards}</div>
+    //         `;
+    //     }
+    // }
+}
+
+// Simple Quiz Renderer (supports multichoice, truefalse, enumeration)
+function renderQuiz(quizData, container, type = "Quiz") {
+    const questions = quizData.questions || [];
+    if (questions.length === 0) {
+        container.innerHTML = "<p>No questions found.</p>";
+        return;
+    }
+
+    let html = `
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h3 class="quiz-title">${quizData.title || type}</h3>
+                <p class="quiz-info">${questions.length} questions • ${quizData.settings?.totalItems || questions.length} items</p>
+            </div>
+    `;
+
+    questions.forEach((q, i) => {
+        const num = i + 1;
+        if (q.type === "multichoice") {
+            html += `
+                <div class="question-item mb-4 p-3 border rounded">
+                    <p class="question-text fw-bold">${num}. ${q.question}</p>
+                    ${q.choices.map(choice => `
+                        <label class="answer-option d-block">
+                            <input type="radio" name="q${q.id}" disabled> ${choice.text}
+                        </label>
+                    `).join("")}
+                    <button class="show-answer-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                        </svg>
+                        Show Answer
+                    </button>
+                    <div class="answer-reveal" style="display:none">
+                        <strong>Correct Answer:</strong> 
+                        ${q.choices.find(c => c.points > 0)?.text || "N/A"}
+                    </div>
+                </div>`;
+        }
+        else if (q.type === "truefalse") {
+            html += `
+                <div class="question-item mb-4 p-3 border rounded">
+                    <p class="question-text fw-bold">${num}. ${q.question}</p>
+                    <label><input type="radio" disabled> True</label>
+                    <label><input type="radio" disabled> False</label>
+                    <button class="show-answer-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                        </svg>
+                        Show Answer
+                    </button>
+                    <div class="answer-reveal" style="display:none">
+                        <strong>Correct Answer:</strong> ${q.answer[0]}
+                    </div>
+                </div>`;
+        }
+        else if (q.type === "enumeration") {
+            html += `
+                <div class="question-item mb-4 p-3 border rounded">
+                    <p class="question-text fw-bold">${num}. ${q.question}</p>
+                    <input type="text" class="form-control" disabled placeholder="Type answer here">
+                    <button class="show-answer-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                        </svg>
+                        Show Answer
+                    </button>
+                    <div class="answer-reveal" style="display:none">
+                        <strong>Correct Answer:</strong> ${q.answer.join(", ")}
+                    </div>
+                </div>`;
+        }
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+}
+
+
+// Back button functionality
+document.getElementById("backButton")?.addEventListener("click", () => {
+    const lessonsContainer = document.getElementById("lessonsContainer");
+    const container = document.getElementById("lessonDetailContainer");
+
+    // Hide lesson detail container
+    if (container) container.style.display = "none";
+
+    // Show lessons list again
+    if (lessonsContainer) lessonsContainer.style.display = "block";
+});
+
+
+
+
+
+
+</script>
+
+
+
 
 
 
