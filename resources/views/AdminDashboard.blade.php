@@ -62,7 +62,7 @@
                                     <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"></path>
                                     <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"></path>
                                 </svg><span class="text-decoration-none align-middle">Activity Log</span></a></li>
-                        <li class="sidebar-header" style="width: 24px;color: var(--bs-emphasis-color);">General</li>
+                        <!-- <li class="sidebar-header" style="width: 24px;color: var(--bs-emphasis-color);">General</li>
                         <li class="sidebar-item"><a class="text-decoration-none sidebar-link" href="dashboardMenu1" data-bs-toggle="collapse" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-gear">
                                     <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
                                     <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
@@ -70,7 +70,7 @@
                         <li class="sidebar-item"><a class="text-decoration-none sidebar-link" href="dashboardMenu1" data-bs-toggle="collapse" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-question-circle">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
                                     <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
-                                </svg><span class="text-decoration-none align-middle">Help</span></a></li>
+                                </svg><span class="text-decoration-none align-middle">Help</span></a></li> -->
                     </ul>
                 </div>
                 <div class="p-4 mt-auto sidebar-item sidebar-footer border-top">
@@ -95,11 +95,14 @@
                 <!-- Notification & Profile Dropdown -->
                 <div class="navbar-collapse collapse">
                     <div class="ms-auto navbar-align navbar-nav">
-                        <div class="position-relative d-flex me-2 nav-item dropdown"><a class="d-flex align-items-center nav-link nav-icon dropdown-toggle bell" id="element" aria-expanded="false" data-bs-toggle="dropdown">
-                                <div class="position-relative"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bell">
+                        <div class="position-relative d-flex me-2 nav-item dropdown">
+                            <!-- <a class="d-flex align-items-center nav-link nav-icon dropdown-toggle bell" style="display:none;" id="element" aria-expanded="false" data-bs-toggle="dropdown">
+                                <div class="position-relative" style="display: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bell">
                                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6"></path>
-                                    </svg><span class="indicator">4</span></div>
-                            </a>
+                                    </svg><span class="indicator">4</span>
+                                </div>
+                            </a> -->
                             <div class="p-0 dropdown-menu-lg dropdown-menu dropdown-menu-end" data-bs-popper="static">
                                 <div class="text-start position-relative w-100 p-3 dropdown-menu-header"><span>3 New Notifications</span></div>
                                 <div class="d-flex list-group g-5 notification-list"><a href="#">
@@ -157,9 +160,9 @@
                                 </a>
                             </div>
                             <div class="nav-item dropdown nav-item-user"><span class="d-inline-block d-sm-none nav-icon"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" width="200" height="200" style="height: 28px; width: 28px; object-fit: cover;" src="assets/img/8.png"></a></span><span class="d-none d-sm-inline-block nav-icon"><a class="nav-link dropdown-toggle" href="#" aria-expanded="false" role="button" data-bs-toggle="dropdown"><img id="profileLarge" class="rounded-circle img-fluid me-1 profile" width="32" height="32" alt="Profile"><span style="font-size: 14px;" id="adminName2">Loading...</span></a></span>
-                                <div class="dropdown-menu dropdown-menu3 dropdown-menu-end" data-bs-popper="static" style="width:180px;"><a class="dropdown-item" href="#" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
+                                <div class="dropdown-menu dropdown-menu3 dropdown-menu-end" data-bs-popper="static" style="width:180px;"><a class="dropdown-item" href="#" type="button" style="display:none;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
                                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                        </svg><span>Profile</span></a><a class="dropdown-item" href="#" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-moon-fill">
+                                        </svg><span>Profile</span></a><a class="dropdown-item" href="#" type="button" style="display:none;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-moon-fill">
                                             <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278"></path>
                                         </svg><span>Dark Mode</span></a>
                                     <hr class="dropdown-divider"><a class="dropdown-item" href="#" id="logout-btn"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-box-arrow-right">
@@ -734,14 +737,14 @@
                                         <th>Name</th>
                                         <th>email</th>
                                         <th>Type</th>
-                                        <th>Grade/Class</th>
+                                        <th>School</th>
                                         <th>Status</th>
                                         <th>Last seen</th>
                                         <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="userTableBody">
-                                    <tr data-active="true">
+                                    <!-- <tr data-active="true">
                                         <td data-label="Online"><div class="status-dot online"></div></td>
                                         <td data-label="Name">Maria Santos</td>
                                         <td data-label="Email">m******s@gmail.com</td>
@@ -791,7 +794,7 @@
                                                 </svg>
                                             </button>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -804,9 +807,6 @@
                             <ul class="mb-0 pagination pagination-sm">
                                 <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
                                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
                             </ul>
                         </nav>
@@ -853,7 +853,7 @@
                         </div>
                     </div>
                     <ul id="activityList" class="activity-list">
-                        <li class="activity-log-item" data-type="material-upload" data-search="uploaded shapes intro pdf admin" data-user="admin" data-category="lesson_material" data-timestamp="2025-09-02T15:30:00Z">
+                        <!-- <li class="activity-log-item" data-type="material-upload" data-search="uploaded shapes intro pdf admin" data-user="admin" data-category="lesson_material" data-timestamp="2025-09-02T15:30:00Z">
                             <div class="activity-log-header">
                                 <div class="activity-log-icon lesson activity-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-folder">
                                         <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"></path>
@@ -861,154 +861,14 @@
                                 <div class="activity-content"><span>Uploaded&nbsp;<strong>"Shapes_Intro.pdf"</strong></span><span class="bg-primary badge user-role">Admin</span></div>
                                 <div class="activity-time"><span class="data-timestamp-display">2 mins ago</span></div>
                             </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">User:</span> Admin</p>
-                                <p><span class="detail-label">File Name:</span> Shapes_Intro.pdf</p>
-                                <p><span class="detail-label">File Type:</span> PDF</p>
-                                <p><span class="detail-label">Size:</span> 2.4 MB</p>
-                                <p><span class="detail-label">Location:</span> Lesson 1 - Quarter 1</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="quiz-create" data-search="added colors quiz admin" data-user="admin" data-category="quiz" data-timestamp="2025-08-23T10:00:00Z">
-                            <div class="activity-log-header">
-                                <div class="activity-icon quiz activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pen">
-                                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>Added&nbsp;<strong>"Color Quiz"</strong></span><span class="bg-primary badge user-role">Admin</span></div>
-                                <div class="activity-time"><span>1 hr ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">User:</span> Admin</p>
-                                <p><span class="detail-label">Quiz Name:</span>&nbsp;Color Quiz</p>
-                                <p><span class="detail-label">No. of Questions:</span>&nbsp;10</p>
-                                <p><span class="detail-label">Assigned To:</span>&nbsp;Lesson 2 - Quarter 1</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="quix-complete" data-search="added colors quiz admin" data-user="admin" data-category="quiz" data-timestamp="2025-07-26T08:00:00Z">
-                            <div class="activity-log-header">
-                                <div class="activity-icon quiz activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pen">
-                                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>@jelo completed&nbsp;<strong>"Color Quiz"</strong></span><span class="bg-info badge user-role">Pupil</span></div>
-                                <div class="activity-time"><span>1 hr ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">Username:</span>&nbsp;@jelo</p>
-                                <p><span class="detail-label">Score:</span>&nbsp;9 / 10</p>
-                                <p><span class="detail-label">Time Spent:</span>&nbsp;8 mins</p>
-                                <p><span class="detail-label">Device:</span>&nbsp;Oppo 123</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="login-failed" data-search="failed login" data-user="pupil" data-category="login_access" data-timestamp="2025-09-01T07:00:00Z">
-                            <div class="activity-log-header">
-                                <div class="activity-icon login activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>@jelo&nbsp;&nbsp;<strong>failed to login</strong></span><span class="bg-info badge user-role">pupil</span></div>
-                                <div class="activity-time"><span>1 hr ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">Username:</span>&nbsp;@jelo</p>
-                                <p><span class="detail-label">Action:</span>&nbsp;Accessed Quarter 1</p>
-                                <p><span class="detail-label">Device:</span>&nbsp;Mobile (iOS Safari)</p>
-                                <p><span class="detail-label">IP Address:</span>&nbsp;192.168.1.109</p>
-                                <p><span class="detail-label">Location:</span>&nbsp;Quezon City, PH</p>
-                                <p><span class="detail-label">Time:</span>&nbsp;Today at 3PM</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="material-access" data-search="teacher maria accessed quarter 1 teacher" data-user="teacher" data-category="login_access" data-timestamp="2025-08-03T12:00:00Z">
-                            <div class="activity-log-header">
-                                <div class="activity-icon login activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>Teacher Maria&nbsp;<strong>accessed Quarter 1</strong></span><span class="bg-success badge user-role">TEacher</span></div>
-                                <div class="activity-time"><span>1 hr ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">User:</span>&nbsp;Maria Santos</p>
-                                <p><span class="detail-label">Role:</span>&nbsp;Teacher</p>
-                                <p><span class="detail-label">Action:</span>&nbsp;Accessed Quarter 1</p>
-                                <p><span class="detail-label">Device:</span>&nbsp;Chrome on Windows</p>
-                                <p><span class="detail-label">Location:</span>&nbsp;Manila, PH</p>
-                                <p><span class="detail-label">Session Started:</span>&nbsp;3 hours ago</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="login-success" data-search="11 23 logged in MQuest" data-user="pupil" data-category="login_access">
-                            <div class="activity-log-header">
-                                <div class="activity-icon login activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>11*******23&nbsp;<strong>&nbsp;logged in to MQuest</strong></span><span class="bg-info badge user-role">Pupil</span></div>
-                                <div class="activity-time"><span>yesterday</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">User:</span>&nbsp;11********45</p>
-                                <p><span class="detail-label">Role:</span>&nbsp;Pupil</p>
-                                <p><span class="detail-label">Grade/Class:</span>&nbsp;&nbsp;Grade 3 - Section A</p>
-                                <p><span class="detail-label">Login Method:</span>&nbsp;Email</p>
-                                <p><span class="detail-label">Device:</span>&nbsp;Oppo 123</p>
-                                <p><span class="detail-label">Last Activity:</span>&nbsp;Completed Pre-Test Quiz</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="material-publish" data-search="published lesson 3 introduction to flowers admin" data-user="admin" data-category="lesson_material">
-                            <div class="activity-log-header">
-                                <div class="activity-log-icon lesson activity-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-folder">
-                                        <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>Published&nbsp;<strong>"Lesson 3: Introduction to Flowers"</strong></span><span class="bg-primary badge user-role">admin</span></div>
-                                <div class="activity-time"><span>2 days ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">User:</span>&nbsp;Admin</p>
-                                <p><span class="detail-label">Content:</span>&nbsp;Lesson 3: Introduction to Flowers</p>
-                                <p><span class="detail-label">Status:</span>&nbsp;Published</p>
-                                <p><span class="detail-label">Materials Included:</span>&nbsp;Pretest,&nbsp;PDF Guide, Video, Post Test</p>
-                                <p><span class="detail-label">Published To:</span>&nbsp;Quarter 1: Science</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="delete" data-search="deleted old worksheet v1 pdf admin" data-user="admin" data-category="deletion">
-                            <div class="activity-log-header">
-                                <div class="activity-icon delete activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trash3">
-                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>Deleted<strong>&nbsp;"Old_Worksheet_v1.pdf"</strong></span><span class="bg-primary badge user-role">Admin</span></div>
-                                <div class="activity-time"><span>3 days ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">User:</span>&nbsp;Admin</p>
-                                <p><span class="detail-label">File Name:</span>&nbsp;Old_Worksheet_v1.pdf</p>
-                                <p><span class="detail-label">Deleted From:</span>&nbsp;Quarter 1</p>
-                                <p><span class="detail-label">Backup:</span>&nbsp;Yes</p>
-                            </div>
-                        </li>
-                        <li class="activity-log-item" data-type="badge-earned" data-search="wow badge earned" data-user="puil" data-category="achievement">
-                            <div class="activity-log-header">
-                                <div class="activity-icon achievement activity-log-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-award">
-                                        <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z"></path>
-                                        <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z"></path>
-                                    </svg></div>
-                                <div class="activity-content"><span>Mark earned<strong>&nbsp;"Wow Badge"</strong></span><span class="bg-info badge user-role">pupil</span></div>
-                                <div class="activity-time"><span>3 days ago</span></div>
-                            </div>
-                            <div class="activity-details">
-                                <p><span class="detail-label">Badge Name:</span>&nbsp;Wow Badge</p>
-                                <p><span class="detail-label">Recipient:</span>&nbsp;Mark Velasco (Grade 3 - Section B)</p>
-                                <p><span class="detail-label">Unlocked On:</span>&nbsp;Apr 2, 2025</p>
-                                <p><span class="detail-label">Subject:</span>&nbsp;Mathematics</p>
-                            </div>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="text-center text-muted p-4" id="noResults" style="display:none;"><span> No matching activities found.</span></div>
                     <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
                         <div class="text-muted small"><span> Showing </span><span id="startCount-2">1</span><span> to </span><span id="endCount-2">3</span><span> of </span><span id="totalCount-2">50</span></div>
                         <nav aria-label="User list pagination">
-                            <ul class="mb-0 pagination pagination-sm">
-                                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            <ul class="mb-0 pagination pagination-sm" id="activityPagination">
+                                <!-- JS will dynamically insert page items here -->
                             </ul>
                         </nav>
                     </div>
@@ -1716,7 +1576,7 @@
                                         <div class="info-item-label"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar">
                                                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
                                             </svg><span>Joined since</span></div>
-                                        <div class="info-item-value"><span>January 15, 2022</span></div>
+                                        <div class="info-item-value" id="createdAt"><span>January 15, 2022</span></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -1725,7 +1585,7 @@
                                                 <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"></path>
                                                 <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"></path>
                                             </svg><span>Last Active</span></div>
-                                        <div class="info-item-value"><span>Active Now</span></div>
+                                        <div class="info-item-value" id="lastActive"><span>Active Now</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -1740,26 +1600,26 @@
                                                 <div class="info-item-label"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope">
                                                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
                                                     </svg><span> Email</span></div>
-                                                <div class="info-item-value"><span>emma.johnson@example.com</span></div>
+                                                <div class="info-item-value" id="email"><span>emma.johnson@example.com</span></div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <!-- <div class="col-6">
                                             <div class="info-item">
                                                 <div class="info-item-label"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-telephone">
                                                         <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"></path>
                                                     </svg><span>&nbsp;Phone</span></div>
-                                                <div class="info-item-value"><span>+1 (555) 123-4567</span></div>
+                                                <div class="info-item-value" ><span>+1 (555) 123-4567</span></div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-6">
                                             <div class="info-item">
                                                 <div class="info-item-label"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cake">
                                                         <path d="m7.994.013-.595.79a.747.747 0 0 0 .101 1.01V4H5a2 2 0 0 0-2 2v3H2a2 2 0 0 0-2 2v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a2 2 0 0 0-2-2h-1V6a2 2 0 0 0-2-2H8.5V1.806A.747.747 0 0 0 8.592.802l-.598-.79ZM4 6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v.414a.911.911 0 0 1-.646-.268 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0A.911.911 0 0 1 4 6.414zm0 1.414c.49 0 .98-.187 1.354-.56a.914.914 0 0 1 1.292 0c.748.747 1.96.747 2.708 0a.914.914 0 0 1 1.292 0c.374.373.864.56 1.354.56V9H4zM1 11a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.793l-.354.354a.914.914 0 0 1-1.293 0 1.914 1.914 0 0 0-2.707 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0L1 11.793zm11.646 1.854a1.915 1.915 0 0 0 2.354.279V15H1v-1.867c.737.452 1.715.36 2.354-.28a.914.914 0 0 1 1.292 0c.748.748 1.96.748 2.708 0a.914.914 0 0 1 1.292 0c.748.748 1.96.748 2.707 0a.914.914 0 0 1 1.293 0Z"></path>
                                                     </svg><span>&nbsp;Date of Birth</span></div>
-                                                <div class="info-item-value"><span>March 8, 2017</span></div>
+                                                <div class="info-item-value" id="bday"><span>March 8, 2017</span></div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <!-- <div class="col-6">
                                             <div class="info-item">
                                                 <div class="info-item-label"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-geo-alt">
                                                         <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"></path>
@@ -1767,43 +1627,43 @@
                                                     </svg><span>Address</span></div>
                                                 <div class="info-item-value"><span>New York, USA</span></div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-6">
                                             <div class="info-item">
                                                 <div class="info-item-label"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-building">
                                                         <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path>
                                                         <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"></path>
                                                     </svg><span>School</span></div>
-                                                <div class="info-item-value"><span>Lincoln Middle School</span></div>
+                                                <div class="info-item-value" id="schoolName"><span>Lincoln Middle School</span></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <h3 class="section-title">Learning Progress</h3>
-                                    <div class="mb-3">
+                                    <div class="mb-3" class="progress-overview" data-subject="Mathematics">
                                         <div class="progress-container">
-                                            <div class="progress-title"><span>Mathematics</span><span class="progress-percentage">30%</span></div>
+                                            <div class="progress-title"><span>Mathematics</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
-                                                <div class="bg-warning progress-bar" style="width: 30%"></div>
+                                                <div class="bg-warning progress-bar" id="mathProg" style="width: 0%"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-container">
-                                            <div class="progress-title"><span>English</span><span class="progress-percentage">15%</span></div>
+                                        <div class="progress-container" data-subject="Enhlish">
+                                            <div class="progress-title"><span>English</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
-                                                <div class="bg-danger progress-bar" style="width: 15%"></div>
+                                                <div class="bg-danger progress-bar" id="engProg" style="width: 0%"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-container">
-                                            <div class="progress-title"><span>Science</span><span class="progress-percentage">5%</span></div>
+                                        <div class="progress-container" data-subject="Science">
+                                            <div class="progress-title"><span>Science</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
-                                                <div class="bg-danger progress-bar" style="width: 5%"></div>
+                                                <div class="bg-danger progress-bar" id="sciProg" style="width: 0%"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-container">
-                                            <div class="progress-title"><span>Filipino</span><span class="progress-percentage">60%</span></div>
+                                        <div class="progress-container" data-subject="Filipino">
+                                            <div class="progress-title"><span>Filipino</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
-                                                <div class="bg-success progress-bar" style="width: 60%"></div>
+                                                <div class="bg-success progress-bar"id="filProg" style="width: 0%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1855,15 +1715,15 @@
                             </div>
                             <div class="stats-row">
                                 <div class="stat-item">
-                                    <div class="stat-value"><span>86%</span></div>
+                                    <div class="stat-value" ><span id="avgScore">0%</span></div>
                                     <div class="stat-label"><span>Average Score</span></div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="stat-value"><span>13</span></div>
+                                    <div class="stat-value" ><span id="TotalCompleteLesson">0</span></div>
                                     <div class="stat-label"><span>Lesson Completed</span></div>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="stat-value"><span>3</span></div>
+                                    <div class="stat-value"><span id="badgeEarn">0</span></div>
                                     <div class="stat-label"><span>Badges Earned</span></div>
                                 </div>
                             </div>
@@ -2546,6 +2406,7 @@
         console.log("Teacher List:", @json($Teachers_list));
         console.log("Pupil List:", @json($Pupils_list));
         console.log("Student Progress:", @json($Student_progress_Subject));
+        console.log("Activity Logs:", @json($activity_logs));
 
 
         window.allLessons = {!! json_encode($allLessons) !!};
@@ -3058,6 +2919,515 @@
 
 
     </script>
+
+
+    <script>
+        const teachers = @json($Teachers_list);
+        const pupils   = @json($Pupils_list);
+
+        // Combine Teacher + Pupil into ONE unified list
+        const combinedUsers = [
+            ...teachers.map(t => ({
+                id: t.user_id,
+                name: t.full_name,
+                email: t.email,
+                type: "Teacher",
+                birthdate: t.birth_date,
+                avatar: t.avatar_thumbnail,
+                schoolName: t.sections?.length 
+                    ? `${t.sections[0].school_name}`
+                    : "No School",
+                active: t.active_status === 1,
+                lastActive: t.last_active,
+                sections: t.sections || [],
+                totalPupils: t.total_pupils || 0,
+                recentActivity: t.recent_activities || [],
+                created_at: t.created_at
+            })),
+            ...pupils.map(p => ({
+                id: p.pupil_id,
+                name: p.full_name,
+                email: p.email,
+                type: "Pupil",
+                birthdate: p.birth_date,
+                avatar: p.avatar_thumbnail,
+                schoolName: p.school_name ?? "No School",
+                active: p.active_status === 1,
+                lastActive: p.last_active,
+                progress: p.progress || 0,
+                total_badges: p.total_badges || 0,
+                avg_score: p.avg_score || 0,
+                total_completed_lessons: p.completed_lessons || 0,
+                recentActivity: p.recent_activities || [],
+                created_at: p.created_at
+            }))
+        ];
+
+        console.log("Combined Users:", combinedUsers);
+
+        let currentPage = 1;
+        const rowsPerPage = 5;
+        let activeList = [...combinedUsers]; 
+
+        function renderPagination(list) {
+            const total = list.length;
+            const totalPages = Math.ceil(total / rowsPerPage);
+
+            document.getElementById("totalCount").textContent = total;
+
+            const pagination = document.querySelector(".pagination"); // only your pagination ul
+
+            let pagesHTML = `
+                <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+                    <a class="page-link" href="#" data-page="prev">Previous</a>
+                </li>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                pagesHTML += `
+                    <li class="page-item ${i === currentPage ? "active" : ""}">
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
+                    </li>
+                `;
+            }
+
+            pagesHTML += `
+                <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+                    <a class="page-link" href="#" data-page="next">Next</a>
+                </li>
+            `;
+
+            pagination.innerHTML = pagesHTML;
+
+            // Attach event listeners AFTER updating the HTML
+            pagination.querySelectorAll(".page-link").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    e.preventDefault();
+                    const page = btn.dataset.page;
+
+                    if (page === "prev" && currentPage > 1) currentPage--;
+                    else if (page === "next" && currentPage < totalPages) currentPage++;
+                    else if (!isNaN(page)) currentPage = parseInt(page);
+
+                    updateUI();
+                });
+            });
+        }
+
+
+        // Render to table
+        function renderUserTable(list) {
+            const body = document.getElementById("userTableBody");
+            body.innerHTML = "";
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            const pageItems = list.slice(start, end);
+
+            document.getElementById("startCount").textContent = start + 1;
+            document.getElementById("endCount").textContent = Math.min(end, list.length);
+
+            pageItems.forEach(user => {
+                const activeBadge = user.active 
+                    ? `<span class="status-badge status-active">Active</span>`
+                    : `<span class="status-badge status-inactive">Inactive</span>`;
+
+                const dotClass = user.active ? "online" : "offline";
+
+                const typeBadge =
+                    user.type === "Teacher"
+                        ? `<span class="text-success bg-success-subtle user-badge badge">Teacher</span>`
+                        : `<span class="text-info bg-info-subtle user-badge badge">Pupil</span>`;
+
+                const lastSeenText = user.active ? "Now" : timeAgo(user.lastActive);
+
+                const row = `
+                    <tr data-active="${user.active}">
+                        <td data-label="Online"><div class="status-dot ${dotClass}"></div></td>
+                        <td data-label="Name">${user.name}</td>
+                        <td data-label="Email">${user.email}</td>
+                        <td data-label="Type">${typeBadge}</td>
+                        <td data-label="Grade/Class">${user.schoolName}</td>
+                        <td data-label="Status">${activeBadge}</td>
+                        <td data-label="Last Seen">${lastSeenText}</td>
+                        <td data-label="Actions">
+                            <button class="btn action-btn view" title="View Profile"
+                                    data-bs-toggle="modal" data-bs-target="#viewProfile"
+                                    onclick="openProfile(${user.id}, '${user.type}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye" data-bs-toggle="modal" data-bs-target="#viewProfile">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+
+                body.insertAdjacentHTML("beforeend", row);
+            });
+        }
+
+        function updateUI() {
+            renderUserTable(activeList);
+            renderPagination(activeList);
+        }
+
+        // Converts last_active into “5 mins ago”
+        function timeAgo(dateStr) {
+            const diff = (new Date() - new Date(dateStr)) / 1000;
+            if (diff < 60) return "Just now";
+            if (diff < 3600) return Math.floor(diff / 60) + " mins ago";
+            if (diff < 86400) return Math.floor(diff / 3600) + " hrs ago";
+            return Math.floor(diff / 86400) + " days ago";
+        }
+
+        // Filter/Search Example (date, type, status, search)
+        function applyFilters() {
+            const dateFilter = document.getElementById("filterDate").value;
+            const typeFilter = document.getElementById("filterType").value;
+            const statusFilter = document.getElementById("filterStatus").value;
+            const searchText = document.getElementById("searchInput").value.toLowerCase();
+
+            let filtered = combinedUsers;
+
+            // Filter by date
+            if (dateFilter) {
+                const now = new Date();
+                let limitDays = parseInt(dateFilter);
+                if (dateFilter === "24d") limitDays = 1;
+                const cutoff = new Date(now.getTime() - limitDays * 24 * 60 * 60 * 1000);
+                filtered = filtered.filter(u => new Date(u.lastActive) >= cutoff);
+            }
+
+            // Filter by type
+            if (typeFilter) filtered = filtered.filter(u => u.type === typeFilter);
+
+            // Filter by status
+            if (statusFilter) {
+                const isActive = statusFilter === "Active";
+                filtered = filtered.filter(u => u.active === isActive);
+            }
+
+            // Filter by search text
+            if (searchText) {
+                filtered = filtered.filter(u =>
+                    u.name.toLowerCase().includes(searchText) ||
+                    u.schoolName.toLowerCase().includes(searchText) ||
+                    u.type.toLowerCase().includes(searchText)
+                );
+            }
+
+            activeList = filtered;
+            currentPage = 1;
+            updateUI();
+        }
+
+        // Event listeners
+        document.getElementById("filterDate").addEventListener("change", applyFilters);
+        document.getElementById("filterType").addEventListener("change", applyFilters);
+        document.getElementById("filterStatus").addEventListener("change", applyFilters);
+        document.getElementById("searchInput").addEventListener("input", applyFilters);
+
+        // Initial render
+        updateUI();
+
+
+        // Assuming combinedUsers is your array of pupils + teachers
+        function openProfile(userId, userType) {
+            const user = combinedUsers.find(u => u.id === userId && u.type === userType);
+            if (!user) return;
+
+            // Modal elements
+            const modal = document.getElementById('viewProfile');
+            modal.querySelector('.profile-pic').src = user.avatar || 'assets/img/7.png';
+            modal.querySelector('.profile-title h1').textContent = user.name;
+            modal.querySelector('.profile-title span.badge').textContent = user.type;
+
+            // Example: Show school or section info
+            if (user.sections && user.sections.length > 0) {
+                modal.querySelector('.profile-title p').textContent = user.sections.map(s => s.section_name).join(', ');
+            } else {
+                modal.querySelector('.profile-title p').textContent = '';
+            }
+
+            // Personal info
+            document.getElementById("createdAt").textContent = new Date(user.created_at).toLocaleDateString() || '-';
+            document.getElementById("email").textContent = user.email || '-';
+            document.getElementById("bday").textContent = new Date(user.birthdate).toLocaleDateString() || '-';
+            document.getElementById("schoolName").textContent = user.schoolName || 'No School';
+
+            // Last Active
+            document.getElementById('createdAt').textContent = user.lastActive
+                ? new Date(user.lastActive).toLocaleString()
+                : 'Active Now';
+
+            // Learning Progress (if pupil)
+            if (user.progress) {
+                user.progress.forEach(p => {
+                    const container = modal.querySelector(`.progress-container[data-subject="${p.subject_name}"]`);
+                    if (container) {
+                        const percent = parseFloat(p.progress_percent).toFixed(2); // format as 2 decimals
+                        container.querySelector('.progress-percentage').textContent = `${percent}%`;
+                        container.querySelector('.progress-bar').style.width = `${percent}%`;
+                    }
+                });
+            }
+
+            document.getElementById("avgScore").textContent = user.avg_score || '0%';
+            document.getElementById("badgeEarn").textContent = user.total_badges || '0';
+            document.getElementById("TotalCompleteLesson").textContent = user.total_completed_lessons || '0';
+
+
+            // Recent Activities
+            const activityContainer = modal.querySelector('.mt-4 .mb-3');
+            activityContainer.innerHTML = ''; // Clear previous activities
+            if (user.recentActivity && user.recentActivity.length > 0) {
+                user.recentActivity.forEach(act => {
+                    const div = document.createElement('div');
+                    div.classList.add('activity-item');
+                    div.innerHTML = `
+                        <div class="activity-icon gray"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-book"><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"></path></svg></div>
+                        <div class="activity-content">
+                            <div class="activity-title"><span>${act.name}</span></div>
+                            <div class="activity-time"><span>${new Date(act.executed_at).toLocaleString()}</span></div>
+                        </div>
+                    `;
+                    activityContainer.appendChild(div);
+                });
+            } else {
+                activityContainer.innerHTML = '<div>No recent activity</div>';
+            }
+        }
+
+    </script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const activityLogs = {!! json_encode($activity_logs) !!} || [];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+
+    let searchTerm = '';
+    let filterType = '';
+    let filterDate = '';
+
+    function timeAgo(dateString) {
+        const now = new Date();
+        const past = new Date(dateString);
+        const diffSec = Math.floor((now - past)/1000);
+        const diffMin = Math.floor(diffSec/60);
+        const diffHr = Math.floor(diffMin/60);
+        const diffDay = Math.floor(diffHr/24);
+
+        if(diffSec < 60) return `${diffSec} sec ago`;
+        if(diffMin < 60) return `${diffMin} min ago`;
+        if(diffHr < 24) return `${diffHr} hr ago`;
+        return `${diffDay} days ago`;
+    }
+
+    function getFilteredLogs() {
+        return activityLogs.filter(log => {
+            const searchText = `${log.full_name} ${log.activity_name}`.toLowerCase();
+            
+            // Search filter
+            if(searchTerm && !searchText.includes(searchTerm.toLowerCase())) {
+                return false;
+            }
+
+            // Activity type filter
+            if(filterType && filterType !== '') {
+                // Create a simplified version for comparison
+                const activityType = log.activity_name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                if(activityType !== filterType) {
+                    return false;
+                }
+            }
+
+            // Date filter
+            if(filterDate) {
+                const logDate = new Date(log.executed_at);
+                const now = new Date();
+                
+                switch(filterDate){
+                    case 'today': 
+                        if(logDate.toDateString() !== now.toDateString()) return false; 
+                        break;
+                    case '7d': 
+                        const sevenDaysAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+                        if(logDate < sevenDaysAgo) return false; 
+                        break;
+                    case '30d': 
+                        const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
+                        if(logDate < thirtyDaysAgo) return false; 
+                        break;
+                    case 'this-month': 
+                        if(logDate.getMonth() !== now.getMonth() || logDate.getFullYear() !== now.getFullYear()) return false; 
+                        break;
+                }
+            }
+
+            return true;
+        });
+    }
+
+    function renderLogs() {
+        const list = document.getElementById('activityList');
+        list.innerHTML = '';
+
+        // Get filtered logs
+        const filtered = getFilteredLogs();
+        const total = filtered.length;
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = Math.min(start + rowsPerPage, total);
+        const paginated = filtered.slice(start, end);
+
+        // Update counters
+        document.getElementById('startCount-2').textContent = total === 0 ? 0 : start + 1;
+        document.getElementById('endCount-2').textContent = end;
+        document.getElementById('totalCount-2').textContent = total;
+
+        // Show/hide no results message
+        if(paginated.length === 0){
+            document.getElementById('noResults').style.display = 'block';
+        } else {
+            document.getElementById('noResults').style.display = 'none';
+        }
+
+        // Render logs
+        paginated.forEach(log => {
+            const li = document.createElement('li');
+            li.className = 'activity-log-item';
+            li.innerHTML = `
+                <div class="activity-log-header">
+                    <div class="activity-log-icon login activity-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <span>${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
+                        <span class="bg-primary badge user-role">${log.role}</span>
+                    </div>
+                    <div class="activity-time">
+                        <span>${timeAgo(log.executed_at)}</span>
+                    </div>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+
+        renderPagination(total);
+    }
+
+    function renderPagination(total) {
+        const totalPages = Math.ceil(total / rowsPerPage);
+        const pagination = document.getElementById('activityPagination');
+        
+        // Clear old pagination buttons
+        pagination.innerHTML = '';
+
+        if (totalPages <= 1) {
+            pagination.style.display = 'none';
+            return;
+        }
+
+        pagination.style.display = 'flex';
+
+        const createPageItem = (page, text = null, disabled = false, active = false) => {
+            const li = document.createElement('li');
+            li.className = `page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`;
+            const a = document.createElement('a');
+            a.href = '#';
+            a.className = 'page-link';
+            a.textContent = text || page;
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!disabled && page >= 1 && page <= totalPages) {
+                    currentPage = page;
+                    renderLogs();
+                }
+            });
+            li.appendChild(a);
+            return li;
+        };
+
+        // Previous button
+        pagination.appendChild(createPageItem(currentPage - 1, 'Previous', currentPage === 1));
+
+        // Page numbers (show max 5)
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            pagination.appendChild(createPageItem(i, i, false, currentPage === i));
+        }
+
+        // Next button
+        pagination.appendChild(createPageItem(currentPage + 1, 'Next', currentPage === totalPages));
+    }
+
+
+
+    // Event listeners
+    function setupEventListeners() {
+        document.getElementById('searchActivity').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            currentPage = 1;
+            renderLogs();
+        });
+
+        document.getElementById('filterActType').addEventListener('change', (e) => {
+            filterType = e.target.value;
+            currentPage = 1;
+            renderLogs();
+        });
+
+        document.getElementById('filterDate-1').addEventListener('change', (e) => {
+            filterDate = e.target.value;
+            currentPage = 1;
+            renderLogs();
+        });
+
+        // CSV Export
+        document.getElementById('exportBtn-1').addEventListener('click', () => {
+            const filtered = getFilteredLogs();
+
+            if (filtered.length === 0) {
+                alert('No data to export');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Full Name,Activity,Role,Executed At\n";
+            filtered.forEach(log => {
+                csvContent += `"${log.full_name}","${log.activity_name}","${log.role}","${log.executed_at}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "activity_logs.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
+
+    // Initialize
+    setupEventListeners();
+    renderLogs();
+});
+</script>
+
+
+
 
 
 

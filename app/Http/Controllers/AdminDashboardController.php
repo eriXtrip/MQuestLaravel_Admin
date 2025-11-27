@@ -33,6 +33,8 @@ class AdminDashboardController extends Controller
         $Teachers_list = [];
         $Pupils_list = [];
         $Student_progress_Subject = [];
+        $activity_logs = [];
+
 
         $token = session('node_token');
 
@@ -83,6 +85,7 @@ class AdminDashboardController extends Controller
                     $Teachers_list = $fullResponse['Teachers_list'] ?? [];
                     $Pupils_list = $fullResponse['Pupils_list'] ?? [];
                     $Student_progress_Subject = $fullResponse['Student_progress_Subject'] ?? [];
+                    $activity_logs = $fullResponse['activity_logs'] ?? [];
 
                     // ✅ Extract the 'data' array
                     if (is_array($fullResponse) && isset($fullResponse['data']) && is_array($fullResponse['data'])) {
@@ -105,6 +108,7 @@ class AdminDashboardController extends Controller
                     $Teachers_list = [];
                     $Pupils_list = [];
                     $Student_progress_Subject = [];
+                    $activity_logs = [];
 
                 }
 
@@ -236,7 +240,8 @@ class AdminDashboardController extends Controller
             'teachersWithSections',
             'Teachers_list',
             'Pupils_list',
-            'Student_progress_Subject'
+            'Student_progress_Subject',
+            'activity_logs'
         ));
     }
 
