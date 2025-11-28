@@ -164,19 +164,221 @@
                 </div>
             </div>
 
+             <!-- Terms and Conditions Checkbox -->
+            <div class="input-group" style="margin-top: 20px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <input type="checkbox" id="agree-terms" name="agree-terms" style="margin-top: 3px;">
+                    <label for="agree-terms" style="font-weight: normal; margin: 0; line-height: 1.4;">
+                        I agree to the 
+                        <a href="#" onclick="showTermsModal()" style="color: #007bff; text-decoration: underline;">Terms and Conditions</a>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Privacy Policy Checkbox -->
+            <div class="input-group" style="margin-top: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <input type="checkbox" id="agree-privacy" name="agree-privacy" style="margin-top: 3px;">
+                    <label for="agree-privacy" style="font-weight: normal; margin: 0; line-height: 1.4;">
+                        I agree to the 
+                        <a href="#" onclick="showPrivacyModal()" style="color: #007bff; text-decoration: underline;">Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+
             <button class="register-button" onclick="validateAndGoToStep(7, 8)">Complete Registration</button>
+        </div>
+
+        <!-- Terms and Conditions Modal -->
+        <div id="termsModal" class="modal" style="display: none;">
+            <div class="modal-content" style="max-width: 800px; max-height: 80vh;">
+                <div class="modal-header">
+                    <h3>Terms and Conditions</h3>
+                    <span class="close" onclick="closeTermsModal()">&times;</span>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: 60vh; padding: 20px;">
+                    <p style="opacity: 0.7; margin-bottom: 20px; text-align: left;">Last Updated: 2025-11-28</p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">1. Acceptance of Terms</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        By accessing or using MQuest, you agree to be bound by these Terms and Conditions. If you do not agree,
+                        do not use the Service. If you are a minor, you must have permission from a parent, guardian, or responsible
+                        school official, where applicable.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">2. Eligibility</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        You must meet the minimum age requirements in your jurisdiction (e.g., 13+) or obtain permission from your
+                        parent or guardian. If your account is provided by a school or educator, they confirm your eligibility and
+                        authorize your use of the Service.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">3. Accounts and Security</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        You agree to provide accurate information and keep your credentials secure. You are responsible for all
+                        activities under your account. Notify us immediately of any unauthorized use or security incident.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">4. Permitted and Prohibited Use</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        The Service is for lawful, personal, and/or educational use. You agree not to reverse engineer, scrape,
+                        interfere with the Service, transmit malware, harass others, or violate any laws or the rights of others.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">5. Content and Intellectual Property</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        You retain ownership of content you submit. You grant matatag and company a limited license to host and display
+                        your content solely to provide the Service. All Service content, code, and brand assets belong to
+                        matatag and company and are licensed to you for use within the app only.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">6. Third-Party Links and In-App Browser</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        The Service may open external websites within the app or your default browser. External sites are governed by
+                        their own terms and privacy policies. We are not responsible for the content or practices of third-party sites.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">9. Privacy</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        Our data practices are described in the Privacy Policy. By using the Service, you agree that we may collect and
+                        use your information as outlined there.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">10. Disclaimers</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
+                        The Service is provided "as is" and "as available" without warranties of any kind, except as required by law.
+                        We do not guarantee uninterrupted or error-free operation.
+                    </p>
+
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">16. Contact</h4>
+                    <p style="line-height: 1.6; text-align: left; margin-bottom: 15px; ">
+                        For questions about these Terms, contact us at matatagquest@gmail.com.
+                    </p>
+
+                    <div style="border-top: 1px solid #e4e4e7; margin: 20px 0; padding: 20px 0; text-align: left;">
+                        <p style="opacity: 0.8;">
+                            By continuing to use MQuest, you acknowledge you have read and agreed to these Terms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Modal -->
+        <div id="privacyModal" class="modal" style="display: none;">
+            <div class="modal-content" style="max-width: 800px; max-height: 80vh;">
+                <div class="modal-header">
+                    <h3>Privacy Policy</h3>
+                    <span class="close" onclick="closePrivacyModal()">&times;</span>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: 60vh; padding: 20px; text-align: left;">
+                    <p style="opacity: 0.7; margin-bottom: 20px; text-align: left;">Last Updated: 2025-11-28</p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">1. Introduction</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        This Privacy Policy explains how matatag and company ("we", "us") collects, uses, and shares information about
+                        you when you use MQuest. By using the Service, you agree to the collection and use of information
+                        in accordance with this Policy.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">2. Information We Collect</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        We collect information you provide (e.g., name, email, profile details) and information collected
+                        automatically (e.g., device information, app usage data, crash logs, IP address, and push tokens). We may
+                        also receive information from third-party services where integrations are used.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">3. How We Use Information</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        We use your information to operate and improve the Service, authenticate users, personalize experiences,
+                        support offline usage, store progress, send notifications, debug issues, and enhance security.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">5. Sharing and Disclosure</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        We share data with service providers that help us deliver the Service (e.g., hosting, analytics, notifications).
+                        We may disclose information to comply with legal requests or to protect rights and safety. In case of a
+                        business transfer (e.g., merger), your data may be transferred to the new owner.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">6. Data Storage, Security, and Retention</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        We implement reasonable security measures. Data may be stored on secure servers and within the app (e.g.,
+                        secure credentials, offline databases, cached files). We retain data as long as necessary to provide the
+                        Service and as required by law.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">7. Children's Privacy</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        If MQuest is used by students/minors, we require parental or school authorization where applicable and
+                        limit data collection to what is necessary for learning and app functionality.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">9. Your Rights</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        Depending on your location, you may have rights to access, correct, delete, or export your data, restrict or
+                        object to certain processing, and withdraw consent. To exercise these rights, contact us at matatagquest@gmail.com.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">11. Changes to This Policy</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        We may update this Policy from time to time. Significant changes will be communicated in-app or via other
+                        reasonable means. Your continued use of the Service after changes indicates your acceptance.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">12. Contact Us</h4>
+                    <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
+                        If you have questions or concerns about this Policy, contact us at matatagquest@gmail.com.
+                    </p>
+                </div>
+            </div>
         </div>
 
     </div>
 
-    <div class="alert" id="alert" style="display: none;">
-        <p id="alert-message"></p>
-        <button onclick="closeAlert()">OK</button>
+    <div id="customAlert" style="display:none; position:fixed; top:20px; right:20px; background-color:#f8d7da; color:#842029; border:1px solid #f5c2c7; padding:15px 20px; border-radius:5px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000; font-family:Arial, sans-serif;">
+        <span id="customAlertMessage"></span>
+        <button id="customAlertClose" style="margin-left:15px; background:none; border:none; font-weight:bold; cursor:pointer;">&times;</button>
     </div>
 
     
     <script>
         /* ---------- Proxy helpers (call Laravel controller routes) ---------- */
+
+        function showCustomAlert(message, type = 'error') {
+            const alertEl = document.getElementById('customAlert');
+            const alertMessage = document.getElementById('customAlertMessage');
+            const closeBtn = document.getElementById('customAlertClose');
+
+            alertMessage.textContent = message;
+
+            // Set styles based on type
+            if (type === 'success') {
+                alertEl.style.backgroundColor = '#d1e7dd';
+                alertEl.style.color = '#0f5132';
+                alertEl.style.border = '1px solid #badbcc';
+            } else if (type === 'neutral') {
+                alertEl.style.backgroundColor = '#cff4fc';
+                alertEl.style.color = '#055160';
+                alertEl.style.border = '1px solid #b6effb';
+            } else { // error
+                alertEl.style.backgroundColor = '#f8d7da';
+                alertEl.style.color = '#842029';
+                alertEl.style.border = '1px solid #f5c2c7';
+            }
+
+            alertEl.style.display = 'flex';
+            alertEl.style.alignItems = 'center';
+
+            closeBtn.onclick = () => {
+                alertEl.style.display = 'none';
+            };
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertEl.style.display = 'none';
+            }, 5000);
+        }
 
         async function startRegistration(data) {
             try {
@@ -384,7 +586,7 @@
                             await startRegistration(registrationData);
                             startResendTimer();
                             goToStep(6);
-                            showAlert('Verification code sent to your email.');
+                            showCustomAlert('Verification code sent to your email.', 'success');
                             return; // Exit early to avoid goToStep(nextStep)
                         } catch (error) {
                             isValid = false;
@@ -416,7 +618,12 @@
                 case 7:
                     formData.password = document.getElementById('password').value;
                     formData.confirmPassword = document.getElementById('confirm-password').value;
+                    const termsChecked = document.getElementById('agree-terms').checked;
+                    const privacyChecked = document.getElementById('agree-privacy').checked;
+                    
                     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+
+                    
                     if (!formData.password || formData.password.length < 8) {
                         isValid = false;
                         message = 'Password must be at least 8 characters long.';
@@ -426,7 +633,10 @@
                     } else if (formData.password !== formData.confirmPassword) {
                         isValid = false;
                         message = 'Passwords do not match.';
-                    } else {
+                    } else if (!termsChecked || !privacyChecked) {
+                        showCustomAlert('Please agree to both Terms and Conditions and Privacy Policy to continue.', 'error');
+                        return;
+                    }else {
                         try {
                             const registrationData = {
                                 email: formData.email,
@@ -442,7 +652,7 @@
                                 [formData.role === 'Teacher' ? 'teacherId' : 'lrn']: formData[formData.role === 'Teacher' ? 'teacherId' : 'lrn']
                             };
                             await completeRegistration(registrationData);
-                            showAlert('Account successfully created.');
+                            showCustomAlert('Account successfully created.', 'success');
                             setTimeout(() => window.location.href = "{{ route('login') }}", 2000);
                             return; // Exit early to avoid goToStep(nextStep)
                         } catch (error) {
@@ -454,7 +664,7 @@
             }
 
             if (!isValid) {
-                showAlert(message);
+                showCustomAlert(message, 'error');
                 return;
             }
 
@@ -480,7 +690,7 @@
 
         async function resendCode() {
             if (resendTimer > 0) {
-                showAlert(`Please wait ${resendTimer}s before resending.`);
+                showCustomAlert(`Please wait ${resendTimer}s before resending.`, 'neutral');
                 return;
             }
             try {
@@ -497,12 +707,12 @@
                     teacherId: formData.role === 'Teacher' ? formData.teacherId : null
                 };
                 await startRegistration(registrationData);
-                showAlert('Verification code resent.');
+                showCustomAlert('Verification code resent.', 'success');
                 document.querySelectorAll('.code-input').forEach(input => input.value = '');
                 document.querySelectorAll('.code-input')[0].focus();
                 startResendTimer();
             } catch (error) {
-                showAlert(error.message || 'Failed to resend code');
+                showCustomAlert(error.message || 'Failed to resend code');
             }
         }
 
@@ -518,25 +728,52 @@
             }, 1000);
         }
 
-        function showAlert(message) {
-            document.getElementById('alert-message').textContent = message;
-            document.getElementById('alert').style.display = 'flex';
-        }
-
         function closeAlert() {
             document.getElementById('alert').style.display = 'none';
         }
 
         function showPasswordHint() {
-            showAlert(
+            showCustomAlert(
                 'Tips for a strong password:\n\n' +
                 '• Combine upper and lower case letters, numbers, and special characters (e.g., $, #, &, etc.).\n\n' +
                 '• Keep your password at least 8 to 12 characters long.\n\n' +
                 '• Avoid consecutive characters (e.g., 12345, abcde, qwerty, etc.) or repeating characters (e.g., 11111).\n\n' +
                 '• Avoid personal info like names of friends or relatives, your birthday, or your address.\n\n' +
                 '• Avoid common or obvious words (e.g., password, maya, bank, money, etc.).\n\n' +
-                '• Avoid using the same password from other accounts you own.'
+                '• Avoid using the same password from other accounts you own.', 'neutral'
             );
+        }
+    </script>
+
+    <script>
+        // Terms and Privacy Modal Functions
+        function showTermsModal() {
+            document.getElementById('termsModal').style.display = 'block';
+        }
+
+        function closeTermsModal() {
+            document.getElementById('termsModal').style.display = 'none';
+        }
+
+        function showPrivacyModal() {
+            document.getElementById('privacyModal').style.display = 'block';
+        }
+
+        function closePrivacyModal() {
+            document.getElementById('privacyModal').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const termsModal = document.getElementById('termsModal');
+            const privacyModal = document.getElementById('privacyModal');
+            
+            if (event.target == termsModal) {
+                closeTermsModal();
+            }
+            if (event.target == privacyModal) {
+                closePrivacyModal();
+            }
         }
     </script>
 </body>

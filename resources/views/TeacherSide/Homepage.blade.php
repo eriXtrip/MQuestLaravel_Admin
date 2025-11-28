@@ -10,6 +10,119 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300i,400,400i,500,600,800&amp;display=swap">
     <link rel="stylesheet" href="{{ asset('TeacherSide/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('TeacherSide/assets/css/styles.css') }}">
+
+
+    <style>
+/* Custom dropdown styles */
+.custom-dropdown {
+    position: relative;
+}
+
+/* Dropdown list base styles */
+.dropdown-list {
+    list-style: none;
+    display: none;
+    align-items: left;
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e1e5e9;
+    padding: 8px 0;
+    min-width: 180px;
+    z-index: 1000;
+    margin: 0;
+    animation: dropdownFadeIn 0.2s ease-out;
+}
+
+/* Mobile view - dropdown appears at top */
+@media (max-width: 768px) {
+    .dropdown-list {
+        bottom: 100%; /* Position above the trigger */
+        top: auto !important;
+        left: 0;
+        right: auto;
+        margin-bottom: 8px;
+        transform-origin: bottom left;
+        align-items: left;
+    }
+
+    .sidebar-link:hover {
+        background: #f8f9fa;
+        border-left-color: #007bff;
+        color: #0056b3;
+    }
+}
+
+/* Desktop view - dropdown appears below */
+@media (min-width: 769px) {
+    .dropdown-list {
+        top: 100%;
+        bottom: auto;
+        left: 0;
+        margin-top: 8px;
+        transform-origin: top left;
+    }
+}
+
+/* Dropdown items */
+.dropdown-list li {
+    margin: 0;
+    align-items: left;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 12px 20px;
+    color: #2d3748;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: #f8f9fa;
+    border-left-color: #007bff;
+    color: #0056b3;
+}
+
+/* Smooth fade-in animation */
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    .dropdown-list {
+        animation: dropdownFadeInMobile 0.2s ease-out;
+    }
+    
+    @keyframes dropdownFadeInMobile {
+        from {
+            opacity: 0;
+            transform: scale(0.95) translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+    
+    .sidebar-link {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
+</style>
+
 </head>
 
 <body style="font-family: Poppins, sans-serif;">
@@ -40,11 +153,10 @@
                             <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1"></path>
                         </svg>
                         <span class="align-middle">Lessons</span>
-                        <span class="ms-2" id="dropdown-arrow"></span>
                     </a>
 
                     <!-- Dropdown list - hidden by default -->
-                    <ul class="dropdown-list" style="list-style: none; display:none; align-items: left;">
+                    <ul class="dropdown-list">
                         <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="English" onclick="selectSubject(this)">English</a></li>
                         <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="Science" onclick="selectSubject(this)">Science</a></li>
                         <li><a class="sidebar-link" href="javascript:void(0)"  data-section="lessonsection" data-subject="Mathematics" onclick="selectSubject(this)">Mathematics</a></li>
@@ -1901,41 +2013,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="userTableBody">
-                                                <!-- <tr data-active="false">
-                                                    <td></td>
-                                                    <td data-label="Profile"><img class="img-fluid pupil-avatar" width="200" height="200" src="{{ asset('TeacherSide/assets/img/12.png') }}"></td>
-                                                    <td data-label="Name">Richard Bilan</td>
-                                                    <td data-label="LRN">113550937534</td>
-                                                    <td data-label="Grade">Grade 4</td>
-                                                    <td data-label="Age">9</td>
-                                                    <td data-label="Status"><span class="status-badge status-inactive">Inactive</span></td>
-                                                    <td data-label="Parent">Ana Bell</td>
-                                                    <td data-label="Last Active">1 hr ago</td>
-                                                    <td data-label="Actions">
-                                                        <button class="btn action-btn view" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewPupilModal" data-id="2">
-                                                            <svg class="bi bi-eye" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewbox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path></svg>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr data-active="true">
-                                                    <td></td>
-                                                    <td data-label="Profile"><img class="img-fluid pupil-avatar" width="200" height="200" src="{{ asset('TeacherSide/assets/img/6.png') }}"></td>
-                                                    <td data-label="Name">Wendee Diane Llona</td>
-                                                    <td data-label="LRN">115609871623</td>
-                                                    <td data-label="Grade">Grade 4</td>
-                                                    <td data-label="Age">8</td>
-                                                    <td data-label="Status"><span class="status-badge status-active">Active</span></td>
-                                                    <td data-label="Parent">Chuckie Doll</td>
-                                                    <td data-label="Last Active">1 day ago</td>
-                                                    <td data-label="Actions">
-                                                        <button class="btn action-btn view" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewPupilModal" data-id="2">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye">
-                                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                                                            </svg>
-                                                        </button>
-                                                    </td>
-                                                </tr> -->
+                                                <!-- User rows will be dynamically populated here -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -1950,7 +2028,7 @@
                                         <span> users </span>
                                     </div>
                                     <nav aria-label="User list pagination">
-                                        <ul class="mb-0 pagination pagination-sm">
+                                        <ul class="mb-0 pagination pagination-sm" id="pupilListPagination">
                                             <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
                                             <li class="page-item active"><a class="page-link" href="#">1</a></li>
                                             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -3293,51 +3371,91 @@
 
 
     <script>
-        document.getElementById('createSectionSubmit').addEventListener('click', async () => {
-
-            const school_name  = document.getElementById('schoolName').value.trim();
-            const school_year  = document.getElementById('schoolYear').value.trim();
-            const section_name = document.getElementById('sectionName').value.trim();
-
-            if (!school_name || !school_year || !section_name) {
-                alert("All fields are required.");
-                return;
-            }
-
-            const token = "{{ session('node_token') }}";
-            const teacherId = "{{ session('user_id') }}";
-
-            try {
-                const response = await fetch("{{ env('API_URL') }}/teacher/create/section", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        teacherId: teacherId,
-                        school_name,
-                        school_year,
-                        section_name
-                    })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    alert(data.error || "Failed to create section.");
-                }
-
-                // 2️⃣ AFTER SUCCESS → FETCH UPDATED LIST
-                await fetchSections();
-
-            } catch (err) {
-                console.error(err);
-                alert("Something went wrong.");
-            }
-
+// Fix for modal backdrop not disappearing
+document.addEventListener('DOMContentLoaded', function() {
+    const createSectionModal = document.getElementById('createSectionModal');
+    
+    // Properly handle modal hide event
+    createSectionModal.addEventListener('hidden.bs.modal', function () {
+        // Remove any lingering backdrops
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(backdrop => {
+            backdrop.remove();
         });
-    </script>
+        
+        // Reset body styles
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    });
+
+    // Also handle show event to prevent multiple backdrops
+    createSectionModal.addEventListener('show.bs.modal', function () {
+        // Clean up any existing backdrops before showing
+        const existingBackdrops = document.querySelectorAll('.modal-backdrop');
+        existingBackdrops.forEach(backdrop => {
+            backdrop.remove();
+        });
+    });
+});
+
+// Your existing create section code
+document.getElementById('createSectionSubmit').addEventListener('click', async () => {
+    const school_name  = document.getElementById('schoolName').value.trim();
+    const school_year  = document.getElementById('schoolYear').value.trim();
+    const section_name = document.getElementById('sectionName').value.trim();
+
+    if (!school_name || !school_year || !section_name) {
+        alert("All fields are required.");
+        return;
+    }
+
+    const token = "{{ session('node_token') }}";
+    const teacherId = "{{ session('user_id') }}";
+
+    try {
+        const response = await fetch("{{ env('API_URL') }}/teacher/create/section", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                teacherId: teacherId,
+                school_name,
+                school_year,
+                section_name
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.error || "Failed to create section.");
+            return;
+        }
+
+        // ✅ SUCCESS: Use Bootstrap to properly hide the modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('createSectionModal'));
+        if (modal) {
+            modal.hide();
+        }
+
+        // Reset form
+        document.getElementById('createSectionForm').reset();
+
+        // Show success message
+        alert("Section created successfully!");
+
+        // Fetch updated sections
+        await fetchSections();
+
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong.");
+    }
+});
+</script>
 
     <script>
         async function fetchSections() {

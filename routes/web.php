@@ -152,4 +152,8 @@
     Route::get('/teacher/homepage', [TeacherDashboardController::class, 'stats'])
      ->name('teacher.homepage');
 
+    Route::post('/teacher/create-section', [TeacherDashboardController::class, 'createSection']);
+    Route::post('/teacher/fetch-sections', [TeacherDashboardController::class, 'fetchSections']);
+
+
 

@@ -1528,6 +1528,82 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
         }
     }
 
+    let currentPage = 1;
+    const pageSize = 10; // how many pupils per page
+
+    function renderPupilsTable(filteredPupils) {
+        const totalPupils = filteredPupils.length;
+        const totalPages = Math.ceil(totalPupils / pageSize);
+        
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+
+        const start = (currentPage - 1) * pageSize;
+        const end = start + pageSize;
+        const pupilsToShow = filteredPupils.slice(start, end);
+
+        userTableBody.innerHTML = '';
+        pupilsToShow.forEach(pupil => {
+            const status = pupil.active_status === 1 ? 'Active' : 'Inactive';
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td></td>
+                <td data-label="Profile">
+                    <img class="img-fluid pupil-avatar" width="200" height="200" src="${pupil.thumbnail || '/path/to/default.png'}">
+                </td>
+                <td data-label="Name">${pupil.fullname}</td>
+                <td data-label="LRN">${pupil.LRN}</td>
+                <td data-label="Grade">Grade 4</td>
+                <td data-label="Age">${pupil.age}</td>
+                <td data-label="Status">
+                    <span class="status-badge status-${status.toLowerCase()}">${status}</span>
+                </td>
+                <td data-label="Email">${pupil.email}</td>
+                <td data-label="Section">${pupil.section_name}</td>
+                <td data-label="Enrollment Date">${new Date(pupil.enrollment_date).toLocaleDateString()}</td>
+                <td data-label="Actions">
+                    <button class="btn action-btn view" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewPupilModal" data-id="${pupil.user_id}">
+                        <svg class="bi bi-eye" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewbox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                        </svg>
+                    </button>
+                </td>
+            `;
+            userTableBody.appendChild(tr);
+        });
+
+        // Update pagination numbers
+        document.getElementById('startCount').textContent = start + 1;
+        document.getElementById('endCount').textContent = Math.min(end, totalPupils);
+        document.getElementById('totalCount').textContent = totalPupils;
+
+        const pagination = document.getElementById('pupilListPagination');
+        pagination.innerHTML = '';
+
+        // Previous button
+        const prevLi = document.createElement('li');
+        prevLi.className = 'page-item' + (currentPage === 1 ? ' disabled' : '');
+        prevLi.innerHTML = `<a class="page-link" href="#">Previous</a>`;
+        prevLi.addEventListener('click', e => { e.preventDefault(); if (currentPage > 1) { currentPage--; renderPupilsTable(filteredPupils); } });
+        pagination.appendChild(prevLi);
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            li.className = 'page-item' + (i === currentPage ? ' active' : '');
+            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            li.addEventListener('click', e => { e.preventDefault(); currentPage = i; renderPupilsTable(filteredPupils); });
+            pagination.appendChild(li);
+        }
+
+        // Next button
+        const nextLi = document.createElement('li');
+        nextLi.className = 'page-item' + (currentPage === totalPages ? ' disabled' : '');
+        nextLi.innerHTML = `<a class="page-link" href="#">Next</a>`;
+        nextLi.addEventListener('click', e => { e.preventDefault(); if (currentPage < totalPages) { currentPage++; renderPupilsTable(filteredPupils); } });
+        pagination.appendChild(nextLi);
+    }
+
     function filterStudents(sectionName = null) {
         userTableBody.innerHTML = '';
 
@@ -1585,35 +1661,11 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             const tr = document.createElement('tr');
             tr.dataset.section = pupil.section_name;
             tr.dataset.active = pupil.active_status === 1;
-
-            tr.innerHTML = `
-                <td></td>
-                <td data-label="Profile">
-                    <img class="img-fluid pupil-avatar" width="200" height="200" src="${pupil.thumbnail || '/path/to/default.png'}">
-                </td>
-                <td data-label="Name">${pupil.fullname}</td>
-                <td data-label="LRN">${pupil.LRN}</td>
-                <td data-label="Grade">Grade 4</td>
-                <td data-label="Age">${pupil.age}</td>
-                <td data-label="Status">
-                    <span class="status-badge status-${status.toLowerCase()}">${status}</span>
-                </td>
-                <td data-label="Email">${pupil.email}</td>
-                <td data-label="Section">${pupil.section_name}</td>
-                <td data-label="Enrollment Date">${new Date(pupil.enrollment_date).toLocaleDateString()}</td>
-                <td data-label="Actions">
-                    <button class="btn action-btn view" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewPupilModal" data-id="${pupil.user_id}">
-                        <svg class="bi bi-eye" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewbox="0 0 16 16">
-                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
-                        </svg>
-                    </button>
-                </td>
-            `;
-            userTableBody.appendChild(tr);
         });
 
         window.currentFilteredPupils = filteredPupils;
+        currentPage = 1; // reset page on new filter
+        renderPupilsTable(filteredPupils);
 
         document.getElementById('endCount').textContent = filteredPupils.length;
         document.getElementById('totalCount').textContent = pupils.length;
@@ -1752,7 +1804,7 @@ window.fillPupilModal = function(pupil) {
 
     // Performance Summary
     // Avg. Mastery
-    document.getElementById("avgMasteryValue").textContent = pupil.avg_mastery + "%";
+    document.getElementById("avgMasteryValue").textContent = Math.round(pupil.avg_mastery) + "%";
     document.getElementById("avgMasteryTrend").textContent = (pupil.avg_mastery_change >= 0 ? "▲ " : "▼ ") + Math.abs(pupil.avg_mastery_change) + "%";
     document.getElementById("avgMasteryStatus").textContent = pupil.mastery_status;
     document.getElementById("avgMasteryStatus").style.color =
@@ -1770,7 +1822,7 @@ window.fillPupilModal = function(pupil) {
         dangerColor;
 
     // Avg. Session
-    document.getElementById("avgSessionValue").textContent = pupil.avg_session_minutes + " min";
+    document.getElementById("avgSessionValue").textContent = Math.round(pupil.avg_session_minutes) + " min";
     document.getElementById("avgSessionTrend").textContent = (pupil.avg_session_minutes_change >= 0 ? "▲ " : "▼ ") + Math.abs(pupil.avg_session_minutes_change || 0) + " min";
     document.getElementById("avgSessionStatus").textContent = pupil.avg_session_status;
     document.getElementById("avgSessionStatus").style.color =
@@ -1918,12 +1970,6 @@ window.fillPupilModal = function(pupil) {
       fillPupilModal(pupil);
   });
 
-
-
-/* ===========================
-   Student Performance Analytics - Analytics Page
-=========================== */
-function initStudentsTable(pupils) {
   // const students = [
   //   {id:1, name:"Juan Dela Cruz", section:"Grade 7-A", avg:"92.5%", progress:75, lastScore:"95%", time:24.5, badges:12, status:"Excellent", trend:"up", subject:"Mathematics", lastActivityDate:"2025-11-20"},
   //   {id:2, name:"Maria Garcia", section:"Grade 7-B", avg:"88.3%", progress:75, lastScore:"90%", time:18.2, badges:10, status:"Good", trend:"up", subject:"English", lastActivityDate:"2025-11-15"},
@@ -1934,6 +1980,12 @@ function initStudentsTable(pupils) {
   //   {id:7, name:"Miguel Santos", section:"Grade 8-C", avg:"72.3%", progress:50, lastScore:"70%", time:12.7, badges:4, status:"Needs Attention", trend:"flat", subject:"Filipino", lastActivityDate:"2025-06-18"},
   //   {id:8, name:"Isabella Cruz", section:"Grade 7-B", avg:"90.1%", progress:80, lastScore:"92%", time:20.5, badges:11, status:"Excellent", trend:"up", subject:"English", lastActivityDate:"2025-11-02"}
   // ];
+
+/* ===========================
+   Student Performance Analytics - Analytics Page
+=========================== */
+function initStudentsTable(pupils) {
+
 
   const tbody = document.getElementById('studentsTbody');
 
@@ -1951,7 +2003,7 @@ function initStudentsTable(pupils) {
       avg: Number(p.avg_mastery).toFixed(2) + '%',
       progress: progress,
       lastScore: p.engagement_sessions,
-      time: Number(p.avg_session_minutes),
+      time: p.avg_session_minutes, 
       badges: p.badges_earned,
       status: status, // derived from progress
       trend: p.avg_mastery_change > 0 ? 'up' : (p.avg_mastery_change < 0 ? 'down' : 'flat'),
@@ -1979,6 +2031,13 @@ function initStudentsTable(pupils) {
           <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
         </svg>`;
     }
+
+
+    function formatMinutes(mins) {
+      const hours = Math.floor(mins / 60);
+      const minutes = Math.round(mins % 60);
+      return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+  }
     
 
     const progressBar = `
@@ -2006,7 +2065,7 @@ function initStudentsTable(pupils) {
         <td data-label="Avg. Score" style="font-weight:700">${escapeHtml(s.avg)}</td>
         <td data-label="Progress">${progressBar}</td>
         
-        <td data-label="Time Spent" class="time-text">${s.time}h</td>
+        <td data-label="Time Spent" class="time-text">${formatMinutes(s.time)}</td>
         <td data-label="Badges"><span class="tiny"><svg class="bi bi-award" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
       <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z"></path>
       <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z"></path>
@@ -2071,6 +2130,57 @@ function initStudentsTable(pupils) {
     }
   }
 
+  let currentPage = 1;
+  const rowsPerPage = 5;
+
+  function renderRowsWithPagination() {
+      const tbody = document.getElementById('studentsTbody');
+      const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
+      const totalRows = rows.length;
+      const totalPages = Math.ceil(totalRows / rowsPerPage);
+      
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+      
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+
+      // Hide all rows first
+      rows.forEach(row => row.style.display = 'none');
+
+      // Show only current page rows
+      rows.slice(startIndex, endIndex).forEach(row => row.style.display = '');
+
+      // Update counts
+      document.getElementById('startCount-2').textContent = totalRows ? startIndex + 1 : 0;
+      document.getElementById('endCount-2').textContent = Math.min(endIndex, totalRows);
+      document.getElementById('totalCount-2').textContent = totalRows;
+
+      // Render pagination
+      const paginationUl = document.querySelector('.pagination-container ul.pagination');
+      paginationUl.innerHTML = '';
+
+      const prevLi = document.createElement('li');
+      prevLi.className = 'page-item' + (currentPage === 1 ? ' disabled' : '');
+      prevLi.innerHTML = `<a class="page-link" href="#">Previous</a>`;
+      prevLi.addEventListener('click', e => { e.preventDefault(); if (currentPage > 1) { currentPage--; renderRowsWithPagination(); }});
+      paginationUl.appendChild(prevLi);
+
+      for (let i = 1; i <= totalPages; i++) {
+          const li = document.createElement('li');
+          li.className = 'page-item' + (i === currentPage ? ' active' : '');
+          li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          li.addEventListener('click', e => { e.preventDefault(); currentPage = i; renderRowsWithPagination(); });
+          paginationUl.appendChild(li);
+      }
+
+      const nextLi = document.createElement('li');
+      nextLi.className = 'page-item' + (currentPage === totalPages ? ' disabled' : '');
+      nextLi.innerHTML = `<a class="page-link" href="#">Next</a>`;
+      nextLi.addEventListener('click', e => { e.preventDefault(); if (currentPage < totalPages) { currentPage++; renderRowsWithPagination(); }});
+      paginationUl.appendChild(nextLi);
+  }
+
+
   const searchInput = document.getElementById('searchInput');
   const subjectFiltering = document.getElementById('pupilSubjectFilter');
   const sectionFilter = document.getElementById('sectionFilter');
@@ -2126,6 +2236,9 @@ function initStudentsTable(pupils) {
     if (noResultsDiv) {
       noResultsDiv.style.display = visibleRows.length === 0 ? 'block' : 'none';
     }
+
+    currentPage = 1; // Reset to first page after filtering
+    renderRowsWithPagination();
   }
 
   // 👇 Added sortByName to event listeners

@@ -1,5 +1,5 @@
 <?php
-
+// app/Http/Controllers/TeacherDashboardController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -42,4 +42,54 @@ class TeacherDashboardController extends Controller
             return back()->with('error', 'Something went wrong while fetching stats.');
         }
     }
+
+    public function createSection(Request $request)
+    {
+        $token = session('node_token');
+        $teacherId = session('user_id');
+
+        try {
+            $response = Http::withToken($token)->post("{$this->apiUrl}/teacher/create/section", [
+                "teacherId" => $teacherId,
+                "school_name" => $request->school_name,
+                "school_year" => $request->school_year,
+                "section_name" => $request->section_name
+            ]);
+
+            return response()->json($response->json(), $response->status());
+        } catch (\Exception $e) {
+            Log::error("Create Section Error: " . $e->getMessage());
+            return response()->json(["error" => "Server error"], 500);
+        }
+    }
+
+    public function fetchSections(Request $request)
+    {
+        $token = $request->input('token');
+        $teacherId = $request->input('teacherId');
+
+        if (!$token || !$teacherId) {
+            return response()->json(["error" => "Missing token or teacherId"], 400);
+        }
+
+        try {
+            $response = Http::withToken($token)->post("{$this->apiUrl}/teacher/fetch-sections-and-pupils", [
+                "teacherId" => $teacherId
+            ]);
+
+            Log::info('Fetch Sections Response: ', $response->json());
+
+            return response()->json($response->json(), $response->status());
+
+        } catch (\Exception $e) {
+            Log::error("Fetch Sections Error: " . $e->getMessage());
+            return response()->json(["error" => "Server error"], 500);
+        }
+    }
+
+
+
+
+
+
 }

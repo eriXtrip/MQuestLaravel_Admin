@@ -1906,42 +1906,31 @@
 
             // Sign out logic with event delegation
             document.addEventListener("click", async (e) => {
-                if (e.target.closest("#logout-btn")) {
-                    e.preventDefault();
+                if (!e.target.closest("#logout-btn")) return;
 
-                    const userData = sessionStorage.getItem("user");
-                    const token = sessionStorage.getItem("token");
+                e.preventDefault();
 
-                    if (!userData || !token) {
-                        console.warn("⚠️ No user logged in");
-                        sessionStorage.clear();
-                        window.location.href = "{{ route('login') }}";
-                        return;
-                    }
+                try {
+                    const response = await fetch("{{ route('logout') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    });
 
-                    const user = JSON.parse(userData);
+                    await response.json();
 
-                    try {
-                        const response = await fetch("{{ route('logout') }}", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Authorization": "Bearer " + token,
-                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                            },
-                            body: JSON.stringify({ user, token })
-                        });
+                    // Clear any frontend data (optional)
+                    sessionStorage.clear();
 
-                        const data = await response.json();
-                        console.log("🔌 Logout response:", data);
+                    // Redirect to login
+                    window.location.href = "{{ route('login') }}";
 
-                        sessionStorage.clear();
-                        window.location.href = "{{ route('login') }}";
-                    } catch (error) {
-                        console.error("❌ Logout failed:", error);
-                        sessionStorage.clear();
-                        window.location.href = "{{ route('login') }}";
-                    }
+                } catch (error) {
+                    console.error("❌ Logout failed:", error);
+                    sessionStorage.clear();
+                    window.location.href = "{{ route('login') }}";
                 }
             });
         });

@@ -70,46 +70,28 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            // Get token & user
-            $token = $request->bearerToken() ?? $request->input('token');
-            $user  = $request->input('user');
+            $token = $request->session()->get('node_token');
+            $userServerId = $request->session()->get('user_server_id');
 
-            if (! $token) {
-                return response()->json(['error' => 'No token provided'], 400);
+            if (!$token || !$userServerId) {
+                return response()->json(['error' => 'No token or user ID in session'], 400);
             }
 
-            if (! isset($user['server_id'])) {
-                return response()->json(['error' => 'No user_id provided'], 400);
-            }
+            // Call external API
+            Http::withToken($token)
+                ->post("{$this->apiUrl}/auth/logout", ['user_id' => $userServerId]);
 
-            // 1. Call your external API logout
-            $response = Http::withHeaders([
-                'Authorization' => "Bearer {$token}"
-            ])->post("{$this->apiUrl}/auth/logout", [
-                'user_id' => $user['server_id']
-            ]);
-
-            // 2. Clear Laravel session completely
+            // Clear Laravel session
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            // 3. Clear cookies (if stored)
-            $cookie = cookie()->forget('token');
-            $cookie2 = cookie()->forget('auth');
-
-            // 4. Optional: Clear cache related to this user
-            Cache::forget("user_{$user['server_id']}");
-
-            return response()->json([
-                'message' => 'Logged out successfully'
-            ], 200)->withCookie($cookie)->withCookie($cookie2);
+            return response()->json(['message' => 'Logged out successfully']);
 
         } catch (\Throwable $e) {
-            return response()->json([
-                'error' => $e->getMessage() ?: 'Logout failed'
-            ], 500);
+            return response()->json(['error' => $e->getMessage() ?: 'Logout failed'], 500);
         }
     }
+
 
 
     // Confirm admin login

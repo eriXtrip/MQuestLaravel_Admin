@@ -78,9 +78,9 @@
         </div>
 
     </div>
-    <div class="alert" id="alert" style="display: none;">
-        <p id="alert-message"></p>
-        <button onclick="closeAlert()">OK</button>
+    <div id="customAlert" style="display:none; position:fixed; top:20px; right:20px; background-color:#f8d7da; color:#842029; border:1px solid #f5c2c7; padding:15px 20px; border-radius:5px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000; font-family:Arial, sans-serif;">
+        <span id="customAlertMessage"></span>
+        <button id="customAlertClose" style="margin-left:15px; background:none; border:none; font-weight:bold; cursor:pointer;">&times;</button>
     </div>
     <script src="./userside_backend/user.js"></script>
     <script>
@@ -194,27 +194,27 @@
         async function handleSubmitEmail() {
             email = document.getElementById('email').value;
             if (!email.trim()) {
-                showAlert('Please enter your email');
+                showCustomAlert('Please enter your email');
                 return;
             }
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showAlert('Invalid email format.');
+                showCustomAlert('Invalid email format.');
                 return;
             }
             try {
                 await startPasswordReset({ email });
                 startResendTimer();
                 goToStep(2);
-                showAlert('Verification code sent to your email.');
+                showCustomAlert('Verification code sent to your email.', 'success');
             } catch (error) {
-                showAlert(error.message || 'Account not found');
+                showCustomAlert(error.message || 'Account not found');
             }
         }
 
         async function handleVerifyCode() {
             const code = Array.from(document.querySelectorAll('.code-input')).map(input => input.value).join('');
             if (code.length !== 6 || !/^\d{6}$/.test(code)) {
-                showAlert('Please enter a valid 6-digit code.');
+                showCustomAlert('Please enter a valid 6-digit code.');
                 return;
             }
             try {
@@ -222,10 +222,10 @@
                 if (result.success) {
                     goToStep(3);
                 } else {
-                    showAlert('Invalid or expired reset code');
+                    showCustomAlert('Invalid or expired reset code');
                 }
             } catch (error) {
-                showAlert(error.message || 'Failed to verify code');
+                showCustomAlert(error.message || 'Failed to verify code');
             }
         }
 
@@ -233,44 +233,44 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             if (!password.trim()) {
-                showAlert('Please enter a password');
+                showCustomAlert('Please enter a password');
                 return;
             }
             if (password !== confirmPassword) {
-                showAlert('Passwords do not match');
+                showCustomAlert('Passwords do not match');
                 return;
             }
             if (password.length < 8) {
-                showAlert('Password must be at least 8 characters');
+                showCustomAlert('Password must be at least 8 characters');
                 return;
             }
             const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
             if (!passwordRegex.test(password)) {
-                showAlert('Password must include uppercase, lowercase, number, and special character.');
+                showCustomAlert('Password must include uppercase, lowercase, number, and special character.');
                 return;
             }
             try {
                 await completePasswordReset({ email, password });
-                showAlert('Password has been reset successfully');
+                showCustomAlert('Password has been reset successfully', 'success');
                 setTimeout(() => window.location.href = "{{ route('login') }}", 2000);
             } catch (error) {
-                showAlert(error.message);
+                showCustomAlert(error.message);
             }
         }
 
         async function handleResendCode() {
             if (resendTimer > 0) {
-                showAlert(`Please wait ${resendTimer}s before resending.`);
+                showCustomAlert(`Please wait ${resendTimer}s before resending.`);
                 return;
             }
             try {
                 await startPasswordReset({ email });
-                showAlert('Verification code resent.');
+                showCustomAlert('Verification code resent.', 'success');
                 document.querySelectorAll('.code-input').forEach(input => input.value = '');
                 document.querySelectorAll('.code-input')[0].focus();
                 startResendTimer();
             } catch (error) {
-                showAlert(error.message || 'Failed to resend code');
+                showCustomAlert(error.message || 'Failed to resend code');
             }
         }
 
@@ -299,9 +299,39 @@
             }
         }
 
-        function showAlert(message) {
-            document.getElementById('alert-message').textContent = message;
-            document.getElementById('alert').style.display = 'flex';
+        function showCustomAlert(message, type = 'error') {
+            const alertEl = document.getElementById('customAlert');
+            const alertMessage = document.getElementById('customAlertMessage');
+            const closeBtn = document.getElementById('customAlertClose');
+
+            alertMessage.textContent = message;
+
+            // Set styles based on type
+            if (type === 'success') {
+                alertEl.style.backgroundColor = '#d1e7dd';
+                alertEl.style.color = '#0f5132';
+                alertEl.style.border = '1px solid #badbcc';
+            } else if (type === 'neutral') {
+                alertEl.style.backgroundColor = '#cff4fc';
+                alertEl.style.color = '#055160';
+                alertEl.style.border = '1px solid #b6effb';
+            } else { // error
+                alertEl.style.backgroundColor = '#f8d7da';
+                alertEl.style.color = '#842029';
+                alertEl.style.border = '1px solid #f5c2c7';
+            }
+
+            alertEl.style.display = 'flex';
+            alertEl.style.alignItems = 'center';
+
+            closeBtn.onclick = () => {
+                alertEl.style.display = 'none';
+            };
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertEl.style.display = 'none';
+            }, 5000);
         }
 
         function closeAlert() {
@@ -309,14 +339,14 @@
         }
 
         function showPasswordHint() {
-            showAlert(
+            showCustomAlert(
                 'Tips for a strong password:\n\n' +
                 '• Combine upper and lower case letters, numbers, and special characters (e.g., $, #, &, etc.).\n\n' +
                 '• Keep your password at least 8 to 12 characters long.\n\n' +
                 '• Avoid consecutive characters (e.g., 12345, abcde, qwerty, etc.) or repeating characters (e.g., 11111).\n\n' +
                 '• Avoid personal info like names of friends or relatives, your birthday, or your address.\n\n' +
                 '• Avoid common or obvious words (e.g., password, maya, bank, money, etc.).\n\n' +
-                '• Avoid using the same password from other accounts you own.'
+                '• Avoid using the same password from other accounts you own.', 'neutral'
             );
         }
     </script>
