@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +178,10 @@ return [
             'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
         ],
 
+    ],
+
+    'none' => [
+        'driver' => 'null',
     ],
 
 ];
