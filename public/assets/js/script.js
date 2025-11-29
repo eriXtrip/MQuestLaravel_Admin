@@ -1630,52 +1630,52 @@ document.addEventListener("DOMContentLoaded", () => {
 // =============================================================
 // 20. Lesson Editor - Publish & Draft Handling
 // =============================================================
-document.addEventListener("DOMContentLoaded", () => {
-  // --- Publish Lesson (with confetti modal) ---
-  const publishBtn = document.querySelector('.publish-btn');
-  const modalEl = document.getElementById('publishSuccessModal');
+// document.addEventListener("DOMContentLoaded", () => {
+//   // --- Publish Lesson (with confetti modal) ---
+//   const publishBtn = document.querySelector('.publish-btn');
+//   const modalEl = document.getElementById('publishSuccessModal');
 
-  if (publishBtn && modalEl) {
-    const modal = new bootstrap.Modal(modalEl);
+//   if (publishBtn && modalEl) {
+//     const modal = new bootstrap.Modal(modalEl);
 
-    function fireConfetti() {
-      const modalRect = modalEl.querySelector('.modal-content').getBoundingClientRect();
-      const x = (modalRect.left + modalRect.width / 2) / window.innerWidth;
-      const y = (modalRect.top + modalRect.height / 2) / window.innerHeight;
+//     function fireConfetti() {
+//       const modalRect = modalEl.querySelector('.modal-content').getBoundingClientRect();
+//       const x = (modalRect.left + modalRect.width / 2) / window.innerWidth;
+//       const y = (modalRect.top + modalRect.height / 2) / window.innerHeight;
 
-      if (typeof confetti !== 'undefined') {
-        confetti({
-          particleCount: 60,
-          angle: 90,
-          spread: 60,
-          startVelocity: 30,
-          decay: 0.92,
-          gravity: 0.5,
-          ticks: 120,
-          origin: { x, y },
-          colors: ['#28a745', '#198754', '#20c997', '#ffffff'],
-          scalar: 0.8,
-          disableForReducedMotion: true
-        });
-      }
-    }
+//       if (typeof confetti !== 'undefined') {
+//         confetti({
+//           particleCount: 60,
+//           angle: 90,
+//           spread: 60,
+//           startVelocity: 30,
+//           decay: 0.92,
+//           gravity: 0.5,
+//           ticks: 120,
+//           origin: { x, y },
+//           colors: ['#28a745', '#198754', '#20c997', '#ffffff'],
+//           scalar: 0.8,
+//           disableForReducedMotion: true
+//         });
+//       }
+//     }
 
-    publishBtn.addEventListener('click', () => {
-      // TODO: Replace with actual publish API call
-      console.log('Publishing lesson...');
+//     publishBtn.addEventListener('click', () => {
+//       // TODO: Replace with actual publish API call
+//       console.log('Publishing lesson...');
 
-      setTimeout(() => {
-        modal.show();
-        modalEl.addEventListener('shown.bs.modal', fireConfetti, { once: true });
-      }, 200);
-    });
-  }
+//       setTimeout(() => {
+//         modal.show();
+//         modalEl.addEventListener('shown.bs.modal', fireConfetti, { once: true });
+//       }, 200);
+//     });
+//   }
 
-  // --- Save As Draft (trigger your toast) ---
-  const saveDraftBtn = document.querySelector('.save-draft-btn');
-  if (saveDraftBtn) {
-    saveDraftBtn.addEventListener('click', () => {
-      showToast('info', 'Lesson Draft', 'Lesson saved as draft');
-    });
-  }
-});
+//   // --- Save As Draft (trigger your toast) ---
+//   const saveDraftBtn = document.querySelector('.save-draft-btn');
+//   if (saveDraftBtn) {
+//     saveDraftBtn.addEventListener('click', () => {
+//       showToast('info', 'Lesson Draft', 'Lesson saved as draft');
+//     });
+//   }
+// });

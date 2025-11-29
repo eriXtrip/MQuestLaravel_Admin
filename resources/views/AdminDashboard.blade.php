@@ -1047,9 +1047,13 @@
                                                     <div class="icon-selector">
                                                         <div class="icon-option" data-icon="ribbon" data-label="Award"><ion-icon name="ribbon-outline"></ion-icon><span>Award</span></div>
                                                         <div class="icon-option" data-icon="shield" data-label="Shield"><ion-icon name="shield-outline"></ion-icon><span>Shield</span></div>
-                                                        <div class="icon-option selected" data-icon="star" data-label="Star"><ion-icon name="star-outline"></ion-icon><span>Star</span></div>
+                                                        <div class="icon-option selected" data-icon="star" data-label="Star"><ion-icon name="sparkles-outline"></ion-icon><span>Star</span></div>
                                                         <div class="icon-option" data-icon="flash"  data-label="Zap"><ion-icon name="flash-outline"></ion-icon><span>Zap</span></div>
                                                         <div class="icon-option" data-icon="trophy" data-label="Trophy"><ion-icon name="trophy-outline"></ion-icon><span>Trophy</span></div>
+                                                        <div class="icon-option" data-icon="bulb"  data-label="Bulb"><ion-icon name="bulb-outline"></ion-icon><span>Bulb</span></div>
+                                                        <div class="icon-option" data-icon="flask"  data-label="Flask"><ion-icon name="flask-outline"></ion-icon><span>Flask</span></div>
+                                                        <div class="icon-option" data-icon="planet"  data-label="Planet"><ion-icon name="planet-outline"></ion-icon><span>Planet</span></div>
+                                                        <div class="icon-option" data-icon="bonfire"  data-label="Bonfire"><ion-icon name="bonfire-outline"></ion-icon><span>Bonfire</span></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1202,11 +1206,11 @@
                                         <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
                                     </svg>Publish Lesson
                                 </button>
-                                <button class="btn btn-outline-secondary save-draft-btn" type="button">
+                                <!-- <button class="btn btn-outline-secondary save-draft-btn" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-save me-2">
                                         <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"></path>
                                     </svg>Save As Draft
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                     </div>
@@ -1815,11 +1819,59 @@
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
                         </svg></div>
                     <h4 class="fw-bold mb-2">Lesson Published!</h4>
-                    <p class="text-muted mb-3">Your lesson is now live and ready for pupils to view in the mobile app.</p><button class="btn btn-success rounded-pill px-4 py-2 close-modal" type="button" data-bs-dismiss="modal">Got it!</button>
+                    <p class="text-muted mb-3">Your lesson is now live and ready for pupils to view in the mobile app.</p>
+                    <button class="btn btn-success rounded-pill px-4 py-2 close-modal" type="button" data-bs-dismiss="modal" id="gotItButton">Got it!</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="loadingModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <h4 class="fw-bold mb-2">Publishing Lesson...</h4>
+                    <p class="text-muted mb-0">Please wait while we publish your lesson.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="confirmPublishModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-triangle-fill text-warning">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                    </div>
+                    <h4 class="fw-bold mb-3">Confirm Publication</h4>
+                    <p class="text-muted mb-3">
+                        <strong>Once published, you cannot edit or delete this lesson.</strong><br>
+                        Please make sure all content is correct before proceeding.
+                    </p>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="btn btn-secondary rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                        <button class="btn btn-warning rounded-pill px-4 py-2" type="button" id="confirmPublishBtn">
+                            Yes, Publish Lesson
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Toast Container -->
     <div class="position-fixed bottom-0 end-0 p-3 toast-container" id="global-toast-container" style="z-index: 9999;"></div>
     
     <!-- {{-- Hidden field that JS will keep up-to-date --}} -->
@@ -2130,6 +2182,45 @@
             const selectedQuarter = document.getElementById('selected-quarter-input');
             const selectedSubject = document.getElementById('selected-subject-input');
 
+            // Initialize modals
+            const confirmModal = new bootstrap.Modal(document.getElementById('confirmPublishModal'));
+            const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            const successModal = new bootstrap.Modal(document.getElementById('publishSuccessModal'));
+
+            // Store the current status for confirmation
+            let currentStatus = '';
+
+            // Confetti function
+            function fireConfetti() {
+                const modalEl = document.getElementById('publishSuccessModal');
+                const modalRect = modalEl.querySelector('.modal-content').getBoundingClientRect();
+                const x = (modalRect.left + modalRect.width / 2) / window.innerWidth;
+                const y = (modalRect.top + modalRect.height / 2) / window.innerHeight;
+
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 60,
+                        angle: 90,
+                        spread: 60,
+                        startVelocity: 30,
+                        decay: 0.92,
+                        gravity: 0.5,
+                        ticks: 120,
+                        origin: { x, y },
+                        colors: ['#28a745', '#198754', '#20c997', '#ffffff'],
+                        scalar: 0.8,
+                        disableForReducedMotion: true
+                    });
+                }
+            }
+
+            // Handle confirmation button click - ADD THIS INSIDE DOMContentLoaded
+            document.getElementById('confirmPublishBtn').addEventListener('click', function() {
+                console.log('Confirm publish button clicked'); // Debug log
+                confirmModal.hide();
+                submitLesson(currentStatus);
+            });
+
             async function fetchGames() {
                 const games = {};
                 const gameTypes = ['matching', 'flashcard', 'spelling', 'speak', 'imagequiz'];
@@ -2172,7 +2263,6 @@
                             const question   = item.querySelector('.question-input')?.value || '';
                             const correct    = item.querySelector('.correct-select')?.value || '';
 
-                            // 1. Get all choice wrappers
                             const choiceWrappers = item.querySelectorAll('.choice-item');
                             const fileInputs = item.querySelectorAll('.choice-image-input');
 
@@ -2185,18 +2275,13 @@
                                 const textValue = textInput?.value.trim() || '';
                                 const hasFile = fileInput?.files?.[0];
 
-                                // Only include if:
-                                // - Has real file OR
-                                // - Has non-empty text AND is not a fake path
                                 if (hasFile) {
-                                    choices.push(hasFile); // Real File object
+                                    choices.push(hasFile);
                                 } else if (textValue && !textValue.startsWith('C:\\fakepath\\')) {
-                                    choices.push(textValue); // Real text
+                                    choices.push(textValue);
                                 }
-                                // Skip: empty or fake path
                             });
 
-                            // Convert question image blob → File
                             let image = imgElement?.src || '';
                             if (image.startsWith('blob:')) {
                                 try {
@@ -2207,7 +2292,6 @@
                                 }
                             }
 
-                            // Only push if we have question or image or choices
                             if (question || image || choices.length > 0) {
                                 items.push({ image, question, choices, correct });
                             }
@@ -2247,7 +2331,6 @@
                 const uploadData = fetchUploads();
                 const allBadges = typeof window.getAllBadgeData === 'function' ? window.getAllBadgeData() : {};
 
-                // FILTER: Only include games with >1 item AND their badges
                 const filteredGames = {};
                 const badges = {};
 
@@ -2255,7 +2338,7 @@
                     const items = gameData[type];
                     if (items && items.length > 1) {
                         filteredGames[type] = items;
-                        badges[type] = allBadges[type]; // Only send badge if game has 2+ items
+                        badges[type] = allBadges[type];
                     }
                 });
 
@@ -2274,82 +2357,80 @@
             }
 
             async function submitLesson(status) {
-                const data = await getLessonData(status);
-                console.log('Submitting lesson:', data);
+                console.log('Submitting lesson with status:', status); // Debug log
+                
+                // Show loading modal
+                loadingModal.show();
 
-                const formData = new FormData();
-                formData.append('lesson_title', data.lesson_title);
-                formData.append('lesson_description', data.lesson_description);
-                formData.append('selected_quarter', data.selected_quarter);
-                formData.append('selected_subject', data.selected_subject);
-                formData.append('pretest_questions', JSON.stringify(data.pretest_questions));
-                formData.append('posttest_questions', JSON.stringify(data.posttest_questions));
+                try {
+                    const data = await getLessonData(status);
+                    console.log('Submitting lesson data:', data);
 
-                // Process imagequiz: question + choice images
-                if (data.games.imagequiz && data.games.imagequiz.length) {
-                    for (let i = 0; i < data.games.imagequiz.length; i++) {
-                        const quiz = data.games.imagequiz[i];
+                    const formData = new FormData();
+                    formData.append('lesson_title', data.lesson_title);
+                    formData.append('lesson_description', data.lesson_description);
+                    formData.append('selected_quarter', data.selected_quarter);
+                    formData.append('selected_subject', data.selected_subject);
+                    formData.append('pretest_questions', JSON.stringify(data.pretest_questions));
+                    formData.append('posttest_questions', JSON.stringify(data.posttest_questions));
 
-                        // 1. Question Image
-                        if (quiz.image instanceof File) {
-                            console.log(`Question Image [Item ${i}]:`, {
-                                name: quiz.image.name,
-                                size: `${(quiz.image.size / 1024).toFixed(2)} KB`,
-                                type: quiz.image.type
-                            });
+                    // Process imagequiz: question + choice images
+                    if (data.games.imagequiz && data.games.imagequiz.length) {
+                        for (let i = 0; i < data.games.imagequiz.length; i++) {
+                            const quiz = data.games.imagequiz[i];
 
-                            formData.append('imagequiz_images[]', quiz.image);
-                            quiz.image = `imagequiz_images[${i}]`;
-                        }
-
-                        // 2. Choice Images
-                        for (let c = 0; c < quiz.choices.length; c++) {
-                            const choice = quiz.choices[c];
-                            if (choice instanceof File) {
-                                // LOG THE ACTUAL FILE BEFORE REPLACING IT
-                                console.log(`Choice Image File [Item ${i}, Choice ${c}]:`, {
-                                    name: choice.name,
-                                    size: `${(choice.size / 1024).toFixed(2)} KB`,
-                                    type: choice.type,
-                                    lastModified: new Date(choice.lastModified).toLocaleString()
+                            // 1. Question Image
+                            if (quiz.image instanceof File) {
+                                console.log(`Question Image [Item ${i}]:`, {
+                                    name: quiz.image.name,
+                                    size: `${(quiz.image.size / 1024).toFixed(2)} KB`,
+                                    type: quiz.image.type
                                 });
 
-                                // Use global index for unique placeholder
-                                if (!window._imageIndex) window._imageIndex = 0;
-                                const idx = window._imageIndex++;
+                                formData.append('imagequiz_images[]', quiz.image);
+                                quiz.image = `imagequiz_images[${i}]`;
+                            }
 
-                                formData.append('imagequiz_images[]', choice);
-                                quiz.choices[c] = `imagequiz_images[${idx}]`;
+                            // 2. Choice Images
+                            for (let c = 0; c < quiz.choices.length; c++) {
+                                const choice = quiz.choices[c];
+                                if (choice instanceof File) {
+                                    if (!window._imageIndex) window._imageIndex = 0;
+                                    const idx = window._imageIndex++;
+
+                                    formData.append('imagequiz_images[]', choice);
+                                    quiz.choices[c] = `imagequiz_images[${idx}]`;
+                                }
                             }
                         }
                     }
-                }
 
-                formData.append('games', JSON.stringify(data.games));
-                formData.append('badges', JSON.stringify(data.badges));
-                formData.append('status', data.status);
+                    formData.append('games', JSON.stringify(data.games));
+                    formData.append('badges', JSON.stringify(data.badges));
+                    formData.append('status', data.status);
 
-                // Uploads
-                if (data.uploads.files) {
-                    formData.append('fileTitle', data.uploads.files.title || '');
-                    formData.append('fileSubtitle', data.uploads.files.subtitle || '');
-                    if (data.uploads.files.file) formData.append('fileInput', data.uploads.files.file);
-                }
+                    // Uploads
+                    if (data.uploads.files) {
+                        formData.append('fileTitle', data.uploads.files.title || '');
+                        formData.append('fileSubtitle', data.uploads.files.subtitle || '');
+                        if (data.uploads.files.file) formData.append('fileInput', data.uploads.files.file);
+                    }
 
-                if (data.uploads.videos) {
-                    formData.append('videoTitle', data.uploads.videos.title || '');
-                    formData.append('videoSubtitle', data.uploads.videos.subtitle || '');
-                    if (data.uploads.videos.file) formData.append('videoInput', data.uploads.videos.file);
-                }
+                    if (data.uploads.videos) {
+                        formData.append('videoTitle', data.uploads.videos.title || '');
+                        formData.append('videoSubtitle', data.uploads.videos.subtitle || '');
+                        if (data.uploads.videos.file) formData.append('videoInput', data.uploads.videos.file);
+                    }
 
-                if (data.uploads.video_url) {
-                    formData.append('videoUrl', data.uploads.video_url);
-                    formData.append('videoUrlTitle', data.uploads.video_url_title || '');
-                    formData.append('videoUrlSubtitle', data.uploads.video_url_subtitle || '');
-                }
+                    if (data.uploads.video_url) {
+                        formData.append('videoUrl', data.uploads.video_url);
+                        formData.append('videoUrlTitle', data.uploads.video_url_title || '');
+                        formData.append('videoUrlSubtitle', data.uploads.video_url_subtitle || '');
+                    }
 
-                try {
                     const token = '{{ session("node_token") }}';
+                    console.log('Making API request...'); // Debug log
+                    
                     const response = await fetch('{{ env("API_URL") }}/admin/lessons/upload', {
                         method: 'POST',
                         headers: { 'Authorization': `Bearer ${token}` },
@@ -2358,15 +2439,75 @@
 
                     const result = await response.json();
                     console.log('API Response:', result);
-                    alert(result.success ? 'Lesson uploaded successfully!' : 'Upload failed.');
+
+                    // Hide loading modal
+                    loadingModal.hide();
+
+                    // Check if response is successful
+                    if (response.ok && result.success) {
+                        console.log('Upload successful!'); // Debug log
+                        
+                        // Show success modal only for published lessons
+                        if (status === 'published') {
+                            successModal.show();
+                            successModal._element.addEventListener('shown.bs.modal', fireConfetti, { once: true });
+                            
+                            // Disable the publish button after successful publication
+                            publishBtn.disabled = true;
+                            publishBtn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Published';
+                            publishBtn.classList.remove('btn-primary');
+                            publishBtn.classList.add('btn-success');
+
+                            // ✅ Add event listener to "Got it!" button to reload page
+                            document.getElementById('gotItButton').addEventListener('click', function() {
+                                console.log('Got it button clicked - reloading page');
+                                window.location.reload();
+                            }, { once: true });
+
+                            
+                        } else {
+                            // For draft, show a simple success message
+                            showToast('info', 'Lesson Draft', 'Lesson saved as draft successfully!');
+                        }
+                    } else {
+                        // Show error message
+                        const errorMessage = result.message || result.error || 'Upload failed. Please try again.';
+                        showToast('error', 'Upload Failed', errorMessage);
+                    }
+
                 } catch (err) {
                     console.error('Upload error:', err);
-                    alert('Error uploading lesson.');
+                    // Hide loading modal on error
+                    loadingModal.hide();
+                    // Show error message
+                    showToast('error', 'Upload Error', 'An error occurred while uploading the lesson.');
                 }
             }
 
-            publishBtn.addEventListener('click', () => submitLesson('published'));
-            draftBtn.addEventListener('click', () => submitLesson('draft'));
+            // Handle publish button click - show confirmation first
+            publishBtn.addEventListener('click', () => {
+                console.log('Publish button clicked'); // Debug log
+                currentStatus = 'published';
+                confirmModal.show();
+            });
+
+            // Handle draft button click - no confirmation needed
+            draftBtn.addEventListener('click', () => {
+                console.log('Draft button clicked'); // Debug log
+                submitLesson('draft');
+            });
+
+            // Toast function (if not already defined)
+            function showToast(type, title, message) {
+                // You can use your existing toast implementation or Bootstrap toasts
+                console.log(`[${type.toUpperCase()}] ${title}: ${message}`);
+                // Example with Bootstrap toasts:
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+                if (toast) toast.show();
+                
+                // Fallback alert for debugging
+                alert(`${title}: ${message}`);
+            }
         });
     </script>
 
@@ -3192,228 +3333,228 @@
     </script>
 
     <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const activityLogs = {!! json_encode($activity_logs) !!} || [];
+        document.addEventListener('DOMContentLoaded', () => {
+            const activityLogs = {!! json_encode($activity_logs) !!} || [];
 
-    let currentPage = 1;
-    const rowsPerPage = 10;
+            let currentPage = 1;
+            const rowsPerPage = 10;
 
-    let searchTerm = '';
-    let filterType = '';
-    let filterDate = '';
+            let searchTerm = '';
+            let filterType = '';
+            let filterDate = '';
 
-    function timeAgo(dateString) {
-        const now = new Date();
-        const past = new Date(dateString);
-        const diffSec = Math.floor((now - past)/1000);
-        const diffMin = Math.floor(diffSec/60);
-        const diffHr = Math.floor(diffMin/60);
-        const diffDay = Math.floor(diffHr/24);
-
-        if(diffSec < 60) return `${diffSec} sec ago`;
-        if(diffMin < 60) return `${diffMin} min ago`;
-        if(diffHr < 24) return `${diffHr} hr ago`;
-        return `${diffDay} days ago`;
-    }
-
-    function getFilteredLogs() {
-        return activityLogs.filter(log => {
-            const searchText = `${log.full_name} ${log.activity_name}`.toLowerCase();
-            
-            // Search filter
-            if(searchTerm && !searchText.includes(searchTerm.toLowerCase())) {
-                return false;
-            }
-
-            // Activity type filter
-            if(filterType && filterType !== '') {
-                // Create a simplified version for comparison
-                const activityType = log.activity_name.toLowerCase().replace(/[^a-z0-9]/g, '_');
-                if(activityType !== filterType) {
-                    return false;
-                }
-            }
-
-            // Date filter
-            if(filterDate) {
-                const logDate = new Date(log.executed_at);
+            function timeAgo(dateString) {
                 const now = new Date();
+                const past = new Date(dateString);
+                const diffSec = Math.floor((now - past)/1000);
+                const diffMin = Math.floor(diffSec/60);
+                const diffHr = Math.floor(diffMin/60);
+                const diffDay = Math.floor(diffHr/24);
+
+                if(diffSec < 60) return `${diffSec} sec ago`;
+                if(diffMin < 60) return `${diffMin} min ago`;
+                if(diffHr < 24) return `${diffHr} hr ago`;
+                return `${diffDay} days ago`;
+            }
+
+            function getFilteredLogs() {
+                return activityLogs.filter(log => {
+                    const searchText = `${log.full_name} ${log.activity_name}`.toLowerCase();
+                    
+                    // Search filter
+                    if(searchTerm && !searchText.includes(searchTerm.toLowerCase())) {
+                        return false;
+                    }
+
+                    // Activity type filter
+                    if(filterType && filterType !== '') {
+                        // Create a simplified version for comparison
+                        const activityType = log.activity_name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                        if(activityType !== filterType) {
+                            return false;
+                        }
+                    }
+
+                    // Date filter
+                    if(filterDate) {
+                        const logDate = new Date(log.executed_at);
+                        const now = new Date();
+                        
+                        switch(filterDate){
+                            case 'today': 
+                                if(logDate.toDateString() !== now.toDateString()) return false; 
+                                break;
+                            case '7d': 
+                                const sevenDaysAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+                                if(logDate < sevenDaysAgo) return false; 
+                                break;
+                            case '30d': 
+                                const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
+                                if(logDate < thirtyDaysAgo) return false; 
+                                break;
+                            case 'this-month': 
+                                if(logDate.getMonth() !== now.getMonth() || logDate.getFullYear() !== now.getFullYear()) return false; 
+                                break;
+                        }
+                    }
+
+                    return true;
+                });
+            }
+
+            function renderLogs() {
+                const list = document.getElementById('activityList');
+                list.innerHTML = '';
+
+                // Get filtered logs
+                const filtered = getFilteredLogs();
+                const total = filtered.length;
+                const start = (currentPage - 1) * rowsPerPage;
+                const end = Math.min(start + rowsPerPage, total);
+                const paginated = filtered.slice(start, end);
+
+                // Update counters
+                document.getElementById('startCount-2').textContent = total === 0 ? 0 : start + 1;
+                document.getElementById('endCount-2').textContent = end;
+                document.getElementById('totalCount-2').textContent = total;
+
+                // Show/hide no results message
+                if(paginated.length === 0){
+                    document.getElementById('noResults').style.display = 'block';
+                } else {
+                    document.getElementById('noResults').style.display = 'none';
+                }
+
+                // Render logs
+                paginated.forEach(log => {
+                    const li = document.createElement('li');
+                    li.className = 'activity-log-item';
+                    li.innerHTML = `
+                        <div class="activity-log-header">
+                            <div class="activity-log-icon login activity-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <span>${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
+                                <span class="bg-primary badge user-role">${log.role}</span>
+                            </div>
+                            <div class="activity-time">
+                                <span>${timeAgo(log.executed_at)}</span>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(li);
+                });
+
+                renderPagination(total);
+            }
+
+            function renderPagination(total) {
+                const totalPages = Math.ceil(total / rowsPerPage);
+                const pagination = document.getElementById('activityPagination');
                 
-                switch(filterDate){
-                    case 'today': 
-                        if(logDate.toDateString() !== now.toDateString()) return false; 
-                        break;
-                    case '7d': 
-                        const sevenDaysAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
-                        if(logDate < sevenDaysAgo) return false; 
-                        break;
-                    case '30d': 
-                        const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
-                        if(logDate < thirtyDaysAgo) return false; 
-                        break;
-                    case 'this-month': 
-                        if(logDate.getMonth() !== now.getMonth() || logDate.getFullYear() !== now.getFullYear()) return false; 
-                        break;
+                // Clear old pagination buttons
+                pagination.innerHTML = '';
+
+                if (totalPages <= 1) {
+                    pagination.style.display = 'none';
+                    return;
                 }
+
+                pagination.style.display = 'flex';
+
+                const createPageItem = (page, text = null, disabled = false, active = false) => {
+                    const li = document.createElement('li');
+                    li.className = `page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`;
+                    const a = document.createElement('a');
+                    a.href = '#';
+                    a.className = 'page-link';
+                    a.textContent = text || page;
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (!disabled && page >= 1 && page <= totalPages) {
+                            currentPage = page;
+                            renderLogs();
+                        }
+                    });
+                    li.appendChild(a);
+                    return li;
+                };
+
+                // Previous button
+                pagination.appendChild(createPageItem(currentPage - 1, 'Previous', currentPage === 1));
+
+                // Page numbers (show max 5)
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    pagination.appendChild(createPageItem(i, i, false, currentPage === i));
+                }
+
+                // Next button
+                pagination.appendChild(createPageItem(currentPage + 1, 'Next', currentPage === totalPages));
             }
 
-            return true;
-        });
-    }
 
-    function renderLogs() {
-        const list = document.getElementById('activityList');
-        list.innerHTML = '';
 
-        // Get filtered logs
-        const filtered = getFilteredLogs();
-        const total = filtered.length;
-        const start = (currentPage - 1) * rowsPerPage;
-        const end = Math.min(start + rowsPerPage, total);
-        const paginated = filtered.slice(start, end);
-
-        // Update counters
-        document.getElementById('startCount-2').textContent = total === 0 ? 0 : start + 1;
-        document.getElementById('endCount-2').textContent = end;
-        document.getElementById('totalCount-2').textContent = total;
-
-        // Show/hide no results message
-        if(paginated.length === 0){
-            document.getElementById('noResults').style.display = 'block';
-        } else {
-            document.getElementById('noResults').style.display = 'none';
-        }
-
-        // Render logs
-        paginated.forEach(log => {
-            const li = document.createElement('li');
-            li.className = 'activity-log-item';
-            li.innerHTML = `
-                <div class="activity-log-header">
-                    <div class="activity-log-icon login activity-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
-                        </svg>
-                    </div>
-                    <div class="activity-content">
-                        <span>${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
-                        <span class="bg-primary badge user-role">${log.role}</span>
-                    </div>
-                    <div class="activity-time">
-                        <span>${timeAgo(log.executed_at)}</span>
-                    </div>
-                </div>
-            `;
-            list.appendChild(li);
-        });
-
-        renderPagination(total);
-    }
-
-    function renderPagination(total) {
-        const totalPages = Math.ceil(total / rowsPerPage);
-        const pagination = document.getElementById('activityPagination');
-        
-        // Clear old pagination buttons
-        pagination.innerHTML = '';
-
-        if (totalPages <= 1) {
-            pagination.style.display = 'none';
-            return;
-        }
-
-        pagination.style.display = 'flex';
-
-        const createPageItem = (page, text = null, disabled = false, active = false) => {
-            const li = document.createElement('li');
-            li.className = `page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`;
-            const a = document.createElement('a');
-            a.href = '#';
-            a.className = 'page-link';
-            a.textContent = text || page;
-            a.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!disabled && page >= 1 && page <= totalPages) {
-                    currentPage = page;
+            // Event listeners
+            function setupEventListeners() {
+                document.getElementById('searchActivity').addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    currentPage = 1;
                     renderLogs();
-                }
-            });
-            li.appendChild(a);
-            return li;
-        };
+                });
 
-        // Previous button
-        pagination.appendChild(createPageItem(currentPage - 1, 'Previous', currentPage === 1));
+                document.getElementById('filterActType').addEventListener('change', (e) => {
+                    filterType = e.target.value;
+                    currentPage = 1;
+                    renderLogs();
+                });
 
-        // Page numbers (show max 5)
-        const maxVisiblePages = 5;
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                document.getElementById('filterDate-1').addEventListener('change', (e) => {
+                    filterDate = e.target.value;
+                    currentPage = 1;
+                    renderLogs();
+                });
 
-        if (endPage - startPage + 1 < maxVisiblePages) {
-            startPage = Math.max(1, endPage - maxVisiblePages + 1);
-        }
+                // CSV Export
+                document.getElementById('exportBtn-1').addEventListener('click', () => {
+                    const filtered = getFilteredLogs();
 
-        for (let i = startPage; i <= endPage; i++) {
-            pagination.appendChild(createPageItem(i, i, false, currentPage === i));
-        }
+                    if (filtered.length === 0) {
+                        alert('No data to export');
+                        return;
+                    }
 
-        // Next button
-        pagination.appendChild(createPageItem(currentPage + 1, 'Next', currentPage === totalPages));
-    }
+                    let csvContent = "data:text/csv;charset=utf-8,";
+                    csvContent += "Full Name,Activity,Role,Executed At\n";
+                    filtered.forEach(log => {
+                        csvContent += `"${log.full_name}","${log.activity_name}","${log.role}","${log.executed_at}"\n`;
+                    });
 
-
-
-    // Event listeners
-    function setupEventListeners() {
-        document.getElementById('searchActivity').addEventListener('input', (e) => {
-            searchTerm = e.target.value;
-            currentPage = 1;
-            renderLogs();
-        });
-
-        document.getElementById('filterActType').addEventListener('change', (e) => {
-            filterType = e.target.value;
-            currentPage = 1;
-            renderLogs();
-        });
-
-        document.getElementById('filterDate-1').addEventListener('change', (e) => {
-            filterDate = e.target.value;
-            currentPage = 1;
-            renderLogs();
-        });
-
-        // CSV Export
-        document.getElementById('exportBtn-1').addEventListener('click', () => {
-            const filtered = getFilteredLogs();
-
-            if (filtered.length === 0) {
-                alert('No data to export');
-                return;
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", "activity_logs.csv");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
             }
 
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Full Name,Activity,Role,Executed At\n";
-            filtered.forEach(log => {
-                csvContent += `"${log.full_name}","${log.activity_name}","${log.role}","${log.executed_at}"\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "activity_logs.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Initialize
+            setupEventListeners();
+            renderLogs();
         });
-    }
-
-    // Initialize
-    setupEventListeners();
-    renderLogs();
-});
-</script>
+    </script>
 
 
 

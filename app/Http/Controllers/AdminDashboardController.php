@@ -140,40 +140,31 @@ class AdminDashboardController extends Controller
                 }
 
                 // ✅ 4. Fetch ALL Lessons & Contents (Pretest first, Posttest last)
-                $lessonsFetched = session('lessons_fetched', false);
-                $allLessons = session('all_lessons', []);
-                $allContents = session('all_contents', []);
+                $lessonsResponse = Http::withToken($token)
+                    ->timeout(10)
+                    ->get("{$this->apiUrl}/admin/subjects/lessons");
 
-                if (!$lessonsFetched) {
-                    $lessonsResponse = Http::withToken($token)
-                        ->timeout(10)
-                        ->get("{$this->apiUrl}/admin/subjects/lessons");
+                if ($lessonsResponse->successful() && $lessonsResponse->json('success')) {
+                    $responseData = $lessonsResponse->json();
 
-                    if ($lessonsResponse->successful() && $lessonsResponse->json('success')) {
-                        $responseData = $lessonsResponse->json();
+                    $allLessons = $responseData['lessons'] ?? [];
+                    $allContents = $responseData['contents'] ?? [];
 
-                        $allLessons = $responseData['lessons'] ?? [];
-                        $allContents = $responseData['contents'] ?? [];
+                    // Save to session for temporary caching (optional)
+                    session([
+                        'all_lessons' => $allLessons,
+                        'all_contents' => $allContents,
+                    ]);
 
-                        // Save to session to avoid refetching
-                        session([
-                            'all_lessons' => $allLessons,
-                            'all_contents' => $allContents,
-                            'lessons_fetched' => true
-                        ]);
-
-                        Log::info('Fetched all lessons & contents', [
-                            'lessons_count' => count($allLessons),
-                            'contents_count' => count($allContents)
-                        ]);
-                    } else {
-                        Log::warning('Failed to fetch lessons', [
-                            'status' => $lessonsResponse->status(),
-                            'body' => $lessonsResponse->body()
-                        ]);
-                    }
+                    Log::info('Fetched all lessons & contents', [
+                        'lessons_count' => count($allLessons),
+                        'contents_count' => count($allContents)
+                    ]);
                 } else {
-                    Log::info('Lessons already in session, skipping API call');
+                    Log::warning('Failed to fetch lessons', [
+                        'status' => $lessonsResponse->status(),
+                        'body' => $lessonsResponse->body()
+                    ]);
                 }
 
                 try {

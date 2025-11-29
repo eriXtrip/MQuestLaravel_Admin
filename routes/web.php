@@ -85,6 +85,8 @@
         return view('orgAdminDashboard');
     })->name('orgAdminDashboard');
 
+
+
     // web.php
     Route::get('/English', function () {
         return view('English'); // this should return only the HTML fragment (not full layout)
@@ -133,6 +135,8 @@
             return response()->file(public_path('images/default-avatar.jpg'));
         }
     });
+
+    Route::post('/admin/refresh-dashboard-data', [AdminDashboardController::class, 'refreshDashboardData'])->name('admin.refresh-dashboard-data');
 
 
     //Added teacher side routes
