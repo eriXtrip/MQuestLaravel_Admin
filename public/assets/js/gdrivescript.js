@@ -35,7 +35,7 @@ async function uploadFile() {
     const formData = new FormData();
     formData.append("file", fileInput);
 
-    const response = await fetch("http://localhost:3001/api/drive/upload", {
+    const response = await fetch("https://mquest-backend-production.up.railway.app/api/drive/upload", {
       method: "POST",
       body: formData,
     });
@@ -65,7 +65,7 @@ async function deleteFile() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3001/api/drive/delete/${fileId}`, { method: "DELETE" });
+    const res = await fetch(`https://mquest-backend-production.up.railway.app/api/drive/delete/${fileId}`, { method: "DELETE" });
     const data = await res.json();
     if (data.success) {
       document.getElementById("deleteResult").innerText = "File Deleted!";
@@ -86,7 +86,7 @@ async function shareFile() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3001/api/drive/share/${fileId}`);
+    const res = await fetch(`https://mquest-backend-production.up.railway.app/api/drive/share/${fileId}`);
     const data = await res.json();
     if (res.ok && data.success) {
       document.getElementById("shareResult").innerHTML =
@@ -110,7 +110,7 @@ async function generateDownloadLink() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3001/api/drive/download/${fileId}`);
+    const res = await fetch(`https://mquest-backend-production.up.railway.app/api/drive/download/${fileId}`);
     const data = await res.json();
     if (res.ok && data.success) {
       document.getElementById("downloadResult").innerHTML =
@@ -134,7 +134,7 @@ async function getFileMetadata() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3001/api/drive/metadata/${fileId}`);
+    const res = await fetch(`https://mquest-backend-production.up.railway.app/api/drive/metadata/${fileId}`);
     const data = await res.json();
     if (res.ok && data.success) {
       document.getElementById("metadataResult").innerHTML =
