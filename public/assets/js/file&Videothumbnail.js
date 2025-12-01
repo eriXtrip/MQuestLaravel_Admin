@@ -77,9 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Please upload a valid file: PDF, PPT, or PPTX");
           return clearFileInfo();
         }
-        if (file.size > 100 * 1024 * 1024) {
-          alert("File too large. Maximum size: 100MB");
-          return clearFileInfo();
+        if (file.size > 1024 * 1024 * 1024) {
+            alert("File too large. Maximum size: 1GB");
+            return clearFileInfo();
         }
 
         fileName.textContent = file.name;
