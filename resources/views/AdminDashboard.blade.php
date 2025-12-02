@@ -2725,6 +2725,7 @@
         -------------------------------------------------------------- */
         document.addEventListener('DOMContentLoaded', () => {
             const quarterTabs = document.querySelectorAll('.quarter-tab');
+            console.log('Quarter tabs found:', quarterTabs.length); // Add thi
 
             quarterTabs.forEach(tab => {
                 tab.addEventListener('click', e => {
