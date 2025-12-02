@@ -2614,6 +2614,10 @@
 
             const qNum = Number(quarter.replace('Q', ''));
 
+            console.log('🔍 DEBUG - All lessons:', window.allLessons);
+            console.log('🔍 DEBUG - Selected subject:', subj);
+            console.log('🔍 DEBUG - Quarter number:', qNum);
+
             // const lessons = (window.allLessons || []).filter(l => {
             //     const s = (l.subject_name || '').trim().toLowerCase();
             //     return s === subj && Number(l.quarter) === qNum;
