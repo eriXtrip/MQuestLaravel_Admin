@@ -2602,16 +2602,12 @@
 
             // map user-friendly names → actual names in dataset
             const subjectMap = {
-                'math': 'Mathematics',
-                'mathematics': 'Mathematics',
-                'Mathematics': 'Mathematics',
-                'eng': 'English',
-                'english': 'English',
-                'English': 'English',
-                'filipino': 'Filipino',
-                'Filipino': 'Filipino',
-                'science': 'Science',
-                'Science': 'Science'
+                'math': 'mathematics',
+                'mathematics': 'mathematics',
+                'eng': 'english',
+                'english': 'english',
+                'filipino': 'filipino',
+                'science': 'science'
             };
 
             subj = subjectMap[subj] || subj; // default to original if no mapping
@@ -2637,6 +2633,7 @@
             if (quarterProgress) {
                 quarterProgress.style.width = `${progressPercentage}%`;
             }
+
 
             console.log(`renderLessons → ${lessons.length} lesson(s) for "${subj}" – Q${qNum}`);
 
