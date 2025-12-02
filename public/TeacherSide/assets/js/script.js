@@ -1782,6 +1782,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
 }
 
 window.fillPupilModal = function(pupil) {
+
+    console.log('raw pupil data: ',pupil);
     document.getElementById("pupilProfileImg").src = pupil.thumbnail;
     document.getElementById("pupilProfileName").textContent = pupil.fullname;
     document.getElementById("pupilProfileLRN").textContent = "LRN: " + pupil.LRN;
