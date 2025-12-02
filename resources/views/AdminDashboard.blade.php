@@ -2604,10 +2604,14 @@
             const subjectMap = {
                 'math': 'Mathematics',
                 'mathematics': 'Mathematics',
+                'Mathematics': 'Mathematics',
                 'eng': 'English',
                 'english': 'English',
+                'English': 'English',
                 'filipino': 'Filipino',
-                'science': 'Science'
+                'Filipino': 'Filipino',
+                'science': 'Science',
+                'Science': 'Science'
             };
 
             subj = subjectMap[subj] || subj; // default to original if no mapping
