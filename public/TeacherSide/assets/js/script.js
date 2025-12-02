@@ -1928,29 +1928,46 @@ window.fillPupilModal = function(pupil) {
     function generateInsight(subjectProgress) {
         if (!subjectProgress || !subjectProgress.length) return "No data available.";
 
-        const strongSubjects = [];
-        const weakSubjects = [];
+        const strong = [];
+        const moderate = [];
+        const weak = [];
+        const noProgress = [];
 
         subjectProgress.forEach(subj => {
-            if (subj.progress_percent >= subj.class_avg) {
-                strongSubjects.push(subj.subject_name);
+            const p = subj.progress_percent;
+
+            if (p === 0) {
+                noProgress.push(subj.subject_name);
+            } else if (p >= 50) {
+                strong.push(subj.subject_name);
+            } else if (p >= 30) {
+                moderate.push(subj.subject_name);
             } else {
-                weakSubjects.push(subj.subject_name);
+                weak.push(subj.subject_name);
             }
         });
 
         let insightText = "";
 
-        if (strongSubjects.length > 0) {
-            insightText += `Strong in ${strongSubjects.join(" & ")}. `;
+        if (strong.length > 0) {
+            insightText += `Strong performance in ${strong.join(" & ")}. `;
         }
 
-        if (weakSubjects.length > 0) {
-            insightText += `${weakSubjects.join(" & ")} need reinforcement through targeted practice.`;
+        if (moderate.length > 0) {
+            insightText += `${moderate.join(" & ")} are progressing but need more practice. `;
+        }
+
+        if (weak.length > 0) {
+            insightText += `${weak.join(" & ")} require focused support to improve. `;
+        }
+
+        if (noProgress.length > 0) {
+            insightText += `${noProgress.join(" & ")} show no progress and the pupil needs motivation to improve.`;
         }
 
         return insightText.trim();
     }
+
 
     // Populate the insight banner
     const insightBanner = document.getElementById("pupilInsight");
