@@ -2586,6 +2586,9 @@
         -------------------------------------------------------------- */
         window.renderLessons = function renderLessons(quarter) {
             const lessonMenu = document.getElementById('lessonMenu');
+            const progressLabel = document.getElementById('progressLabel');
+            const quarterProgress = document.getElementById('quarterProgress');
+
             if (!lessonMenu) return;
 
             // ---- dispose old collapses
@@ -2615,6 +2618,21 @@
                 const s = (l.subject_name || '').trim().toLowerCase();
                 return s === subj && Number(l.quarter) === qNum;
             });
+
+            // Calculate progress - number of uploaded lessons vs total (8 per quarter)
+            const TOTAL_LESSONS_PER_QUARTER = 8;
+            const uploadedLessons = lessons.length; // Number of lessons actually uploaded
+            const progressPercentage = Math.min((uploadedLessons / TOTAL_LESSONS_PER_QUARTER) * 100, 100);
+
+             // Update progress label
+            if (progressLabel) {
+                progressLabel.innerHTML = `<span class="small">${uploadedLessons} out of ${TOTAL_LESSONS_PER_QUARTER} Lessons</span>`;
+            }
+
+            // Update progress bar
+            if (quarterProgress) {
+                quarterProgress.style.width = `${progressPercentage}%`;
+            }
 
             console.log(`renderLessons → ${lessons.length} lesson(s) for "${subj}" – Q${qNum}`);
 
