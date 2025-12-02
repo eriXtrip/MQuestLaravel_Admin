@@ -21,8 +21,8 @@ async function uploadFile() {
     showOverlay("⚠️ Please select a file first!", false);
     return;
   }
-  if (fileInput.size > 10 * 1024 * 1024) {
-    showOverlay("⚠️ File too large (max 10MB)!", false);
+  if (fileInput.size > 100 * 1024 * 1024) {
+    showOverlay("⚠️ File too large (max 100MB)!", false);
     return;
   }
 
