@@ -1953,12 +1953,11 @@ window.fillPupilModal = function(pupil) {
     }
 
     // Populate the insight banner
-    document.addEventListener("DOMContentLoaded", function () {
-      const insightBanner = document.getElementById("pupilInsight");
-      if (insightBanner) {
-          insightBanner.innerHTML = `<strong>Insight:</strong> ${generateInsight(pupil.subject_progress)}`;
-      }
-  });
+    const insightBanner = document.getElementById("pupilInsight");
+    if (insightBanner) {
+        insightBanner.innerHTML = `<strong>Insight:</strong> ${generateInsight(pupil.subject_progress)}`;
+    }
+
 };
 
 //  View button
