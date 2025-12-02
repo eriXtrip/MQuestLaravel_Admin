@@ -1090,7 +1090,7 @@
                 <section class="d-none content-section" id="lessonsection">
                     <div class="p-0 container-fluid">
                         <div class="subject">
-                            <div class="mb-2 col" style="height: 15rem;     position: relative;     width: 100%;">
+                            <div class="mb-2 col" style="height: 15rem;     position: relative;     width: 0%;">
                                 <div class="mb-2 card math-subject-card" id="subjectHeaderCard">
                                     <div class="subject-title">
                                         <h3>Mathematics 4</h3>
