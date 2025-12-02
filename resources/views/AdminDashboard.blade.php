@@ -2599,12 +2599,12 @@
 
             // map user-friendly names → actual names in dataset
             const subjectMap = {
-                'math': 'mathematics',
-                'mathematics': 'mathematics',
-                'eng': 'english',
-                'english': 'english',
-                'filipino': 'filipino',
-                'science': 'science'
+                'math': 'Mathematics',
+                'mathematics': 'Mathematics',
+                'eng': 'English',
+                'english': 'English',
+                'filipino': 'Filipino',
+                'science': 'Science'
             };
 
             subj = subjectMap[subj] || subj; // default to original if no mapping
