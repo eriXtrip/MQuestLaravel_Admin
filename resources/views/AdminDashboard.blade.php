@@ -2415,16 +2415,16 @@
 
             const qNum = Number(quarter.replace('Q', ''));
 
-            console.log('🔍 DEBUG - All lessons:', window.allLessons);
-            console.log('🔍 DEBUG - Selected subject:', subj);
-            console.log('🔍 DEBUG - Quarter number:', qNum);
+            // console.log('🔍 DEBUG - All lessons:', window.allLessons);
+            // console.log('🔍 DEBUG - Selected subject:', subj);
+            // console.log('🔍 DEBUG - Quarter number:', qNum);
 
-            // const lessons = (window.allLessons || []).filter(l => {
-            //     const s = (l.subject_name || '').trim().toLowerCase();
-            //     return s === subj && Number(l.quarter) === qNum;
-            // });
+            const lessons = (window.allLessons || []).filter(l => {
+                const s = (l.subject_name || '').trim().toLowerCase();
+                return s === subj && Number(l.quarter) === qNum;
+            });
 
-            const lessons = window.allLessons || []; // Show ALL lessons
+            // const lessons = window.allLessons || []; // Show ALL lessons
 
             // Calculate progress - number of uploaded lessons vs total (8 per quarter)
             const TOTAL_LESSONS_PER_QUARTER = 8;
@@ -2492,7 +2492,7 @@
                     <ul class="obj-list">${comps.map(o => `<li>${o}</li>`).join('')}</ul>`
                     : '';
 
-                const html = `<div class="lesson-item ${idx===0?'active':''}" id="${quarter}${id}">
+                const html = `<div class="lesson-item active" id="${quarter}${id}">
                                 <div class="lesson-header d-flex justify-content-between align-items-center"
                                     data-bs-toggle="collapse" data-bs-target="#content${id}"
                                     aria-expanded="false" aria-controls="content${id}">
