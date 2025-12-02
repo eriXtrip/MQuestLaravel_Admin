@@ -2614,10 +2614,12 @@
 
             const qNum = Number(quarter.replace('Q', ''));
 
-            const lessons = (window.allLessons || []).filter(l => {
-                const s = (l.subject_name || '').trim().toLowerCase();
-                return s === subj && Number(l.quarter) === qNum;
-            });
+            // const lessons = (window.allLessons || []).filter(l => {
+            //     const s = (l.subject_name || '').trim().toLowerCase();
+            //     return s === subj && Number(l.quarter) === qNum;
+            // });
+
+            const lessons = window.allLessons || []; // Show ALL lessons
 
             // Calculate progress - number of uploaded lessons vs total (8 per quarter)
             const TOTAL_LESSONS_PER_QUARTER = 8;
