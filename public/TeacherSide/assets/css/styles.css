@@ -3949,7 +3949,7 @@ td[data-label="LRN"] {
   }
 }
 
-.enrollment-header {
+.enrollment-header, .top-scorers-header {
   border-bottom: 1px solid var(--gray-200);
   display: flex;
   justify-content: space-between;
