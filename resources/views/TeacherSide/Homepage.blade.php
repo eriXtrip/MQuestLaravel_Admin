@@ -360,7 +360,7 @@
                             </div>
                             <div class="ms-3 welcome-img"><img src="{{ asset('TeacherSide/assets/img/undraw_books_wxzz.svg') }}" style="max-width: 150px;" widt=""></div>
                         </div>
-                        <div class="main-content-row row">
+                        <!--<div class="main-content-row row">-->
 
                             <!--Row 1-->
                             <div class="row equal-height-row mb-section">
@@ -578,7 +578,7 @@
                                 <!--Top Performers-->
                                 <div class="col-lg-6">
                                     <div class="top-scorers-section">
-                                        <div class="mb-2 top-scorers-header">
+                                        <div class="mb-6 top-scorers-header">
                                             <h4 class="text-muted mb-1">Top Performers</h4>
                                             <!-- <div class="top-performers-context"><span>Showing Top 5 of 42 Pupils</span></div> -->
                                         </div>
@@ -1117,7 +1117,7 @@
                                 </div>
                                 </div>
                             </div>
-                        </div>
+                        
                     </div>
                 </section>
 
