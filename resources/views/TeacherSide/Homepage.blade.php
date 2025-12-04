@@ -3334,6 +3334,8 @@
                 game_speak: "icon-game",
                 achievement: "icon-achievement",
                 enrollment: "icon-enrollment"
+                video: "icon-material", //dinagdag q
+                ppt: "icon-material" //dinagdag ko
             }[type] || "icon-default";
         }
 
@@ -3346,8 +3348,8 @@
                 game_speak: "badge-game",
                 achievement: "badge-achievement",
                 enrollment: "badge-enrollment"
-                video: "badge-material",
-                ppt: "bagde-material"
+                video: "badge-material", //dinagdag q
+                ppt: "bagde-material" // dinagdag q
             }[type] || "badge-default";
         }
 
@@ -3375,6 +3377,17 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-plus">
                         <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
                         <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"></path>
+                    </svg>
+                `
+                video: `
+                    <svg class="bi bi-camera-video" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"></path>
+                    </svg>
+                `,
+
+                ppt: `
+                    <svg class="bi bi-files" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1M3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
                     </svg>
                 `
             };
@@ -3409,90 +3422,90 @@
 
 
     <script>
-// Fix for modal backdrop not disappearing
-document.addEventListener('DOMContentLoaded', function() {
-    const createSectionModal = document.getElementById('createSectionModal');
-    
-    // Properly handle modal hide event
-    createSectionModal.addEventListener('hidden.bs.modal', function () {
-        // Remove any lingering backdrops
-        const backdrops = document.querySelectorAll('.modal-backdrop');
-        backdrops.forEach(backdrop => {
-            backdrop.remove();
-        });
+    // Fix for modal backdrop not disappearing
+    document.addEventListener('DOMContentLoaded', function() {
+        const createSectionModal = document.getElementById('createSectionModal');
         
-        // Reset body styles
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-    });
-
-    // Also handle show event to prevent multiple backdrops
-    createSectionModal.addEventListener('show.bs.modal', function () {
-        // Clean up any existing backdrops before showing
-        const existingBackdrops = document.querySelectorAll('.modal-backdrop');
-        existingBackdrops.forEach(backdrop => {
-            backdrop.remove();
-        });
-    });
-});
-
-// Your existing create section code
-document.getElementById('createSectionSubmit').addEventListener('click', async () => {
-    const school_name  = document.getElementById('schoolName').value.trim();
-    const school_year  = document.getElementById('schoolYear').value.trim();
-    const section_name = document.getElementById('sectionName').value.trim();
-
-    if (!school_name || !school_year || !section_name) {
-        alert("All fields are required.");
-        return;
-    }
-
-    const token = "{{ session('node_token') }}";
-    const teacherId = "{{ session('user_id') }}";
-
-    try {
-        const response = await fetch("{{ env('API_URL') }}/teacher/create/section", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                teacherId: teacherId,
-                school_name,
-                school_year,
-                section_name
-            })
+        // Properly handle modal hide event
+        createSectionModal.addEventListener('hidden.bs.modal', function () {
+            // Remove any lingering backdrops
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => {
+                backdrop.remove();
+            });
+            
+            // Reset body styles
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
         });
 
-        const data = await response.json();
+        // Also handle show event to prevent multiple backdrops
+        createSectionModal.addEventListener('show.bs.modal', function () {
+            // Clean up any existing backdrops before showing
+            const existingBackdrops = document.querySelectorAll('.modal-backdrop');
+            existingBackdrops.forEach(backdrop => {
+                backdrop.remove();
+            });
+        });
+    });
 
-        if (!response.ok) {
-            alert(data.error || "Failed to create section.");
+    // Your existing create section code
+    document.getElementById('createSectionSubmit').addEventListener('click', async () => {
+        const school_name  = document.getElementById('schoolName').value.trim();
+        const school_year  = document.getElementById('schoolYear').value.trim();
+        const section_name = document.getElementById('sectionName').value.trim();
+
+        if (!school_name || !school_year || !section_name) {
+            alert("All fields are required.");
             return;
         }
 
-        // ✅ SUCCESS: Use Bootstrap to properly hide the modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('createSectionModal'));
-        if (modal) {
-            modal.hide();
+        const token = "{{ session('node_token') }}";
+        const teacherId = "{{ session('user_id') }}";
+
+        try {
+            const response = await fetch("{{ env('API_URL') }}/teacher/create/section", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    teacherId: teacherId,
+                    school_name,
+                    school_year,
+                    section_name
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.error || "Failed to create section.");
+                return;
+            }
+
+            // ✅ SUCCESS: Use Bootstrap to properly hide the modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('createSectionModal'));
+            if (modal) {
+                modal.hide();
+            }
+
+            // Reset form
+            document.getElementById('createSectionForm').reset();
+
+            // Show success message
+            alert("Section created successfully!");
+
+            // Fetch updated sections
+            await fetchSections();
+
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong.");
         }
-
-        // Reset form
-        document.getElementById('createSectionForm').reset();
-
-        // Show success message
-        alert("Section created successfully!");
-
-        // Fetch updated sections
-        await fetchSections();
-
-    } catch (err) {
-        console.error(err);
-        alert("Something went wrong.");
-    }
-});
+    });
 </script>
 
     <script>
