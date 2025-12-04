@@ -121,6 +121,17 @@
         font-size: 15px;
     }
 }
+
+/* Ensure full height in paired columns */
+.equal-height-row > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+
+.mb-section {
+    margin-bottom: 1rem;
+}
+
 </style>
 
 </head>
