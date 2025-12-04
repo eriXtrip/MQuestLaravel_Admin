@@ -3949,7 +3949,7 @@ td[data-label="LRN"] {
   }
 }
 
-.enrollment-header, .top-scorers-header {
+.enrollment-header {
   border-bottom: 1px solid var(--gray-200);
   display: flex;
   justify-content: space-between;
@@ -3961,14 +3961,27 @@ td[data-label="LRN"] {
   flex-wrap: wrap;
 }
 
-.top-scorers-header {
+/*.top-scorers-header {
   border-bottom: 1px solid var(--gray-200);
-  /*align-items: center;*/
+  align-items: center;
   margin-bottom: 1.25rem;
-  /*padding-bottom: 0.75rem;*/
-  /*border-bottom: 1px solid var(--gray-200);*/
-  /*font-size: 1rem;*/
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--gray-200);
+  /*font-size: 1rem;
+}*/
+
+.top-scorers-header{
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 1rem;
 }
+
+
 
 /* Scrollbar styling */
 
