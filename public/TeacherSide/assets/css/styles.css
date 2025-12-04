@@ -3309,7 +3309,7 @@ td[data-label="LRN"] {
 }
 
 .line-chart-header {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--gray-200);
   display: flex;
@@ -3964,7 +3964,7 @@ td[data-label="LRN"] {
 .top-scorers-header {
   border-bottom: 1px solid var(--gray-200);
   /*align-items: center;*/
-  /*margin-bottom: 1.5rem;*/
+  margin-bottom: 1.25rem;*/
   /*padding-bottom: 0.75rem;*/
   /*border-bottom: 1px solid var(--gray-200);*/
   /*font-size: 1rem;*/

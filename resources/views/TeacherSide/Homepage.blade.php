@@ -3259,7 +3259,7 @@
                                 <span class="student-name">${pupil.fullname}</span>
                                 <span class="grade-badge">Grade 4</span>
                             </div>
-                            <div class="student-meta">
+                            <div class="student-meta small">
                                 <span class="text-muted"><strong>Last Accessed</strong></span>
                                 <span>${new Date(pupil.last_accessed).toLocaleDateString()}</span>
                             </div>
