@@ -579,7 +579,7 @@
                                 <div class="col-lg-6">
                                     <div class="top-scorers-section h-100">
                                         <div class="top-scorers-header">
-                                            <h4 class="text-muted mb-1">Top Performers</h4>
+                                            <h4 class="text-muted">Top Performers</h4>
                                             <!-- <div class="top-performers-context"><span>Showing Top 5 of 42 Pupils</span></div> -->
                                         </div>
                                         <!-- <div class="text-muted d-flex justify-content-between subject-summary small">
