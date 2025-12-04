@@ -3339,7 +3339,7 @@
                 game_img: "icon-game",
                 game_speak: "icon-game",
                 achievement: "icon-achievement",
-                enrollment: "icon-enrollment"
+                enrollment: "icon-enrollment",
                 video: "icon-material", //dinagdag q
                 ppt: "icon-material" //dinagdag ko
             }[type] || "icon-default";
@@ -3353,7 +3353,7 @@
                 game_img: "badge-game",
                 game_speak: "badge-game",
                 achievement: "badge-achievement",
-                enrollment: "badge-enrollment"
+                enrollment: "badge-enrollment",
                 video: "badge-material", //dinagdag q
                 ppt: "bagde-material" // dinagdag q
             }[type] || "badge-default";
