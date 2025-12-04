@@ -997,7 +997,21 @@
 
                                 <!--Recent Activity-->
                                 <div class="col-lg-6">
-                                    <!--Recent Activity Section-->
+                                    <div class="recently-added-container">
+                                        <div class="recently-added-header">
+                                            <h4 class="text-muted d-flex align-items-center">
+                                                Recently Added Materials&nbsp;<span class="new-materials-count-bagde">5</span>
+                                            </h4>
+                                        </div>
+                                        <div class="material-lists" id="materialLists"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Row 4-->
+                            <div class="row mb-section">
+                                <!--Recent Activity-->
+                                <div class="col-12">
                                     <!-- <div class="recent-activity-container">
                                         <div class="recent-activity-header">
                                             <h4 class="text-muted">Recent Activity</h4>
@@ -1101,20 +1115,6 @@
                                         <div class="activity-feed" id="activityFeed"></div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!--Row 4-->
-                            <div class="row mb-section">
-                                <!--Recently Added Materials-->
-                                <div class="col-12">
-                                    <div class="recently-added-container">
-                                        <div class="recently-added-header">
-                                            <h4 class="text-muted d-flex align-items-center">
-                                                Recently Added Materials&nbsp;<span class="new-materials-count-bagde">5</span>
-                                            </h4>
-                                        </div>
-                                        <div class="material-lists" id="materialLists"></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
