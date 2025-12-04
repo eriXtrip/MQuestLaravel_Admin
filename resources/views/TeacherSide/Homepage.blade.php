@@ -363,7 +363,7 @@
                         <div class="main-content-row row">
 
                             <!--Row 1-->
-                            <div class="row equal-height-row mb-section g-4">
+                            <div class="row equal-height-row mb-section">
                                 <!-- OverView Section-->
                                  <div class="col-lg-8">
                                     <div class="overview-section">
@@ -438,7 +438,7 @@
                             </div>
                             
                             <!--Row 2-->
-                             <div class="row equal-height-row mb-section g-4">
+                             <div class="row equal-height-row mb-section">
                                 <!--Enrollment Request Section-->
                                 <div class="col-lg-6">
                                     <div class="enrollment-container">
@@ -962,7 +962,7 @@
                             </div>
 
                             <!--Row 3-->
-                            <div class="row equal-height-row mb-section g-4">
+                            <div class="row equal-height-row mb-section">
                                 <!-- Line Chart-->
                                 <div class="col-lg-6">
                                     <div class="line-chart-container">
