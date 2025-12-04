@@ -2832,6 +2832,8 @@ td[data-label="LRN"] {
   color: #333;
   margin: 0 0 4px 0;
   line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .pupil-activity-timestamp {
