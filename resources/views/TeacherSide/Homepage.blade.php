@@ -3346,6 +3346,8 @@
                 game_speak: "badge-game",
                 achievement: "badge-achievement",
                 enrollment: "badge-enrollment"
+                video: "badge-material",
+                ppt: "bagde-material"
             }[type] || "badge-default";
         }
 

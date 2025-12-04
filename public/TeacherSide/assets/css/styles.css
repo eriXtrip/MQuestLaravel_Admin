@@ -4941,6 +4941,12 @@ activity-title {
   color: #2980b9;
 }
 
+.badge-material {
+  background-color: rgba(111,66,193,0.1);
+  color: #8b5cf6;
+}
+
+
 .icon-assessment {
   background: rgba(74,111,220,0.1);
   color: var(--primary-color);
@@ -4960,6 +4966,13 @@ activity-title {
   background: rgba(58,91,199,0.1);
   color: var(--secondary-color);
 }
+
+.icon-video, .icon-ppt {
+  background-color: rgba(111,66,193,0.1);
+  color: #8b5cf6;
+}
+
+
 
 @media (max-width: 480px) {
   .activity-container {
