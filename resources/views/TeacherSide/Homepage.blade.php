@@ -366,7 +366,7 @@
                             <div class="row equal-height-row mb-section">
                                 <!-- OverView Section-->
                                  <div class="col-lg-8">
-                                    <div class="overview-section">
+                                    <div class="overview-section h-100">
                                         <div class="overview-header">
                                             <h4 class="text-muted">Overview</h4>
                                         </div>
@@ -426,7 +426,7 @@
 
                                  <!-- Student Distribution (Pie Graph)-->
                                  <div class="col-lg-4">
-                                    <div class="donut-chart-container">
+                                    <div class="donut-chart-container h-100">
                                         <div class="donut-header">
                                             <h4 class="text-muted">Student Distribution</h4>
                                         </div>
@@ -441,7 +441,7 @@
                              <div class="row equal-height-row mb-section">
                                 <!--Enrollment Request Section-->
                                 <div class="col-lg-6">
-                                    <div class="enrollment-container">
+                                    <div class="enrollment-container h-100">
                                         <div class="enrollment-header">
                                             <h4 class="text-muted d-flex justify-content-center align-items-center">Recent Enrollment&nbsp;<span class="enrollment-count-bagde">0</span></h4>
                                             <!-- <button class="btn btn-sm view-all-list-btn" id="viewAllRequest" data-bs-toggle="modal" data-bs-target="#viewAllEnrollmentReq">
@@ -577,7 +577,7 @@
 
                                 <!--Top Performers-->
                                 <div class="col-lg-6">
-                                    <div class="top-scorers-section">
+                                    <div class="top-scorers-section h-100">
                                         <div class="mb-6 top-scorers-header">
                                             <h4 class="text-muted mb-1">Top Performers</h4>
                                             <!-- <div class="top-performers-context"><span>Showing Top 5 of 42 Pupils</span></div> -->
@@ -965,7 +965,7 @@
                             <div class="row equal-height-row mb-section">
                                 <!-- Line Chart-->
                                 <div class="col-lg-6">
-                                    <div class="line-chart-container">
+                                    <div class="line-chart-container h-100">
                                         <div class="line-chart-header">
                                             <h4 class="text-muted">Class Performance</h4>
                                             <div class="line-chart-filter">
@@ -997,7 +997,7 @@
 
                                 <!--Recent Activity-->
                                 <div class="col-lg-6">
-                                    <div class="recently-added-container">
+                                    <div class="recently-added-container h-100">
                                         <div class="recently-added-header">
                                             <h4 class="text-muted d-flex align-items-center">
                                                 Recently Added Materials&nbsp;<span class="new-materials-count-bagde">5</span>
