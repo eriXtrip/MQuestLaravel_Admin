@@ -2009,6 +2009,7 @@
                                                     <th>Email</th>
                                                     <th>Section</th>
                                                     <th>Last Active</th>
+                                                    <th>Action</th>
                                                     
                                                 </tr>
                                             </thead>
