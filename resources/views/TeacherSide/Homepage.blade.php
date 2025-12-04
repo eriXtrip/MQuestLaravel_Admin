@@ -129,7 +129,7 @@
 }
 
 .mb-section {
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
 }
 
 </style>
@@ -365,7 +365,7 @@
                             <!--Row 1-->
                             <div class="row equal-height-row mb-section g-4">
                                 <!-- OverView Section-->
-                                 <div class="col-8">
+                                 <div class="col-lg-8">
                                     <div class="overview-section">
                                         <div class="overview-header">
                                             <h4 class="text-muted">Overview</h4>
@@ -425,7 +425,7 @@
                                  </div>
 
                                  <!-- Student Distribution (Pie Graph)-->
-                                 <div class="col-4">
+                                 <div class="col-lg-4">
                                     <div class="donut-chart-container">
                                         <div class="donut-header">
                                             <h4 class="text-muted">Student Distribution</h4>
