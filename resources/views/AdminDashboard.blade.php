@@ -1660,10 +1660,10 @@
                         Please review everything carefully before publishing.
                     </p>
                     <div class="d-flex gap-2 justify-content-center">
-                        <button class="btn btn-outline-danger rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal">
+                        <button class="btn btn-outline-danger rounded-pill px-4 py-2 btn-sm" type="button" data-bs-dismiss="modal">
                             Cancel
                         </button>
-                        <button class="btn btn-outline-success rounded-pill px-4 py-2" type="button" id="confirmPublishBtn">
+                        <button class="btn btn-outline-success rounded-pill px-4 py-2 btn-sm" type="button" id="confirmPublishBtn">
                             Publish Lesson
                         </button>
                     </div>
