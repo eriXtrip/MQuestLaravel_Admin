@@ -129,6 +129,21 @@ a.sidebar-link:hover {
   color: #131150 !important;
 }
 
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0%;
+  width: 100%;
+  padding: .9rem 1.625rem !important;
+  cursor: pointer;
+  font-size: .9rem;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px;
+  border-top: 1px solid #dee2e65b !important;
+  color: #131150 !important;
+}
+
 .admin-img {
   width: 40px;
   height: 40px;
