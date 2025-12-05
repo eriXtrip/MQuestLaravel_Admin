@@ -800,6 +800,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Activity Log Section -->
             <div class="d-none p-3 activity-log-container content-section" id="activitylogSection">
                 <div class="user-page-header">
                     <h1 class="d-flex align-items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-clock-history">
@@ -3228,6 +3230,7 @@
                 });
             }
 
+            // Activity Logs
             function renderLogs() {
                 const list = document.getElementById('activityList');
                 list.innerHTML = '';
@@ -3263,7 +3266,7 @@
                                 </svg>
                             </div>
                             <div class="activity-content">
-                                <span>${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
+                                <span class="activity-log-name">${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
                                 <span class="bg-primary badge user-role">${log.role}</span>
                             </div>
                             <div class="activity-time">

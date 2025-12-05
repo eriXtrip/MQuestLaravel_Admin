@@ -3545,6 +3545,10 @@ td[data-label="Email"] {
   color: #131150;
 }
 
+.activity-log-name {
+  font-size: 0.75rem;
+}
+
 .activity-time {
   font-size: 10px;
   color: #6c757d;
