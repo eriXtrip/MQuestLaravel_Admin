@@ -2832,6 +2832,8 @@ td[data-label="LRN"] {
   color: #333;
   margin: 0 0 4px 0;
   line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .pupil-activity-timestamp {
@@ -3307,7 +3309,7 @@ td[data-label="LRN"] {
 }
 
 .line-chart-header {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--gray-200);
   display: flex;
@@ -3959,14 +3961,27 @@ td[data-label="LRN"] {
   flex-wrap: wrap;
 }
 
-.top-scorers-header {
+/*.top-scorers-header {
   border-bottom: 1px solid var(--gray-200);
-  /*align-items: center;*/
-  /*margin-bottom: 1.5rem;*/
-  /*padding-bottom: 0.75rem;*/
-  /*border-bottom: 1px solid var(--gray-200);*/
-  /*font-size: 1rem;*/
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--gray-200);
+  /*font-size: 1rem;
+}*/
+
+.top-scorers-header{
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 1rem;
 }
+
+
 
 /* Scrollbar styling */
 
@@ -4926,6 +4941,12 @@ activity-title {
   color: #2980b9;
 }
 
+.badge-material {
+  background-color: rgba(111,66,193,0.1);
+  color: #8b5cf6;
+}
+
+
 .icon-assessment {
   background: rgba(74,111,220,0.1);
   color: var(--primary-color);
@@ -4945,6 +4966,13 @@ activity-title {
   background: rgba(58,91,199,0.1);
   color: var(--secondary-color);
 }
+
+.icon-video, .icon-ppt {
+  background-color: rgba(111,66,193,0.1);
+  color: #8b5cf6;
+}
+
+
 
 @media (max-width: 480px) {
   .activity-container {
