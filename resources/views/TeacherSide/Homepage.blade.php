@@ -3333,7 +3333,7 @@
 
         function getIconClass(type) {
             return {
-                test: "icon-assessment",
+                quiz: "icon-assessment",
                 game_comp: "icon-game",
                 game_match: "icon-game",
                 game_img: "icon-game",
@@ -3347,7 +3347,7 @@
 
         function getBadgeClass(type) {
             return {
-                test: "badge-assessment",
+                quiz: "badge-assessment",
                 game_comp: "badge-game",
                 game_match: "badge-game",
                 game_img: "badge-game",
@@ -3360,6 +3360,12 @@
         }
 
         function getIconSVG(type) {
+            const map = {
+                quiz: "test",
+            };
+
+            type = map[type] || type;
+
             const icons = {
                 test: `
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-circle">
