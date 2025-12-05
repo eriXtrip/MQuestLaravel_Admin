@@ -2789,7 +2789,6 @@ textarea::-webkit-scrollbar-thumb {
 
 
 /* Lesson Editable bagde */
-
 .lesson-item.non-editable .header-badge {
   display: flex;
   align-items: center;
@@ -2803,7 +2802,6 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 /* Locked Banner inside lesson body */
-
 .lock-badge {
   display: inline-flex;
   align-items: center;
