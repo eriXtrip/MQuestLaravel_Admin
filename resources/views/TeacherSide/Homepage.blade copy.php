@@ -3245,6 +3245,7 @@
         });
     </script>
 
+    <!-- Recent Activity -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const activities = window.dashboardData.recentActivity || [];
