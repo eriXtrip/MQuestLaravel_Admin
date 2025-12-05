@@ -3332,8 +3332,12 @@
         // -------------------
 
         function getIconClass(type) {
+            const map = {
+                quiz: "test", 
+            };
+
             return {
-                quiz: "icon-assessment",
+                test: "icon-assessment",
                 game_comp: "icon-game",
                 game_match: "icon-game",
                 game_img: "icon-game",
@@ -3346,8 +3350,14 @@
         }
 
         function getBadgeClass(type) {
+            const map = {
+                quiz: "test",
+            };
+
+            type = map[type] || type;
+
             return {
-                quiz: "badge-assessment",
+                test: "badge-assessment",
                 game_comp: "badge-game",
                 game_match: "badge-game",
                 game_img: "badge-game",
