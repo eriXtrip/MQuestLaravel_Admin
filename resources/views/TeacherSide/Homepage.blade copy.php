@@ -3785,11 +3785,11 @@ function updateQuarterlyProgressUI(subject) {
             lessonItem.classList.add("quarter-lesson-item");
 
             const lessonTitle = lesson.lesson_title || `Lesson ${lesson.lesson_number}`;
-            //const lessonDescription = lesson.description || "";
+            const lessonDescription = lesson.description || "";
 
             lessonItem.innerHTML = `
                 <h6>Lesson ${lesson.lesson_number}: ${lessonTitle}</h6>
-                
+                <p>${lessonDescription}</p> 
             `;
 
             quarterLessonList.appendChild(lessonItem);
