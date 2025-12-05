@@ -1921,11 +1921,6 @@ window.fillPupilModal = function(pupil) {
             } else {
                 learningProgressContainer.appendChild(div);
             }
-
-            // Initialize the radar chart with pupil data
-            if (window.initRadarChartForPupil && typeof window.initRadarChartForPupil === 'function') {
-                window.initRadarChartForPupil(pupil);
-            }
         });
     }
 
@@ -1971,6 +1966,11 @@ window.fillPupilModal = function(pupil) {
         }
 
         return insightText.trim();
+    }
+
+    // Initialize the radar chart with pupil data
+    if (window.initRadarChartForPupil && typeof window.initRadarChartForPupil === 'function') {
+        window.initRadarChartForPupil(pupil);
     }
 
 
