@@ -3555,6 +3555,12 @@ td[data-label="Email"] {
   white-space: nowrap;
 }
 
+.activity-time span {
+  font-size: 10px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
 .activity-details {
   margin-top: 10px;
   padding: 10px;
