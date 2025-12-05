@@ -3789,7 +3789,7 @@ function updateQuarterlyProgressUI(subject) {
 
             lessonItem.innerHTML = `
                 <h6>Lesson ${lesson.lesson_number}: ${lessonTitle}</h6>
-                 
+                
             `;
 
             quarterLessonList.appendChild(lessonItem);
