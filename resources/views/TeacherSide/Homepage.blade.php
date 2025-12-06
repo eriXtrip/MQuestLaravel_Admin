@@ -2691,6 +2691,9 @@
                                             <li class="nav-item pupil-tab">
                                                 <button class="btn nav-link pupil-tab-btn" data-bs-toggle="tab" data-bs-target="#academic">Analytic Performance</button>
                                             </li>
+                                            <li class="nav-item pupil-tab">
+                                                <button class="btn nav-link pupil-tab-btn" data-bs-toggle="tab" data-bs-target="#assessments">Assessments</button>
+                                            </li>
                                         </ul>
                                         <div class="tab-content pupil-tab-content">
                                             <div id="overview" class="tab-pane fade active show">
@@ -2910,6 +2913,70 @@
                                                         </div>
                                                     </div>
                                                 </div> -->
+                                            </div>
+                                            <div id="assessments" class="tab-pane fade">
+                                                <div style="background-color: white;border-radius: var(--radius);box-shadow: var(--shadow-sm);margin-bottom: 1.5rem;border: 1px solid var(--gray-200);">
+                                                    <div class="p-3">
+                                                        <div id="advancedFilters-2" class="p-2" style="border: 1px solid var(--gray-300);border-radius: 8px;">
+                                                            <div class="row">
+                                                                <div class="col-md-12 mb-2"><input id="searchTest" class="pupil-search-lesson-input" type="text" placeholder="Search by test title, subject, or type..." /></div>
+                                                            </div>
+                                                            <div class="row align-items-center">
+                                                                <div class="col-12">
+                                                                    <div class="row g-2 pupil-filters-group">
+                                                                        <div class="col-12 col-sm-3"><select id="testSubjectFilter" class="form-select-sm form-select">
+                                                                                <optgroup label="Sort by:">
+                                                                                    <option value>All Subjects</option>
+                                                                                    <option value="math">Math</option>
+                                                                                    <option value="english">English</option>
+                                                                                    <option value="science">Science</option>
+                                                                                    <option value="filipino">Filipino</option>
+                                                                                </optgroup>
+                                                                            </select></div>
+                                                                        <div class="col-12 col-sm-3"><select id="testQuarterFilter" class="form-select-sm form-select">
+                                                                                <optgroup label="Sort by:">
+                                                                                    <option value>All Quarters</option>
+                                                                                    <option value="q1">Q1</option>
+                                                                                    <option value="q2">Q2</option>
+                                                                                    <option value="q3">Q3</option>
+                                                                                    <option value="q4">Q4</option>
+                                                                                </optgroup>
+                                                                            </select></div>
+                                                                        <div class="col-12 col-sm-3"><input id="fromDate" class="form-select form-select-sm" type="date" /></div>
+                                                                        <div class="col-12 col-sm-3"><button id="testClearFilter" class="btn btn-outline-secondary btn-sm w-100 reset-btn" type="button"><svg class="bi bi-arrow-clockwise me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"></path>
+                                                                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"></path>
+                                                                                </svg>Reset </button></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="test-results-section">
+                                                            <div class="assess-header">
+                                                                <div>
+                                                                    <div class="assess-title"><span>All Test Results</span></div>
+                                                                    <div class="assess-subtitle"><span>Detailed assessment records</span></div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="testCardsContainer" class="test-cards"></div>
+                                                        </div>
+                                                        <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
+                                                            <div class="text-muted small"><span> Showing </span><span id="startCount-3">1</span><span> to </span><span id="endCount-3">3</span><span> of </span><span id="totalCount-3">50</span></div>
+                                                            <nav aria-label="User list pagination">
+                                                                <ul class="mb-0 pagination pagination-sm">
+                                                                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                                                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
