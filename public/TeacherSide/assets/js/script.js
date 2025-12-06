@@ -266,8 +266,6 @@ function initFilters() {
 }
 
 
-
-
 /* ===========================
    6. Enrollment Actions - Approve/Decline/View - Dashboard Page
 =========================== */
@@ -564,7 +562,6 @@ const countDecline = document.getElementById("selectedCountDecline");
 }
 
 
-
 // =============================================================
 // 9. Notifications Tab Switcher (All / Unread)
 // =============================================================
@@ -592,7 +589,6 @@ function initNotificationTabs() {
     });
   });
 }
-
 
 
 // =============================================================
@@ -658,7 +654,6 @@ function initPerformerTable() {
   });
 }
 
-
 /* ===========================
    11. Expand / Collapse Lesson Footer
 =========================== */
@@ -705,7 +700,6 @@ function initLessonFooterToggle() {
     });
   });
 }
-
 
 
 /* =============================================================
@@ -924,7 +918,6 @@ function initViewDetailsHandler() {
 }
 
 
-
 // ===========================
 // 14. Tab Switching for Detail Cards -Profile Section Page
 // ===========================
@@ -1003,8 +996,6 @@ function initKeyboardFocus() {
   const navLinks = document.querySelectorAll('.nav-tabs-custom .nav-link');
   navLinks.forEach(btn => btn.setAttribute('tabindex', '0'));
 }
-
-
 
 
 // ================================
@@ -1254,7 +1245,6 @@ function initNotifications() {
 }
 
 
-
 /* ===========================
    18. Create Section - Pupil Management
 =========================== */
@@ -1268,7 +1258,7 @@ function initEditableSections() {
         const viewValues = section.querySelectorAll('.view-value');
         const editInputs = section.querySelectorAll('.edit-input');
         const icons = section.querySelectorAll('.value > svg');
-icons.forEach(icon => icon.style.display = 'none');
+        icons.forEach(icon => icon.style.display = 'none');
 
         // Skip if any required element is missing
         if (!editBtn || !editActions || !cancelBtn || !saveBtn) return;
@@ -1384,7 +1374,6 @@ icons.forEach(icon => icon.style.display = 'none');
         });
     });
 }
-
 
 
 /* ===========================
