@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initEditableSections(); // function to edit each section in Profile Section
   initSectionsManager(); // Function to create section in Pupil Management
   initStudentsTable(); // Function to display and filter the pupil progress analytics - Analytics Page
-  initAssessments(); // Function para idisplay ang test results sa Assessment Tab sa Pupil Page
+  initAssessments(); // Function para idisplay ang test results sa Assessment Tab sa Pupil page
 });
 
 /* ===========================

@@ -3881,8 +3881,6 @@ function selectSubject(link) {
     if (lessonsContainer) lessonsContainer.style.display = "block";
 }
 
-
-
 function updateSubjectCard(subject) {
     const card = document.getElementById("subjectHeaderCard");
     card.style.backgroundImage = `url('${subjectBackgrounds[subject]}')`;
