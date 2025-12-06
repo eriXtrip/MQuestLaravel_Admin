@@ -2767,9 +2767,9 @@
                                                     </div>
                                                     <div class="pupil-info-card-body">
                                                         <div class="chart-container" style="height: 280px; width: 100%;"><canvas id="radarChart"></canvas></div>
-                                                        <div class="text-center">
+                                                        <!--<div class="text-center">
                                                             <span id="radarPupil-InsightText" class="pupil-insight-text">Mathematics leads across all quarters with consistent growth.</span>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </div>
                                                 <div class="pupil-info-card">
