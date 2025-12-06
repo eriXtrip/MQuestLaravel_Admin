@@ -350,21 +350,8 @@
                                                     </path>
                                                 </svg>
 
-                                                <a href="#">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                                        viewBox="0 0 16 16" class="bi bi-folder">
-                                                        <path
-                                                            d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31z" />
-                                                    </svg>
-                                                </a>
-
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                                    viewBox="0 0 16 16" class="bi bi-trash" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal">
-                                                    <path
-                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                    <path
-                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1z" />
+                                                <svg class="bi bi-folder" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"></path>
                                                 </svg>
                                             </div>
                                         </div>
@@ -813,6 +800,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Activity Log Section -->
             <div class="d-none p-3 activity-log-container content-section" id="activitylogSection">
                 <div class="user-page-header">
                     <h1 class="d-flex align-items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-clock-history">
@@ -1649,22 +1638,22 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body text-center p-4">
-                    <div class="mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-triangle-fill text-warning">
+                    <div class="mb-3 text-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-triangle-fill text-danger">
                             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                         </svg>
                     </div>
                     <h4 class="fw-bold mb-3">Confirm Publication</h4>
                     <p class="text-muted mb-3">
-                        <strong>Once published, you cannot edit or delete this lesson.</strong><br>
-                        Please make sure all content is correct before proceeding.
+                        <strong>After a pupil accesses this lesson or any of its materials, it can no longer be edited or deleted.</strong><br>
+                        Please review everything carefully before publishing.
                     </p>
                     <div class="d-flex gap-2 justify-content-center">
-                        <button class="btn btn-secondary rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal">
+                        <button class="btn btn-outline-danger rounded-pill px-4 py-2 btn-sm" type="button" data-bs-dismiss="modal">
                             Cancel
                         </button>
-                        <button class="btn btn-warning rounded-pill px-4 py-2" type="button" id="confirmPublishBtn">
-                            Yes, Publish Lesson
+                        <button class="btn btn-outline-success rounded-pill px-4 py-2 btn-sm" type="button" id="confirmPublishBtn">
+                            Publish Lesson
                         </button>
                     </div>
                 </div>
@@ -2497,13 +2486,25 @@
                                     data-bs-toggle="collapse" data-bs-target="#content${id}"
                                     aria-expanded="false" aria-controls="content${id}">
                                     <div class="header-left">
-                                        <h2>Lesson ${lesson.lesson_number || idx+1}</h2>
+                                        <h2>Lesson ${lesson.lesson_number || idx+1}
+                                            <span class="lock-badge" data-bs-toggle="tooltip" data-bss-tooltip title="This lesson cannot be edited">
+                                            <svg class="bi bi-lock me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"></path>
+                                            </svg> Locked </span>
+                                        </h2>
                                         <p>${title}</p>
                                     </div>
                                     <div class="header-right"><span>+</span></div>
                                 </div>
                                 <div id="content${id}" class="collapse">
                                     <div class="lesson-content">
+                                        <div class="locked-banner">
+                                            <svg class="bi bi-exclamation-triangle me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"></path>
+                                                <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
+                                            </svg>
+                                            <span> This lesson is locked and cannot be edited or deleted. </span>
+                                        </div>
                                         <div class="part-1 mb-3">
                                             <div class="mb-2 part-intro">
                                                 <h6>Lesson Overview</h6>
@@ -3229,6 +3230,7 @@
                 });
             }
 
+            // Activity Logs
             function renderLogs() {
                 const list = document.getElementById('activityList');
                 list.innerHTML = '';
@@ -3264,7 +3266,7 @@
                                 </svg>
                             </div>
                             <div class="activity-content">
-                                <span>${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
+                                <span class="activity-log-name">${log.full_name}&nbsp;<strong>${log.activity_name}</strong></span>
                                 <span class="bg-primary badge user-role">${log.role}</span>
                             </div>
                             <div class="activity-time">

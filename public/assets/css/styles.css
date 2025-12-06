@@ -129,6 +129,21 @@ a.sidebar-link:hover {
   color: #131150 !important;
 }
 
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0%;
+  width: 100%;
+  padding: .9rem 1.625rem !important;
+  cursor: pointer;
+  font-size: .9rem;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px;
+  border-top: 1px solid #dee2e65b !important;
+  color: #131150 !important;
+}
+
 .admin-img {
   width: 40px;
   height: 40px;
@@ -2772,6 +2787,51 @@ textarea::-webkit-scrollbar-thumb {
   color: var(--bs-blue);
 }
 
+
+/* Lesson Editable bagde */
+.lesson-item.non-editable .header-badge {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #ffe8e8;
+  color: #d9534f;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  gap: 4px;
+}
+
+/* Locked Banner inside lesson body */
+.lock-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #ffe8e8;
+  color: #d9534f;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+.locked-banner {
+  background: #fff2d6;
+  color: #b26a00;
+  border: 1px solid #ffda9b;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.locked-banner span {
+  font-size: 0.75rem;
+}
+
+
+
 /* User Management */
 
 .user-management-container, .activity-log-container {
@@ -3485,7 +3545,17 @@ td[data-label="Email"] {
   color: #131150;
 }
 
+.activity-log-name {
+  font-size: 0.75rem;
+}
+
 .activity-time {
+  font-size: 10px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.activity-time span {
   font-size: 10px;
   color: #6c757d;
   white-space: nowrap;
