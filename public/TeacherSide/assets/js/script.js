@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initEditableSections(); // function to edit each section in Profile Section
   initSectionsManager(); // Function to create section in Pupil Management
   initStudentsTable(); // Function to display and filter the pupil progress analytics - Analytics Page
+  initAssessments(); // Function para idisplay ang test results sa Assessment Tab sa Pupil Page
 });
 
 /* ===========================
@@ -2294,6 +2295,372 @@ function initStudentsTable(pupils) {
 }
 
 
+/* ===========================
+   Assessment Tab - View Pupil Modal -Teacher Side
+=========================== */
+function initAssessments() {
+    // Sample test data
+    const testData = [
+        {
+            id: 1,
+            title: "Numbers and Operations",
+            type: "pretest",
+            subject: "math",
+            quarter: "q1",
+            date: "2025-09-15",
+            timeSpent: "18mins",
+            score: 75,
+            totalQuestions: 10,
+            correctAnswers: 8,
+            attempts: 1,
+            status: "passed"
+        },
+        {
+            id: 2,
+            title: "Numbers and Operations 2",
+            type: "pretest",
+            subject: "english",
+            quarter: "q3",
+            date: "2025-09-15",
+            timeSpent: "18mins",
+            score: 75,
+            totalQuestions: 10,
+            correctAnswers: 8,
+            attempts: 1,
+            status: "passed"
+        },
+        {
+            id: 3,
+            title: "Cell Biology",
+            type: "posttest",
+            subject: "science",
+            quarter: "q2",
+            date: "2025-09-15",
+            timeSpent: "18mins",
+            score: 75,
+            totalQuestions: 10,
+            correctAnswers: 8,
+            attempts: 1,
+            status: "passed"
+        },
+        {
+            id: 4,
+            title: "Algebra Basics",
+            type: "pretest",
+            subject: "math",
+            quarter: "q2",
+            date: "2025-10-05",
+            timeSpent: "20mins",
+            score: 60,
+            totalQuestions: 15,
+            correctAnswers: 9,
+            attempts: 2,
+            status: "needs-review"
+        },
+        {
+            id: 5,
+            title: "Cell Biology",
+            type: "posttest",
+            subject: "science",
+            quarter: "q1",
+            date: "2025-09-27",
+            timeSpent: "22mins",
+            score: 85,
+            totalQuestions: 20,
+            correctAnswers: 17,
+            attempts: 1,
+            status: "passed"
+        },
+        {
+            id: 6,
+            title: "Grammar Rules",
+            type: "pretest",
+            subject: "english",
+            quarter: "q3",
+            date: "2025-11-01",
+            timeSpent: "15mins",
+            score: 90,
+            totalQuestions: 10,
+            correctAnswers: 9,
+            attempts: 1,
+            status: "passed"
+        },
+        {
+            id: 7,
+            title: "Philippine History",
+            type: "posttest",
+            subject: "filipino",
+            quarter: "q4",
+            date: "2025-11-22",
+            timeSpent: "18mins",
+            score: 70,
+            totalQuestions: 10,
+            correctAnswers: 7,
+            attempts: 1,
+            status: "passed"
+        },
+        {
+            id: 8,
+            title: "Geometry Basics",
+            type: "pretest",
+            subject: "math",
+            quarter: "q3",
+            date: "2025-10-10",
+            timeSpent: "22mins",
+            score: 55,
+            totalQuestions: 20,
+            correctAnswers: 11,
+            attempts: 2,
+            status: "needs-review"
+        },
+        {
+            id: 9,
+            title: "Ecosystems",
+            type: "posttest",
+            subject: "science",
+            quarter: "q4",
+            date: "2025-12-01",
+            timeSpent: "25mins",
+            score: 65,
+            totalQuestions: 15,
+            correctAnswers: 10,
+            attempts: 1,
+            status: "needs-review"
+        },
+        {
+            id: 10,
+            title: "Reading Comprehension",
+            type: "pretest",
+            subject: "english",
+            quarter: "q1",
+            date: "2025-08-15",
+            timeSpent: "20mins",
+            score: 80,
+            totalQuestions: 10,
+            correctAnswers: 8,
+            attempts: 1,
+            status: "passed"
+        }
+    ];
+
+    // Config
+    let currentPage = 1;
+    const itemsPerPage = 3;
+    let filteredData = [...testData];
+
+    // Helper
+    const $ = (id) => document.getElementById(id);
+
+    // DOM Elements
+    const searchInput = $('searchTest');
+    const subjectFilter = $('testSubjectFilter');
+    const quarterFilter = $('testQuarterFilter');
+    const fromDate = $('fromDate');
+    const clearFiltersBtn = $('testClearFilter');
+    const testCardsContainer = $('testCardsContainer');
+    const startCount = $('startCount-3');
+    const endCount = $('endCount-3');
+    const totalCount = $('totalCount-3');
+    const paginationNav = document.querySelector('.pagination');
+
+    if (!testCardsContainer) return;
+
+    // Initialize
+    function init() {
+        renderTestCards();
+        updatePagination();
+        updateResultsCount();
+
+        if (searchInput) searchInput.addEventListener('input', handleFilterChange);
+        if (subjectFilter) subjectFilter.addEventListener('change', handleFilterChange);
+        if (quarterFilter) quarterFilter.addEventListener('change', handleFilterChange);
+        if (fromDate) fromDate.addEventListener('change', handleFilterChange);
+        if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
+        if (paginationNav) paginationNav.addEventListener('click', handlePaginationClick);
+    }
+
+    function handleFilterChange() {
+        filteredData = testData.filter(test => {
+            const searchTerm = (searchInput?.value || '').toLowerCase().trim();
+
+            if (searchTerm &&
+                !test.title.toLowerCase().includes(searchTerm) &&
+                !test.subject.toLowerCase().includes(searchTerm) &&
+                !test.type.toLowerCase().includes(searchTerm)) {
+                return false;
+            }
+
+            if (subjectFilter?.value && test.subject !== subjectFilter.value) return false;
+            if (quarterFilter?.value && test.quarter !== quarterFilter.value) return false;
+
+            if (fromDate?.value) {
+                const testDate = new Date(test.date);
+                const fromDateValue = new Date(fromDate.value);
+                if (testDate < fromDateValue) return false;
+            }
+
+            return true;
+        });
+
+        currentPage = 1;
+        renderTestCards();
+        updatePagination();
+        updateResultsCount();
+    }
+
+    function clearAllFilters() {
+        if (searchInput) searchInput.value = '';
+        if (subjectFilter) subjectFilter.value = '';
+        if (quarterFilter) quarterFilter.value = '';
+        if (fromDate) fromDate.value = '';
+
+        filteredData = [...testData];
+        currentPage = 1;
+
+        renderTestCards();
+        updatePagination();
+        updateResultsCount();
+    }
+
+    function renderTestCards() {
+        if (!testCardsContainer) return;
+
+        testCardsContainer.innerHTML = '';
+
+        if (filteredData.length === 0) {
+            testCardsContainer.innerHTML = `
+                <div class="col-12">
+                    <div class="text-center py-5">
+                        <div class="text-muted mb-2">No results found</div>
+                        <p class="text-muted small">Try adjusting your search or filter criteria</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+
+        for (let i = startIndex; i < endIndex; i++) {
+            testCardsContainer.appendChild(createTestCard(filteredData[i]));
+        }
+    }
+
+    function createTestCard(test) {
+        const card = document.createElement('div');
+        card.className = 'test-card';
+
+        let statusBadgeClass = test.status === 'needs-review' ? 'status-needs-review' : 'status-passed';
+        let statusText = test.status === 'needs-review' ? 'Needs Review' : 'Passed';
+
+        const typeTagClass = test.type === 'pretest' ? 'tag-pretest' : 'tag-posttest';
+        const subjectTagClass = `tag-${test.subject}`;
+        const quarterTagClass = `tag-${test.quarter}`;
+
+        const formattedDate = new Date(test.date).toLocaleDateString('en-US');
+
+        card.innerHTML = `
+            <div class="test-header">
+                <div class="test-title"><span>${test.title}</span></div>
+                <div class="test-tags">
+                    <span class="tag ${typeTagClass}">${test.type === 'pretest' ? 'Pretest' : 'Post Test'}</span>
+                    <span class="tag ${subjectTagClass}">${test.subject}</span>
+                    <span class="tag ${quarterTagClass}">${test.quarter.toUpperCase()}</span>
+                </div>
+            </div>
+            <div class="test-meta">
+                <div class="text-muted test-meta-item">
+                    <span>${formattedDate}</span>
+                </div>
+                <div class="text-muted test-meta-item">
+                    <span>${test.timeSpent}</span>
+                </div>
+            </div>
+            <div class="test-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Status</div>
+                    <span class="test-status-badge ${statusBadgeClass}">${statusText}</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Scores</div>
+                    <div class="stat-value-small">${test.score}%</div>
+                    <div class="score-details">${test.correctAnswers}/${test.totalQuestions} correct</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Attempts</div>
+                    <div class="stat-value-small">${test.attempts} ${test.attempts === 1 ? 'time' : 'times'}</div>
+                </div>
+            </div>
+        `;
+
+        return card;
+    }
+
+    function updatePagination() {
+        if (!paginationNav) return;
+
+        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+        let paginationHTML = '';
+
+        paginationHTML += `<li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#">Previous</a>
+        </li>`;
+
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, startPage + 4);
+
+        for (let i = startPage; i <= endPage; i++) {
+            paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#">${i}</a>
+            </li>`;
+        }
+
+        paginationHTML += `<li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="#">Next</a>
+        </li>`;
+
+        const ul = paginationNav.querySelector('ul');
+        if (ul) ul.innerHTML = paginationHTML;
+    }
+
+    function handlePaginationClick(e) {
+        if (!e.target.classList.contains('page-link')) return;
+        e.preventDefault();
+
+        const text = e.target.textContent.trim();
+        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+        if (text === 'Previous' && currentPage > 1) {
+            currentPage--;
+        } else if (text === 'Next' && currentPage < totalPages) {
+            currentPage++;
+        } else if (!isNaN(parseInt(text))) {
+            currentPage = parseInt(text);
+        }
+
+        renderTestCards();
+        updatePagination();
+        updateResultsCount();
+    }
+
+    function updateResultsCount() {
+        if (!startCount || !endCount || !totalCount) return;
+
+        const start = (currentPage - 1) * itemsPerPage + 1;
+        const end = Math.min(currentPage * itemsPerPage, filteredData.length);
+        const total = filteredData.length;
+
+        startCount.textContent = start;
+        endCount.textContent = end;
+        totalCount.textContent = total;
+    }
+
+    // RUN
+    init();
+}
+
+
 // ===========================
 // Initialize all tab & metric scripts
 // ===========================
@@ -2305,6 +2672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initEditableSections();
     initSectionsManager();
     initStudentsTable();
+    initAssessments();
     initNotifications();
 });
 
