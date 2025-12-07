@@ -1334,66 +1334,57 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Start from Draft option
+    // =============== FIX: START FROM DRAFT OPTION ===============
     if (startFromDraftBtn) {
         startFromDraftBtn.addEventListener("click", () => {
             if (dialog) dialog.style.display = 'none';
             
-            // Check if there's a draft in localStorage
-            const savedData = localStorage.getItem('lessonDraft');
-            if (!savedData) {
+            const draftInfo = getDraftInfo();
+            
+            if (!draftInfo || !draftInfo.exists) {
                 showToast('info', 'No Draft Found', 'Starting a blank lesson instead.');
-                createBlankLesson();
+                const newLesson = createBlankLesson();
                 return;
             }
             
-            try {
-                const data = JSON.parse(savedData);
-                const oneWeek = 7 * 24 * 60 * 60 * 1000;
-                const now = Date.now();
+            // Create new lesson and load the draft
+            const newLesson = createBlankLesson();
+            
+            // Small delay to ensure new lesson template is loaded, then call loadLessonDraft
+            setTimeout(() => {
+                loadLessonDraft();
+                showToast('success', 'Draft Loaded', `"${draftInfo.title}" draft loaded successfully.`);
                 
-                // Check if draft is expired
-                if (!data.saved_at || now - data.saved_at > oneWeek) {
-                    showToast('warning', 'Draft Expired', 'Your draft has expired. Starting a blank lesson.');
-                    createBlankLesson();
-                    localStorage.removeItem('lessonDraft');
-                    return;
+                // Show delete button for loaded draft
+                const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
+                if (deleteDraftBtn) {
+                    deleteDraftBtn.style.display = 'inline-block';
                 }
-                
-                // Create new lesson and load the draft
-                createBlankLesson();
-                
-                // Small delay to ensure new lesson template is loaded
-                setTimeout(() => {
-                    if (typeof loadLessonDraft === 'function') {
-                        loadLessonDraft();
-                        showToast('success', 'Draft Loaded', 'Your draft has been successfully loaded.');
-                    }
-                }, 300);
-                
-            } catch (error) {
-                console.error("Error loading draft:", error);
-                showToast('error', 'Error', 'Failed to load draft. Starting blank lesson.');
-                createBlankLesson();
-            }
+            }, 300);
         });
     }
 
-    // Start Blank option
+    // =============== FIX: START BLANK OPTION ===============
     if (startBlankBtn) {
         startBlankBtn.addEventListener("click", () => {
             if (dialog) dialog.style.display = 'none';
             
-            // Ask if user wants to clear existing draft
-            const savedData = localStorage.getItem('lessonDraft');
-            if (savedData) {
-                if (confirm('You have an existing draft. Would you like to clear it before starting blank?')) {
-                    localStorage.removeItem('lessonDraft');
-                    showToast('info', 'Draft Cleared', 'Your draft has been removed.');
+            const draftInfo = getDraftInfo();
+            if (draftInfo && draftInfo.exists) {
+                if (confirm(`You have an existing draft "${draftInfo.title}". Would you like to clear it before starting blank?`)) {
+                    deleteDraft();
                 }
             }
             
-            createBlankLesson();
+            const newLesson = createBlankLesson();
+            
+            // Hide the delete draft button for blank lessons
+            setTimeout(() => {
+                const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
+                if (deleteDraftBtn) {
+                    deleteDraftBtn.style.display = 'none';
+                }
+            }, 100);
         });
     }
 
@@ -1413,11 +1404,582 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Function to create a blank lesson
+    // =============== DRAFT MANAGEMENT FUNCTIONS ===============
+    async function saveLessonToSession(status = 'draft') {
+        try {
+            const data = await getLessonData(status);
+            data.saved_at = Date.now(); // timestamp
+            data.status = status;
+            
+            localStorage.setItem('lessonDraft', JSON.stringify(data));
+            
+            console.log('✅ Lesson saved to localStorage:', data);
+            showToast('success', 'Lesson Saved', status === 'draft' ? 'Draft saved locally!' : 'Lesson saved!');
+            
+            // Show delete draft button when draft is saved
+            showDeleteDraftButton();
+            
+            return data; // Return data for potential use
+        } catch (err) {
+            console.error('❌ Failed to save lesson to localStorage:', err);
+            showToast('error', 'Save Failed', 'Failed to save lesson. Please try again.');
+            throw err; // Re-throw for error handling
+        }
+    }
+
+    // Function to show/hide delete draft button based on whether draft exists
+    function updateDeleteDraftButtonVisibility() {
+        const savedData = localStorage.getItem('lessonDraft');
+        const deleteDraftButtons = document.querySelectorAll('.delete-draft-btn');
+        
+        if (deleteDraftButtons.length > 0) {
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+                    const now = Date.now();
+                    
+                    // Only show if draft exists and isn't expired
+                    if (data.saved_at && now - data.saved_at <= oneWeek) {
+                        deleteDraftButtons.forEach(btn => {
+                            btn.style.display = 'inline-block';
+                        });
+                    } else {
+                        // Clear expired draft
+                        localStorage.removeItem('lessonDraft');
+                        deleteDraftButtons.forEach(btn => {
+                            btn.style.display = 'none';
+                        });
+                    }
+                } catch (e) {
+                    // If error parsing, clear and hide
+                    localStorage.removeItem('lessonDraft');
+                    deleteDraftButtons.forEach(btn => {
+                        btn.style.display = 'none';
+                    });
+                }
+            } else {
+                deleteDraftButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                });
+            }
+        }
+    }
+
+    // Function to show delete draft button
+    function showDeleteDraftButton() {
+        const deleteDraftButtons = document.querySelectorAll('.delete-draft-btn');
+        deleteDraftButtons.forEach(btn => {
+            btn.style.display = 'inline-block';
+        });
+    }
+
+    // Function to hide delete draft button
+    function hideDeleteDraftButton() {
+        const deleteDraftButtons = document.querySelectorAll('.delete-draft-btn');
+        deleteDraftButtons.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
+
+    // Enhanced delete draft function
+    function deleteDraft(lessonElement = null) {
+        if (confirm('Are you sure you want to delete this draft? This action cannot be undone.')) {
+            localStorage.removeItem('lessonDraft');
+            
+            // Hide all delete buttons
+            hideDeleteDraftButton();
+            
+            // Remove the lesson element if provided
+            if (lessonElement && lessonElement.remove) {
+                lessonElement.remove();
+            }
+            
+            showToast('success', 'Draft Deleted', 'Your draft has been successfully deleted.');
+            return true;
+        }
+        return false;
+    }
+
+    // Function to check if draft exists and is valid
+    function checkDraftExists() {
+        const savedData = localStorage.getItem('lessonDraft');
+        if (!savedData) return false;
+        
+        try {
+            const data = JSON.parse(savedData);
+            const oneWeek = 7 * 24 * 60 * 60 * 1000;
+            const now = Date.now();
+            
+            // Check if draft exists and isn't expired
+            return data.saved_at && now - data.saved_at <= oneWeek;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Function to get draft info
+    function getDraftInfo() {
+        const savedData = localStorage.getItem('lessonDraft');
+        if (!savedData) return null;
+        
+        try {
+            const data = JSON.parse(savedData);
+            const oneWeek = 7 * 24 * 60 * 60 * 1000;
+            const now = Date.now();
+            
+            if (data.saved_at && now - data.saved_at <= oneWeek) {
+                return {
+                    exists: true,
+                    title: data.lesson_title || 'Untitled Draft',
+                    savedAt: new Date(data.saved_at).toLocaleString(),
+                    expiresAt: new Date(data.saved_at + oneWeek).toLocaleString(),
+                    data: data
+                };
+            } else {
+                localStorage.removeItem('lessonDraft'); // Clean up expired
+                return { exists: false, expired: true };
+            }
+        } catch (e) {
+            return { exists: false, error: true };
+        }
+    }
+
+    // =============== MAIN LOAD LESSON DRAFT FUNCTION ===============
+    function loadLessonDraft() {
+        const savedData = localStorage.getItem('lessonDraft');
+
+        // Log raw savedData from localStorage
+        // console.log("Raw savedData from localStorage:", savedData);
+
+        if (!savedData) {
+            console.log("No lesson draft found.");
+            return;
+        }
+
+        let data;
+        try {
+            data = JSON.parse(savedData);
+        } catch (error) {
+            console.error("Failed to parse lessonDraft:", error);
+            return;
+        }
+
+        // Log parsed data object
+        console.log("Parsed lessonDraft object:", data);
+
+        const oneWeek = 7 * 24 * 60 * 60 * 1000;
+        const now = Date.now();
+
+        // Remove expired or invalid drafts
+        if (!data.saved_at || now - data.saved_at > oneWeek) {
+            localStorage.removeItem('lessonDraft');
+            console.log("Draft expired or invalid, removed from localStorage.");
+            return;
+        }
+
+        // Populate lesson basic info
+        document.getElementById('lesson-title').value = data.lesson_title || '';
+        document.getElementById('lesson-description').value = data.lesson_description || '';
+        document.getElementById('selected-quarter-input').value = data.selected_quarter || '';
+        document.getElementById('selected-subject-input').value = data.selected_subject || '';
+
+        // Populate pretest questions
+        if (data.pretest_questions?.length) {
+            //console.log("Restoring pretest questions:", data.pretest_questions);
+            
+            // Store the data
+            localStorage.setItem('lessonData', JSON.stringify(data));
+            
+            // Wait for everything to be ready
+            setTimeout(() => {
+                // The function should be available now
+                if (window.loadQuestionsFromLocalStorage) {
+                    window.loadQuestionsFromLocalStorage();
+                } else {
+                    console.error("Function not found in window object");
+                    // Try calling it directly from the prequizBuilder module
+                    if (window.prequizBuilder && window.prequizBuilder.loadQuestionsFromLocalStorage) {
+                        window.prequizBuilder.loadQuestionsFromLocalStorage();
+                    }
+                }
+            }, 500); // Longer delay to ensure all scripts loaded
+        }
+
+        // Populate posttest questions
+        if (data.posttest_questions?.length) {
+            //console.log("Restoring posttest questions:", data.posttest_questions);
+            
+            // Store the data
+            localStorage.setItem('lessonData', JSON.stringify(data));
+            
+            // Wait for everything to be ready
+            setTimeout(() => {
+                // The function should be available now
+                if (window.loadQuestions2FromLocalStorage) {
+                    window.loadQuestions2FromLocalStorage();
+                } else {
+                    console.error("Function not found in window object");
+                    // Try calling it directly from the prequizBuilder module
+                    if (window.prequizBuilder && window.prequizBuilder.loadQuestionsFromLocalStorage) {
+                        window.prequizBuilder.loadQuestions2FromLocalStorage();
+                    }
+                }
+            }, 500); // Longer delay to ensure all scripts loaded
+        }
+    
+
+        // =============== LOAD ALL GAMES ===============
+        if (data.games) {
+            console.log("Restoring games:", data.games);
+            
+            // Load with delays to ensure DOM is ready
+            setTimeout(() => {
+                if (data.games.matching?.length) {
+                    loadMatchingGame(data.games.matching);
+                }
+            }, 1000);
+            
+            setTimeout(() => {
+                if (data.games.flashcard?.length) {
+                    loadFlashcardGame(data.games.flashcard);
+                }
+            }, 1100);
+            
+            setTimeout(() => {
+                if (data.games.spelling?.length) {
+                    loadSpellingGame(data.games.spelling);
+                }
+            }, 1200);
+            
+            setTimeout(() => {
+                if (data.games.speak?.length) {
+                    loadSpeakGame(data.games.speak);
+                }
+            }, 1300);
+            
+            setTimeout(() => {
+                if (data.games.imagequiz?.length) {
+                    loadImageQuizGame(data.games.imagequiz);
+                }
+            }, 1400);
+        }
+
+        // Populate uploads
+        if (data.uploads) {
+            console.log("Restoring uploads (titles only):", data.uploads);
+            
+            // PPT/PDF Title and Subtitle
+            if (data.uploads.ppt) {
+                const pptTitle = document.getElementById('file-title');
+                const pptSubtitle = document.getElementById('file-title-1');
+                if (pptTitle) pptTitle.value = data.uploads.ppt.title || '';
+                if (pptSubtitle) pptSubtitle.value = data.uploads.ppt.subtitle || '';
+                
+                // Also show filename in display area
+                const fileName = document.getElementById('fileName');
+                const fileSize = document.getElementById('fileSize');
+                const fileNameDisplay = document.getElementById('fileNameDisplay');
+                if (fileName && data.uploads.ppt.name) {
+                    fileName.textContent = data.uploads.ppt.name;
+                    if (fileSize) fileSize.textContent = 'Previously uploaded';
+                    if (fileNameDisplay) fileNameDisplay.style.display = 'block';
+                }
+            }
+            
+            // Video Title and Subtitle
+            if (data.uploads.videos) {
+                const videoTitle = document.getElementById('file-title-2');
+                const videoSubtitle = document.getElementById('video-title');
+                if (videoTitle) videoTitle.value = data.uploads.videos.title || '';
+                if (videoSubtitle) videoSubtitle.value = data.uploads.videos.subtitle || '';
+                
+                // Show video placeholder
+                const videoPreview = document.getElementById('videoPreview');
+                if (videoPreview && data.uploads.videos.name) {
+                    videoPreview.style.display = 'block';
+                    videoPreview.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #666;">
+                            <p><strong>Video loaded from draft</strong></p>
+                            <p>${data.uploads.videos.name}</p>
+                            <p><em>Re-upload video to preview</em></p>
+                        </div>
+                        <div class="video-controls"><button id="playPauseBtn">Play</button></div>
+                    `;
+                }
+            }
+            
+            // Video URL
+            if (data.uploads.video_url) {
+                const urlInput = document.getElementById('urlInput');
+                if (urlInput) urlInput.value = data.uploads.video_url || '';
+                
+                // If URL has title/subtitle, set them (they might share the same fields as file video)
+                if (data.uploads.video_url_title) {
+                    const urlTitleInput = document.getElementById('file-title-2');
+                    if (urlTitleInput && !urlTitleInput.value) {
+                        urlTitleInput.value = data.uploads.video_url_title;
+                    }
+                }
+                if (data.uploads.video_url_subtitle) {
+                    const urlSubtitleInput = document.getElementById('video-title');
+                    if (urlSubtitleInput && !urlSubtitleInput.value) {
+                        urlSubtitleInput.value = data.uploads.video_url_subtitle;
+                    }
+                }
+            }
+        }
+
+        // Populate badges
+        if (data.badges) {
+            console.log("Restoring badges:", data.badges);
+            Object.keys(data.badges).forEach(type => applyBadge(type, data.badges[type]));
+        }
+
+        console.log("Lesson draft fully loaded from localStorage.");
+    }
+
+
+    // =============== GAME LOADING FUNCTIONS ===============
+
+    function loadMatchingGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('matching-container');
+        if (!container) return;
+        
+        console.log("Loading matching game items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        items.forEach((item, index) => {
+            const html = `
+                <div class="matching-item mb-2" data-index="${index}">
+                    <div class="row g-2">
+                        <div class="col-12 col-md-5">
+                            <input type="text" class="form-control matching-term" 
+                                placeholder="Term" value="${item.term || ''}">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <input type="text" class="form-control matching-definition" 
+                                placeholder="Definition" value="${item.definition || ''}">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <button class="btn btn-sm btn-danger w-100 remove-matching" type="button" onclick="removeMatchingItem(this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    function loadFlashcardGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('flashcard-container');
+        if (!container) return;
+        
+        console.log("Loading flashcard items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        items.forEach((item, index) => {
+            const html = `
+                <div class="flashcard-item mb-2" data-index="${index}">
+                    <div class="row g-2">
+                        <div class="col-12 col-md-5">
+                            <input type="text" class="form-control flashcard-front" 
+                                placeholder="Front" value="${item.front || ''}">
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <input type="text" class="form-control flashcard-back" 
+                                placeholder="Back" value="${item.back || ''}">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <button class="btn btn-sm btn-danger w-100 remove-flashcard" type="button" onclick="removeFlashcardItem(this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    function loadSpellingGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('spelling-container');
+        if (!container) return;
+        
+        console.log("Loading spelling items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        items.forEach((item, index) => {
+            const html = `
+                <div class="spelling-item mb-2" data-index="${index}">
+                    <div class="row g-2">
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control spelling-first" 
+                                placeholder="First part" value="${item.first || ''}">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control spelling-answer" 
+                                placeholder="Answer" value="${item.answer || ''}">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control spelling-last" 
+                                placeholder="Last part" value="${item.last || ''}">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <input type="text" class="form-control spelling-definition" 
+                                placeholder="Definition" value="${item.definition || ''}">
+                            <button class="btn btn-sm btn-danger mt-1 w-100 remove-spelling" type="button" onclick="removeSpellingItem(this)">
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    function loadSpeakGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('speak-container');
+        if (!container) return;
+        
+        console.log("Loading speak prompts:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        items.forEach((item, index) => {
+            const html = `
+                <div class="speak-item mb-2" data-index="${index}">
+                    <div class="row g-2">
+                        <div class="col-12 col-md-10">
+                            <input type="text" class="form-control speak-prompt" 
+                                placeholder="Prompt" value="${item.prompt || ''}">
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <button class="btn btn-sm btn-danger w-100 remove-speak" type="button" onclick="removeSpeakItem(this)">
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    function loadImageQuizGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('imagequiz-container');
+        if (!container) return;
+        
+        console.log("Loading image quiz items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        
+        items.forEach((item, index) => {
+            // Create choices HTML
+            let choicesHtml = '';
+            if (item.choices && item.choices.length > 0) {
+                item.choices.forEach((choice, i) => {
+                    choicesHtml += `
+                        <input type="text" class="form-control mb-1 imagequiz-choice" 
+                            placeholder="Choice ${String.fromCharCode(65 + i)}" 
+                            value="${choice || ''}">
+                    `;
+                });
+            } else {
+                // Default empty choices
+                choicesHtml = `
+                    <input type="text" class="form-control mb-1 imagequiz-choice" placeholder="Choice A" value="">
+                    <input type="text" class="form-control mb-1 imagequiz-choice" placeholder="Choice B" value="">
+                `;
+            }
+            
+            const html = `
+                <div class="imagequiz-item mb-3 p-2 border rounded" data-index="${index}">
+                    <div class="mb-2">
+                        <label class="form-label">Question</label>
+                        <input type="text" class="form-control imagequiz-question" 
+                            value="${item.question || ''}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Choices</label>
+                        ${choicesHtml}
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Correct Answer</label>
+                        <select class="form-select imagequiz-correct">
+                            <option value="A" ${item.correct === 'A' ? 'selected' : ''}>A</option>
+                            <option value="B" ${item.correct === 'B' ? 'selected' : ''}>B</option>
+                            <option value="C" ${item.correct === 'C' ? 'selected' : ''}>C</option>
+                            <option value="D" ${item.correct === 'D' ? 'selected' : ''}>D</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-sm btn-danger remove-imagequiz" type="button" onclick="removeImageQuizItem(this)">
+                        Remove
+                    </button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    // =============== REMOVE FUNCTIONS ===============
+    function removeMatchingItem(button) {
+        const item = button.closest('.matching-item');
+        if (item) item.remove();
+    }
+
+    function removeFlashcardItem(button) {
+        const item = button.closest('.flashcard-item');
+        if (item) item.remove();
+    }
+
+    function removeSpellingItem(button) {
+        const item = button.closest('.spelling-item');
+        if (item) item.remove();
+    }
+
+    function removeSpeakItem(button) {
+        const item = button.closest('.speak-item');
+        if (item) item.remove();
+    }
+
+    function removeImageQuizItem(button) {
+        const item = button.closest('.imagequiz-item');
+        if (item) item.remove();
+    }
+
+    // =============== FUNCTION TO CREATE A BLANK LESSON ===============
     function createBlankLesson() {
         if (!lessonTemplate || !container) {
             showToast('error', 'Error', 'Unable to create lesson. Template not found.');
-            return;
+            return null;
         }
         
         // Clone the template deeply (with child nodes)
@@ -1455,25 +2017,50 @@ document.addEventListener("DOMContentLoaded", () => {
         // Optional: Add a unique class for tracking
         newLesson.classList.add("new-lesson-template");
 
-        // If your template has a publish button, wire it up
+        // Wire up the publish button
         const publishBtn = newLesson.querySelector(".publish-btn");
         if (publishBtn) {
             publishBtn.addEventListener("click", () => {
                 newLesson.remove();
             });
         }
+        
+        // Wire up the save draft button
+        const saveDraftBtn = newLesson.querySelector(".save-draft-btn");
+        if (saveDraftBtn) {
+            saveDraftBtn.addEventListener("click", async (e) => {
+                e.preventDefault();
+                try {
+                    await saveLessonToSession('draft');
+                } catch (error) {
+                    console.error("Failed to save draft:", error);
+                }
+            });
+        }
+        
+        // Wire up the delete draft button
+        const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
+        if (deleteDraftBtn) {
+            deleteDraftBtn.addEventListener("click", () => {
+                deleteDraft(newLesson);
+            });
+        }
 
         // Insert the new lesson after the last one
         container.appendChild(newLesson);
+
+        // Update delete button visibility
+        updateDeleteDraftButtonVisibility();
 
         // Smoothly scroll to the newly created template
         newLesson.scrollIntoView({ behavior: "smooth", block: "start" });
         
         showToast('success', 'New Lesson', 'Blank lesson template created.');
+        
+        // Return the new lesson element for further manipulation
+        return newLesson;
     }
 });
-
-
 
 
 // ======================================================
@@ -1749,7 +2336,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial load
   filterActivities();
-});
+
 
 
 
@@ -1805,4 +2392,4 @@ document.addEventListener("DOMContentLoaded", () => {
 //       showToast('info', 'Lesson Draft', 'Lesson saved as draft');
 //     });
 //   }
-// });
+});
