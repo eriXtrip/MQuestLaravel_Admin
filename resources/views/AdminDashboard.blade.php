@@ -2799,6 +2799,11 @@
                             // Remove draft after publishing
                             localStorage.removeItem('lessonDraft');
 
+                            const deleteDraftBtn = document.querySelector('.delete-draft-btn');
+                            if (deleteDraftBtn) {
+                                deleteDraftBtn.style.display = 'none';
+                            }
+
                             successModal.show();
                             successModal._element.addEventListener('shown.bs.modal', fireConfetti, { once: true });
                             
@@ -2906,6 +2911,32 @@
                     showToast('error', 'Save Failed', 'Could not save draft. Try again.');
                 }
             });
+
+            // Delete Draft button functionality
+            const deleteDraftBtn = document.querySelector('.delete-draft-btn');
+            if (deleteDraftBtn) {
+                deleteDraftBtn.addEventListener('click', function() {
+                    // Confirm before deleting
+                    if (confirm('Are you sure you want to delete this draft? This action cannot be undone.')) {
+                        // Remove the draft from localStorage
+                        localStorage.removeItem('lessonDraft');
+                        
+                        // Show success message
+                        showToast('success', 'Draft Deleted', 'Your draft has been successfully deleted.');
+                        
+                        // Hide the delete button
+                        deleteDraftBtn.style.display = 'none';
+                        
+                        // Clear all form fields
+                        clearAllFormFields();
+                        
+                        // Optionally, reload the page to start fresh
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                });
+            }
         });
     </script>
 
