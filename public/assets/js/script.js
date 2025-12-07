@@ -1397,13 +1397,23 @@ let speakCount = 0;
 let imageQuizCount = 0;
 // =============== GAME LOADING FUNCTIONS ===============
 
+// =============== GAME LOADING FUNCTIONS ===============
+
 function loadMatchingGame(items) {
     if (!items || !items.length) return;
     
-    const container = $("#matching-container");
-    if (!container.length) return;
+    const gameSection = $("#matching-game");
+    if (!gameSection.length) return;
     
     console.log("Loading matching game items:", items.length);
+    
+    // Show the matching game section
+    gameSection.show();
+    // Update the game select to show matching is selected
+    $("#gameSelect").val("matching");
+    
+    const container = $("#matching-container");
+    if (!container.length) return;
     
     // Clear container first
     container.empty();
@@ -1438,10 +1448,18 @@ function loadMatchingGame(items) {
 function loadFlashcardGame(items) {
     if (!items || !items.length) return;
     
-    const container = $("#flashcard-container");
-    if (!container.length) return;
+    const gameSection = $("#flashcard-game");
+    if (!gameSection.length) return;
     
     console.log("Loading flashcard items:", items.length);
+    
+    // Show the flashcard game section
+    gameSection.show();
+    // Update the game select to show flashcard is selected
+    $("#gameSelect").val("flashcard");
+    
+    const container = $("#flashcard-container");
+    if (!container.length) return;
     
     // Clear container first
     container.empty();
@@ -1474,10 +1492,18 @@ function loadFlashcardGame(items) {
 function loadSpellingGame(items) {
     if (!items || !items.length) return;
     
-    const container = $("#spelling-container");
-    if (!container.length) return;
+    const gameSection = $("#spelling-game");
+    if (!gameSection.length) return;
     
     console.log("Loading spelling items:", items.length);
+    
+    // Show the spelling game section
+    gameSection.show();
+    // Update the game select to show spelling is selected
+    $("#gameSelect").val("spelling");
+    
+    const container = $("#spelling-container");
+    if (!container.length) return;
     
     // Clear container first
     container.empty();
@@ -1531,10 +1557,18 @@ function loadSpellingGame(items) {
 function loadSpeakGame(items) {
     if (!items || !items.length) return;
     
-    const container = $("#speak-container");
-    if (!container.length) return;
+    const gameSection = $("#speak-game");
+    if (!gameSection.length) return;
     
     console.log("Loading speak prompts:", items.length);
+    
+    // Show the speak game section
+    gameSection.show();
+    // Update the game select to show speak is selected
+    $("#gameSelect").val("speak");
+    
+    const container = $("#speak-container");
+    if (!container.length) return;
     
     // Clear container first
     container.empty();
@@ -1566,10 +1600,18 @@ function loadSpeakGame(items) {
 function loadImageQuizGame(items) {
     if (!items || !items.length) return;
     
-    const container = $("#imagequiz-container");
-    if (!container.length) return;
+    const gameSection = $("#imagequiz-game");
+    if (!gameSection.length) return;
     
     console.log("Loading image quiz items:", items.length);
+    
+    // Show the image quiz game section
+    gameSection.show();
+    // Update the game select to show imagequiz is selected
+    $("#gameSelect").val("imagequiz");
+    
+    const container = $("#imagequiz-container");
+    if (!container.length) return;
     
     // Clear container first
     container.empty();
@@ -1654,7 +1696,7 @@ function updateCorrectAnswerDropdown(container) {
     });
 }
 
-// Auto-load function that uses jQuery selectors
+// Auto-load function that checks what game type should be loaded
 function autoLoadGameSections() {
     const savedData = localStorage.getItem('lessonDraft');
     if (!savedData) return;
@@ -1663,27 +1705,45 @@ function autoLoadGameSections() {
         const data = JSON.parse(savedData);
         if (!data.games) return;
         
-        // Load games immediately
+        // Hide all game sections initially
+        $(".game-template").hide();
+        
+        // Check which game type has data and load it
         if (data.games.matching?.length) {
             loadMatchingGame(data.games.matching);
-        }
-        if (data.games.flashcard?.length) {
+        } else if (data.games.flashcard?.length) {
             loadFlashcardGame(data.games.flashcard);
-        }
-        if (data.games.spelling?.length) {
+        } else if (data.games.spelling?.length) {
             loadSpellingGame(data.games.spelling);
-        }
-        if (data.games.speak?.length) {
+        } else if (data.games.speak?.length) {
             loadSpeakGame(data.games.speak);
-        }
-        if (data.games.imagequiz?.length) {
+        } else if (data.games.imagequiz?.length) {
             loadImageQuizGame(data.games.imagequiz);
         }
+        // If no game data, keep the select visible but hide all game sections
     } catch (error) {
         console.error('Error auto-loading game sections:', error);
     }
 }
 
+// Also add this event handler for the game select dropdown
+$(document).ready(function() {
+    // Handle game type selection
+    $("#gameSelect").on("change", function() {
+        const selectedValue = $(this).val();
+        
+        // Hide all game sections first
+        $(".game-template").hide();
+        
+        // Show the selected game section
+        if (selectedValue) {
+            $(`#${selectedValue}-game`).show();
+        }
+    });
+    
+    // You might also want to initialize the select based on saved data
+    autoLoadGameSections();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     const createBtn = document.getElementById("createLessonBtn");
