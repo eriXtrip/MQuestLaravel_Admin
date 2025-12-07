@@ -1988,6 +1988,92 @@
     </script>
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLessonDraft(); // Automatically load draft on page load
+        });
+
+        function loadLessonDraft() {
+            const savedData = localStorage.getItem('lessonDraft');
+            if (!savedData) return console.log("No lesson draft found.");
+
+            const data = JSON.parse(savedData);
+            const oneWeek = 7 * 24 * 60 * 60 * 1000;
+            const now = Date.now();
+
+            // Remove expired or invalid drafts
+            if (!data.saved_at || now - data.saved_at > oneWeek) {
+                localStorage.removeItem('lessonDraft');
+                console.log("Draft expired or invalid, removed from localStorage.");
+                return;
+            }
+
+            // Populate lesson basic info
+            document.getElementById('lesson-title').value = data.lesson_title || '';
+            document.getElementById('lesson-description').value = data.lesson_description || '';
+            document.getElementById('selected-quarter-input').value = data.selected_quarter || '';
+            document.getElementById('selected-subject-input').value = data.selected_subject || '';
+
+            // Populate pretest questions
+            if (data.pretest_questions?.length) {
+                data.pretest_questions.forEach(q => addPreTestQuestion(q));
+            }
+
+            // Populate posttest questions
+            if (data.posttest_questions?.length) {
+                data.posttest_questions.forEach(q => {
+                    setTimeout(() => {
+                        // Set question type
+                        document.getElementById("questionType2").value = q.type;
+
+                        // Add question card
+                        addQuestion2();
+
+                        const idx = questionCount2; // current question index
+                        const qText = document.getElementById(`questionText2-${idx}`);
+                        if (qText) qText.value = q.questionText || "";
+
+                        const correctEl = document.getElementById(`correctAnswer2-${idx}`);
+                        if (correctEl) correctEl.value = q.correctAnswer || "";
+
+                        if (q.type === "multiple" && q.options?.length === 4) {
+                            document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
+                            document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
+                            document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
+                            document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
+                        }
+                    }, 0);
+                });
+            }
+
+            // Populate flashcards and other games
+            if (data.games?.flashcard?.length) {
+                data.games.flashcard.forEach(f => addFlashcard(f.front, f.back));
+            }
+
+            // Populate uploads
+            if (data.uploads) {
+                if (data.uploads.ppt) populatePPTInput(data.uploads.ppt);
+                if (data.uploads.pdf) populatePDFInput(data.uploads.pdf);
+                if (data.uploads.videos) populateVideoInput(data.uploads.videos);
+                if (data.uploads.video_url) populateVideoURL(
+                    data.uploads.video_url,
+                    data.uploads.video_url_title,
+                    data.uploads.video_url_subtitle
+                );
+            }
+
+            // Populate badges
+            if (data.badges) {
+                Object.keys(data.badges).forEach(type => applyBadge(type, data.badges[type]));
+            }
+
+            console.log("Lesson draft loaded from localStorage:", data);
+        }
+    </script>
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -2002,98 +2088,6 @@
             const confirmModal = new bootstrap.Modal(document.getElementById('confirmPublishModal'));
             const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
             const successModal = new bootstrap.Modal(document.getElementById('publishSuccessModal'));
-
-
-            // Load draft
-            const savedData = localStorage.getItem('lessonDraft');
-            console.log('Lesson from localStorage:', savedData);
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                const oneWeek = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
-                const now = Date.now();
-
-                if (!data.saved_at) {
-                    // Remove drafts without a saved_at timestamp
-                    localStorage.removeItem('lessonDraft');
-                    console.log("Removed legacy draft without timestamp");
-                } else if (now - data.saved_at > oneWeek) {
-                    // Remove drafts older than 1 week
-                    localStorage.removeItem('lessonDraft');
-                    console.log("Draft expired and removed from localStorage");
-                } else {
-                    // Draft is still valid, load it
-                    lessonTitle.value = data.lesson_title || '';
-                    lessonDescription.value = data.lesson_description || '';
-                    selectedQuarter.value = data.selected_quarter || '';
-                    selectedSubject.value = data.selected_subject || '';
-
-                    // Restore pretest questions
-                    if (data.pretest_questions && data.pretest_questions.length) {
-                        data.pretest_questions.forEach(q => addPreTestQuestion(q)); // implement addPreTestQuestion to render in UI
-                    }
-
-                    // Restore post-test questions
-                    if (data.posttest_questions?.length) {
-                        data.posttest_questions.forEach(q => {
-                            // Delay to ensure addQuestion2() is available
-                            setTimeout(() => {
-                                // Set type first
-                                document.getElementById("questionType2").value = q.type;
-
-                                // Add new question card
-                                addQuestion2();
-
-                                const idx = questionCount2; // current question index
-
-                                // Fill question text
-                                const qText = document.getElementById(`questionText2-${idx}`);
-                                if (qText) qText.value = q.questionText || "";
-
-                                // Fill correct answer
-                                const correctEl = document.getElementById(`correctAnswer2-${idx}`);
-                                if (correctEl) correctEl.value = q.correctAnswer || "";
-
-                                // Fill multiple choice options
-                                if (q.type === "multiple" && q.options?.length === 4) {
-                                    document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
-                                    document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
-                                    document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
-                                    document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
-                                }
-
-                                console.log(`Restored post-test question ${idx}:`, q);
-                            }, 0);
-                        });
-                    }
-
-
-
-                    // Restore flashcards
-                    if (data.games?.flashcard && data.games.flashcard.length) {
-                        data.games.flashcard.forEach(f => addFlashcard(f.front, f.back));
-                    }
-
-                    // Restore other games similarly
-                    // matching, spelling, speak, imagequiz...
-                    // for imagequiz, handle image URLs or Files
-
-                    // Restore uploads
-                    if (data.uploads) {
-                        if (data.uploads.ppt) populatePPTInput(data.uploads.ppt);
-                        if (data.uploads.pdf) populatePDFInput(data.uploads.pdf);
-                        if (data.uploads.videos) populateVideoInput(data.uploads.videos);
-                        if (data.uploads.video_url) populateVideoURL(data.uploads.video_url, data.uploads.video_url_title, data.uploads.video_url_subtitle);
-                    }
-
-                    // Restore badges
-                    if (data.badges) {
-                        Object.keys(data.badges).forEach(type => applyBadge(type, data.badges[type]));
-                    }
-
-
-                    console.log('Lesson restored from localStorage:', data);
-                }
-            }
 
 
 
