@@ -1370,11 +1370,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (dialog) dialog.style.display = 'none';
             
             const draftInfo = getDraftInfo();
-            if (draftInfo && draftInfo.exists) {
-                if (confirm(`You have an existing draft "${draftInfo.title}". Would you like to clear it before starting blank?`)) {
-                    deleteDraft();
-                }
-            }
+            // if (draftInfo && draftInfo.exists) {
+            //     if (confirm(`You have an existing draft "${draftInfo.title}". Would you like to clear it before starting blank?`)) {
+            //         deleteDraft();
+            //     }
+            // }
             
             const newLesson = createBlankLesson();
             
