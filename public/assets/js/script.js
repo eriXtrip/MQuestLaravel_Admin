@@ -1744,103 +1744,113 @@ document.addEventListener("DOMContentLoaded", () => {
     // =============== GAME LOADING FUNCTIONS ===============
 
     function loadMatchingGame(items) {
-        if (!items || !items.length) return;
-        
-        const container = $("#matching-container");
-        if (!container.length) return;
-        
-        console.log("Loading matching game items:", items.length);
-        
-        // Clear container first
-        container.empty();
-        matchingCount = 0;
-        
-        items.forEach((item) => {
-            // Use existing addMatching function
-            addMatching();
-            
-            // Get the last added item
-            const matchingGroups = container.find('.item-group');
-            const lastItem = matchingGroups.last();
-            
-            // Populate with data
-            lastItem.find('.matching-container-item:first input').val(item.term || '');
-            lastItem.find('.matching-container-item:last textarea').val(item.definition || '');
-        });
-    }
+      if (!items || !items.length) return;
+      
+      const container = $("#matching-container");
+      if (!container.length) return;
+      
+      console.log("Loading matching game items:", items.length);
+      
+      // Clear container first
+      container.empty();
+      matchingCount = 0;
+      
+      items.forEach((item) => {
+          // Use existing addMatching function
+          addMatching();
+          
+          // Get the last added item
+          const matchingGroups = container.find('.item-group');
+          const lastItem = matchingGroups.last();
+          
+          // Debug: Check the structure of the created item
+          console.log("Created item HTML:", lastItem.html());
+          
+          // Populate with data - Use correct selectors based on your HTML structure
+          lastItem.find('input[type="text"]').val(item.term || '');
+          lastItem.find('textarea').val(item.definition || '');
+          
+          // Alternative more specific selectors:
+          // lastItem.find('.matching-container-item:first-child input').val(item.term || '');
+          // lastItem.find('.matching-container-item:last-child textarea').val(item.definition || '');
+      });
+  }
 
-    function loadFlashcardGame(items) {
-        if (!items || !items.length) return;
-        
-        const container = $("#flashcard-container");
-        if (!container.length) return;
-        
-        console.log("Loading flashcard items:", items.length);
-        
-        // Clear container first
-        container.empty();
-        flashcardCount = 0;
-        
-        items.forEach((item) => {
-            // Use existing addFlashcard function
-            addFlashcard();
-            
-            // Get the last added item
-            const flashcardGroups = container.find('.item-group');
-            const lastItem = flashcardGroups.last();
-            
-            // Populate with data
-            lastItem.find('.matching-container-item:first input').val(item.front || '');
-            lastItem.find('.matching-container-item:last textarea').val(item.back || '');
-        });
-    }
+  function loadFlashcardGame(items) {
+      if (!items || !items.length) return;
+      
+      const container = $("#flashcard-container");
+      if (!container.length) return;
+      
+      console.log("Loading flashcard items:", items.length);
+      
+      // Clear container first
+      container.empty();
+      flashcardCount = 0;
+      
+      items.forEach((item) => {
+          // Use existing addFlashcard function
+          addFlashcard();
+          
+          // Get the last added item
+          const flashcardGroups = container.find('.item-group');
+          const lastItem = flashcardGroups.last();
+          
+          // Debug: Check the structure
+          console.log("Created flashcard HTML:", lastItem.html());
+          
+          // Populate with data - Use correct selectors
+          lastItem.find('input[type="text"]').val(item.front || '');
+          lastItem.find('textarea').val(item.back || '');
+      });
+  }
 
-    function loadSpellingGame(items) {
-        if (!items || !items.length) return;
-        
-        const container = $("#spelling-container");
-        if (!container.length) return;
-        
-        console.log("Loading spelling items:", items.length);
-        
-        // Clear container first
-        container.empty();
-        spellCount = 0;
-        
-        items.forEach((item) => {
-            // Use existing addSpelling function
-            addSpelling();
-            
-            // Get the last added item
-            const spellingGroups = container.find('.item-group');
-            const lastItem = spellingGroups.last();
-            
-            // Populate with data
-            lastItem.find('.first-phrase').val(item.first || '');
-            lastItem.find('.answer-input').val(item.answer || '');
-            lastItem.find('.last-phrase').val(item.last || '');
-            lastItem.find('.definition-input').val(item.definition || '');
-            
-            // Trigger the preview update
-            const answerInput = lastItem.find('.answer-input')[0];
-            const counter = lastItem.find('.char-counter')[0];
-            const previewText = lastItem.find('.preview-text')[0];
-            
-            if (answerInput && counter && previewText) {
-                // Update counter
-                const len = answerInput.value.length;
-                counter.textContent = `${len}/11`;
-                counter.classList.toggle('text-danger', len > 9);
-                counter.classList.toggle('fw-bold', len > 9);
-                
-                // Update preview
-                const first = lastItem.find('.first-phrase').val().trim();
-                const answer = answerInput.value.trim() || "_____";
-                const last = lastItem.find('.last-phrase').val().trim();
-                previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
-            }
-        });
-    }
+  function loadSpellingGame(items) {
+      if (!items || !items.length) return;
+      
+      const container = $("#spelling-container");
+      if (!container.length) return;
+      
+      console.log("Loading spelling items:", items.length);
+      
+      // Clear container first
+      container.empty();
+      spellCount = 0;
+      
+      items.forEach((item) => {
+          // Use existing addSpelling function
+          addSpelling();
+          
+          // Get the last added item
+          const spellingGroups = container.find('.item-group');
+          const lastItem = spellingGroups.last();
+          
+          // Debug
+          console.log("Created spelling HTML:", lastItem.html());
+          
+          // Populate with data
+          lastItem.find('.first-phrase').val(item.first || '');
+          lastItem.find('.answer-input').val(item.answer || '');
+          lastItem.find('.last-phrase').val(item.last || '');
+          lastItem.find('.definition-input').val(item.definition || '');
+          
+          // Trigger the preview update functions
+          const answerInput = lastItem.find('.answer-input');
+          const counter = lastItem.find('.char-counter');
+          const previewText = lastItem.find('.preview-text');
+          
+          if (answerInput.length && counter.length && previewText.length) {
+              // Trigger input event to update counter and preview
+              answerInput.trigger('input');
+              
+              // Also manually update preview
+              const first = lastItem.find('.first-phrase').val().trim();
+              const answer = answerInput.val().trim() || "_____";
+              const last = lastItem.find('.last-phrase').val().trim();
+              previewText.html(`"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' '));
+          }
+      });
+  }
 
     function loadSpeakGame(items) {
         if (!items || !items.length) return;
