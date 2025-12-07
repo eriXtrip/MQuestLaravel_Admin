@@ -1980,17 +1980,18 @@
             const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
             const successModal = new bootstrap.Modal(document.getElementById('publishSuccessModal'));
 
-            const savedData = sessionStorage.getItem('lessonDraft');
+            // Save draft
+            localStorage.setItem('lessonDraft', JSON.stringify(data));
+
+            // Load draft
+            const savedData = localStorage.getItem('lessonDraft');
             if (savedData) {
                 const data = JSON.parse(savedData);
-
                 lessonTitle.value = data.lesson_title || '';
                 lessonDescription.value = data.lesson_description || '';
                 selectedQuarter.value = data.selected_quarter || '';
                 selectedSubject.value = data.selected_subject || '';
-
-                // TODO: restore pre/post tests, games, uploads if needed
-                console.log('Lesson restored from sessionStorage:', data);
+                console.log('Lesson restored from localStorage:', data);
             }
 
             // Store the current status for confirmation
@@ -1998,10 +1999,10 @@
 
             // Check if lesson has any actual content
             async function hasLessonData() {
-                const data = await getLessonData('draft'); // status doesn't matter here
+                const data = await getLessonData('draft');
 
                 // Check title or description
-                if (data.lesson_title || data.lesson_description) return true;
+                if (data.lesson_title.trim() || data.lesson_description.trim()) return true;
 
                 // Check pre/post test
                 if ((data.pretest_questions && data.pretest_questions.length > 0) ||
@@ -2012,10 +2013,10 @@
                 if (hasGames) return true;
 
                 // Check uploads (files/videos/URL)
-                const uploads = data.uploads;
+                const uploads = data.uploads || {};
                 if ((uploads.files && uploads.files.file) ||
                     (uploads.videos && uploads.videos.file) ||
-                    uploads.video_url) return true;
+                    (uploads.video_url && uploads.video_url.trim() !== '')) return true;
 
                 return false;
             }
@@ -2305,7 +2306,8 @@
                         // Show success modal only for published lessons
                         if (status === 'published') {
 
-                            sessionStorage.removeItem('lessonDraft'); //destroy draft
+                            // Remove draft after publishing
+                            localStorage.removeItem('lessonDraft');
 
                             successModal.show();
                             successModal._element.addEventListener('shown.bs.modal', fireConfetti, { once: true });
