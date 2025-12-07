@@ -3233,15 +3233,24 @@
 
     <!-- Go to lessons btn -->
     <script>
-        document.getElementById('gotolessons-btn').addEventListener('click', function() {
-            // Grab the first lesson link in the dropdown
-            const firstLessonLink = document.querySelector('.dropdown-list li a');
-            
-            if (firstLessonLink) {
-                // Redirect to a URL based on the data-subject attribute
-                const subject = firstLessonLink.getAttribute('data-subject');
-                window.location.href = `/${English}`; // e.g., /English
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            const goToLessonsBtn = document.querySelector(".gotolessons-btn");
+
+            goToLessonsBtn.addEventListener("click", function() {
+                // Default subject: English
+                const defaultSubjectLink = document.querySelector('.dropdown-list a[data-subject="English"]');
+
+                if (defaultSubjectLink) {
+                    // Call the same function used when a subject is clicked
+                    selectSubject(defaultSubjectLink);
+
+                    // Optionally scroll to lessons section
+                    const lessonsSection = document.getElementById("lessonsection");
+                    if (lessonsSection) {
+                        lessonsSection.scrollIntoView({ behavior: "smooth" });
+                    }
+                }
+            });
         });
     </script>
 
