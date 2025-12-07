@@ -1995,9 +1995,23 @@
 
         function loadLessonDraft() {
             const savedData = localStorage.getItem('lessonDraft');
+
+            // Log raw savedData from localStorage
+            console.log("Raw savedData from localStorage:", savedData);
+
             if (!savedData) return console.log("No lesson draft found.");
 
-            const data = JSON.parse(savedData);
+            let data;
+            try {
+                data = JSON.parse(savedData);
+            } catch (error) {
+                console.error("Failed to parse lessonDraft:", error);
+                return;
+            }
+
+            // Log parsed data object
+            console.log("Parsed lessonDraft object:", data);
+
             const oneWeek = 7 * 24 * 60 * 60 * 1000;
             const now = Date.now();
 
@@ -2016,23 +2030,20 @@
 
             // Populate pretest questions
             if (data.pretest_questions?.length) {
+                console.log("Restoring pretest questions:", data.pretest_questions);
                 data.pretest_questions.forEach(q => addPreTestQuestion(q));
             }
 
             // Populate posttest questions
             if (data.posttest_questions?.length) {
+                console.log("Restoring posttest questions:", data.posttest_questions);
                 data.posttest_questions.forEach(q => {
                     setTimeout(() => {
-                        // Set question type
                         document.getElementById("questionType2").value = q.type;
-
-                        // Add question card
                         addQuestion2();
-
-                        const idx = questionCount2; // current question index
+                        const idx = questionCount2;
                         const qText = document.getElementById(`questionText2-${idx}`);
                         if (qText) qText.value = q.questionText || "";
-
                         const correctEl = document.getElementById(`correctAnswer2-${idx}`);
                         if (correctEl) correctEl.value = q.correctAnswer || "";
 
@@ -2042,17 +2053,21 @@
                             document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
                             document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
                         }
+
+                        console.log(`Posttest question restored [${idx}]:`, q);
                     }, 0);
                 });
             }
 
             // Populate flashcards and other games
             if (data.games?.flashcard?.length) {
+                console.log("Restoring flashcards:", data.games.flashcard);
                 data.games.flashcard.forEach(f => addFlashcard(f.front, f.back));
             }
 
             // Populate uploads
             if (data.uploads) {
+                console.log("Restoring uploads:", data.uploads);
                 if (data.uploads.ppt) populatePPTInput(data.uploads.ppt);
                 if (data.uploads.pdf) populatePDFInput(data.uploads.pdf);
                 if (data.uploads.videos) populateVideoInput(data.uploads.videos);
@@ -2065,12 +2080,14 @@
 
             // Populate badges
             if (data.badges) {
+                console.log("Restoring badges:", data.badges);
                 Object.keys(data.badges).forEach(type => applyBadge(type, data.badges[type]));
             }
 
-            console.log("Lesson draft loaded from localStorage:", data);
+            console.log("Lesson draft fully loaded from localStorage.");
         }
     </script>
+
 
 
 
