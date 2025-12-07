@@ -210,7 +210,7 @@
                                             <div class="mb-3 mx-auto stat-icon bg-lessons"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-book">
                                                     <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"></path>
                                                 </svg></div>
-                                            <h5 class="fw-bold card-title-2">{{ $lessonsCount ?? 0 }}</h5>
+                                            <h5 class="fw-bold card-title-2" id="lessonCount"></h5>
                                             <p class="text-muted mb-0 card-text-2">Lessons Uploaded</p>
                                         </div>
                                     </div>
@@ -2008,12 +2008,27 @@
             const savedData = localStorage.getItem('lessonDraft');
             if (savedData) {
                 const data = JSON.parse(savedData);
-                lessonTitle.value = data.lesson_title || '';
-                lessonDescription.value = data.lesson_description || '';
-                selectedQuarter.value = data.selected_quarter || '';
-                selectedSubject.value = data.selected_subject || '';
-                console.log('Lesson restored from localStorage:', data);
+                const oneWeek = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+                const now = Date.now();
+
+                if (!data.saved_at) {
+                    // Remove drafts without a saved_at timestamp
+                    localStorage.removeItem('lessonDraft');
+                    console.log("Removed legacy draft without timestamp");
+                } else if (now - data.saved_at > oneWeek) {
+                    // Remove drafts older than 1 week
+                    localStorage.removeItem('lessonDraft');
+                    console.log("Draft expired and removed from localStorage");
+                } else {
+                    // Draft is still valid, load it
+                    lessonTitle.value = data.lesson_title || '';
+                    lessonDescription.value = data.lesson_description || '';
+                    selectedQuarter.value = data.selected_quarter || '';
+                    selectedSubject.value = data.selected_subject || '';
+                    console.log('Lesson restored from localStorage:', data);
+                }
             }
+
 
 
             // Store the current status for confirmation
@@ -2386,8 +2401,10 @@
                 confirmModal.show();
             });
 
+            // --- Save lesson to localStorage with timestamp ---
             async function saveLessonToLocalDraft(status = 'draft') {
                 const data = await getLessonData(status);
+                data.saved_at = Date.now(); // add timestamp
                 localStorage.setItem('lessonDraft', JSON.stringify(data));
                 console.log('Lesson saved to localStorage:', data);
                 showToast('info', 'Lesson Draft', 'Lesson saved locally!');
@@ -2397,26 +2414,25 @@
             // Handle draft button click - no confirmation needed
             draftBtn.addEventListener('click', async () => {
                 console.log('Draft button clicked');
-
                 const hasData = await hasLessonData();
                 if (!hasData) {
                     showToast('error', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
-
-                // Save to localStorage first
                 await saveLessonToLocalDraft('draft');
-
-                // Then send to server
                 await submitLesson('draft');
             });
         });
     </script>
 
     <script>
-    // All lessons and contents are already available from Laravel
-        console.log('All Lessons:', @json($allLessons));
+        const allLessons = @json($allLessons);
+
+        console.log('All Lessons:', allLessons);
         console.log('All Contents:', @json($allContents));
+
+        // Set the count inside the <h5>
+        document.getElementById("lessonCount").textContent = allLessons.length;
 
         // Optional: Group contents by lesson
         const contentsByLesson = @json($allContents).reduce((acc, content) => {
@@ -2427,6 +2443,7 @@
 
         console.log('Contents grouped by lesson:', contentsByLesson);
     </script>
+
 
     <script>
         console.log("📘 Subject Summaries:", @json($subjectSummaries));
