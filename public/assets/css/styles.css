@@ -3144,8 +3144,9 @@ td[data-label="Email"] {
     display: flex;
     justify-content: space-between;
     padding: 10px 8px;
-    font-size: 0.9rem;
+    /*font-size: 0.9rem;*/
     align-items: center;
+    font-size: 0.75rem;
   }
 }
 
