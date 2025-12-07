@@ -1744,124 +1744,157 @@ document.addEventListener("DOMContentLoaded", () => {
     // =============== GAME LOADING FUNCTIONS ===============
 
     function loadMatchingGame(items) {
-      if (!items || !items.length) return;
-      
-      const container = $("#matching-container");
-      if (!container.length) return;
-      
-      console.log("Loading matching game items:", items.length);
-      
-      // Clear container first
-      container.empty();
-      matchingCount = 0;
-      
-      items.forEach((item) => {
-          // Use existing addMatching function
-          addMatching();
-          
-          // Get the last added item
-          const matchingGroups = container.find('.item-group');
-          const lastItem = matchingGroups.last();
-          
-          // Debug: Check the structure of the created item
-          console.log("Created item HTML:", lastItem.html());
-          
-          // Populate with data - Use correct selectors based on your HTML structure
-          lastItem.find('input[type="text"]').val(item.term || '');
-          lastItem.find('textarea').val(item.definition || '');
-          
-          // Alternative more specific selectors:
-          // lastItem.find('.matching-container-item:first-child input').val(item.term || '');
-          // lastItem.find('.matching-container-item:last-child textarea').val(item.definition || '');
-      });
-  }
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('matching-container');
+        if (!container) {
+            console.error("Matching container not found!");
+            return;
+        }
+        
+        console.log("Loading matching game items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        matchingCount = 0;
+        
+        items.forEach((item) => {
+            // Use existing addMatching function
+            addMatching();
+            
+            // Get the last added item (vanilla JS)
+            const matchingGroups = container.querySelectorAll('.item-group');
+            const lastItem = matchingGroups[matchingGroups.length - 1];
+            
+            if (!lastItem) {
+                console.error("Could not find last item!");
+                return;
+            }
+            
+            console.log("Populating item with:", item);
+            
+            // Use vanilla JS to populate data
+            const inputs = lastItem.querySelectorAll('input[type="text"]');
+            const textareas = lastItem.querySelectorAll('textarea');
+            
+            console.log("Found inputs:", inputs.length);
+            console.log("Found textareas:", textareas.length);
+            
+            if (inputs.length > 0) {
+                inputs[0].value = item.term || '';
+            }
+            if (textareas.length > 0) {
+                textareas[0].value = item.definition || '';
+            }
+        });
+    }
 
-  function loadFlashcardGame(items) {
-      if (!items || !items.length) return;
-      
-      const container = $("#flashcard-container");
-      if (!container.length) return;
-      
-      console.log("Loading flashcard items:", items.length);
-      
-      // Clear container first
-      container.empty();
-      flashcardCount = 0;
-      
-      items.forEach((item) => {
-          // Use existing addFlashcard function
-          addFlashcard();
-          
-          // Get the last added item
-          const flashcardGroups = container.find('.item-group');
-          const lastItem = flashcardGroups.last();
-          
-          // Debug: Check the structure
-          console.log("Created flashcard HTML:", lastItem.html());
-          
-          // Populate with data - Use correct selectors
-          lastItem.find('input[type="text"]').val(item.front || '');
-          lastItem.find('textarea').val(item.back || '');
-      });
-  }
+    function loadFlashcardGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('flashcard-container');
+        if (!container) {
+            console.error("Flashcard container not found!");
+            return;
+        }
+        
+        console.log("Loading flashcard items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        flashcardCount = 0;
+        
+        items.forEach((item) => {
+            // Use existing addFlashcard function
+            addFlashcard();
+            
+            // Get the last added item
+            const flashcardGroups = container.querySelectorAll('.item-group');
+            const lastItem = flashcardGroups[flashcardGroups.length - 1];
+            
+            if (!lastItem) return;
+            
+            // Populate with data
+            const inputs = lastItem.querySelectorAll('input[type="text"]');
+            const textareas = lastItem.querySelectorAll('textarea');
+            
+            if (inputs.length > 0) {
+                inputs[0].value = item.front || '';
+            }
+            if (textareas.length > 0) {
+                textareas[0].value = item.back || '';
+            }
+        });
+    }
 
-  function loadSpellingGame(items) {
-      if (!items || !items.length) return;
-      
-      const container = $("#spelling-container");
-      if (!container.length) return;
-      
-      console.log("Loading spelling items:", items.length);
-      
-      // Clear container first
-      container.empty();
-      spellCount = 0;
-      
-      items.forEach((item) => {
-          // Use existing addSpelling function
-          addSpelling();
-          
-          // Get the last added item
-          const spellingGroups = container.find('.item-group');
-          const lastItem = spellingGroups.last();
-          
-          // Debug
-          console.log("Created spelling HTML:", lastItem.html());
-          
-          // Populate with data
-          lastItem.find('.first-phrase').val(item.first || '');
-          lastItem.find('.answer-input').val(item.answer || '');
-          lastItem.find('.last-phrase').val(item.last || '');
-          lastItem.find('.definition-input').val(item.definition || '');
-          
-          // Trigger the preview update functions
-          const answerInput = lastItem.find('.answer-input');
-          const counter = lastItem.find('.char-counter');
-          const previewText = lastItem.find('.preview-text');
-          
-          if (answerInput.length && counter.length && previewText.length) {
-              // Trigger input event to update counter and preview
-              answerInput.trigger('input');
-              
-              // Also manually update preview
-              const first = lastItem.find('.first-phrase').val().trim();
-              const answer = answerInput.val().trim() || "_____";
-              const last = lastItem.find('.last-phrase').val().trim();
-              previewText.html(`"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' '));
-          }
-      });
-  }
+    function loadSpellingGame(items) {
+        if (!items || !items.length) return;
+        
+        const container = document.getElementById('spelling-container');
+        if (!container) {
+            console.error("Spelling container not found!");
+            return;
+        }
+        
+        console.log("Loading spelling items:", items.length);
+        
+        // Clear container first
+        container.innerHTML = '';
+        spellCount = 0;
+        
+        items.forEach((item) => {
+            // Use existing addSpelling function
+            addSpelling();
+            
+            // Get the last added item
+            const spellingGroups = container.querySelectorAll('.item-group');
+            const lastItem = spellingGroups[spellingGroups.length - 1];
+            
+            if (!lastItem) return;
+            
+            // Populate with data using vanilla JS
+            const firstPhrase = lastItem.querySelector('.first-phrase');
+            const answerInput = lastItem.querySelector('.answer-input');
+            const lastPhrase = lastItem.querySelector('.last-phrase');
+            const definitionInput = lastItem.querySelector('.definition-input');
+            const charCounter = lastItem.querySelector('.char-counter');
+            const previewText = lastItem.querySelector('.preview-text');
+            
+            if (firstPhrase) firstPhrase.value = item.first || '';
+            if (answerInput) answerInput.value = item.answer || '';
+            if (lastPhrase) lastPhrase.value = item.last || '';
+            if (definitionInput) definitionInput.value = item.definition || '';
+            
+            // Trigger the update functions
+            if (answerInput && charCounter && previewText) {
+                // Update counter
+                const len = answerInput.value.length;
+                charCounter.textContent = `${len}/11`;
+                charCounter.classList.toggle('text-danger', len > 9);
+                charCounter.classList.toggle('fw-bold', len > 9);
+                
+                // Update preview
+                const first = firstPhrase ? firstPhrase.value.trim() : '';
+                const answer = answerInput.value.trim() || "_____";
+                const last = lastPhrase ? lastPhrase.value.trim() : '';
+                previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
+            }
+        });
+    }
 
     function loadSpeakGame(items) {
         if (!items || !items.length) return;
         
-        const container = $("#speak-container");
-        if (!container.length) return;
+        const container = document.getElementById('speak-container');
+        if (!container) {
+            console.error("Speak container not found!");
+            return;
+        }
         
         console.log("Loading speak prompts:", items.length);
         
         // Clear container first
-        container.empty();
+        container.innerHTML = '';
         speakCount = 0;
         
         items.forEach((item) => {
@@ -1869,24 +1902,32 @@ document.addEventListener("DOMContentLoaded", () => {
             addSpeak();
             
             // Get the last added item
-            const speakGroups = container.find('.item-group');
-            const lastItem = speakGroups.last();
+            const speakGroups = container.querySelectorAll('.item-group');
+            const lastItem = speakGroups[speakGroups.length - 1];
+            
+            if (!lastItem) return;
             
             // Populate with data
-            lastItem.find('.speech-text-form input').val(item.prompt || '');
+            const input = lastItem.querySelector('.speech-text-form input');
+            if (input) {
+                input.value = item.prompt || '';
+            }
         });
     }
 
     function loadImageQuizGame(items) {
         if (!items || !items.length) return;
         
-        const container = $("#imagequiz-container");
-        if (!container.length) return;
+        const container = document.getElementById('imagequiz-container');
+        if (!container) {
+            console.error("Image quiz container not found!");
+            return;
+        }
         
         console.log("Loading image quiz items:", items.length);
         
         // Clear container first
-        container.empty();
+        container.innerHTML = '';
         imageQuizCount = 0;
         
         items.forEach((item) => {
@@ -1894,23 +1935,22 @@ document.addEventListener("DOMContentLoaded", () => {
             addImageQuiz();
             
             // Get the last added item
-            const imageQuizGroups = container.find('.item-group');
-            const lastItem = imageQuizGroups.last();
+            const imageQuizGroups = container.querySelectorAll('.item-group');
+            const lastItem = imageQuizGroups[imageQuizGroups.length - 1];
+            
+            if (!lastItem) return;
             
             // Populate with data
-            // Set question
-            lastItem.find('.question-input').val(item.question || '');
+            const questionInput = lastItem.querySelector('.question-input');
+            const correctSelect = lastItem.querySelector('.correct-select');
             
-            // Set correct answer
-            const correctSelect = lastItem.find('.correct-select')[0];
-            if (correctSelect && item.correct) {
-                correctSelect.value = item.correct;
-            }
+            if (questionInput) questionInput.value = item.question || '';
+            if (correctSelect && item.correct) correctSelect.value = item.correct;
             
             // Handle image if exists
             if (item.imageUrl) {
-                const previewImage = lastItem.find('.preview-image-compact')[0];
-                const uploadPlaceholder = lastItem.find('.upload-placeholder')[0];
+                const previewImage = lastItem.querySelector('.preview-image-compact');
+                const uploadPlaceholder = lastItem.querySelector('.upload-placeholder');
                 
                 if (previewImage && uploadPlaceholder) {
                     previewImage.src = item.imageUrl;
@@ -1920,7 +1960,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             // Populate choices
-            const choicesWrapper = lastItem.find('.choices-wrapper')[0];
+            const choicesWrapper = lastItem.querySelector('.choices-wrapper');
             if (choicesWrapper) {
                 choicesWrapper.innerHTML = ''; // Clear existing choices
                 
@@ -1930,7 +1970,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         choiceDiv.className = 'choice-item d-flex align-items-center mb-1';
                         choiceDiv.innerHTML = `
                             <input type="text" class="form-control choice-input" value="${choice || ''}" placeholder="Option ${String.fromCharCode(65 + index)}">
-                            <button type="button" class="btn btn-sm btn-outline-danger ms-1 remove-choice" onclick="removeChoice(this)">
+                            <button type="button" class="btn btn-sm btn-outline-danger ms-1 remove-choice">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
@@ -1938,15 +1978,43 @@ document.addEventListener("DOMContentLoaded", () => {
                             </button>
                         `;
                         choicesWrapper.appendChild(choiceDiv);
+                        
+                        // Add event listener for remove button
+                        const removeBtn = choiceDiv.querySelector('.remove-choice');
+                        removeBtn.addEventListener('click', function() {
+                            choiceDiv.remove();
+                            updateCorrectAnswerDropdown(lastItem);
+                        });
                     });
                     
                     // Update correct answer dropdown
-                    updateCorrectAnswerDropdown(lastItem[0]);
+                    updateCorrectAnswerDropdown(lastItem);
                 }
             }
         });
     }
 
+    // Helper function to update correct answer dropdown for image quiz
+    function updateCorrectAnswerDropdown(container) {
+        const choices = container.querySelectorAll('.choice-input');
+        const select = container.querySelector('.correct-select');
+        
+        if (!select) return;
+        
+        // Clear existing options except the first one
+        while (select.options.length > 1) {
+            select.remove(1);
+        }
+        
+        // Add new options based on choices
+        choices.forEach((choice, index) => {
+            const letter = String.fromCharCode(65 + index);
+            const option = document.createElement('option');
+            option.value = letter;
+            option.textContent = `Option ${letter}: ${choice.value || '(empty)'}`;
+            select.appendChild(option);
+        });
+    }
 
     // =============== REMOVE FUNCTIONS ===============
     function removeMatchingItem(button) {
