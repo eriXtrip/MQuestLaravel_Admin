@@ -111,8 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const lessons = (raw[rawKey] && raw[rawKey][q]) || [];
 
-      // Use the actual number of lessons in this quarter
+      // Extract existing progress
       const progressArray = lessons.map(l => Number(l.avg_progress || 0));
+
+      // Fill remaining lessons with zeros
+      while (progressArray.length < totalLessons) {
+        progressArray.push(0);
+      }
 
       quarterlyData[quarterKey][subject] = progressArray;
     }
@@ -120,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log("🔥 Final quarterlyData for Charts:", quarterlyData);
   console.log("🔥 Raw subjectPerformance data:", raw);
+
 
   // const quarterlyData = {
   //   q1: {

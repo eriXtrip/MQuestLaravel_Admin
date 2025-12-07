@@ -2021,13 +2021,55 @@
                     console.log("Draft expired and removed from localStorage");
                 } else {
                     // Draft is still valid, load it
-                    lessonTitle.value = data.lesson_title || '';
-                    lessonDescription.value = data.lesson_description || '';
-                    selectedQuarter.value = data.selected_quarter || '';
-                    selectedSubject.value = data.selected_subject || '';
+                    restoreDraft(data); // <--- restore everything
                     console.log('Lesson restored from localStorage:', data);
                 }
             }
+
+            function restoreDraft(data) {
+                lessonTitle.value = data.lesson_title || '';
+                lessonDescription.value = data.lesson_description || '';
+                selectedQuarter.value = data.selected_quarter || '';
+                selectedSubject.value = data.selected_subject || '';
+
+                // Restore Pretest
+                if (data.pretest_questions && data.pretest_questions.length) {
+                    data.pretest_questions.forEach(q => addPreTestQuestion(q));
+                }
+
+                // Restore Posttest
+                if (data.posttest_questions && data.posttest_questions.length) {
+                    data.posttest_questions.forEach(q => addPostTestQuestion(q));
+                }
+
+                // Restore Games
+                if (data.games) {
+                    Object.keys(data.games).forEach(type => {
+                        data.games[type].forEach(item => addGameItem(type, item));
+                    });
+                }
+
+                // Restore Uploads
+                if (data.uploads) {
+                    if (data.uploads.ppt) {
+                        document.getElementById('file-title').value = data.uploads.ppt.title || '';
+                        // optionally show file name in UI
+                    }
+                    if (data.uploads.videos) {
+                        document.getElementById('file-title-2').value = data.uploads.videos.title || '';
+                        // optionally show file name in UI
+                    }
+                    if (data.uploads.video_url) {
+                        document.getElementById('urlInput').value = data.uploads.video_url || '';
+                    }
+                }
+
+                // Restore badges if needed
+                if (data.badges) {
+                    window.loadBadges && window.loadBadges(data.badges);
+                }
+            }
+
 
 
 
