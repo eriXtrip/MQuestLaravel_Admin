@@ -82,9 +82,9 @@ class AuthController extends Controller
                 ->post("{$this->apiUrl}/auth/logout", ['user_id' => $userServerId]);
 
             // Clear Laravel session
-            $request->session()->flush();
-            $request->session()->invalidate();
+            $request->session()->forget(['node_token', 'user_server_id']);
             $request->session()->regenerateToken();
+
 
             return response()->json(['message' => 'Logged out successfully']);
 

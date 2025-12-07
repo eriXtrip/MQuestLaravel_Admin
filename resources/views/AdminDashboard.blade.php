@@ -1195,11 +1195,11 @@
                                         <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
                                     </svg>Publish Lesson
                                 </button>
-                                <!-- <button class="btn btn-outline-secondary save-draft-btn" type="button">
+                                <button class="btn btn-outline-secondary save-draft-btn" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-save me-2">
                                         <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"></path>
                                     </svg>Save As Draft
-                                </button> -->
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1977,6 +1977,19 @@
             const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
             const successModal = new bootstrap.Modal(document.getElementById('publishSuccessModal'));
 
+            const savedData = sessionStorage.getItem('lessonDraft');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+
+                lessonTitle.value = data.lesson_title || '';
+                lessonDescription.value = data.lesson_description || '';
+                selectedQuarter.value = data.selected_quarter || '';
+                selectedSubject.value = data.selected_subject || '';
+
+                // TODO: restore pre/post tests, games, uploads if needed
+                console.log('Lesson restored from sessionStorage:', data);
+            }
+
             // Store the current status for confirmation
             let currentStatus = '';
 
@@ -2146,6 +2159,18 @@
                 };
             }
 
+            async function saveLessonToSession(status = 'draft') {
+                try {
+                    const data = await getLessonData(status);
+                    sessionStorage.setItem('lessonDraft', JSON.stringify(data));
+                    console.log('Lesson saved to sessionStorage:', data);
+                } catch (err) {
+                    console.warn('Failed to save lesson to sessionStorage:', err);
+                }
+            }
+
+
+
             async function submitLesson(status) {
                 console.log('Submitting lesson with status:', status); // Debug log
                 
@@ -2239,6 +2264,9 @@
                         
                         // Show success modal only for published lessons
                         if (status === 'published') {
+
+                            sessionStorage.removeItem('lessonDraft'); //destroy draft
+
                             successModal.show();
                             successModal._element.addEventListener('shown.bs.modal', fireConfetti, { once: true });
                             
@@ -2282,9 +2310,10 @@
             });
 
             // Handle draft button click - no confirmation needed
-            draftBtn.addEventListener('click', () => {
-                console.log('Draft button clicked'); // Debug log
-                submitLesson('draft');
+            draftBtn.addEventListener('click', async () => {
+                console.log('Draft button clicked');
+                await saveLessonToSession('draft'); // Save to session first
+                submitLesson('draft');               // Then send to server
             });
 
             // Toast function (if not already defined)
