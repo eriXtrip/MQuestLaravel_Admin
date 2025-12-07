@@ -3207,6 +3207,13 @@
         });
     </script>
 
+    <!-- Go to lessons btn -->
+    <script>
+        document.querySelector('.gotolessons-btn').addEventListener('click', function() {
+            window.location.href = "{{ route('English') }}"; 
+        });
+    </script>
+
     <!-- Recent Enrollees -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
