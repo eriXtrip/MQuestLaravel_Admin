@@ -103,21 +103,31 @@
   // 2) Performance Line Chart (Quarterly by subject)
   // ================================
   (function initPerformanceLineChart() {
-    // Use dashboard data instead of hardcoded data
-    const rawQuarterlyData = window.dashboardData?.overall_class_performance || {};
+    const rawData = window.dashboardData?.overall_class_performance || [];
 
-    // Normalize subjects to lowercase keys for chart consistency
-    const quarterlyData = {};
-    ['q1', 'q2', 'q3', 'q4'].forEach(q => {
-      quarterlyData[q] = {};
-      const subjects = rawQuarterlyData[q] || {};
-      for (let key in subjects) {
-        const normalizedKey = key.toLowerCase() === 'mathematics' ? 'math' : key.toLowerCase();
-        quarterlyData[q][normalizedKey] = subjects[key];
-      }
+    // Transform rawData into { q1: { english: [], math: [], ... }, q2: {...} }
+    const quarterlyData = { q1: {}, q2: {}, q3: {}, q4: {} };
+
+    rawData.forEach(item => {
+      const qKey = `q${item.quarter}`;
+      const subjKey = item.subject_name.toLowerCase() === 'mathematics' ? 'math' : item.subject_name.toLowerCase();
+
+      if (!quarterlyData[qKey][subjKey]) quarterlyData[qKey][subjKey] = [];
+
+      // Fill the lesson number index (lesson_number starts at 1)
+      quarterlyData[qKey][subjKey][item.lesson_number - 1] = item.avg_grade;
     });
 
     const defaultLabels = ['Lesson 1','Lesson 2','Lesson 3','Lesson 4','Lesson 5','Lesson 6','Lesson 7','Lesson 8'];
+    const SUBJECT_COLORS = { english: '#3b82f6', filipino: '#ef4444', math: '#f59e0b', science: '#10b981' };
+
+    function hexToRgb(hex) {
+      const bigint = parseInt(hex.replace('#',''),16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `${r}, ${g}, ${b}`;
+    }
 
     function createDatasets(quarterData, subjectFilter = 'all') {
       const datasets = [];
@@ -146,13 +156,10 @@
     function updatePerformanceChart(chart) {
       const subject = document.getElementById('line-chart-subject-filter')?.value?.toLowerCase() || 'all';
       const quarter = document.getElementById('line-chart-quarter-filter')?.value || 'q1';
-      const quarterData = quarterlyData[quarter] || {};
-
-      chart.data.datasets = createDatasets(quarterData, subject);
+      chart.data.datasets = createDatasets(quarterlyData[quarter] || {}, subject);
       chart.update();
     }
 
-    // Defer creation until DOM is ready and canvas exists
     document.addEventListener('DOMContentLoaded', () => {
       const canvas = document.getElementById('performanceChart');
       if (!canvas) return;
@@ -161,23 +168,14 @@
         type: 'line',
         data: {
           labels: defaultLabels,
-          datasets: createDatasets(quarterlyData.q1 || {})
+          datasets: createDatasets(quarterlyData.q1)
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'top' },
-            tooltip: { mode: 'index', intersect: false }
-          },
+          plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } },
           scales: {
-            y: {
-              beginAtZero: false,
-              min: 0,
-              max: 100,
-              title: { display: true, text: 'Score (%)' },
-              grid: { color: 'rgba(0, 0, 0, 0.1)' }
-            },
+            y: { beginAtZero: false, min: 0, max: 100, title: { display: true, text: 'Score (%)' }, grid: { color: 'rgba(0,0,0,0.1)' } },
             x: { grid: { display: false } }
           }
         }
@@ -185,11 +183,11 @@
 
       const subjectFilterEl = document.getElementById('line-chart-subject-filter');
       const quarterFilterEl = document.getElementById('line-chart-quarter-filter');
-
       if (subjectFilterEl) subjectFilterEl.addEventListener('change', () => updatePerformanceChart(chart));
       if (quarterFilterEl) quarterFilterEl.addEventListener('change', () => updatePerformanceChart(chart));
     });
   })();
+
 
   // ================================
   // 3) Lesson Progress Trend Chart (Dynamic demo)
