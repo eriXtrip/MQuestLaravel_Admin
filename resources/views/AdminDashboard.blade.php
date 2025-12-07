@@ -1724,7 +1724,7 @@
     </div>
 
     <!--Delete Draft Confirmation Modal-->
-    <div id="deleteDraftLesson" class="modal fade show" role="dialog" tabindex="-1" style="display: block;">
+    <div id="deleteDraftLesson" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body text-center p-4">
@@ -1733,10 +1733,7 @@
                         </svg></div>
                     <h4 class="fw-bold mb-2">Delete draft?</h4>
                     <p class="text-muted mb-3">Are you sure you want to delete this draft? This action cannot be undone.</p>
-                    <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal"> Cancel </button>
-                        <button id="deleteDraft" class="btn btn-outline-success btn-sm rounded-pill px-4 py-2" type="button">Delete</button>
-                    </div>
+                    <div class="d-flex justify-content-center gap-2"><button class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal"> Cancel </button><button id="deleteDraft" class="btn btn-outline-success btn-sm rounded-pill px-4 py-2" type="button">Delete</button></div>
                 </div>
             </div>
         </div>
