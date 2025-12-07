@@ -1366,27 +1366,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =============== FIX: START BLANK OPTION ===============
     if (startBlankBtn) {
-        startBlankBtn.addEventListener("click", () => {
-            if (dialog) dialog.style.display = 'none';
-            
-            const draftInfo = getDraftInfo();
-            // if (draftInfo && draftInfo.exists) {
-            //     if (confirm(`You have an existing draft "${draftInfo.title}". Would you like to clear it before starting blank?`)) {
-            //         deleteDraft();
-            //     }
-            // }
-            
-            const newLesson = createBlankLesson();
-            
-            // Hide the delete draft button for blank lessons
-            setTimeout(() => {
-                const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
-                if (deleteDraftBtn) {
-                    deleteDraftBtn.style.display = 'none';
-                }
-            }, 100);
-        });
-    }
+      startBlankBtn.addEventListener("click", () => {
+          if (dialog) dialog.style.display = 'none';
+          
+          // Just create a blank lesson without any questions
+          const newLesson = createBlankLesson();
+          
+          // Hide delete draft button for blank lessons
+          setTimeout(() => {
+              const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
+              if (deleteDraftBtn) {
+                  deleteDraftBtn.style.display = 'none';
+              }
+          }, 100);
+          
+          // Optional: Show info if draft exists
+          const draftInfo = getDraftInfo();
+          if (draftInfo && draftInfo.exists) {
+              showToast('info', 'Draft Available', 
+                  `You have a draft: "${draftInfo.title}". Use "Start from Draft" to load it.`);
+          }
+      });
+  }
 
     // Cancel option
     if (cancelBtn) {
