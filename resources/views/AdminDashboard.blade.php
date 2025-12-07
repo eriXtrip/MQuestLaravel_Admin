@@ -2006,6 +2006,7 @@
 
             // Load draft
             const savedData = localStorage.getItem('lessonDraft');
+            console.log('Lesson from localStorage:', savedData);
             if (savedData) {
                 const data = JSON.parse(savedData);
                 const oneWeek = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
@@ -2031,35 +2032,40 @@
                         data.pretest_questions.forEach(q => addPreTestQuestion(q)); // implement addPreTestQuestion to render in UI
                     }
 
-                    // Restore post-test questions from draft
-                    if (data.posttest_questions && data.posttest_questions.length) {
+                    // Restore post-test questions
+                    if (data.posttest_questions?.length) {
                         data.posttest_questions.forEach(q => {
-                            // Set the type first so the correct input fields are rendered
-                            document.getElementById("questionType2").value = q.type;
+                            // Delay to ensure addQuestion2() is available
+                            setTimeout(() => {
+                                // Set type first
+                                document.getElementById("questionType2").value = q.type;
 
-                            // Add a new question card
-                            addQuestion2();
+                                // Add new question card
+                                addQuestion2();
 
-                            // The new question's index is the current questionCount2
-                            const idx = questionCount2;
+                                const idx = questionCount2; // current question index
 
-                            // Fill in question text
-                            document.getElementById(`questionText2-${idx}`).value = q.questionText || "";
+                                // Fill question text
+                                const qText = document.getElementById(`questionText2-${idx}`);
+                                if (qText) qText.value = q.questionText || "";
 
-                            // Fill in correct answer
-                            if (q.type === "truefalse" || q.type === "fillblank" || q.type === "multiple") {
-                                document.getElementById(`correctAnswer2-${idx}`).value = q.correctAnswer || "";
-                            }
+                                // Fill correct answer
+                                const correctEl = document.getElementById(`correctAnswer2-${idx}`);
+                                if (correctEl) correctEl.value = q.correctAnswer || "";
 
-                            // Fill in options for multiple choice
-                            if (q.type === "multiple" && q.options && q.options.length === 4) {
-                                document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
-                                document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
-                                document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
-                                document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
-                            }
+                                // Fill multiple choice options
+                                if (q.type === "multiple" && q.options?.length === 4) {
+                                    document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
+                                    document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
+                                    document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
+                                    document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
+                                }
+
+                                console.log(`Restored post-test question ${idx}:`, q);
+                            }, 0);
                         });
                     }
+
 
 
                     // Restore flashcards
