@@ -2394,19 +2394,19 @@ function initAssessments(pupilTests = []) {
             if (quarterFilter?.value && quarterFilter.value !== '' &&
                 parseInt(test.quarter) !== parseInt(quarterFilter.value)) return false;
 
-            if (fromDate?.value) {
-                const testDate = new Date(test.date);
-                const filterDate = new Date(fromDate.value);
-
-                // Convert both to YYYY-MM-DD strings for comparison
-                const testDateStr = testDate.toISOString().split('T')[0];
-                const filterDateStr = filterDate.toISOString().split('T')[0];
-
-                if (testDateStr < filterDateStr) return false;
-            }
-
             return true;
         });
+
+
+        // SORT AFTER FILTERING
+        const sortDate = $('sortDate');
+        if (sortDate?.value) {
+            filteredData.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return sortDate.value === 'asc' ? dateA - dateB : dateB - dateA;
+            });
+        }
 
         currentPage = 1;
         renderTestCards();
