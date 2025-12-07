@@ -1312,13 +1312,85 @@ document.getElementById('saveAdminPictureBtn')?.addEventListener('click', functi
 // 15. Create Lesson (Dynamic Lesson Template)
 // =============================================================
 // =============== GAME LOADING FUNCTIONS (MOVE OUTSIDE DOMContentLoaded) ===============
+function setupGameSectionObservers() {
+    // Observe game type sections for when they become visible/active
+    const gameSections = document.querySelectorAll('.game-type-section');
+    
+    gameSections.forEach(section => {
+        // Create an observer to detect when section becomes visible
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const displayStyle = section.style.display;
+                    if (displayStyle === 'block' || displayStyle === '') {
+                        // Section is now visible, check if we need to load draft data
+                        loadGameDataForSection(section.id);
+                    }
+                }
+            });
+        });
+        
+        // Start observing
+        observer.observe(section, { attributes: true });
+    });
+}
 
-// =============== GAME LOADING FUNCTIONS (MOVE OUTSIDE DOMContentLoaded) ===============
+// Function to load game data for a specific section
+function loadGameDataForSection(sectionId) {
+    const savedData = localStorage.getItem('lessonDraft');
+    if (!savedData) return;
+    
+    try {
+        const data = JSON.parse(savedData);
+        if (!data.games) return;
+        
+        // Map section IDs to game types
+        const sectionGameMap = {
+            'matching-section': { type: 'matching', data: data.games.matching },
+            'flashcard-section': { type: 'flashcard', data: data.games.flashcard },
+            'spelling-section': { type: 'spelling', data: data.games.spelling },
+            'speak-section': { type: 'speak', data: data.games.speak },
+            'imagequiz-section': { type: 'imagequiz', data: data.games.imagequiz }
+        };
+        
+        const gameInfo = sectionGameMap[sectionId];
+        if (gameInfo && gameInfo.data && gameInfo.data.length > 0) {
+            // Check if this section has already been loaded
+            const container = document.querySelector(`#${gameInfo.type}-container`);
+            if (container && container.children.length === 0) {
+                // Only load if container is empty
+                console.log(`Loading ${gameInfo.type} game data for ${sectionId}`);
+                
+                // Call the appropriate loading function
+                switch(gameInfo.type) {
+                    case 'matching':
+                        loadMatchingGame(gameInfo.data);
+                        break;
+                    case 'flashcard':
+                        loadFlashcardGame(gameInfo.data);
+                        break;
+                    case 'spelling':
+                        loadSpellingGame(gameInfo.data);
+                        break;
+                    case 'speak':
+                        loadSpeakGame(gameInfo.data);
+                        break;
+                    case 'imagequiz':
+                        loadImageQuizGame(gameInfo.data);
+                        break;
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error loading game data:', error);
+    }
+}
+
+// =============== GAME LOADING FUNCTIONS ===============
 
 function loadMatchingGame(items) {
     if (!items || !items.length) return;
     
-    // First, find the matching container in the CURRENTLY ACTIVE lesson
     const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
     if (!activeLesson) {
         console.error("No active lesson found!");
@@ -1331,113 +1403,102 @@ function loadMatchingGame(items) {
         return;
     }
     
+    // Check if we've already loaded this data
+    if (container.hasAttribute('data-draft-loaded')) {
+        console.log("Matching game already loaded from draft");
+        return;
+    }
+    
     console.log("Loading matching game items:", items.length);
-    console.log("Container found:", container);
     
     // Clear container first
     container.innerHTML = '';
-    matchingCount = 0; // Reset counter
+    
+    // Get the matchingCount from the active lesson or reset it
+    let matchingCount = 0;
     
     items.forEach((item, index) => {
-        // Use existing addMatching function
-        addMatching();
+        matchingCount++;
         
-        // Get the last added item (vanilla JS)
-        const matchingGroups = container.querySelectorAll('.item-group');
-        const lastItem = matchingGroups[matchingGroups.length - 1];
-        
-        if (!lastItem) {
-            console.error("Could not find last item!");
-            return;
-        }
-        
-        console.log(`Populating matching item ${index + 1} with:`, item);
-        
-        // Use vanilla JS to populate data
-        const inputs = lastItem.querySelectorAll('input[type="text"]');
-        const textareas = lastItem.querySelectorAll('textarea');
-        
-        console.log("Found inputs:", inputs.length);
-        console.log("Found textareas:", textareas.length);
-        
-        if (inputs.length > 0) {
-            inputs[0].value = item.term || '';
-            console.log("Set term to:", inputs[0].value);
-        }
-        if (textareas.length > 0) {
-            textareas[0].value = item.definition || '';
-            console.log("Set definition to:", textareas[0].value);
-        }
-        
-        // Update the item title
-        const itemTitle = lastItem.querySelector('.game-item-title');
-        if (itemTitle) {
-            itemTitle.textContent = `Item ${index + 1}`;
-        }
+        // Create the HTML directly instead of calling addMatching()
+        const div = document.createElement("div");
+        div.classList.add("item-group", "position-relative");
+        div.innerHTML = `
+            <div class="game-header">
+                <h6 class="game-item-title">Item ${matchingCount}</h6>
+                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+                    <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="mb-3 matching-container-item">
+                <div class="field-label-wrapper"><label class="form-label">Term</label></div>
+                <input class="form-control" type="text" value="${item.term || ''}" />
+            </div>
+            <div class="matching-container-item">
+                <div class="field-label-wrapper"><label class="form-label">Definition</label></div>
+                <textarea class="form-control">${item.definition || ''}</textarea>
+            </div>
+        `;
+        container.appendChild(div);
     });
     
-    // Reset counter to actual number of items
-    matchingCount = items.length;
+    container.setAttribute('data-draft-loaded', 'true');
+    console.log("Matching game loaded successfully");
 }
 
 function loadFlashcardGame(items) {
     if (!items || !items.length) return;
     
-    // Find the active lesson
     const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-    if (!activeLesson) {
-        console.error("No active lesson found!");
-        return;
-    }
+    if (!activeLesson) return;
     
     const container = activeLesson.querySelector('#flashcard-container');
-    if (!container) {
-        console.error("Flashcard container not found in active lesson!");
-        return;
-    }
+    if (!container) return;
+    
+    // Check if already loaded
+    if (container.hasAttribute('data-draft-loaded')) return;
     
     console.log("Loading flashcard items:", items.length);
     
-    // Clear container first
     container.innerHTML = '';
-    flashcardCount = 0;
+    
+    let flashcardCount = 0;
     
     items.forEach((item, index) => {
-        // Use existing addFlashcard function
-        addFlashcard();
+        flashcardCount++;
         
-        // Get the last added item
-        const flashcardGroups = container.querySelectorAll('.item-group');
-        const lastItem = flashcardGroups[flashcardGroups.length - 1];
-        
-        if (!lastItem) return;
-        
-        // Populate with data
-        const inputs = lastItem.querySelectorAll('input[type="text"]');
-        const textareas = lastItem.querySelectorAll('textarea');
-        
-        if (inputs.length > 0) {
-            inputs[0].value = item.front || '';
-        }
-        if (textareas.length > 0) {
-            textareas[0].value = item.back || '';
-        }
-        
-        // Update the item title
-        const itemTitle = lastItem.querySelector('.game-item-title');
-        if (itemTitle) {
-            itemTitle.textContent = `Item ${index + 1}`;
-        }
+        const div = document.createElement("div");
+        div.classList.add("item-group");
+        div.innerHTML = `
+            <div class="game-header">
+                <h6 class="game-item-title">Item ${flashcardCount}</h6>
+                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+                    <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="mb-2 matching-container-item">
+                <div class="field-label-wrapper"><label class="form-label">Front</label></div>
+                <input class="form-control" type="text" value="${item.front || ''}" />
+            </div>
+            <div class="matching-container-item">
+                <div class="field-label-wrapper"><label class="form-label">Back</label></div>
+                <textarea class="form-control">${item.back || ''}</textarea>
+            </div>
+        `;
+        container.appendChild(div);
     });
     
-    // Reset counter to actual number of items
-    flashcardCount = items.length;
+    container.setAttribute('data-draft-loaded', 'true');
+    console.log("Flashcard game loaded successfully");
 }
 
 function loadSpellingGame(items) {
     if (!items || !items.length) return;
     
-    // Find the active lesson
     const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
     if (!activeLesson) {
         console.error("No active lesson found!");
@@ -1450,251 +1511,197 @@ function loadSpellingGame(items) {
         return;
     }
     
+    if (container.hasAttribute('data-draft-loaded')) return;
+    
     console.log("Loading spelling items:", items.length);
     
-    // Clear container first
     container.innerHTML = '';
-    spellCount = 0;
+    
+    let spellCount = 0;
     
     items.forEach((item, index) => {
-        // Use existing addSpelling function
-        addSpelling();
+        spellCount++;
         
-        // Get the last added item
-        const spellingGroups = container.querySelectorAll('.item-group');
-        const lastItem = spellingGroups[spellingGroups.length - 1];
+        const div = document.createElement("div");
+        div.classList.add("item-group");
+        div.innerHTML = `
+            <div class="game-header">
+                <h6 class="game-item-title">Item ${spellCount}</h6>
+                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+                    <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="row g-3 fillblank-row">
+                <div class="col-12 phrase">
+                    <label class="fw-semibold d-flex form-label">
+                        <span class="badge me-2 phrase-badge">1</span> First Phrase (before blank) 
+                    </label>
+                    <input class="form-control first-phrase" type="text" placeholder="e.g. The capital of France is" value="${item.first || ''}" />
+                </div>
+                <div class="col-12 col-md-6 phrase">
+                    <label class="fw-semibold d-flex form-label">
+                        <span class="badge me-2 phrase-badge">2</span> Correct Answer (max 11 chars) 
+                    </label>
+                    <div class="input-group flex-nowrap">
+                        <input class="form-control form-control answer-input" type="text" maxlength="11" placeholder="Paris" value="${item.answer || ''}" />
+                        <span class="bg-light input-group-text input-group-text border-start-0 small char-counter max-char">${(item.answer || '').length}/11</span>
+                    </div>
+                    <div class="text-muted form-text small">
+                        <span>Answer is case-insensitive when played. Max 11 characters.</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 phrase">
+                    <label class="fw-semibold d-flex form-label">
+                        <span class="badge me-2 phrase-badge">3</span> Last Phrase (after blank) 
+                    </label>
+                    <input class="form-control phrase last-phrase" type="text" placeholder="e.g. , known for its art." value="${item.last || ''}" />
+                </div>
+                <div class="col-12 phrase">
+                    <label class="fw-semibold d-flex form-label">
+                        <span class="badge me-2 phrase-badge">4</span> Definition (optional)
+                    </label>
+                    <textarea class="form-control definition-input" rows="2" placeholder="e.g. The capital city of France, famous for the Eiffel Tower and art museums.">${item.definition || ''}</textarea>
+                    <div class="text-muted form-text small">
+                        <span>Shown to students after answering correctly (optional).</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-light border rounded-2 p-3 mt-4">
+                <h6 class="text-secondary d-flex align-items-center mb-2 live-preview">
+                    <svg class="bi bi-eye me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
+                    </svg> Live Preview 
+                </h6>
+                <p class="fst-italic text-dark mb-0 preview-text">"${item.first || ''} <strong class="text-underline">${item.answer || '_____'}</strong> ${item.last || ''}"</p>
+            </div>
+        `;
+        container.appendChild(div);
         
-        if (!lastItem) return;
-        
-        // Populate with data using vanilla JS
-        const firstPhrase = lastItem.querySelector('.first-phrase');
-        const answerInput = lastItem.querySelector('.answer-input');
-        const lastPhrase = lastItem.querySelector('.last-phrase');
-        const definitionInput = lastItem.querySelector('.definition-input');
-        const charCounter = lastItem.querySelector('.char-counter');
-        const previewText = lastItem.querySelector('.preview-text');
-        
-        if (firstPhrase) firstPhrase.value = item.first || '';
-        if (answerInput) answerInput.value = item.answer || '';
-        if (lastPhrase) lastPhrase.value = item.last || '';
-        if (definitionInput) definitionInput.value = item.definition || '';
-        
-        // Trigger the update functions
-        if (answerInput && charCounter && previewText) {
-            // Update counter
-            const len = answerInput.value.length;
-            charCounter.textContent = `${len}/11`;
-            charCounter.classList.toggle('text-danger', len > 9);
-            charCounter.classList.toggle('fw-bold', len > 9);
-            
-            // Update preview
-            const first = firstPhrase ? firstPhrase.value.trim() : '';
+        // Setup event listeners for real-time preview
+        const firstInput = div.querySelector('.first-phrase');
+        const answerInput = div.querySelector('.answer-input');
+        const lastInput = div.querySelector('.last-phrase');
+        const counter = div.querySelector('.char-counter');
+        const previewText = div.querySelector('.preview-text');
+
+        function updatePreview() {
+            const first = firstInput.value.trim();
             const answer = answerInput.value.trim() || "_____";
-            const last = lastPhrase ? lastPhrase.value.trim() : '';
+            const last = lastInput.value.trim();
             previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
         }
-        
-        // Update the item title
-        const itemTitle = lastItem.querySelector('.game-item-title');
-        if (itemTitle) {
-            itemTitle.textContent = `Item ${index + 1}`;
+
+        function updateCounter() {
+            const len = answerInput.value.length;
+            counter.textContent = `${len}/11`;
+            counter.classList.toggle('text-danger', len > 9);
+            counter.classList.toggle('fw-bold', len > 9);
         }
+
+        firstInput.addEventListener('input', updatePreview);
+        answerInput.addEventListener('input', () => {
+            updateCounter();
+            updatePreview();
+        });
+        lastInput.addEventListener('input', updatePreview);
     });
     
-    // Reset counter to actual number of items
-    spellCount = items.length;
+    container.setAttribute('data-draft-loaded', 'true');
+    console.log("Spelling game loaded successfully");
 }
 
-function loadSpeakGame(items) {
-    if (!items || !items.length) return;
+// Add setupGameSectionHandlers function
+function setupGameSectionHandlers() {
+    // Map button IDs to game types
+    const gameButtonMap = {
+        'addMatchingBtn': { type: 'matching', section: 'matching-section' },
+        'addFlashcardBtn': { type: 'flashcard', section: 'flashcard-section' },
+        'addSpellingBtn': { type: 'spelling', section: 'spelling-section' },
+        'addSpeakBtn': { type: 'speak', section: 'speak-section' },
+        'addImageQuizBtn': { type: 'imagequiz', section: 'imagequiz-section' }
+    };
     
-    // Find the active lesson
-    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-    if (!activeLesson) {
-        console.error("No active lesson found!");
-        return;
-    }
-    
-    const container = activeLesson.querySelector('#speak-container');
-    if (!container) {
-        console.error("Speak container not found in active lesson!");
-        return;
-    }
-    
-    console.log("Loading speak prompts:", items.length);
-    
-    // Clear container first
-    container.innerHTML = '';
-    speakCount = 0;
-    
-    items.forEach((item, index) => {
-        // Use existing addSpeak function
-        addSpeak();
-        
-        // Get the last added item
-        const speakGroups = container.querySelectorAll('.item-group');
-        const lastItem = speakGroups[speakGroups.length - 1];
-        
-        if (!lastItem) return;
-        
-        // Populate with data
-        const input = lastItem.querySelector('.speech-text-form input');
-        if (input) {
-            input.value = item.prompt || '';
-        }
-        
-        // Update the item title
-        const itemTitle = lastItem.querySelector('.game-item-title');
-        if (itemTitle) {
-            itemTitle.textContent = `Item ${index + 1}`;
-        }
-    });
-    
-    // Reset counter to actual number of items
-    speakCount = items.length;
-}
-
-function loadImageQuizGame(items) {
-    if (!items || !items.length) return;
-    
-    // Find the active lesson
-    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-    if (!activeLesson) {
-        console.error("No active lesson found!");
-        return;
-    }
-    
-    const container = activeLesson.querySelector('#imagequiz-container');
-    if (!container) {
-        console.error("Image quiz container not found in active lesson!");
-        return;
-    }
-    
-    console.log("Loading image quiz items:", items.length);
-    
-    // Clear container first
-    container.innerHTML = '';
-    imageQuizCount = 0;
-    
-    items.forEach((item, index) => {
-        // Use existing addImageQuiz function
-        addImageQuiz();
-        
-        // Get the last added item
-        const imageQuizGroups = container.querySelectorAll('.item-group');
-        const lastItem = imageQuizGroups[imageQuizGroups.length - 1];
-        
-        if (!lastItem) return;
-        
-        // Populate with data
-        const questionInput = lastItem.querySelector('.question-input');
-        const correctSelect = lastItem.querySelector('.correct-select');
-        
-        if (questionInput) questionInput.value = item.question || '';
-        if (correctSelect && item.correct) correctSelect.value = item.correct;
-        
-        // Handle image if exists
-        if (item.imageUrl) {
-            const previewImage = lastItem.querySelector('.preview-image-compact');
-            const uploadPlaceholder = lastItem.querySelector('.upload-placeholder');
+    Object.keys(gameButtonMap).forEach(buttonId => {
+        const button = document.getElementById(buttonId);
+        if (button) {
+            // Remove any existing listeners and add new one
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
             
-            if (previewImage && uploadPlaceholder) {
-                previewImage.src = item.imageUrl;
-                previewImage.style.display = 'block';
-                uploadPlaceholder.style.display = 'none';
-            }
-        }
-        
-        // Populate choices
-        const choicesWrapper = lastItem.querySelector('.choices-wrapper');
-        if (choicesWrapper) {
-            choicesWrapper.innerHTML = ''; // Clear existing choices
-            
-            if (item.choices && item.choices.length) {
-                item.choices.forEach((choice, choiceIndex) => {
-                    const choiceDiv = document.createElement('div');
-                    choiceDiv.className = 'choice-item d-flex align-items-center mb-1';
-                    choiceDiv.innerHTML = `
-                        <input type="text" class="form-control choice-input" value="${choice || ''}" placeholder="Option ${String.fromCharCode(65 + choiceIndex)}">
-                        <button type="button" class="btn btn-sm btn-outline-danger ms-1 remove-choice">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                            </svg>
-                        </button>
-                    `;
-                    choicesWrapper.appendChild(choiceDiv);
-                    
-                    // Add event listener for remove button
-                    const removeBtn = choiceDiv.querySelector('.remove-choice');
-                    removeBtn.addEventListener('click', function() {
-                        choiceDiv.remove();
-                        updateCorrectAnswerDropdown(lastItem);
-                    });
-                });
+            newButton.addEventListener('click', function() {
+                const gameInfo = gameButtonMap[buttonId];
                 
-                // Update correct answer dropdown
-                updateCorrectAnswerDropdown(lastItem);
+                // Find the game section in the active lesson
+                const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+                if (!activeLesson) return;
+                
+                const section = activeLesson.querySelector(`#${gameInfo.section}`);
+                if (section) {
+                    // Show the section
+                    section.style.display = 'block';
+                    
+                    // Check if there's draft data to load
+                    const draftData = localStorage.getItem('lessonDraft');
+                    if (draftData) {
+                        try {
+                            const data = JSON.parse(draftData);
+                            if (data.games && data.games[gameInfo.type] && data.games[gameInfo.type].length > 0) {
+                                // Load the game data
+                                loadGameDataForSection(gameInfo.section);
+                            }
+                        } catch (error) {
+                            console.error('Error loading draft data:', error);
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+// Add loadGameDataForSection function
+function loadGameDataForSection(sectionId) {
+    const savedData = localStorage.getItem('lessonDraft');
+    if (!savedData) return;
+    
+    try {
+        const data = JSON.parse(savedData);
+        if (!data.games) return;
+        
+        const sectionGameMap = {
+            'matching-section': { type: 'matching', data: data.games.matching },
+            'flashcard-section': { type: 'flashcard', data: data.games.flashcard },
+            'spelling-section': { type: 'spelling', data: data.games.spelling },
+            'speak-section': { type: 'speak', data: data.games.speak },
+            'imagequiz-section': { type: 'imagequiz', data: data.games.imagequiz }
+        };
+        
+        const gameInfo = sectionGameMap[sectionId];
+        if (gameInfo && gameInfo.data && gameInfo.data.length > 0) {
+            switch(gameInfo.type) {
+                case 'matching':
+                    loadMatchingGame(gameInfo.data);
+                    break;
+                case 'flashcard':
+                    loadFlashcardGame(gameInfo.data);
+                    break;
+                case 'spelling':
+                    loadSpellingGame(gameInfo.data);
+                    break;
+                case 'speak':
+                    loadSpeakGame(gameInfo.data);
+                    break;
+                case 'imagequiz':
+                    loadImageQuizGame(gameInfo.data);
+                    break;
             }
         }
-        
-        // Update the item title
-        const itemTitle = lastItem.querySelector('.game-item-title');
-        if (itemTitle) {
-            itemTitle.textContent = `Item ${index + 1}`;
-        }
-    });
-    
-    // Reset counter to actual number of items
-    imageQuizCount = items.length;
-}
-
-// Helper function to update correct answer dropdown for image quiz
-function updateCorrectAnswerDropdown(container) {
-    const choices = container.querySelectorAll('.choice-input');
-    const select = container.querySelector('.correct-select');
-    
-    if (!select) return;
-    
-    // Clear existing options except the first one
-    while (select.options.length > 1) {
-        select.remove(1);
+    } catch (error) {
+        console.error('Error loading game data:', error);
     }
-    
-    // Add new options based on choices
-    choices.forEach((choice, index) => {
-        const letter = String.fromCharCode(65 + index);
-        const option = document.createElement('option');
-        option.value = letter;
-        option.textContent = `Option ${letter}: ${choice.value || '(empty)'}`;
-        select.appendChild(option);
-    });
-}
-
-// =============== REMOVE FUNCTIONS ===============
-function removeMatchingItem(button) {
-    const item = button.closest('.matching-item');
-    if (item) item.remove();
-}
-
-function removeFlashcardItem(button) {
-    const item = button.closest('.flashcard-item');
-    if (item) item.remove();
-}
-
-function removeSpellingItem(button) {
-    const item = button.closest('.spelling-item');
-    if (item) item.remove();
-}
-
-function removeSpeakItem(button) {
-    const item = button.closest('.speak-item');
-    if (item) item.remove();
-}
-
-function removeImageQuizItem(button) {
-    const item = button.closest('.imagequiz-item');
-    if (item) item.remove();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1722,33 +1729,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =============== FIX: START FROM DRAFT OPTION ===============
     if (startFromDraftBtn) {
-        startFromDraftBtn.addEventListener("click", () => {
-            if (dialog) dialog.style.display = 'none';
-            
-            const draftInfo = getDraftInfo();
-            
-            if (!draftInfo || !draftInfo.exists) {
-                showToast('info', 'No Draft Found', 'Starting a blank lesson instead.');
-                const newLesson = createBlankLesson();
-                return;
-            }
-            
-            // Create new lesson and load the draft
-            const newLesson = createBlankLesson();
-            
-            // Small delay to ensure new lesson template is loaded, then call loadLessonDraft
-            setTimeout(() => {
-                loadLessonDraft();
-                showToast('success', 'Draft Loaded', `"${draftInfo.title}" draft loaded successfully.`);
-                
-                // Show delete button for loaded draft
-                const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
-                if (deleteDraftBtn) {
-                    deleteDraftBtn.style.display = 'inline-block';
-                }
-            }, 300);
-        });
-    }
+      startFromDraftBtn.addEventListener("click", () => {
+          if (dialog) dialog.style.display = 'none';
+          
+          const draftInfo = getDraftInfo();
+          
+          if (!draftInfo || !draftInfo.exists) {
+              showToast('info', 'No Draft Found', 'Starting a blank lesson instead.');
+              const newLesson = createBlankLesson();
+              return;
+          }
+          
+          // Create new lesson and load the draft
+          const newLesson = createBlankLesson();
+          
+          // Small delay to ensure new lesson template is loaded, then call loadLessonDraft
+          setTimeout(() => {
+              loadLessonDraft();
+              
+              // Set up game section handlers after loading
+              setTimeout(() => {
+                  setupGameSectionHandlers();
+              }, 500);
+              
+              showToast('success', 'Draft Loaded', `"${draftInfo.title}" draft loaded successfully.`);
+              
+              // Show delete button for loaded draft
+              const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
+              if (deleteDraftBtn) {
+                  deleteDraftBtn.style.display = 'inline-block';
+              }
+          }, 300);
+      });
+  }
 
     // =============== FIX: START BLANK OPTION ===============
     if (startBlankBtn) {
@@ -2018,38 +2031,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // =============== LOAD ALL GAMES ===============
         if (data.games) {
-            console.log("Restoring games:", data.games);
-            
-            // Load with delays to ensure DOM is ready
-            setTimeout(() => {
-                if (data.games.matching?.length) {
-                    loadMatchingGame(data.games.matching);
-                }
-            }, 1000);
-            
-            setTimeout(() => {
-                if (data.games.flashcard?.length) {
-                    loadFlashcardGame(data.games.flashcard);
-                }
-            }, 1100);
-            
-            setTimeout(() => {
-                if (data.games.spelling?.length) {
-                    loadSpellingGame(data.games.spelling);
-                }
-            }, 1200);
-            
-            setTimeout(() => {
-                if (data.games.speak?.length) {
-                    loadSpeakGame(data.games.speak);
-                }
-            }, 1300);
-            
-            setTimeout(() => {
-                if (data.games.imagequiz?.length) {
-                    loadImageQuizGame(data.games.imagequiz);
-                }
-            }, 1400);
+            const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+            if (activeLesson) {
+                activeLesson.setAttribute('data-draft-games', JSON.stringify(data.games));
+            }
         }
 
         // Populate uploads
