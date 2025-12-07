@@ -790,8 +790,8 @@
                     <!-- Pagination -->
                     <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
                         <div class="text-muted small"><span> Showing </span><span id="startCount">1</span><span> to </span><span id="endCount">3</span><span> of </span><span id="totalCount">50</span><span> users </span></div>
-                        <nav aria-label="User list pagination" id="usersPagination">
-                            <ul class="mb-0 pagination pagination-sm">
+                        <nav aria-label="User list pagination">
+                            <ul class="mb-0 pagination pagination-sm" id="usersPagination">
                                 <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
