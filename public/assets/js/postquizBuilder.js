@@ -158,6 +158,7 @@ function fetchPostTestQuestions() {
 }
 
 
+
 function loadQuestions2FromLocalStorage() {
   try {
     const lessonData = JSON.parse(localStorage.getItem('lessonData'));
@@ -169,20 +170,18 @@ function loadQuestions2FromLocalStorage() {
 
     // Clear existing questions
     const quizContainer = document.getElementById("quiz-container2");
-    if (!quizContainer) {
-      console.error("quiz-container2 element not found!");
-      return;
+    if (quizContainer) {
+      quizContainer.innerHTML = "";
     }
-    quizContainer.innerHTML = "";
     questionCount2 = 0;
     
     // Store the original question type
-    const originalQuestionType = document.getElementById("questionType2")?.value || "";
+    const typeSelect = document.getElementById("questionType2");
+    const originalQuestionType = typeSelect ? typeSelect.value : "";
     
     // Load each question
     lessonData.posttest_questions.forEach((questionData, index) => {
       // Set the question type
-      const typeSelect = document.getElementById("questionType2");
       if (typeSelect) {
         typeSelect.value = questionData.type;
       }
@@ -236,7 +235,6 @@ function loadQuestions2FromLocalStorage() {
     });
     
     // Reset the question type dropdown
-    const typeSelect = document.getElementById("questionType2");
     if (typeSelect) {
       typeSelect.value = originalQuestionType;
     }
@@ -248,3 +246,6 @@ function loadQuestions2FromLocalStorage() {
     showToast('error', 'Load Failed', 'Failed to load saved post-test questions.');
   }
 }
+
+// // Make it globally available
+// window.loadQuestions2FromLocalStorage = loadQuestions2FromLocalStorage;
