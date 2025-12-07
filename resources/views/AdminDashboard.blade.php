@@ -2671,10 +2671,14 @@
             const pupilsBySubject = window.usersBySubject || {};
             const totalPupils = window.totalPupils || 0;
 
-            /* ==============================================================
-            1. RENDER TEACHERS
-            ============================================================== */
-            if (teachers.length === 0) {
+            /* ============================================================
+            1. DISTINCT TEACHERS
+            ============================================================ */
+            const distinctTeachers = Array.from(
+                new Map(teachers.map(t => [t.teacher_id, t])).values()
+            );
+
+            if (distinctTeachers.length === 0) {
                 teachersContainer.innerHTML = `<p class="text-muted">No teachers assigned.</p>`;
             } else {
                 const teacherHeader = `
@@ -2684,50 +2688,52 @@
                         </div>
                     </div>`;
 
-                const teacherItems = teachers.map(t => `
+                const teacherItems = distinctTeachers.map(t => `
                     <div class="teacher-item">
                         <img class="img-fluid avatar-teacher" 
                             src="${t.thumbnail}" 
-                            alt="${t.teacher_name}" 
-                            width="1080" height="1080">
+                            alt="${t.teacher_name}">
                         <p class="mb-0 teacher-name">${t.teacher_name}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                             viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2z"></path>
                         </svg>
                     </div>`).join('');
 
                 teachersContainer.innerHTML = teacherHeader + teacherItems;
             }
 
-            /* ==============================================================
-            2. RENDER PUPILS
-            ============================================================== */
+            /* ============================================================
+            2. DISTINCT PUPILS
+            ============================================================ */
             const allPupils = Object.values(pupilsBySubject).flat();
+
+            const distinctPupils = Array.from(
+                new Map(allPupils.map(p => [p.pupil_id, p])).values()
+            );
 
             const pupilHeader = `
                 <div class="student-header">
                     <div class="justify-content-between" style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;">
                         <h2 class="student-title">Pupils Enrolled</h2>
                         <div class="text-muted" style="padding-right:1rem;">
-                            <p>${totalPupils} Pupil${totalPupils !== 1 ? 's' : ''}</p>
+                            <p>${distinctPupils.length} Pupil${distinctPupils.length !== 1 ? 's' : ''}</p>
                         </div>
                     </div>
                 </div>`;
 
-            if (allPupils.length === 0) {
+            if (distinctPupils.length === 0) {
                 pupilsContainer.innerHTML = pupilHeader + `<p class="text-muted">No pupils enrolled.</p>`;
             } else {
-                const pupilItems = allPupils.map(p => `
+                const pupilItems = distinctPupils.map(p => `
                     <div class="pupil-item">
                         <img class="img-fluid avatar-pupil" 
                             src="${p.avatar_thumbnail}" 
-                            alt="${p.first_name} ${p.last_name}" 
-                            width="200" height="200">
+                            alt="${p.first_name} ${p.last_name}">
                         <p class="mb-0 student-name">${p.first_name} ${p.last_name}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                             viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2z"></path>
                         </svg>
                     </div>`).join('');
 
@@ -2735,6 +2741,7 @@
             }
         });
     </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -3045,23 +3052,19 @@
 
             document.getElementById("totalCount").textContent = total;
 
-            const pagination = document.getElementById("usersPagination"); // only your pagination ul
+            const pagination = document.getElementById("usersPagination");
 
             let pagesHTML = `
                 <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
                     <a class="page-link" href="#" data-page="prev">Previous</a>
                 </li>
-            `;
 
-            for (let i = 1; i <= totalPages; i++) {
-                pagesHTML += `
-                    <li class="page-item ${i === currentPage ? "active" : ""}">
-                        <a class="page-link" href="#" data-page="${i}">${i}</a>
-                    </li>
-                `;
-            }
+                <li class="page-item active">
+                    <a class="page-link" href="#" data-page="${currentPage}">
+                        ${currentPage}
+                    </a>
+                </li>
 
-            pagesHTML += `
                 <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
                     <a class="page-link" href="#" data-page="next">Next</a>
                 </li>
@@ -3069,7 +3072,7 @@
 
             pagination.innerHTML = pagesHTML;
 
-            // Attach event listeners AFTER updating the HTML
+            // event listeners
             pagination.querySelectorAll(".page-link").forEach(btn => {
                 btn.addEventListener("click", e => {
                     e.preventDefault();
@@ -3083,6 +3086,7 @@
                 });
             });
         }
+
 
 
         // Render to table
