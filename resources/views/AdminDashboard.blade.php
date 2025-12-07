@@ -1626,12 +1626,15 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                    <h4 class="fw-bold mb-2">Publishing Lesson...</h4>
-                    <p class="text-muted mb-0">Please wait while we publish your lesson.</p>
+                    <h4 id="loadingModalTitle" class="fw-bold mb-2">Publishing Lesson...</h4>
+                    <p id="loadingModalText" class="text-muted mb-0">Please wait while we publish your lesson.</p>
                 </div>
             </div>
         </div>
     </div>
+
+
+    
 
     <!-- Confirmation Modal -->
     <div class="modal fade" role="dialog" tabindex="-1" id="confirmPublishModal">
@@ -1993,6 +1996,31 @@
             // Store the current status for confirmation
             let currentStatus = '';
 
+            // Check if lesson has any actual content
+            async function hasLessonData() {
+                const data = await getLessonData('draft'); // status doesn't matter here
+
+                // Check title or description
+                if (data.lesson_title || data.lesson_description) return true;
+
+                // Check pre/post test
+                if ((data.pretest_questions && data.pretest_questions.length > 0) ||
+                    (data.posttest_questions && data.posttest_questions.length > 0)) return true;
+
+                // Check games / learning materials
+                const hasGames = Object.values(data.games || {}).some(arr => arr.length > 0);
+                if (hasGames) return true;
+
+                // Check uploads (files/videos/URL)
+                const uploads = data.uploads;
+                if ((uploads.files && uploads.files.file) ||
+                    (uploads.videos && uploads.videos.file) ||
+                    uploads.video_url) return true;
+
+                return false;
+            }
+
+
             // Confetti function
             function fireConfetti() {
                 const modalEl = document.getElementById('publishSuccessModal');
@@ -2173,6 +2201,18 @@
 
             async function submitLesson(status) {
                 console.log('Submitting lesson with status:', status); // Debug log
+
+                // Update loading modal text based on status
+                const titleEl = document.getElementById('loadingModalTitle');
+                const textEl = document.getElementById('loadingModalText');
+
+                if (status === 'published') {
+                    titleEl.textContent = 'Publishing Lesson...';
+                    textEl.textContent = 'Please wait while we publish your lesson.';
+                } else {
+                    titleEl.textContent = 'Saving Draft...';
+                    textEl.textContent = 'Please wait while we save your lesson as draft.';
+                }
                 
                 // Show loading modal
                 loadingModal.show();
@@ -2303,8 +2343,14 @@
             }
 
             // Handle publish button click - show confirmation first
-            publishBtn.addEventListener('click', () => {
+            publishBtn.addEventListener('click', async () => {
                 console.log('Publish button clicked'); // Debug log
+                const hasData = await hasLessonData();
+                if (!hasData) {
+                    showToast('warning', 'No Content', 'Please add content to your lesson before publishing.');
+                    return;
+                }
+
                 currentStatus = 'published';
                 confirmModal.show();
             });
@@ -2312,6 +2358,12 @@
             // Handle draft button click - no confirmation needed
             draftBtn.addEventListener('click', async () => {
                 console.log('Draft button clicked');
+                const hasData = await hasLessonData();
+                if (!hasData) {
+                    showToast('warning', 'No Content', 'Cannot save an empty lesson as draft.');
+                    return;
+                }
+
                 await saveLessonToSession('draft'); // Save to session first
                 submitLesson('draft');               // Then send to server
             });
