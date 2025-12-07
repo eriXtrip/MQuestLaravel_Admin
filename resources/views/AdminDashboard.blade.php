@@ -2073,10 +2073,40 @@
             }
         
 
-            // Populate flashcards and other games
-            if (data.games?.flashcard?.length) {
-                console.log("Restoring flashcards:", data.games.flashcard);
-                data.games.flashcard.forEach(f => addFlashcard(f.front, f.back));
+            // =============== LOAD ALL GAMES ===============
+            if (data.games) {
+                console.log("Restoring games:", data.games);
+                
+                // Load with delays to ensure DOM is ready
+                setTimeout(() => {
+                    if (data.games.matching?.length) {
+                        loadMatchingGame(data.games.matching);
+                    }
+                }, 1000);
+                
+                setTimeout(() => {
+                    if (data.games.flashcard?.length) {
+                        loadFlashcardGame(data.games.flashcard);
+                    }
+                }, 1100);
+                
+                setTimeout(() => {
+                    if (data.games.spelling?.length) {
+                        loadSpellingGame(data.games.spelling);
+                    }
+                }, 1200);
+                
+                setTimeout(() => {
+                    if (data.games.speak?.length) {
+                        loadSpeakGame(data.games.speak);
+                    }
+                }, 1300);
+                
+                setTimeout(() => {
+                    if (data.games.imagequiz?.length) {
+                        loadImageQuizGame(data.games.imagequiz);
+                    }
+                }, 1400);
             }
 
             // Populate uploads
@@ -2152,6 +2182,243 @@
 
             console.log("Lesson draft fully loaded from localStorage.");
         }
+
+
+        // =============== GAME LOADING FUNCTIONS ===============
+
+        function loadMatchingGame(items) {
+            if (!items || !items.length) return;
+            
+            const container = document.getElementById('matching-container');
+            if (!container) return;
+            
+            console.log("Loading matching game items:", items.length);
+            
+            // Clear container first
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const html = `
+                    <div class="matching-item mb-2" data-index="${index}">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-5">
+                                <input type="text" class="form-control matching-term" 
+                                    placeholder="Term" value="${item.term || ''}">
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input type="text" class="form-control matching-definition" 
+                                    placeholder="Definition" value="${item.definition || ''}">
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <button class="btn btn-sm btn-danger w-100 remove-matching" type="button" onclick="removeMatchingItem(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function loadFlashcardGame(items) {
+            if (!items || !items.length) return;
+            
+            const container = document.getElementById('flashcard-container');
+            if (!container) return;
+            
+            console.log("Loading flashcard items:", items.length);
+            
+            // Clear container first
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const html = `
+                    <div class="flashcard-item mb-2" data-index="${index}">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-5">
+                                <input type="text" class="form-control flashcard-front" 
+                                    placeholder="Front" value="${item.front || ''}">
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input type="text" class="form-control flashcard-back" 
+                                    placeholder="Back" value="${item.back || ''}">
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <button class="btn btn-sm btn-danger w-100 remove-flashcard" type="button" onclick="removeFlashcardItem(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function loadSpellingGame(items) {
+            if (!items || !items.length) return;
+            
+            const container = document.getElementById('spelling-container');
+            if (!container) return;
+            
+            console.log("Loading spelling items:", items.length);
+            
+            // Clear container first
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const html = `
+                    <div class="spelling-item mb-2" data-index="${index}">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-3">
+                                <input type="text" class="form-control spelling-first" 
+                                    placeholder="First part" value="${item.first || ''}">
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <input type="text" class="form-control spelling-answer" 
+                                    placeholder="Answer" value="${item.answer || ''}">
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <input type="text" class="form-control spelling-last" 
+                                    placeholder="Last part" value="${item.last || ''}">
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <input type="text" class="form-control spelling-definition" 
+                                    placeholder="Definition" value="${item.definition || ''}">
+                                <button class="btn btn-sm btn-danger mt-1 w-100 remove-spelling" type="button" onclick="removeSpellingItem(this)">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function loadSpeakGame(items) {
+            if (!items || !items.length) return;
+            
+            const container = document.getElementById('speak-container');
+            if (!container) return;
+            
+            console.log("Loading speak prompts:", items.length);
+            
+            // Clear container first
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const html = `
+                    <div class="speak-item mb-2" data-index="${index}">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control speak-prompt" 
+                                    placeholder="Prompt" value="${item.prompt || ''}">
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <button class="btn btn-sm btn-danger w-100 remove-speak" type="button" onclick="removeSpeakItem(this)">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function loadImageQuizGame(items) {
+            if (!items || !items.length) return;
+            
+            const container = document.getElementById('imagequiz-container');
+            if (!container) return;
+            
+            console.log("Loading image quiz items:", items.length);
+            
+            // Clear container first
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                // Create choices HTML
+                let choicesHtml = '';
+                if (item.choices && item.choices.length > 0) {
+                    item.choices.forEach((choice, i) => {
+                        choicesHtml += `
+                            <input type="text" class="form-control mb-1 imagequiz-choice" 
+                                placeholder="Choice ${String.fromCharCode(65 + i)}" 
+                                value="${choice || ''}">
+                        `;
+                    });
+                } else {
+                    // Default empty choices
+                    choicesHtml = `
+                        <input type="text" class="form-control mb-1 imagequiz-choice" placeholder="Choice A" value="">
+                        <input type="text" class="form-control mb-1 imagequiz-choice" placeholder="Choice B" value="">
+                    `;
+                }
+                
+                const html = `
+                    <div class="imagequiz-item mb-3 p-2 border rounded" data-index="${index}">
+                        <div class="mb-2">
+                            <label class="form-label">Question</label>
+                            <input type="text" class="form-control imagequiz-question" 
+                                value="${item.question || ''}">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Choices</label>
+                            ${choicesHtml}
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Correct Answer</label>
+                            <select class="form-select imagequiz-correct">
+                                <option value="A" ${item.correct === 'A' ? 'selected' : ''}>A</option>
+                                <option value="B" ${item.correct === 'B' ? 'selected' : ''}>B</option>
+                                <option value="C" ${item.correct === 'C' ? 'selected' : ''}>C</option>
+                                <option value="D" ${item.correct === 'D' ? 'selected' : ''}>D</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-danger remove-imagequiz" type="button" onclick="removeImageQuizItem(this)">
+                            Remove
+                        </button>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // =============== REMOVE FUNCTIONS ===============
+        function removeMatchingItem(button) {
+            const item = button.closest('.matching-item');
+            if (item) item.remove();
+        }
+
+        function removeFlashcardItem(button) {
+            const item = button.closest('.flashcard-item');
+            if (item) item.remove();
+        }
+
+        function removeSpellingItem(button) {
+            const item = button.closest('.spelling-item');
+            if (item) item.remove();
+        }
+
+        function removeSpeakItem(button) {
+            const item = button.closest('.speak-item');
+            if (item) item.remove();
+        }
+
+        function removeImageQuizItem(button) {
+            const item = button.closest('.imagequiz-item');
+            if (item) item.remove();
+        }
+
     </script>
 
 
