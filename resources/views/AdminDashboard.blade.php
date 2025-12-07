@@ -2031,10 +2031,36 @@
                         data.pretest_questions.forEach(q => addPreTestQuestion(q)); // implement addPreTestQuestion to render in UI
                     }
 
-                    // Restore posttest questions
+                    // Restore post-test questions from draft
                     if (data.posttest_questions && data.posttest_questions.length) {
-                        data.posttest_questions.forEach(q => addPostTestQuestion(q)); // implement addPostTestQuestion
+                        data.posttest_questions.forEach(q => {
+                            // Set the type first so the correct input fields are rendered
+                            document.getElementById("questionType2").value = q.type;
+
+                            // Add a new question card
+                            addQuestion2();
+
+                            // The new question's index is the current questionCount2
+                            const idx = questionCount2;
+
+                            // Fill in question text
+                            document.getElementById(`questionText2-${idx}`).value = q.questionText || "";
+
+                            // Fill in correct answer
+                            if (q.type === "truefalse" || q.type === "fillblank" || q.type === "multiple") {
+                                document.getElementById(`correctAnswer2-${idx}`).value = q.correctAnswer || "";
+                            }
+
+                            // Fill in options for multiple choice
+                            if (q.type === "multiple" && q.options && q.options.length === 4) {
+                                document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
+                                document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
+                                document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
+                                document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
+                            }
+                        });
                     }
+
 
                     // Restore flashcards
                     if (data.games?.flashcard && data.games.flashcard.length) {
