@@ -11,18 +11,18 @@
 
     <style>
         /* === Secret Key Modal Styles === */
-        .secret-key-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
+        .secret-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
         }
 
         .secret-key-container {
@@ -182,14 +182,16 @@
     </div>
 
     <!--Custom enter secret key -->
-    <div class="container secret-key-container" style="display: none;">
-        <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="eriXtrip/MQuestLaravel_Admin/public/assets/img/girl.png" />
-            <div id="fallback" class="placeholder-image" style="display: none;"><span> 🔒 Secure Access</span><br /><small>Illustration</small></div>
-        </div>
-        <div class="form-section">
-            <h1>Enter Your Secret Key</h1>
-            <p>For security purposes, please provide your unique secret key to continue.</p>
-            <div class="input-group secret-input-group"><label class="input-group-text" for="secretKey">Secret Key</label><input id="secretKey" class="secret-input" type="text" autocomplete="off" maxlength="64" placeholder="••••••••" spellcheck="false" /></div><button class="submit-secret-btn" type="button">Continue</button>
+    <div class="secret-modal-overlay" style="display: none;>
+        <div class="container secret-key-container">
+            <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="eriXtrip/MQuestLaravel_Admin/public/assets/img/girl.png" />
+                <div id="fallback" class="placeholder-image" style="display: none;"><span> 🔒 Secure Access</span><br /><small>Illustration</small></div>
+            </div>
+            <div class="form-section">
+                <h1>Enter Your Secret Key</h1>
+                <p>For security purposes, please provide your unique secret key to continue.</p>
+                <div class="input-group secret-input-group"><label class="input-group-text" for="secretKey">Secret Key</label><input id="secretKey" class="secret-input" type="text" autocomplete="off" maxlength="64" placeholder="••••••••" spellcheck="false" /></div><button class="submit-secret-btn" type="button">Continue</button>
+            </div>
         </div>
     </div>
 
@@ -344,7 +346,7 @@
                 // ─── New: Show Secret Key Modal (Matches Your HTML) ───────────────
                 function showSecretKeyPrompt() {
                     return new Promise((resolve) => {
-                        const container = document.querySelector('.secret-key-container');
+                        const container = document.querySelector('.secret-modal-overlay');
                         const input = document.getElementById('secretKey');
                         const submitBtn = document.querySelector('.submit-secret-btn');
                         const image = document.getElementById('auth-image');
