@@ -1585,6 +1585,36 @@
         </div>
     </div>
 
+
+    <!-- Floating Dialog for Create Options -->
+    <div class="floating-dialog" id="createOptionsDialog" style="display: none;">
+        <div class="dialog-content">
+            <h5>Create New Lesson</h5>
+            <p class="text-muted mb-3">How would you like to start?</p>
+            
+            <div class="d-flex flex-column gap-2">
+                <button class="btn btn-primary" id="startFromDraftBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-2">
+                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zM13 4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1z"/>
+                    </svg>
+                    Start from Draft
+                </button>
+                
+                <button class="btn btn-outline-primary" id="startBlankBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-2">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                    Start Blank
+                </button>
+                
+                <button class="btn btn-outline-secondary mt-2" id="cancelCreateBtn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Modal (Reusablefor simple Deletion) -->
     <div class="modal fade" role="dialog" tabindex="-1" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

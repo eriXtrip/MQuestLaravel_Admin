@@ -1312,38 +1312,165 @@ document.getElementById('saveAdminPictureBtn')?.addEventListener('click', functi
 // 15. Create Lesson (Dynamic Lesson Template)
 // =============================================================
 document.addEventListener("DOMContentLoaded", () => {
-  const createBtn = document.getElementById("createLessonBtn");
-  const lessonTemplate = document.getElementById("lessonTemplate");
-  const container = lessonTemplate.parentElement; // place new templates here
+    const createBtn = document.getElementById("createLessonBtn");
+    const lessonTemplate = document.getElementById("lessonTemplate");
+    const container = lessonTemplate?.parentElement; // place new templates here
+    
+    // Dialog elements
+    const dialog = document.getElementById("createOptionsDialog");
+    const startFromDraftBtn = document.getElementById("startFromDraftBtn");
+    const startBlankBtn = document.getElementById("startBlankBtn");
+    const cancelBtn = document.getElementById("cancelCreateBtn");
 
-  if (!createBtn || !lessonTemplate || !container) return; // safety check
+    if (!createBtn) return; // safety check
 
-  createBtn.addEventListener("click", () => {
-    // ✅ Clone the template deeply (with child nodes)
-    const newLesson = lessonTemplate.cloneNode(true);
+    // Show dialog when create button is clicked
+    createBtn.addEventListener("click", () => {
+        if (dialog) {
+            dialog.style.display = 'flex';
+        } else {
+            // Fallback: if dialog doesn't exist, just create blank lesson
+            createBlankLesson();
+        }
+    });
 
-    // ✅ Reset attributes & content for a fresh empty template
-    newLesson.removeAttribute("id"); // avoid duplicate ID
-    newLesson.querySelectorAll("input, textarea, select").forEach(el => el.value = "");
-    newLesson.querySelectorAll(".lesson-content, .lesson-text").forEach(el => el.textContent = "");
-
-    // ✅ Optional: Add a unique class for tracking
-    newLesson.classList.add("new-lesson-template");
-
-    // ✅ If your template has a publish button, wire it up
-    const publishBtn = newLesson.querySelector(".publish-btn");
-    if (publishBtn) {
-      publishBtn.addEventListener("click", () => {
-        newLesson.remove();
-      });
+    // Start from Draft option
+    if (startFromDraftBtn) {
+        startFromDraftBtn.addEventListener("click", () => {
+            if (dialog) dialog.style.display = 'none';
+            
+            // Check if there's a draft in localStorage
+            const savedData = localStorage.getItem('lessonDraft');
+            if (!savedData) {
+                showToast('info', 'No Draft Found', 'Starting a blank lesson instead.');
+                createBlankLesson();
+                return;
+            }
+            
+            try {
+                const data = JSON.parse(savedData);
+                const oneWeek = 7 * 24 * 60 * 60 * 1000;
+                const now = Date.now();
+                
+                // Check if draft is expired
+                if (!data.saved_at || now - data.saved_at > oneWeek) {
+                    showToast('warning', 'Draft Expired', 'Your draft has expired. Starting a blank lesson.');
+                    createBlankLesson();
+                    localStorage.removeItem('lessonDraft');
+                    return;
+                }
+                
+                // Create new lesson and load the draft
+                createBlankLesson();
+                
+                // Small delay to ensure new lesson template is loaded
+                setTimeout(() => {
+                    if (typeof loadLessonDraft === 'function') {
+                        loadLessonDraft();
+                        showToast('success', 'Draft Loaded', 'Your draft has been successfully loaded.');
+                    }
+                }, 300);
+                
+            } catch (error) {
+                console.error("Error loading draft:", error);
+                showToast('error', 'Error', 'Failed to load draft. Starting blank lesson.');
+                createBlankLesson();
+            }
+        });
     }
 
-    // ✅ Insert the new lesson after the last one
-    container.appendChild(newLesson);
+    // Start Blank option
+    if (startBlankBtn) {
+        startBlankBtn.addEventListener("click", () => {
+            if (dialog) dialog.style.display = 'none';
+            
+            // Ask if user wants to clear existing draft
+            const savedData = localStorage.getItem('lessonDraft');
+            if (savedData) {
+                if (confirm('You have an existing draft. Would you like to clear it before starting blank?')) {
+                    localStorage.removeItem('lessonDraft');
+                    showToast('info', 'Draft Cleared', 'Your draft has been removed.');
+                }
+            }
+            
+            createBlankLesson();
+        });
+    }
 
-    // ✅ Smoothly scroll to the newly created template
-    newLesson.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+    // Cancel option
+    if (cancelBtn) {
+        cancelBtn.addEventListener("click", () => {
+            if (dialog) dialog.style.display = 'none';
+        });
+    }
+
+    // Close dialog when clicking outside
+    if (dialog) {
+        dialog.addEventListener("click", (e) => {
+            if (e.target === dialog) {
+                dialog.style.display = 'none';
+            }
+        });
+    }
+
+    // Function to create a blank lesson
+    function createBlankLesson() {
+        if (!lessonTemplate || !container) {
+            showToast('error', 'Error', 'Unable to create lesson. Template not found.');
+            return;
+        }
+        
+        // Clone the template deeply (with child nodes)
+        const newLesson = lessonTemplate.cloneNode(true);
+
+        // Reset attributes & content for a fresh empty template
+        newLesson.removeAttribute("id"); // avoid duplicate ID
+        
+        // Clear all form fields
+        newLesson.querySelectorAll("input, textarea, select").forEach(el => {
+            if (el.type === 'checkbox' || el.type === 'radio') {
+                el.checked = false;
+            } else {
+                el.value = "";
+            }
+        });
+        
+        // Clear all text content areas
+        newLesson.querySelectorAll(".lesson-content, .lesson-text, .question-card").forEach(el => {
+            el.textContent = "";
+            el.innerHTML = "";
+        });
+        
+        // Clear game containers
+        newLesson.querySelectorAll("#matching-container, #flashcard-container, #spelling-container, #speak-container, #imagequiz-container").forEach(el => {
+            el.innerHTML = "";
+        });
+        
+        // Clear file upload displays
+        newLesson.querySelectorAll("#fileNameDisplay, #videoPreview").forEach(el => {
+            el.style.display = 'none';
+            el.innerHTML = '';
+        });
+
+        // Optional: Add a unique class for tracking
+        newLesson.classList.add("new-lesson-template");
+
+        // If your template has a publish button, wire it up
+        const publishBtn = newLesson.querySelector(".publish-btn");
+        if (publishBtn) {
+            publishBtn.addEventListener("click", () => {
+                newLesson.remove();
+            });
+        }
+
+        // Insert the new lesson after the last one
+        container.appendChild(newLesson);
+
+        // Smoothly scroll to the newly created template
+        newLesson.scrollIntoView({ behavior: "smooth", block: "start" });
+        
+        showToast('success', 'New Lesson', 'Blank lesson template created.');
+    }
 });
 
 
