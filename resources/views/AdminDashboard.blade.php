@@ -790,7 +790,7 @@
                     <!-- Pagination -->
                     <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
                         <div class="text-muted small"><span> Showing </span><span id="startCount">1</span><span> to </span><span id="endCount">3</span><span> of </span><span id="totalCount">50</span><span> users </span></div>
-                        <nav aria-label="User list pagination">
+                        <nav aria-label="User list pagination" id="usersPagination">
                             <ul class="mb-0 pagination pagination-sm">
                                 <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -3045,7 +3045,7 @@
 
             document.getElementById("totalCount").textContent = total;
 
-            const pagination = document.querySelector(".pagination"); // only your pagination ul
+            const pagination = document.getElementById("usersPagination"); // only your pagination ul
 
             let pagesHTML = `
                 <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
