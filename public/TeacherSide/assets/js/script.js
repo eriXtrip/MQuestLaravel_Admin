@@ -2395,10 +2395,14 @@ function initAssessments(pupilTests = []) {
                 parseInt(test.quarter) !== parseInt(quarterFilter.value)) return false;
 
             if (fromDate?.value) {
-                const testDate = getLocalDateOnly(test.date);
-                const filterDate = getLocalDateOnly(fromDate.value);
+                const testDate = new Date(test.date);
+                const filterDate = new Date(fromDate.value);
 
-                if (testDate < filterDate) return false;
+                // Convert both to YYYY-MM-DD strings for comparison
+                const testDateStr = testDate.toISOString().split('T')[0];
+                const filterDateStr = filterDate.toISOString().split('T')[0];
+
+                if (testDateStr < filterDateStr) return false;
             }
 
             return true;
