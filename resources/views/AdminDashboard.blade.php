@@ -2485,8 +2485,22 @@
                     showToast('error', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
-                await saveLessonToLocalDraft('draft');  // Save all content
+
+                try {
+                    const data = await getLessonData('draft'); // fetch all lesson data (same as publish)
+                    data.saved_at = Date.now();
+                    localStorage.setItem('lessonDraft', JSON.stringify(data));
+                    console.log('Draft saved with all content:', data);
+
+                    // Show draft success modal
+                    const draftModal = new bootstrap.Modal(document.getElementById('draftSuccessModal'));
+                    draftModal.show();
+                } catch (err) {
+                    console.error('Failed to save draft:', err);
+                    showToast('error', 'Save Failed', 'Could not save draft. Try again.');
+                }
             });
+
         });
     </script>
 
