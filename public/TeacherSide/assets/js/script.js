@@ -2345,49 +2345,42 @@ function initStudentsTable(pupils) {
    Assessment Tab - View Pupil Modal -Teacher Side
 =========================== */
 function initAssessments(pupilTests = []) {
-    // Config
     let currentPage = 1;
     const itemsPerPage = 3;
-    let filteredData = [...pupilTests]; // Use actual pupil tests
+    let filteredData = [...pupilTests];
 
-    // Helper
     const $ = (id) => document.getElementById(id);
 
-    // DOM Elements
     const searchInput = $('searchTest');
     const subjectFilter = $('testSubjectFilter');
     const quarterFilter = $('testQuarterFilter');
-    const typeFilter = $('testTypeFilter'); // optional dropdown for PRE/POST
     const fromDate = $('fromDate');
     const clearFiltersBtn = $('testClearFilter');
     const testCardsContainer = $('testCardsContainer');
     const startCount = $('startCount-3');
     const endCount = $('endCount-3');
     const totalCount = $('totalCount-3');
-    const paginationNav = document.querySelector('.pagination');
+    const paginationNav = document.querySelector('.pagination ul');
 
     if (!testCardsContainer) return;
 
-    // Initialize
     function init() {
         renderTestCards();
         updatePagination();
         updateResultsCount();
 
-        if (searchInput) searchInput.addEventListener('input', handleFilterChange);
-        if (subjectFilter) subjectFilter.addEventListener('change', handleFilterChange);
-        if (quarterFilter) quarterFilter.addEventListener('change', handleFilterChange);
-        if (typeFilter) typeFilter.addEventListener('change', handleFilterChange);
-        if (fromDate) fromDate.addEventListener('change', handleFilterChange);
-        if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
-        if (paginationNav) paginationNav.addEventListener('click', handlePaginationClick);
+        searchInput?.addEventListener('input', handleFilterChange);
+        subjectFilter?.addEventListener('change', handleFilterChange);
+        quarterFilter?.addEventListener('change', handleFilterChange);
+        fromDate?.addEventListener('change', handleFilterChange);
+        clearFiltersBtn?.addEventListener('click', clearAllFilters);
+        paginationNav?.addEventListener('click', handlePaginationClick);
     }
 
     function handleFilterChange() {
         filteredData = pupilTests.filter(test => {
             const searchTerm = (searchInput?.value || '').toLowerCase().trim();
 
-            // Search by title, subject, or type
             if (searchTerm &&
                 !test.title.toLowerCase().includes(searchTerm) &&
                 !test.subject.toLowerCase().includes(searchTerm) &&
@@ -2395,29 +2388,17 @@ function initAssessments(pupilTests = []) {
                 return false;
             }
 
-            // Filter by subject
             if (subjectFilter?.value && subjectFilter.value !== '' &&
-                test.subject.toLowerCase() !== subjectFilter.value.toLowerCase()) {
-                return false;
-            }
+                test.subject.toLowerCase() !== subjectFilter.value.toLowerCase()) return false;
 
-            // Filter by quarter
             if (quarterFilter?.value && quarterFilter.value !== '' &&
-                test.quarter !== parseInt(quarterFilter.value)) {
-                return false;
-            }
+                parseInt(test.quarter) !== parseInt(quarterFilter.value.replace('q',''))) return false;
 
-            // Filter by type (PRE/POST)
-            if (typeFilter?.value && typeFilter.value !== '' &&
-                test.type.toUpperCase() !== typeFilter.value.toUpperCase()) {
-                return false;
-            }
-
-            // Filter by from date
             if (fromDate?.value) {
                 const testDate = new Date(test.date);
-                const fromDateValue = new Date(fromDate.value);
-                if (testDate < fromDateValue) return false;
+                const filterDate = new Date(fromDate.value);
+                // Compare only date portion
+                if (testDate.setHours(0,0,0,0) < filterDate.setHours(0,0,0,0)) return false;
             }
 
             return true;
@@ -2430,34 +2411,23 @@ function initAssessments(pupilTests = []) {
     }
 
     function clearAllFilters() {
-        if (searchInput) searchInput.value = '';
-        if (subjectFilter) subjectFilter.value = '';
-        if (quarterFilter) quarterFilter.value = '';
-        if (typeFilter) typeFilter.value = '';
-        if (fromDate) fromDate.value = '';
-
+        searchInput.value = '';
+        subjectFilter.value = '';
+        quarterFilter.value = '';
+        fromDate.value = '';
         filteredData = [...pupilTests];
         currentPage = 1;
-
         renderTestCards();
         updatePagination();
         updateResultsCount();
     }
 
     function renderTestCards() {
-        if (!testCardsContainer) return;
-
         testCardsContainer.innerHTML = '';
-
         if (filteredData.length === 0) {
-            testCardsContainer.innerHTML = `
-                <div class="col-12">
-                    <div class="text-center py-5">
-                        <div class="text-muted mb-2">No results found</div>
-                        <p class="text-muted small">Try adjusting your search or filter criteria</p>
-                    </div>
-                </div>
-            `;
+            testCardsContainer.innerHTML = `<div class="col-12 text-center py-5 text-muted">
+                No results found<br><small>Try adjusting your search or filter criteria</small>
+            </div>`;
             return;
         }
 
@@ -2473,8 +2443,12 @@ function initAssessments(pupilTests = []) {
         const card = document.createElement('div');
         card.className = 'test-card';
 
-        const statusBadgeClass = test.grade >= 75 ? 'status-passed' : 'status-needs-review';
-        const statusText = test.grade >= 75 ? 'Passed' : 'Needs Review';
+        // Pass/Needs Improvement/Fail logic
+        let statusBadgeClass = '';
+        let statusText = '';
+        if (test.grade >= 75) { statusBadgeClass = 'status-passed'; statusText = 'Passed'; }
+        else if (test.grade >= 50) { statusBadgeClass = 'status-needs-review'; statusText = 'Needs Improvement'; }
+        else { statusBadgeClass = 'status-failed'; statusText = 'Fail'; }
 
         const typeTagClass = test.type.toUpperCase() === 'PRE' ? 'tag-pretest' : 'tag-posttest';
         const subjectTagClass = `tag-${test.subject.toLowerCase()}`;
@@ -2525,24 +2499,20 @@ function initAssessments(pupilTests = []) {
         let paginationHTML = '';
 
         paginationHTML += `<li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#">Previous</a>
-        </li>`;
+            <a class="page-link" href="#">Previous</a></li>`;
 
         const startPage = Math.max(1, currentPage - 2);
         const endPage = Math.min(totalPages, startPage + 4);
 
         for (let i = startPage; i <= endPage; i++) {
             paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#">${i}</a>
-            </li>`;
+                <a class="page-link" href="#">${i}</a></li>`;
         }
 
         paginationHTML += `<li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
-            <a class="page-link" href="#">Next</a>
-        </li>`;
+            <a class="page-link" href="#">Next</a></li>`;
 
-        const ul = paginationNav.querySelector('ul');
-        if (ul) ul.innerHTML = paginationHTML;
+        paginationNav.innerHTML = paginationHTML;
     }
 
     function handlePaginationClick(e) {
@@ -2562,9 +2532,7 @@ function initAssessments(pupilTests = []) {
     }
 
     function updateResultsCount() {
-        if (!startCount || !endCount || !totalCount) return;
-
-        const start = (currentPage - 1) * itemsPerPage + 1;
+        const start = filteredData.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
         const end = Math.min(currentPage * itemsPerPage, filteredData.length);
         const total = filteredData.length;
 
@@ -2575,6 +2543,7 @@ function initAssessments(pupilTests = []) {
 
     init();
 }
+
 
 
 
