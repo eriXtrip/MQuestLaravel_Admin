@@ -2374,20 +2374,7 @@ function initAssessments(pupilTests = []) {
         quarterFilter?.addEventListener('change', handleFilterChange);
         fromDate?.addEventListener('change', handleFilterChange);
         clearFiltersBtn?.addEventListener('click', clearAllFilters);
-        paginationContainer.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('page-link')) return;
-            e.preventDefault();
-            const text = e.target.textContent.trim();
-            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-            if (text === 'Previous' && currentPage > 1) currentPage--;
-            else if (text === 'Next' && currentPage < totalPages) currentPage++;
-            else if (!isNaN(parseInt(text))) currentPage = parseInt(text);
-
-            renderTestCards();
-            updatePagination();
-            updateResultsCount();
-        });
+        paginationNav?.addEventListener('click', handlePaginationClick);
     }
 
     function handleFilterChange() {
