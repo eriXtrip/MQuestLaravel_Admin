@@ -2023,7 +2023,8 @@ function initStudentsTable(pupils) {
       status: status, // derived from progress
       trend: p.avg_mastery_change > 0 ? 'up' : (p.avg_mastery_change < 0 ? 'down' : 'flat'),
       subject: p.subject_progress?.[0]?.subject_name || '',
-      lastActivityDate: p.recent_activity?.[0]?.created_at || ''
+      lastActivityDate: p.recent_activity?.[0]?.created_at || '',
+      stars: p.total_stars || 0 
     };
   });
 
@@ -2095,6 +2096,13 @@ function initStudentsTable(pupils) {
     tbody.innerHTML = students.map(s => renderRow(s)).join('');
   }
   renderAllRows();
+
+  // ⭐ TRIGGER STAR POPULATION WHEN A ROW IS CLICKED
+  tbody.querySelectorAll('tr').forEach((row, index) => {
+      row.addEventListener('click', () => {
+          populateStars(students[index].stars);
+      });
+  });
 
   function escapeHtml(str){
     if(str == null) return '';
@@ -2281,6 +2289,31 @@ function initStudentsTable(pupils) {
       filterRows();
     }
   });
+
+  function populateStars(totalStars) {
+      const container = document.querySelector('.stars-grid');
+      if (!container) return;
+
+      container.innerHTML = ""; // Clear existing placeholder stars
+
+      const maxStars = 30; // You can change this
+      const starCount = Math.min(totalStars, maxStars);
+
+      for (let i = 0; i < starCount; i++) {
+          const star = document.createElement('div');
+          star.className = "text-warning star-item";
+          star.innerHTML = `
+              <svg class="bi bi-star-fill text-warning" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 
+                  6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 
+                  0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 
+                  3.356.83 4.73c.078.443-.36.79-.746.592L8 
+                  13.187l-4.389 2.256z"></path>
+              </svg>
+          `;
+          container.appendChild(star);
+      }
+  }
 }
 
 
