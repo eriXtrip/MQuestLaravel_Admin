@@ -3789,7 +3789,7 @@
 
 
         // Render to table
-        function renderUserTable(list) {
+        /*function renderUserTable(list) {
             const body = document.getElementById("userTableBody");
             body.innerHTML = "";
 
@@ -3839,7 +3839,69 @@
 
                 body.insertAdjacentHTML("beforeend", row);
             });
+        }*/
+        function maskEmail(email) {
+            if (!email || !email.includes("@")) return email;
+
+            const [local, domain] = email.split("@");
+
+            const visible = local.slice(0, 3);
+            const masked = "*".repeat(Math.max(local.length - 3, 3));
+
+            return `${visible}${masked}@${domain}`;
         }
+
+        function renderUserTable(list) {
+            const body = document.getElementById("userTableBody");
+            body.innerHTML = "";
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            const pageItems = list.slice(start, end);
+
+            document.getElementById("startCount").textContent = start + 1;
+            document.getElementById("endCount").textContent = Math.min(end, list.length);
+
+            pageItems.forEach(user => {
+                const activeBadge = user.active 
+                    ? `<span class="status-badge status-active">Active</span>`
+                    : `<span class="status-badge status-inactive">Inactive</span>`;
+
+                const dotClass = user.active ? "online" : "offline";
+
+                const typeBadge =
+                    user.type === "Teacher"
+                        ? `<span class="text-success bg-success-subtle user-badge badge">Teacher</span>`
+                        : `<span class="text-info bg-info-subtle user-badge badge">Pupil</span>`;
+
+                const lastSeenText = user.active ? "Now" : timeAgo(user.lastActive);
+
+                const row = `
+                    <tr data-active="${user.active}">
+                        <td data-label="Online"><div class="status-dot ${dotClass}"></div></td>
+                        <td data-label="Name">${user.name}</td>
+                        <td data-label="Email">${maskEmail(user.email)}</td>
+                        <td data-label="Type">${typeBadge}</td>
+                        <td data-label="Grade/Class">${user.schoolName}</td>
+                        <td data-label="Status">${activeBadge}</td>
+                        <td data-label="Last Seen">${lastSeenText}</td>
+                        <td data-label="Actions">
+                            <button class="btn action-btn view" title="View Profile"
+                                    data-bs-toggle="modal" data-bs-target="#viewProfile"
+                                    onclick="openProfile(${user.id}, '${user.type}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8..."></path>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+
+                body.insertAdjacentHTML("beforeend", row);
+            });
+        }
+
 
         function updateUI() {
             renderUserTable(activeList);
