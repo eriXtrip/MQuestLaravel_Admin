@@ -1980,8 +1980,6 @@
             const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
             const successModal = new bootstrap.Modal(document.getElementById('publishSuccessModal'));
 
-            // Save draft
-            localStorage.setItem('lessonDraft', JSON.stringify(data));
 
             // Load draft
             const savedData = localStorage.getItem('lessonDraft');
@@ -1993,6 +1991,7 @@
                 selectedSubject.value = data.selected_subject || '';
                 console.log('Lesson restored from localStorage:', data);
             }
+
 
             // Store the current status for confirmation
             let currentStatus = '';
@@ -2346,10 +2345,10 @@
 
             // Handle publish button click - show confirmation first
             publishBtn.addEventListener('click', async () => {
-                console.log('Publish button clicked'); // Debug log
+                console.log('Publish button clicked');
                 const hasData = await hasLessonData();
                 if (!hasData) {
-                    showToast('warning', 'No Content', 'Please add content to your lesson before publishing.');
+                    showToast('warning', 'No Content', 'Please add content before publishing.');
                     return;
                 }
 
@@ -2357,17 +2356,29 @@
                 confirmModal.show();
             });
 
+            async function saveLessonToLocalDraft(status = 'draft') {
+                const data = await getLessonData(status);
+                localStorage.setItem('lessonDraft', JSON.stringify(data));
+                console.log('Lesson saved to localStorage:', data);
+                showToast('info', 'Lesson Draft', 'Lesson saved locally!');
+            }
+
+
             // Handle draft button click - no confirmation needed
             draftBtn.addEventListener('click', async () => {
                 console.log('Draft button clicked');
+
                 const hasData = await hasLessonData();
                 if (!hasData) {
                     showToast('warning', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
 
-                await saveLessonToSession('draft'); // Save to session first
-                submitLesson('draft');               // Then send to server
+                // Save to localStorage first
+                await saveLessonToLocalDraft('draft');
+
+                // Then send to server
+                await submitLesson('draft');
             });
 
             // Toast function (if not already defined)
