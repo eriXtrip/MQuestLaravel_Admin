@@ -3054,7 +3054,8 @@
 
             const pagination = document.getElementById("usersPagination");
 
-            let pagesHTML = `
+            // IMPORTANT: Only replace the LI items, not the UL
+            let liHTML = `
                 <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
                     <a class="page-link" href="#" data-page="prev">Previous</a>
                 </li>
@@ -3070,9 +3071,9 @@
                 </li>
             `;
 
-            pagination.innerHTML = pagesHTML;
+            // Replace only the inner content, KEEPING UL classes and style
+            pagination.innerHTML = liHTML;
 
-            // event listeners
             pagination.querySelectorAll(".page-link").forEach(btn => {
                 btn.addEventListener("click", e => {
                     e.preventDefault();
@@ -3086,6 +3087,7 @@
                 });
             });
         }
+
 
 
 
