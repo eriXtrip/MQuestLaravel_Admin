@@ -2051,28 +2051,36 @@
             }
 
             // Populate posttest questions
-            if (data.posttest_questions?.length) {
-                console.log("Restoring posttest questions:", data.posttest_questions);
-                data.posttest_questions.forEach(q => {
-                    setTimeout(() => {
-                        document.getElementById("questionType2").value = q.type;
-                        addQuestion2();
-                        const idx = questionCount2;
-                        const qText = document.getElementById(`questionText2-${idx}`);
-                        if (qText) qText.value = q.questionText || "";
-                        const correctEl = document.getElementById(`correctAnswer2-${idx}`);
-                        if (correctEl) correctEl.value = q.correctAnswer || "";
+            function loadPosttest() {
+                if (data.posttest_questions?.length) {
+                    console.log("Loading posttest questions:", data.posttest_questions.length);
+                    
+                    if (typeof loadQuestions2FromLocalStorage === 'function') {
+                        console.log("✅ Calling loadQuestions2FromLocalStorage for posttest");
+                        loadQuestions2FromLocalStorage();
+                    } else {
+                        console.error("❌ loadQuestions2FromLocalStorage function not found!");
+                        // Fallback to your original method
+                        data.posttest_questions.forEach(q => {
+                            setTimeout(() => {
+                                document.getElementById("questionType2").value = q.type;
+                                addQuestion2();
+                                const idx = questionCount2;
+                                const qText = document.getElementById(`questionText2-${idx}`);
+                                if (qText) qText.value = q.questionText || "";
+                                const correctEl = document.getElementById(`correctAnswer2-${idx}`);
+                                if (correctEl) correctEl.value = q.correctAnswer || "";
 
-                        if (q.type === "multiple" && q.options?.length === 4) {
-                            document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
-                            document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
-                            document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
-                            document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
-                        }
-
-                        console.log(`Posttest question restored [${idx}]:`, q);
-                    }, 0);
-                });
+                                if (q.type === "multiple" && q.options?.length === 4) {
+                                    document.getElementById(`q2-${idx}opt1`).value = q.options[0] || "";
+                                    document.getElementById(`q2-${idx}opt2`).value = q.options[1] || "";
+                                    document.getElementById(`q2-${idx}opt3`).value = q.options[2] || "";
+                                    document.getElementById(`q2-${idx}opt4`).value = q.options[3] || "";
+                                }
+                            }, 0);
+                        });
+                    }
+                }
             }
 
             // Populate flashcards and other games

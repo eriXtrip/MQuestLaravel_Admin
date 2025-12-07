@@ -157,3 +157,94 @@ function fetchPostTestQuestions() {
   return questions;
 }
 
+
+function loadQuestions2FromLocalStorage() {
+  try {
+    const lessonData = JSON.parse(localStorage.getItem('lessonData'));
+    
+    if (!lessonData || !lessonData.posttest_questions || lessonData.posttest_questions.length === 0) {
+      console.log("No post-test questions found in localStorage");
+      return;
+    }
+
+    // Clear existing questions
+    const quizContainer = document.getElementById("quiz-container2");
+    if (!quizContainer) {
+      console.error("quiz-container2 element not found!");
+      return;
+    }
+    quizContainer.innerHTML = "";
+    questionCount2 = 0;
+    
+    // Store the original question type
+    const originalQuestionType = document.getElementById("questionType2")?.value || "";
+    
+    // Load each question
+    lessonData.posttest_questions.forEach((questionData, index) => {
+      // Set the question type
+      const typeSelect = document.getElementById("questionType2");
+      if (typeSelect) {
+        typeSelect.value = questionData.type;
+      }
+      
+      // Add the question
+      addQuestion2();
+      
+      // Get the current question ID (should be the latest added)
+      const currentId = questionCount2;
+      
+      // Populate basic question data
+      const questionTextEl = document.getElementById(`questionText2-${currentId}`);
+      if (questionTextEl) {
+        questionTextEl.value = questionData.questionText || "";
+      }
+      
+      // Handle different question types
+      switch(questionData.type) {
+        case "truefalse":
+          const correctAnswerSelect = document.getElementById(`correctAnswer2-${currentId}`);
+          if (correctAnswerSelect) {
+            correctAnswerSelect.value = questionData.correctAnswer || "true";
+          }
+          break;
+          
+        case "multiple":
+          // Populate options
+          if (questionData.options && Array.isArray(questionData.options)) {
+            for (let i = 0; i < 4; i++) {
+              const optEl = document.getElementById(`q2-${currentId}opt${i + 1}`);
+              if (optEl && questionData.options[i] !== undefined) {
+                optEl.value = questionData.options[i];
+              }
+            }
+          }
+          
+          // Set correct answer
+          const mcCorrectAnswer = document.getElementById(`correctAnswer2-${currentId}`);
+          if (mcCorrectAnswer) {
+            mcCorrectAnswer.value = questionData.correctAnswer || "A";
+          }
+          break;
+          
+        case "fillblank":
+          const fibAnswer = document.getElementById(`correctAnswer2-${currentId}`);
+          if (fibAnswer) {
+            fibAnswer.value = questionData.correctAnswer || "";
+          }
+          break;
+      }
+    });
+    
+    // Reset the question type dropdown
+    const typeSelect = document.getElementById("questionType2");
+    if (typeSelect) {
+      typeSelect.value = originalQuestionType;
+    }
+    
+    console.log(`✅ Loaded ${lessonData.posttest_questions.length} post-test questions from localStorage`);
+    
+  } catch (error) {
+    console.error("Error loading post-test questions from localStorage:", error);
+    showToast('error', 'Load Failed', 'Failed to load saved post-test questions.');
+  }
+}
