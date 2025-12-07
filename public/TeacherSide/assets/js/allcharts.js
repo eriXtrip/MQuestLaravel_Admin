@@ -104,7 +104,7 @@
   // ================================
   (function initPerformanceLineChart() {
     // Use dashboard data instead of hardcoded data
-    const rawQuarterlyData = window.dashboardData?.quarterlyProgress || {};
+    const rawQuarterlyData = window.dashboardData?.overall_class_performance || {};
 
     // Normalize subjects to lowercase keys for chart consistency
     const quarterlyData = {};
