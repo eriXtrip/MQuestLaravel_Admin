@@ -2031,7 +2031,23 @@
             // Populate pretest questions
             if (data.pretest_questions?.length) {
                 console.log("Restoring pretest questions:", data.pretest_questions);
-                data.pretest_questions.forEach(q => addPreTestQuestion(q));
+                
+                // Store the data
+                localStorage.setItem('lessonData', JSON.stringify(data));
+                
+                // Wait for everything to be ready
+                setTimeout(() => {
+                    // The function should be available now
+                    if (window.loadQuestionsFromLocalStorage) {
+                        window.loadQuestionsFromLocalStorage();
+                    } else {
+                        console.error("Function not found in window object");
+                        // Try calling it directly from the prequizBuilder module
+                        if (window.prequizBuilder && window.prequizBuilder.loadQuestionsFromLocalStorage) {
+                            window.prequizBuilder.loadQuestionsFromLocalStorage();
+                        }
+                    }
+                }, 500); // Longer delay to ensure all scripts loaded
             }
 
             // Populate posttest questions
