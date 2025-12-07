@@ -173,7 +173,6 @@
                             href="javascript:void(0)"  
                             data-section="lessonsection" 
                             data-subject="English" 
-                            data-route="{{ route('English') }}" 
                             onclick="selectSubject(this)">English</a>
                         </li>
                         <li>
@@ -181,7 +180,6 @@
                             href="javascript:void(0)"  
                             data-section="lessonsection" 
                             data-subject="Science" 
-                            data-route="{{ route('Science') }}" 
                             onclick="selectSubject(this)">Science</a>
                         </li>
                         <li>
@@ -189,7 +187,6 @@
                             href="javascript:void(0)"  
                             data-section="lessonsection" 
                             data-subject="Mathematics" 
-                            data-route="{{ route('Mathematics') }}" 
                             onclick="selectSubject(this)">Mathematics</a>
                         </li>
                         <li>
@@ -197,7 +194,6 @@
                             href="javascript:void(0)"  
                             data-section="lessonsection" 
                             data-subject="Filipino" 
-                            data-route="{{ route('Filipino') }}" 
                             onclick="selectSubject(this)">Filipino</a>
                         </li>
                     </ul>
@@ -384,7 +380,7 @@
                                 <h4 class="fw-bold mb-2" style="color: #131150;" id='TeacherLname'>Welcome back, Ms. Cruz</h4>
                                 <p class="text-muted mb-1">Stay updated on your students’ learning journey in this subject with access to their lessons and progress.</p>
                                 <!-- <p class="mb-2">You have<strong> <span style="color: rgb(19, 17, 80);">10 pending enrollment request</span></strong> waiting for your review today.&nbsp;</p> -->
-                                 <button id="gotolessons-btn" class="btn rounded-pill px-4 gotolessons-btn" data-default-route="{{ route('English') }}">Go to Lessons</button>
+                                 <button id="gotolessons-btn" class="btn rounded-pill px-4 gotolessons-btn" data-route="{{ route('English') }}">Go to Lessons</button>
                             </div>
                             <div class="ms-3 welcome-img"><img src="{{ asset('TeacherSide/assets/img/undraw_books_wxzz.svg') }}" style="max-width: 150px;" widt=""></div>
                         </div>
@@ -3238,13 +3234,13 @@
     <!-- Go to lessons btn -->
     <script>
         document.getElementById('gotolessons-btn').addEventListener('click', function() {
-            // Get the default route from the button
-            const route = this.dataset.defaultRoute;
-
-            if(route) {
-                window.location.href = route;
-            } else {
-                console.error('No route set for Go to Lessons button');
+            // Grab the first lesson link in the dropdown
+            const firstLessonLink = document.querySelector('.dropdown-list li a');
+            
+            if (firstLessonLink) {
+                // Redirect to a URL based on the data-subject attribute
+                const subject = firstLessonLink.getAttribute('data-subject');
+                window.location.href = `/${subject}`; // e.g., /English
             }
         });
     </script>
