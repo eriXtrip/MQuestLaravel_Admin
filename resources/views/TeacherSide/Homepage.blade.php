@@ -3697,6 +3697,7 @@
     console.log("Pupil Progress", window.dashboardData.pupil_progress ?? {});
     console.log("Recent Activity", window.dashboardData.recentActivity ?? {});
     console.log("Subject Progress", window.dashboardData.quarterlyProgress ?? {});
+    console.log("Class Performance", window.dashboardData.overall_class_performance ?? {});
     console.log("Over all Stats", window.dashboardData.overall_progress ?? {});
     console.log("subjects", window.dashboardData.subjects ?? {});
 
