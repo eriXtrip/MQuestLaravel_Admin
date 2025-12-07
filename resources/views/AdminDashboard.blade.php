@@ -2380,18 +2380,6 @@
                 // Then send to server
                 await submitLesson('draft');
             });
-
-            // Toast function (if not already defined)
-            function showToast(type, title, message) {
-                // You can use your existing toast implementation or Bootstrap toasts
-                console.log(`[${type.toUpperCase()}] ${title}: ${message}`);
-                // Example with Bootstrap toasts:
-                const toast = new bootstrap.Toast(document.getElementById('liveToast'));
-                if (toast) toast.show();
-                
-                // Fallback alert for debugging
-                alert(`${title}: ${message}`);
-            }
         });
     </script>
 
