@@ -9,6 +9,149 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    <style>
+        /* === Secret Key Modal Styles === */
+        .secret-key-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        }
+
+        .secret-key-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 900px;
+        width: 100%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+        .secret-key-container {
+            flex-direction: row;
+        }
+        }
+
+        .image-section {
+        flex: 1;
+        background: #f8fafc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        }
+
+        .image-section img {
+        max-width: 100%;
+        max-height: 300px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 12px;
+        }
+
+        .form-section {
+        flex: 1;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        }
+
+        .form-section h1 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 8px;
+        }
+
+        .form-section p {
+        color: #64748b;
+        font-size: 15px;
+        margin-bottom: 24px;
+        }
+
+        .secret-input-group {
+        position: relative;
+        margin-bottom: 24px;
+        }
+
+        .secret-input-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #334155;
+        margin-bottom: 8px;
+        }
+
+        .secret-input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: monospace;
+        letter-spacing: 8px;
+        background-color: #f8fafc;
+        color: transparent;
+        text-shadow: 0 0 0 #475569;
+        transition: border-color 0.3s;
+        }
+
+        .secret-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .submit-secret-btn {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .submit-secret-btn:hover {
+        background-color: #2563eb;
+        }
+
+        .submit-secret-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Placeholder image fallback */
+
+        .placeholder-image {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e2e8f0;
+        border-radius: 12px;
+        color: #94a3b8;
+        font-size: 14px;
+        text-align: center;
+        padding: 16px;
+        }
+
+    </style>
+
 </head>
 <body>
     <div class="login-container">
@@ -40,7 +183,7 @@
 
     <!--Custom enter secret key -->
     <div class="container secret-key-container" style="display: none;">
-        <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="ChatGPT Image Dec 8, 2025, 01_49_58 AM.png" />
+        <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="eriXtrip/MQuestLaravel_Admin/public/assets/img/girl.png" />
             <div id="fallback" class="placeholder-image" style="display: none;"><span> 🔒 Secure Access</span><br /><small>Illustration</small></div>
         </div>
         <div class="form-section">
