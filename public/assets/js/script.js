@@ -1396,9 +1396,6 @@ let spellCount = 0;
 let speakCount = 0;
 let imageQuizCount = 0;
 // =============== GAME LOADING FUNCTIONS ===============
-
-// =============== GAME LOADING FUNCTIONS ===============
-
 function loadMatchingGame(items) {
     if (!items || !items.length) return;
     
@@ -1696,7 +1693,7 @@ function updateCorrectAnswerDropdown(container) {
     });
 }
 
-// Auto-load function that checks what game type should be loaded
+// Auto-load function that uses jQuery selectors
 function autoLoadGameSections() {
     const savedData = localStorage.getItem('lessonDraft');
     if (!savedData) return;
@@ -1744,6 +1741,7 @@ $(document).ready(function() {
     // You might also want to initialize the select based on saved data
     autoLoadGameSections();
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const createBtn = document.getElementById("createLessonBtn");
