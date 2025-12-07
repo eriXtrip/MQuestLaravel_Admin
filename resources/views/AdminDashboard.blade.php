@@ -1881,7 +1881,7 @@
         });
     </script>
 
-    <script>
+    <!--<script>
         document.addEventListener('DOMContentLoaded', () => {
             const studentsModal = document.getElementById('studentsModal');
             const studentsContainer = studentsModal.querySelector('.modal-student-list');
@@ -1954,7 +1954,91 @@
                 }
             });
         });
+    </script>-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentsModal = document.getElementById('studentsModal');
+            const studentsContainer = studentsModal.querySelector('.modal-student-list');
+
+            studentsModal.addEventListener('show.bs.modal', async (event) => {
+                // The element that triggered the modal
+                const button = event.relatedTarget;
+                const subjectId = button.getAttribute('data-subject-id');
+                if (!subjectId) return;
+
+                // Clear existing content
+                studentsContainer.innerHTML = '<p class="text-center text-muted">Loading...</p>';
+
+                try {
+                    // Fetch enrolled students by subject_id
+                    const response = await fetch(`/usersBySubject/${subjectId}`);
+                    const students = await response.json();
+
+                    // Clear container before inserting new data
+                    studentsContainer.innerHTML = '';
+
+                    if (students.length === 0) {
+                        studentsContainer.innerHTML = `<p class="text-center text-muted">No enrolled students for this subject.</p>`;
+                        return;
+                    }
+
+                    // Populate the modal with the fetched data
+                    students.forEach(student => {
+                        const avatar = student.avatar_thumbnail || 'assets/img/default-avatar.png';
+                        const fullname = `${student.first_name ?? ''} ${student.last_name ?? ''}`.trim();
+                        const lrn = student.lrn ?? 'N/A';
+
+                        // Mask LRN for security (show last 4 digits)
+                        let maskedLrn = 'N/A';
+                        if (lrn !== 'N/A') {
+                            maskedLrn = lrn.length > 4
+                                ? '*'.repeat(lrn.length - 4) + lrn.slice(-4)
+                                : '*'.repeat(lrn.length);
+                        }
+
+                        const card = `
+                            <div class="student-card">
+                                <div class="student-info">
+                                    <img class="img-fluid" width="200" height="200" src="${avatar}">
+                                    <div class="student-details">
+                                        <strong>${fullname}</strong>
+                                        <p class="text-muted mb-0">LRN:&nbsp;<span>${maskedLrn}</span></p>
+                                    </div>
+                                    <div class="student-actions">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                            fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope">
+                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2
+                                            0 0 1 2 2v8a2 2 0 0 1-2
+                                            2H2a2 2 0 0 1-2-2zm2-1a1
+                                            1 0 0 0-1 1v.217l7 4.2
+                                            7-4.2V4a1 1 0 0
+                                            0-1-1zm13 2.383-4.708
+                                            2.825L15
+                                            11.105zm-.034 6.876-5.64-
+                                            3.471L8
+                                            9.583l-1.326-.795-5.64
+                                            3.47A1 1 0 0
+                                            0 2 13h12a1 1 0 0 0
+                                            .966-.741M1
+                                            11.105l4.708-2.897L1
+                                            5.383z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        studentsContainer.insertAdjacentHTML('beforeend', card);
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching students:', error);
+                    studentsContainer.innerHTML = `<p class="text-center text-danger">Failed to load data.</p>`;
+                }
+            });
+        });
     </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
