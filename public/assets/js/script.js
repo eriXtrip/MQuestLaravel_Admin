@@ -1388,236 +1388,297 @@ function loadGameDataForSection(sectionId) {
 
 // =============== GAME LOADING FUNCTIONS ===============
 
+// =============== GAME LOADING FUNCTIONS ===============
+
 function loadMatchingGame(items) {
     if (!items || !items.length) return;
     
-    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-    if (!activeLesson) {
-        console.error("No active lesson found!");
-        return;
-    }
-    
-    const container = activeLesson.querySelector('#matching-container');
-    if (!container) {
-        console.error("Matching container not found in active lesson!");
-        return;
-    }
-    
-    // Check if we've already loaded this data
-    if (container.hasAttribute('data-draft-loaded')) {
-        console.log("Matching game already loaded from draft");
-        return;
-    }
+    const container = document.getElementById('matching-container');
+    if (!container) return;
     
     console.log("Loading matching game items:", items.length);
     
     // Clear container first
     container.innerHTML = '';
     
-    // Get the matchingCount from the active lesson or reset it
-    let matchingCount = 0;
+    // Reset the counter
+    matchingCount = 0;
     
     items.forEach((item, index) => {
-        matchingCount++;
+        // Use the original addMatching function to create the styled item
+        addMatching();
         
-        // Create the HTML directly instead of calling addMatching()
-        const div = document.createElement("div");
-        div.classList.add("item-group", "position-relative");
-        div.innerHTML = `
-            <div class="game-header">
-                <h6 class="game-item-title">Item ${matchingCount}</h6>
-                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-                    <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="mb-3 matching-container-item">
-                <div class="field-label-wrapper"><label class="form-label">Term</label></div>
-                <input class="form-control" type="text" value="${item.term || ''}" />
-            </div>
-            <div class="matching-container-item">
-                <div class="field-label-wrapper"><label class="form-label">Definition</label></div>
-                <textarea class="form-control">${item.definition || ''}</textarea>
-            </div>
-        `;
-        container.appendChild(div);
+        // Get the last added item (the one we just created)
+        const matchingGroups = container.querySelectorAll('.item-group');
+        const lastItem = matchingGroups[matchingGroups.length - 1];
+        
+        if (!lastItem) return;
+        
+        // Populate with data - Use the correct selectors from your addMatching function
+        // In your addMatching() HTML, the term is an input and definition is a textarea
+        const termInput = lastItem.querySelector('.matching-container-item:first-child input');
+        const definitionTextarea = lastItem.querySelector('.matching-container-item:last-child textarea');
+        
+        if (termInput) termInput.value = item.term || '';
+        if (definitionTextarea) definitionTextarea.value = item.definition || '';
+        
+        // Update the item title to show correct number
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
     });
-    
-    container.setAttribute('data-draft-loaded', 'true');
-    console.log("Matching game loaded successfully");
-    
-    // Show the matching section
-    const matchingSection = activeLesson.querySelector('#matching-section');
-    if (matchingSection) {
-        matchingSection.style.display = 'block';
-    }
 }
 
 function loadFlashcardGame(items) {
     if (!items || !items.length) return;
     
-    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-    if (!activeLesson) return;
-    
-    const container = activeLesson.querySelector('#flashcard-container');
+    const container = document.getElementById('flashcard-container');
     if (!container) return;
-    
-    // Check if already loaded
-    if (container.hasAttribute('data-draft-loaded')) return;
     
     console.log("Loading flashcard items:", items.length);
     
+    // Clear container first
     container.innerHTML = '';
     
-    let flashcardCount = 0;
+    // Reset the counter
+    flashcardCount = 0;
     
     items.forEach((item, index) => {
-        flashcardCount++;
+        // Use the original addFlashcard function
+        addFlashcard();
         
-        const div = document.createElement("div");
-        div.classList.add("item-group");
-        div.innerHTML = `
-            <div class="game-header">
-                <h6 class="game-item-title">Item ${flashcardCount}</h6>
-                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-                    <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="mb-2 matching-container-item">
-                <div class="field-label-wrapper"><label class="form-label">Front</label></div>
-                <input class="form-control" type="text" value="${item.front || ''}" />
-            </div>
-            <div class="matching-container-item">
-                <div class="field-label-wrapper"><label class="form-label">Back</label></div>
-                <textarea class="form-control">${item.back || ''}</textarea>
-            </div>
-        `;
-        container.appendChild(div);
+        // Get the last added item
+        const flashcardGroups = container.querySelectorAll('.item-group');
+        const lastItem = flashcardGroups[flashcardGroups.length - 1];
+        
+        if (!lastItem) return;
+        
+        // Populate with data
+        const frontInput = lastItem.querySelector('.matching-container-item:first-child input');
+        const backTextarea = lastItem.querySelector('.matching-container-item:last-child textarea');
+        
+        if (frontInput) frontInput.value = item.front || '';
+        if (backTextarea) backTextarea.value = item.back || '';
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
     });
-    
-    container.setAttribute('data-draft-loaded', 'true');
-    console.log("Flashcard game loaded successfully");
 }
 
 function loadSpellingGame(items) {
     if (!items || !items.length) return;
     
-    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-    if (!activeLesson) {
-        console.error("No active lesson found!");
-        return;
-    }
-    
-    const container = activeLesson.querySelector('#spelling-container');
-    if (!container) {
-        console.error("Spelling container not found in active lesson!");
-        return;
-    }
-    
-    if (container.hasAttribute('data-draft-loaded')) return;
+    const container = document.getElementById('spelling-container');
+    if (!container) return;
     
     console.log("Loading spelling items:", items.length);
     
+    // Clear container first
     container.innerHTML = '';
     
-    let spellCount = 0;
+    // Reset the counter
+    spellCount = 0;
     
     items.forEach((item, index) => {
-        spellCount++;
+        // Use the original addSpelling function
+        addSpelling();
         
-        const div = document.createElement("div");
-        div.classList.add("item-group");
-        div.innerHTML = `
-            <div class="game-header">
-                <h6 class="game-item-title">Item ${spellCount}</h6>
-                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-                    <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="row g-3 fillblank-row">
-                <div class="col-12 phrase">
-                    <label class="fw-semibold d-flex form-label">
-                        <span class="badge me-2 phrase-badge">1</span> First Phrase (before blank) 
-                    </label>
-                    <input class="form-control first-phrase" type="text" placeholder="e.g. The capital of France is" value="${item.first || ''}" />
-                </div>
-                <div class="col-12 col-md-6 phrase">
-                    <label class="fw-semibold d-flex form-label">
-                        <span class="badge me-2 phrase-badge">2</span> Correct Answer (max 11 chars) 
-                    </label>
-                    <div class="input-group flex-nowrap">
-                        <input class="form-control form-control answer-input" type="text" maxlength="11" placeholder="Paris" value="${item.answer || ''}" />
-                        <span class="bg-light input-group-text input-group-text border-start-0 small char-counter max-char">${(item.answer || '').length}/11</span>
-                    </div>
-                    <div class="text-muted form-text small">
-                        <span>Answer is case-insensitive when played. Max 11 characters.</span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 phrase">
-                    <label class="fw-semibold d-flex form-label">
-                        <span class="badge me-2 phrase-badge">3</span> Last Phrase (after blank) 
-                    </label>
-                    <input class="form-control phrase last-phrase" type="text" placeholder="e.g. , known for its art." value="${item.last || ''}" />
-                </div>
-                <div class="col-12 phrase">
-                    <label class="fw-semibold d-flex form-label">
-                        <span class="badge me-2 phrase-badge">4</span> Definition (optional)
-                    </label>
-                    <textarea class="form-control definition-input" rows="2" placeholder="e.g. The capital city of France, famous for the Eiffel Tower and art museums.">${item.definition || ''}</textarea>
-                    <div class="text-muted form-text small">
-                        <span>Shown to students after answering correctly (optional).</span>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-light border rounded-2 p-3 mt-4">
-                <h6 class="text-secondary d-flex align-items-center mb-2 live-preview">
-                    <svg class="bi bi-eye me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
-                    </svg> Live Preview 
-                </h6>
-                <p class="fst-italic text-dark mb-0 preview-text">"${item.first || ''} <strong class="text-underline">${item.answer || '_____'}</strong> ${item.last || ''}"</p>
-            </div>
-        `;
-        container.appendChild(div);
+        // Get the last added item
+        const spellingGroups = container.querySelectorAll('.item-group');
+        const lastItem = spellingGroups[spellingGroups.length - 1];
         
-        // Setup event listeners for real-time preview
-        const firstInput = div.querySelector('.first-phrase');
-        const answerInput = div.querySelector('.answer-input');
-        const lastInput = div.querySelector('.last-phrase');
-        const counter = div.querySelector('.char-counter');
-        const previewText = div.querySelector('.preview-text');
-
-        function updatePreview() {
-            const first = firstInput.value.trim();
+        if (!lastItem) return;
+        
+        // Populate with data
+        const firstPhrase = lastItem.querySelector('.first-phrase');
+        const answerInput = lastItem.querySelector('.answer-input');
+        const lastPhrase = lastItem.querySelector('.last-phrase');
+        const definitionInput = lastItem.querySelector('.definition-input');
+        const charCounter = lastItem.querySelector('.char-counter');
+        const previewText = lastItem.querySelector('.preview-text');
+        
+        if (firstPhrase) firstPhrase.value = item.first || '';
+        if (answerInput) answerInput.value = item.answer || '';
+        if (lastPhrase) lastPhrase.value = item.last || '';
+        if (definitionInput) definitionInput.value = item.definition || '';
+        
+        // Trigger the real-time behaviors from addSpelling function
+        if (answerInput && charCounter && previewText) {
+            // Update counter
+            const len = answerInput.value.length;
+            charCounter.textContent = `${len}/11`;
+            charCounter.classList.toggle('text-danger', len > 9);
+            charCounter.classList.toggle('fw-bold', len > 9);
+            
+            // Update preview
+            const first = firstPhrase ? firstPhrase.value.trim() : '';
             const answer = answerInput.value.trim() || "_____";
-            const last = lastInput.value.trim();
+            const last = lastPhrase ? lastPhrase.value.trim() : '';
             previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
         }
-
-        function updateCounter() {
-            const len = answerInput.value.length;
-            counter.textContent = `${len}/11`;
-            counter.classList.toggle('text-danger', len > 9);
-            counter.classList.toggle('fw-bold', len > 9);
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
         }
-
-        firstInput.addEventListener('input', updatePreview);
-        answerInput.addEventListener('input', () => {
-            updateCounter();
-            updatePreview();
-        });
-        lastInput.addEventListener('input', updatePreview);
     });
-    
-    container.setAttribute('data-draft-loaded', 'true');
-    console.log("Spelling game loaded successfully");
 }
+
+function loadSpeakGame(items) {
+    if (!items || !items.length) return;
+    
+    const container = document.getElementById('speak-container');
+    if (!container) return;
+    
+    console.log("Loading speak prompts:", items.length);
+    
+    // Clear container first
+    container.innerHTML = '';
+    
+    // Reset the counter
+    speakCount = 0;
+    
+    items.forEach((item, index) => {
+        // Use the original addSpeak function
+        addSpeak();
+        
+        // Get the last added item
+        const speakGroups = container.querySelectorAll('.item-group');
+        const lastItem = speakGroups[speakGroups.length - 1];
+        
+        if (!lastItem) return;
+        
+        // Populate with data
+        const input = lastItem.querySelector('.speech-text-form input');
+        if (input) {
+            input.value = item.prompt || '';
+        }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
+    });
+}
+
+function loadImageQuizGame(items) {
+    if (!items || !items.length) return;
+    
+    const container = document.getElementById('imagequiz-container');
+    if (!container) return;
+    
+    console.log("Loading image quiz items:", items.length);
+    
+    // Clear container first
+    container.innerHTML = '';
+    
+    // Reset the counter
+    imageQuizCount = 0;
+    
+    items.forEach((item, index) => {
+        // Use the original addImageQuiz function
+        addImageQuiz();
+        
+        // Get the last added item
+        const imageQuizGroups = container.querySelectorAll('.item-group');
+        const lastItem = imageQuizGroups[imageQuizGroups.length - 1];
+        
+        if (!lastItem) return;
+        
+        // Populate with data
+        const questionInput = lastItem.querySelector('.question-input');
+        const correctSelect = lastItem.querySelector('.correct-select');
+        
+        if (questionInput) questionInput.value = item.question || '';
+        if (correctSelect && item.correct) correctSelect.value = item.correct;
+        
+        // Handle image if exists
+        if (item.imageUrl) {
+            const previewImage = lastItem.querySelector('.preview-image-compact');
+            const uploadPlaceholder = lastItem.querySelector('.upload-placeholder');
+            
+            if (previewImage && uploadPlaceholder) {
+                previewImage.src = item.imageUrl;
+                previewImage.style.display = 'block';
+                uploadPlaceholder.style.display = 'none';
+            }
+        }
+        
+        // Populate choices - this needs special handling since addImageQuiz creates default choices
+        const choicesWrapper = lastItem.querySelector('.choices-wrapper');
+        if (choicesWrapper && item.choices && item.choices.length > 0) {
+            // Clear default choices first
+            choicesWrapper.innerHTML = '';
+            
+            // Add the saved choices
+            item.choices.forEach((choice, choiceIndex) => {
+                const choiceDiv = document.createElement('div');
+                choiceDiv.className = 'choice-item d-flex align-items-center mb-1';
+                choiceDiv.innerHTML = `
+                    <input type="text" class="form-control choice-input" value="${choice || ''}" placeholder="Option ${String.fromCharCode(65 + choiceIndex)}">
+                    <button type="button" class="btn btn-sm btn-outline-danger ms-1 remove-choice">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                        </svg>
+                    </button>
+                `;
+                choicesWrapper.appendChild(choiceDiv);
+                
+                // Add event listener for remove button
+                const removeBtn = choiceDiv.querySelector('.remove-choice');
+                removeBtn.addEventListener('click', function() {
+                    choiceDiv.remove();
+                    updateCorrectAnswerDropdown(lastItem);
+                });
+            });
+            
+            // Update correct answer dropdown
+            updateCorrectAnswerDropdown(lastItem);
+        }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
+    });
+}
+
+// Helper function to update correct answer dropdown for image quiz
+function updateCorrectAnswerDropdown(container) {
+    const choices = container.querySelectorAll('.choice-input');
+    const select = container.querySelector('.correct-select');
+    
+    if (!select) return;
+    
+    // Clear existing options except the first one
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+    
+    // Add new options based on choices
+    choices.forEach((choice, index) => {
+        const letter = String.fromCharCode(65 + index);
+        const option = document.createElement('option');
+        option.value = letter;
+        option.textContent = `Option ${letter}: ${choice.value || '(empty)'}`;
+        select.appendChild(option);
+    });
+}
+
+// Make sure counters are declared globally
+let matchingCount = 0;
+let flashcardCount = 0;
+let spellCount = 0;
+let speakCount = 0;
+let imageQuizCount = 0;
 
 // Add setupGameSectionHandlers function
 function setupGameSectionHandlers(lessonElement) {
