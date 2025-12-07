@@ -2372,7 +2372,11 @@ function initAssessments(pupilTests = []) {
         searchInput?.addEventListener('input', handleFilterChange);
         subjectFilter?.addEventListener('change', handleFilterChange);
         quarterFilter?.addEventListener('change', handleFilterChange);
-        fromDate?.addEventListener('change', handleFilterChange);
+
+        // Add listener for sort select
+        const sortDate = $('sortDate');
+        sortDate?.addEventListener('change', handleFilterChange);
+
         clearFiltersBtn?.addEventListener('click', clearAllFilters);
         paginationNav?.addEventListener('click', handlePaginationClick);
     }
