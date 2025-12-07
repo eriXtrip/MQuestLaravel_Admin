@@ -2184,9 +2184,19 @@
                 const uploadedVideo = videoInput?.files[0] || null;
                 const videoUrl = document.getElementById('urlInput')?.value.trim() || '';
 
-                return {
-                    files: uploadedFile ? { title: fileTitle, subtitle: fileSubtitle, file: uploadedFile } : null,
-                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, file: uploadedVideo } : null,
+                 return {
+                    files: uploadedFile ? { 
+                        title: fileTitle, 
+                        subtitle: fileSubtitle, 
+                        name: uploadedFile.name,   // store only filename
+                        path: fileInput.value      // store the input path (local directory)
+                    } : null,
+                    videos: uploadedVideo ? { 
+                        title: videoTitle, 
+                        subtitle: videoSubtitle, 
+                        name: uploadedVideo.name,  // store only filename
+                        path: videoInput.value     // store the input path (local directory)
+                    } : null,
                     video_url: videoUrl || null,
                     video_url_title: videoTitle || '',
                     video_url_subtitle: videoSubtitle || ''
@@ -2228,8 +2238,10 @@
             async function saveLessonToSession(status = 'draft') {
                 try {
                     const data = await getLessonData(status);
-                    sessionStorage.setItem('lessonDraft', JSON.stringify(data));
-                    console.log('Lesson saved to sessionStorage:', data);
+                    data.saved_at = Date.now(); // timestamp
+                    localStorage.setItem('lessonDraft', JSON.stringify(data));
+                    console.log('Lesson saved to localStorage:', data);
+                    showToast('info', 'Lesson Draft', 'Lesson saved locally!');
                 } catch (err) {
                     console.warn('Failed to save lesson to sessionStorage:', err);
                 }
