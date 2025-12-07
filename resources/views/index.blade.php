@@ -184,7 +184,7 @@
     <!--Custom enter secret key -->
     <div class="secret-modal-overlay" style="display: none;">
         <div class="container secret-key-container">
-            <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="eriXtrip/MQuestLaravel_Admin/public/assets/img/girl.png" />
+            <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="{{ asset('assets/img/girl.png') }}" />
                 <div id="fallback" class="placeholder-image" style="display: none;"><span> 🔒 Secure Access</span><br /><small>Illustration</small></div>
             </div>
             <div class="form-section">
