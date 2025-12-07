@@ -356,7 +356,7 @@
                                 <h4 class="fw-bold mb-2" style="color: #131150;" id='TeacherLname'>Welcome back, Ms. Cruz</h4>
                                 <p class="text-muted mb-1">Stay updated on your students’ learning journey in this subject with access to their lessons and progress.</p>
                                 <!-- <p class="mb-2">You have<strong> <span style="color: rgb(19, 17, 80);">10 pending enrollment request</span></strong> waiting for your review today.&nbsp;</p> -->
-                                 <button class="btn rounded-pill px-4 gotolessons-btn">Go to Lessons</button>
+                                 <button class="btn rounded-pill px-4 gotolessons-btn" data-route="{{ route('English') }}">Go to Lessons</button>
                             </div>
                             <div class="ms-3 welcome-img"><img src="{{ asset('TeacherSide/assets/img/undraw_books_wxzz.svg') }}" style="max-width: 150px;" widt=""></div>
                         </div>
@@ -3210,9 +3210,10 @@
     <!-- Go to lessons btn -->
     <script>
         document.querySelector('.gotolessons-btn').addEventListener('click', function() {
-            window.location.href = "{{ route('English') }}"; 
+            window.location.href = "{{ route('English') }}"; // works inside Blade
         });
     </script>
+
 
     <!-- Recent Enrollees -->
     <script>
