@@ -2348,7 +2348,7 @@
                 console.log('Publish button clicked');
                 const hasData = await hasLessonData();
                 if (!hasData) {
-                    showToast('warning', 'No Content', 'Please add content before publishing.');
+                    showToast('error', 'No Content', 'Please add content before publishing.');
                     return;
                 }
 
@@ -2370,7 +2370,7 @@
 
                 const hasData = await hasLessonData();
                 if (!hasData) {
-                    showToast('warning', 'No Content', 'Cannot save an empty lesson as draft.');
+                    showToast('error', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
 
