@@ -1659,7 +1659,7 @@
                 <div class="modal-body text-center p-4">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
-                            viewBox="0 0 16 16" class="bi bi-check-circle-fill text-info">
+                            viewBox="0 0 16 16" class="bi bi-check-circle-fill text-success">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 
                             9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 
                             0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -1667,7 +1667,7 @@
                     </div>
                     <h4 class="fw-bold mb-2">Draft Saved!</h4>
                     <p class="text-muted mb-3">Your lesson has been successfully saved as a draft.</p>
-                    <button class="btn btn-info rounded-pill px-4 py-2 close-modal"
+                    <button class="btn btn-success rounded-pill px-4 py-2 close-modal"
                         type="button" data-bs-dismiss="modal">Okay</button>
                 </div>
             </div>
@@ -1717,6 +1717,25 @@
                         <button class="btn btn-outline-success rounded-pill px-4 py-2 btn-sm" type="button" id="confirmPublishBtn">
                             Publish Lesson
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Delete Draft Confirmation Modal-->
+    <div id="deleteDraftLesson" class="modal fade show" role="dialog" tabindex="-1" style="display: block;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3"><svg class="bi bi-exclamation-triangle-fill text-danger" xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
+                        </svg></div>
+                    <h4 class="fw-bold mb-2">Delete draft?</h4>
+                    <p class="text-muted mb-3">Are you sure you want to delete this draft? This action cannot be undone.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal"> Cancel </button>
+                        <button id="deleteDraft" class="btn btn-outline-success btn-sm rounded-pill px-4 py-2" type="button">Delete</button>
                     </div>
                 </div>
             </div>
@@ -1956,6 +1975,7 @@
         });
     </script>-->
 
+    <!-- View Enrolled Pupils -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const studentsModal = document.getElementById('studentsModal');
@@ -2004,26 +2024,6 @@
                                     <div class="student-details">
                                         <strong>${fullname}</strong>
                                         <p class="text-muted mb-0">LRN:&nbsp;<span>${maskedLrn}</span></p>
-                                    </div>
-                                    <div class="student-actions">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope">
-                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2
-                                            0 0 1 2 2v8a2 2 0 0 1-2
-                                            2H2a2 2 0 0 1-2-2zm2-1a1
-                                            1 0 0 0-1 1v.217l7 4.2
-                                            7-4.2V4a1 1 0 0
-                                            0-1-1zm13 2.383-4.708
-                                            2.825L15
-                                            11.105zm-.034 6.876-5.64-
-                                            3.471L8
-                                            9.583l-1.326-.795-5.64
-                                            3.47A1 1 0 0
-                                            0 2 13h12a1 1 0 0 0
-                                            .966-.741M1
-                                            11.105l4.708-2.897L1
-                                            5.383z"></path>
-                                        </svg>
                                     </div>
                                 </div>
                             </div>
@@ -3004,7 +3004,7 @@
 
             // Delete Draft button functionality
             const deleteDraftBtn = document.querySelector('.delete-draft-btn');
-            if (deleteDraftBtn) {
+            /*if (deleteDraftBtn) {
                 deleteDraftBtn.addEventListener('click', function() {
                     // Confirm before deleting
                     if (confirm('Are you sure you want to delete this draft? This action cannot be undone.')) {
@@ -3026,7 +3026,40 @@
                         }, 1500);
                     }
                 });
+            }*/
+            if (deleteDraftBtn) {
+                deleteDraftBtn.addEventListener('click', function() {
+                    // Show custom modal instead of confirm()
+                    const modal = new bootstrap.Modal(document.getElementById('deleteDraftLesson'));
+                    modal.show();
+
+                    const confirmDeleteBtn = document.getElementById('deleteDraft');
+
+                    // Confirm delete action
+                    confirmDeleteBtn.onclick = function () {
+
+                        // Remove the draft
+                        localStorage.removeItem('lessonDraft');
+
+                        // Toast alert
+                        showToast('success', 'Draft Deleted', 'Your draft has been successfully deleted.');
+
+                        // Hide button
+                        deleteDraftBtn.style.display = 'none';
+
+                        // Clear form
+                        clearAllFormFields();
+
+                        // Reload
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+
+                        modal.hide();
+                    };
+                });
             }
+
 
             // Helper function to clear all form fields
             function clearAllFormFields() {
