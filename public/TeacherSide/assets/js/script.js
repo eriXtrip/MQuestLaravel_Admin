@@ -2395,12 +2395,8 @@ function initAssessments(pupilTests = []) {
                 parseInt(test.quarter) !== parseInt(quarterFilter.value)) return false;
 
             if (fromDate?.value) {
-                const testDate = new Date(test.date);
-                const filterDate = new Date(fromDate.value);
-
-                // Normalize both to local midnight
-                testDate.setHours(0,0,0,0);
-                filterDate.setHours(0,0,0,0);
+                const testDate = getLocalDateOnly(test.date);
+                const filterDate = getLocalDateOnly(fromDate.value);
 
                 if (testDate < filterDate) return false;
             }
@@ -2517,6 +2513,11 @@ function initAssessments(pupilTests = []) {
             <a class="page-link" href="#">Next</a></li>`;
 
         paginationNav.innerHTML = paginationHTML;
+    }
+
+    function getLocalDateOnly(dateString) {
+        const d = new Date(dateString); // parse ISO or input date
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate()); // local midnight
     }
 
     function handlePaginationClick(e) {
