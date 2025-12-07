@@ -1997,7 +1997,7 @@
             const savedData = localStorage.getItem('lessonDraft');
 
             // Log raw savedData from localStorage
-            console.log("Raw savedData from localStorage:", savedData);
+            // console.log("Raw savedData from localStorage:", savedData);
 
             if (!savedData) return console.log("No lesson draft found.");
 
@@ -2030,7 +2030,7 @@
 
             // Populate pretest questions
             if (data.pretest_questions?.length) {
-                console.log("Restoring pretest questions:", data.pretest_questions);
+                //console.log("Restoring pretest questions:", data.pretest_questions);
                 
                 // Store the data
                 localStorage.setItem('lessonData', JSON.stringify(data));
@@ -2052,7 +2052,7 @@
 
             // Populate posttest questions
             if (data.posttest_questions?.length) {
-                console.log("Restoring posttest questions:", data.posttest_questions);
+                //console.log("Restoring posttest questions:", data.posttest_questions);
                 
                 // Store the data
                 localStorage.setItem('lessonData', JSON.stringify(data));
@@ -2081,15 +2081,67 @@
 
             // Populate uploads
             if (data.uploads) {
-                console.log("Restoring uploads:", data.uploads);
-                if (data.uploads.ppt) populatePPTInput(data.uploads.ppt);
-                if (data.uploads.pdf) populatePDFInput(data.uploads.pdf);
-                if (data.uploads.videos) populateVideoInput(data.uploads.videos);
-                if (data.uploads.video_url) populateVideoURL(
-                    data.uploads.video_url,
-                    data.uploads.video_url_title,
-                    data.uploads.video_url_subtitle
-                );
+                console.log("Restoring uploads (titles only):", data.uploads);
+                
+                // PPT/PDF Title and Subtitle
+                if (data.uploads.ppt) {
+                    const pptTitle = document.getElementById('file-title');
+                    const pptSubtitle = document.getElementById('file-title-1');
+                    if (pptTitle) pptTitle.value = data.uploads.ppt.title || '';
+                    if (pptSubtitle) pptSubtitle.value = data.uploads.ppt.subtitle || '';
+                    
+                    // Also show filename in display area
+                    const fileName = document.getElementById('fileName');
+                    const fileSize = document.getElementById('fileSize');
+                    const fileNameDisplay = document.getElementById('fileNameDisplay');
+                    if (fileName && data.uploads.ppt.name) {
+                        fileName.textContent = data.uploads.ppt.name;
+                        if (fileSize) fileSize.textContent = 'Previously uploaded';
+                        if (fileNameDisplay) fileNameDisplay.style.display = 'block';
+                    }
+                }
+                
+                // Video Title and Subtitle
+                if (data.uploads.videos) {
+                    const videoTitle = document.getElementById('file-title-2');
+                    const videoSubtitle = document.getElementById('video-title');
+                    if (videoTitle) videoTitle.value = data.uploads.videos.title || '';
+                    if (videoSubtitle) videoSubtitle.value = data.uploads.videos.subtitle || '';
+                    
+                    // Show video placeholder
+                    const videoPreview = document.getElementById('videoPreview');
+                    if (videoPreview && data.uploads.videos.name) {
+                        videoPreview.style.display = 'block';
+                        videoPreview.innerHTML = `
+                            <div style="padding: 20px; text-align: center; color: #666;">
+                                <p><strong>Video loaded from draft</strong></p>
+                                <p>${data.uploads.videos.name}</p>
+                                <p><em>Re-upload video to preview</em></p>
+                            </div>
+                            <div class="video-controls"><button id="playPauseBtn">Play</button></div>
+                        `;
+                    }
+                }
+                
+                // Video URL
+                if (data.uploads.video_url) {
+                    const urlInput = document.getElementById('urlInput');
+                    if (urlInput) urlInput.value = data.uploads.video_url || '';
+                    
+                    // If URL has title/subtitle, set them (they might share the same fields as file video)
+                    if (data.uploads.video_url_title) {
+                        const urlTitleInput = document.getElementById('file-title-2');
+                        if (urlTitleInput && !urlTitleInput.value) {
+                            urlTitleInput.value = data.uploads.video_url_title;
+                        }
+                    }
+                    if (data.uploads.video_url_subtitle) {
+                        const urlSubtitleInput = document.getElementById('video-title');
+                        if (urlSubtitleInput && !urlSubtitleInput.value) {
+                            urlSubtitleInput.value = data.uploads.video_url_subtitle;
+                        }
+                    }
+                }
             }
 
             // Populate badges
