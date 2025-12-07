@@ -182,13 +182,13 @@
     </div>
 
     <!--Custom enter secret key -->
-    <div class="secret-modal-overlay" style="display: none;>
+    <div class="secret-modal-overlay" style="display: none;">
         <div class="container secret-key-container">
             <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="eriXtrip/MQuestLaravel_Admin/public/assets/img/girl.png" />
                 <div id="fallback" class="placeholder-image" style="display: none;"><span> 🔒 Secure Access</span><br /><small>Illustration</small></div>
             </div>
             <div class="form-section">
-                <h1>Enter Your Secret Key</h1>
+                <h1>Enter The Secret Key</h1>
                 <p>For security purposes, please provide your unique secret key to continue.</p>
                 <div class="input-group secret-input-group"><label class="input-group-text" for="secretKey">Secret Key</label><input id="secretKey" class="secret-input" type="text" autocomplete="off" maxlength="64" placeholder="••••••••" spellcheck="false" /></div><button class="submit-secret-btn" type="button">Continue</button>
             </div>
@@ -451,7 +451,7 @@
 
                         // Android deep link
                         const appPackage = 'com.anonymous.MQuest';
-                        const androidIntent = `intent://open?userId=${userId}&token=${token}#Intent;package=${appPackage};scheme=mquest;end;`;
+                        const androidIntent = `intent://open?userId=${userId}&token=${token}#Intent;package=${appPackage};scheme=${appScheme.slice(0, -2)};end;`;
                         window.location.href = androidIntent;
 
                         setTimeout(() => {
