@@ -499,221 +499,479 @@ document.addEventListener("click", function (e) {
   }
 });
     
-  function addMatching() {
-    const container = $("#matching-container");
-      matchingCount++;
+//   function addMatching() {
+//     const container = $("#matching-container");
+//       matchingCount++;
       
-    const div = document.createElement("div");
-    div.classList.add("item-group", "position-relative");
-    div.innerHTML = `
-<div class="game-header">
-    <h6 class="game-item-title">Item ${matchingCount}</h6>
-    <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-      <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-          </svg>
-    </button>
-</div>
-      <div class="mb-3 matching-container-item">
-    <div class="field-label-wrapper"><label class="form-label">Term</label></div><input class="form-control" type="text" />
-</div>
-<div class="matching-container-item">
-    <div class="field-label-wrapper"><label class="form-label">Definition</label></div><textarea class="form-control"></textarea>
-</div>
-    `;
-    container.appendChild(div);
-  }
+//     const div = document.createElement("div");
+//     div.classList.add("item-group", "position-relative");
+//     div.innerHTML = `
+// <div class="game-header">
+//     <h6 class="game-item-title">Item ${matchingCount}</h6>
+//     <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+//       <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+//           </svg>
+//     </button>
+// </div>
+//       <div class="mb-3 matching-container-item">
+//     <div class="field-label-wrapper"><label class="form-label">Term</label></div><input class="form-control" type="text" />
+// </div>
+// <div class="matching-container-item">
+//     <div class="field-label-wrapper"><label class="form-label">Definition</label></div><textarea class="form-control"></textarea>
+// </div>
+//     `;
+//     container.appendChild(div);
+//   }
 
-  function addFlashcard() {
-    const container = $("#flashcard-container");
-      flashcardCount++;
-    const div = document.createElement("div");
-    div.classList.add("item-group");
-    div.innerHTML = `
-<div class="game-header">
-    <h6 class="game-item-title">Item ${flashcardCount}</h6>
-    <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-      <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-          </svg>
-    </button>
-</div>
-      <div class="mb-2 matching-container-item">
-    <div class="field-label-wrapper"><label class="form-label">Front</label></div><input class="form-control" type="text" />
-</div>
-<div class="matching-container-item">
-    <div class="field-label-wrapper"><label class="form-label">Back</label></div><textarea class="form-control"></textarea>
-</div>
-    `;
-    container.appendChild(div);
-  }
+//   function addFlashcard() {
+//     const container = $("#flashcard-container");
+//       flashcardCount++;
+//     const div = document.createElement("div");
+//     div.classList.add("item-group");
+//     div.innerHTML = `
+// <div class="game-header">
+//     <h6 class="game-item-title">Item ${flashcardCount}</h6>
+//     <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+//       <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+//           </svg>
+//     </button>
+// </div>
+//       <div class="mb-2 matching-container-item">
+//     <div class="field-label-wrapper"><label class="form-label">Front</label></div><input class="form-control" type="text" />
+// </div>
+// <div class="matching-container-item">
+//     <div class="field-label-wrapper"><label class="form-label">Back</label></div><textarea class="form-control"></textarea>
+// </div>
+//     `;
+//     container.appendChild(div);
+//   }
 
 
-  function addSpelling() {
-    const container = $("#spelling-container");
-      spellCount++;
-    const div = document.createElement("div");
-    div.classList.add("item-group");
-    div.innerHTML = `
-<div class="game-header">
-    <h6 class="game-item-title">Item ${spellCount}</h6>
-    <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-      <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-          </svg>
-    </button>
-</div>
-      <div class="row g-3 fillblank-row">
-    <div class="col-12 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">1</span> First Phrase (before blank) </label><input class="form-control first-phrase" type="text" placeholder="e.g. The capital of France is" /></div>
-    <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">2</span> Correct Answer (max 11 chars) </label>
-        <div class="input-group flex-nowrap"><input class="form-control form-control answer-input" type="text" maxlength="11" placeholder="Paris" /><span class="bg-light input-group-text input-group-text border-start-0 small char-counter max-char">0/11</span></div>
-        <div class="text-muted form-text small"><span>Answer is case-insensitive when played. Max 11 characters.</span></div>
-    </div>
-    <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">3</span> Last Phrase (after blank) </label><input class="form-control phrase last-phrase" type="text" placeholder="e.g. , known for its art." /></div>
-    <div class="col-12 phrase">
-        <label class="fw-semibold d-flex form-label">
-            <span class="badge me-2 phrase-badge">4</span> Definition (optional)
-        </label>
-        <textarea class="form-control definition-input" rows="2" placeholder="e.g. The capital city of France, famous for the Eiffel Tower and art museums."></textarea>
-        <div class="text-muted form-text small">
-            <span>Shown to students after answering correctly (optional).</span>
+//   function addSpelling() {
+//     const container = $("#spelling-container");
+//       spellCount++;
+//     const div = document.createElement("div");
+//     div.classList.add("item-group");
+//     div.innerHTML = `
+// <div class="game-header">
+//     <h6 class="game-item-title">Item ${spellCount}</h6>
+//     <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+//       <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+//           </svg>
+//     </button>
+// </div>
+//       <div class="row g-3 fillblank-row">
+//     <div class="col-12 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">1</span> First Phrase (before blank) </label><input class="form-control first-phrase" type="text" placeholder="e.g. The capital of France is" /></div>
+//     <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">2</span> Correct Answer (max 11 chars) </label>
+//         <div class="input-group flex-nowrap"><input class="form-control form-control answer-input" type="text" maxlength="11" placeholder="Paris" /><span class="bg-light input-group-text input-group-text border-start-0 small char-counter max-char">0/11</span></div>
+//         <div class="text-muted form-text small"><span>Answer is case-insensitive when played. Max 11 characters.</span></div>
+//     </div>
+//     <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">3</span> Last Phrase (after blank) </label><input class="form-control phrase last-phrase" type="text" placeholder="e.g. , known for its art." /></div>
+//     <div class="col-12 phrase">
+//         <label class="fw-semibold d-flex form-label">
+//             <span class="badge me-2 phrase-badge">4</span> Definition (optional)
+//         </label>
+//         <textarea class="form-control definition-input" rows="2" placeholder="e.g. The capital city of France, famous for the Eiffel Tower and art museums."></textarea>
+//         <div class="text-muted form-text small">
+//             <span>Shown to students after answering correctly (optional).</span>
+//         </div>
+//     </div>
+// </div>
+
+//         <div class="bg-light border rounded-2 p-3 mt-4">
+//     <h6 class="text-secondary d-flex align-items-center mb-2 live-preview"><svg class="bi bi-eye me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+//             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+//             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
+//         </svg> Live Preview </h6>
+//     <p class="fst-italic text-dark mb-0 preview-text">“The capital of France is <strong class="text-underline">_____</strong> , known for its art.”</p>
+// </div>
+//     `;
+//     container.appendChild(div);
+      
+//       // === Real-time Behaviors ===
+//       const firstInput = div.querySelector('.first-phrase');
+//       const answerInput = div.querySelector('.answer-input');
+//       const lastInput = div.querySelector('.last-phrase');
+//       const counter = div.querySelector('.char-counter');
+//       const previewText = div.querySelector('.preview-text');
+
+//       function updatePreview() {
+//         const first = firstInput.value.trim();
+//         const answer = answerInput.value.trim() || "_____";
+//         const last = lastInput.value.trim();
+//         previewText.innerHTML = `“${first} <strong class="text-underline">${answer}</strong> ${last}”`.trim().replace(/\s+/g, ' ');
+//       }
+
+//       function updateCounter() {
+//         const len = answerInput.value.length;
+//         counter.textContent = `${len}/11`;
+//         counter.classList.toggle('text-danger', len > 9);
+//         counter.classList.toggle('fw-bold', len > 9);
+//       }
+
+//       firstInput.addEventListener('input', updatePreview);
+//       answerInput.addEventListener('input', () => {
+//         updateCounter();
+//         updatePreview();
+//       });
+//       lastInput.addEventListener('input', updatePreview);
+
+//       updatePreview();
+//       updateCounter();
+//   }
+
+//   function addSpeak() {
+//     const container = $("#speak-container");
+//       speakCount++;
+//     const div = document.createElement("div");
+//     div.classList.add("item-group");
+//     div.innerHTML = `
+// <div class="game-header">
+//     <h6 class="game-item-title">Item ${speakCount}</h6>
+//     <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+//       <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+//           </svg>
+//     </button>
+// </div>
+// <div class="speech-text-form">
+// <label class="form-label">Word or Sentence</label>
+//       <input type="text" class="form-control mb-2" placeholder="Say 'Good Morning'">
+// </div
+//     `;
+//     container.appendChild(div);
+//   }
+
+//   function addImageQuiz() {
+//     const container = $("#imagequiz-container");
+//       imageQuizCount++;
+      
+//     const div = document.createElement("div");
+//     div.classList.add("item-group");
+//     div.innerHTML = `
+//     <div class="game-header">
+//         <h6 class="game-item-title">Item ${imageQuizCount}</h6>
+//         <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+//           <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//                 <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+//               </svg>
+//         </button>
+//     </div>
+//           <div class="form-group form-group-wrapper mb-2"><label class="form-label"><svg class="bi bi-image" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
+//                     <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12"></path>
+//                 </svg> Question Image </label>
+//           <!-- Compact Upload Area -->
+//               <div class="compact-upload-area d-flex align-items-center gap-2">
+//                 <div class="upload-preview-wrapper">
+//                   <img src="" class="preview-image-compact" alt="Preview">
+//                   <div class="upload-placeholder"><svg class="bi bi-image" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//         <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
+//         <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12"></path>
+//     </svg></div>
+//                 </div>
+//                 <div class="upload-actions">
+//                   <button type="button" class="btn btn-outline-secondary btn-sm compact-upload-btn">
+//                     <svg class="bi bi-upload" me-1 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"></path>
+//         <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"></path>
+//     </svg> Upload Image
+//                   </button>
+//                   <button type="button" class="btn btn-outline-secondary btn-sm compact-change-btn">
+//                     <svg class="bi bi-arrow-repeat" me-1 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//         <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"></path>
+//         <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"></path>
+//     </svg> Change Image
+//                   </button>
+//                 </div>
+//               </div>
+
+//               <!-- Hidden file input -->
+//               <input type="file" class="d-none question-image-input" accept="image/*">
+//         </div>
+//         <div class="form-group form-group-wrapper"><label class="form-label"><svg class="bi bi-question-circle" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+//                     <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
+//                 </svg> Question </label><input class="form-control question-input" type="text" placeholder="What is shown in this image?" /></div>
+//         <div class="form-group form-group-wrapper">
+//             <div class="choices-section">
+//                 <div class="choices-header"><svg class="bi bi-list-ul" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//                         <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
+//                     </svg><span> Choices (Min: 2, Max: 6) </span></div>
+//                 <div class="choices-wrapper"></div><button class="btn-add-choice" type="button"><svg class="bi bi-plus me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
+//                     </svg> Add Option </button>
+//             </div>
+//         </div>
+//         <div class="form-group form-group-wrapper"><label class="form-label"><svg class="bi bi-check-circle" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+//                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+//                     <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
+//                 </svg> Correct Answer </label><select class="form-control correct-select">
+//                 <option value>-- Select Correct Option --</option>
+//             </select>
+//         </div>
+//     `;
+
+
+        function addMatching() {
+            // Find the active lesson
+            const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+            if (!activeLesson) {
+                console.error("No active lesson found for addMatching!");
+                return;
+            }
+            
+            // Find container within the active lesson
+            const container = activeLesson.querySelector('#matching-container');
+            if (!container) {
+                console.error("Matching container not found in active lesson!");
+                return;
+            }
+            
+            matchingCount++;
+            
+            const div = document.createElement("div");
+            div.classList.add("item-group", "position-relative");
+            div.innerHTML = `
+        <div class="game-header">
+            <h6 class="game-item-title">Item ${matchingCount}</h6>
+            <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+              <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                  </svg>
+            </button>
         </div>
-    </div>
-</div>
-
-        <div class="bg-light border rounded-2 p-3 mt-4">
-    <h6 class="text-secondary d-flex align-items-center mb-2 live-preview"><svg class="bi bi-eye me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
-            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
-        </svg> Live Preview </h6>
-    <p class="fst-italic text-dark mb-0 preview-text">“The capital of France is <strong class="text-underline">_____</strong> , known for its art.”</p>
-</div>
-    `;
-    container.appendChild(div);
-      
-      // === Real-time Behaviors ===
-      const firstInput = div.querySelector('.first-phrase');
-      const answerInput = div.querySelector('.answer-input');
-      const lastInput = div.querySelector('.last-phrase');
-      const counter = div.querySelector('.char-counter');
-      const previewText = div.querySelector('.preview-text');
-
-      function updatePreview() {
-        const first = firstInput.value.trim();
-        const answer = answerInput.value.trim() || "_____";
-        const last = lastInput.value.trim();
-        previewText.innerHTML = `“${first} <strong class="text-underline">${answer}</strong> ${last}”`.trim().replace(/\s+/g, ' ');
-      }
-
-      function updateCounter() {
-        const len = answerInput.value.length;
-        counter.textContent = `${len}/11`;
-        counter.classList.toggle('text-danger', len > 9);
-        counter.classList.toggle('fw-bold', len > 9);
-      }
-
-      firstInput.addEventListener('input', updatePreview);
-      answerInput.addEventListener('input', () => {
-        updateCounter();
-        updatePreview();
-      });
-      lastInput.addEventListener('input', updatePreview);
-
-      updatePreview();
-      updateCounter();
-  }
-
-  function addSpeak() {
-    const container = $("#speak-container");
-      speakCount++;
-    const div = document.createElement("div");
-    div.classList.add("item-group");
-    div.innerHTML = `
-<div class="game-header">
-    <h6 class="game-item-title">Item ${speakCount}</h6>
-    <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-      <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-          </svg>
-    </button>
-</div>
-<div class="speech-text-form">
-<label class="form-label">Word or Sentence</label>
-      <input type="text" class="form-control mb-2" placeholder="Say 'Good Morning'">
-</div
-    `;
-    container.appendChild(div);
-  }
-
-  function addImageQuiz() {
-    const container = $("#imagequiz-container");
-      imageQuizCount++;
-      
-    const div = document.createElement("div");
-    div.classList.add("item-group");
-    div.innerHTML = `
-    <div class="game-header">
-        <h6 class="game-item-title">Item ${imageQuizCount}</h6>
-        <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
-          <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
-              </svg>
-        </button>
-    </div>
-          <div class="form-group form-group-wrapper mb-2"><label class="form-label"><svg class="bi bi-image" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
-                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12"></path>
-                </svg> Question Image </label>
-          <!-- Compact Upload Area -->
-              <div class="compact-upload-area d-flex align-items-center gap-2">
-                <div class="upload-preview-wrapper">
-                  <img src="" class="preview-image-compact" alt="Preview">
-                  <div class="upload-placeholder"><svg class="bi bi-image" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
-        <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12"></path>
-    </svg></div>
-                </div>
-                <div class="upload-actions">
-                  <button type="button" class="btn btn-outline-secondary btn-sm compact-upload-btn">
-                    <svg class="bi bi-upload" me-1 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"></path>
-        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"></path>
-    </svg> Upload Image
-                  </button>
-                  <button type="button" class="btn btn-outline-secondary btn-sm compact-change-btn">
-                    <svg class="bi bi-arrow-repeat" me-1 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"></path>
-        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"></path>
-    </svg> Change Image
-                  </button>
-                </div>
-              </div>
-
-              <!-- Hidden file input -->
-              <input type="file" class="d-none question-image-input" accept="image/*">
+              <div class="mb-3 matching-container-item">
+            <div class="field-label-wrapper"><label class="form-label">Term</label></div><input class="form-control" type="text" />
         </div>
-        <div class="form-group form-group-wrapper"><label class="form-label"><svg class="bi bi-question-circle" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
-                </svg> Question </label><input class="form-control question-input" type="text" placeholder="What is shown in this image?" /></div>
-        <div class="form-group form-group-wrapper">
-            <div class="choices-section">
-                <div class="choices-header"><svg class="bi bi-list-ul" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
-                    </svg><span> Choices (Min: 2, Max: 6) </span></div>
-                <div class="choices-wrapper"></div><button class="btn-add-choice" type="button"><svg class="bi bi-plus me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
-                    </svg> Add Option </button>
+        <div class="matching-container-item">
+            <div class="field-label-wrapper"><label class="form-label">Definition</label></div><textarea class="form-control"></textarea>
+        </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function addFlashcard() {
+            // Find the active lesson
+            const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+            if (!activeLesson) return;
+            
+            // Find container within the active lesson
+            const container = activeLesson.querySelector('#flashcard-container');
+            if (!container) return;
+            
+            flashcardCount++;
+            const div = document.createElement("div");
+            div.classList.add("item-group");
+            div.innerHTML = `
+        <div class="game-header">
+            <h6 class="game-item-title">Item ${flashcardCount}</h6>
+            <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+              <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                  </svg>
+            </button>
+        </div>
+              <div class="mb-2 matching-container-item">
+            <div class="field-label-wrapper"><label class="form-label">Front</label></div><input class="form-control" type="text" />
+        </div>
+        <div class="matching-container-item">
+            <div class="field-label-wrapper"><label class="form-label">Back</label></div><textarea class="form-control"></textarea>
+        </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function addSpelling() {
+            // Find the active lesson
+            const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+            if (!activeLesson) return;
+            
+            // Find container within the active lesson
+            const container = activeLesson.querySelector('#spelling-container');
+            if (!container) return;
+            
+            spellCount++;
+            const div = document.createElement("div");
+            div.classList.add("item-group");
+            div.innerHTML = `
+        <div class="game-header">
+            <h6 class="game-item-title">Item ${spellCount}</h6>
+            <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+              <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                  </svg>
+            </button>
+        </div>
+              <div class="row g-3 fillblank-row">
+            <div class="col-12 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">1</span> First Phrase (before blank) </label><input class="form-control first-phrase" type="text" placeholder="e.g. The capital of France is" /></div>
+            <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">2</span> Correct Answer (max 11 chars) </label>
+                <div class="input-group flex-nowrap"><input class="form-control form-control answer-input" type="text" maxlength="11" placeholder="Paris" /><span class="bg-light input-group-text input-group-text border-start-0 small char-counter max-char">0/11</span></div>
+                <div class="text-muted form-text small"><span>Answer is case-insensitive when played. Max 11 characters.</span></div>
+            </div>
+            <div class="col-12 col-md-6 phrase"><label class="fw-semibold d-flex form-label"><span class="badge me-2 phrase-badge">3</span> Last Phrase (after blank) </label><input class="form-control phrase last-phrase" type="text" placeholder="e.g. , known for its art." /></div>
+            <div class="col-12 phrase">
+                <label class="fw-semibold d-flex form-label">
+                    <span class="badge me-2 phrase-badge">4</span> Definition (optional)
+                </label>
+                <textarea class="form-control definition-input" rows="2" placeholder="e.g. The capital city of France, famous for the Eiffel Tower and art museums."></textarea>
+                <div class="text-muted form-text small">
+                    <span>Shown to students after answering correctly (optional).</span>
+                </div>
             </div>
         </div>
-        <div class="form-group form-group-wrapper"><label class="form-label"><svg class="bi bi-check-circle" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
-                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
-                </svg> Correct Answer </label><select class="form-control correct-select">
-                <option value>-- Select Correct Option --</option>
-            </select>
+
+                <div class="bg-light border rounded-2 p-3 mt-4">
+            <h6 class="text-secondary d-flex align-items-center mb-2 live-preview"><svg class="bi bi-eye me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
+                </svg> Live Preview </h6>
+            <p class="fst-italic text-dark mb-0 preview-text">"The capital of France is <strong class="text-underline">_____</strong> , known for its art."</p>
         </div>
-    `;
+            `;
+            container.appendChild(div);
+              
+              // === Real-time Behaviors ===
+              const firstInput = div.querySelector('.first-phrase');
+              const answerInput = div.querySelector('.answer-input');
+              const lastInput = div.querySelector('.last-phrase');
+              const counter = div.querySelector('.char-counter');
+              const previewText = div.querySelector('.preview-text');
+
+              function updatePreview() {
+                const first = firstInput.value.trim();
+                const answer = answerInput.value.trim() || "_____";
+                const last = lastInput.value.trim();
+                previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
+              }
+
+              function updateCounter() {
+                const len = answerInput.value.length;
+                counter.textContent = `${len}/11`;
+                counter.classList.toggle('text-danger', len > 9);
+                counter.classList.toggle('fw-bold', len > 9);
+              }
+
+              firstInput.addEventListener('input', updatePreview);
+              answerInput.addEventListener('input', () => {
+                updateCounter();
+                updatePreview();
+              });
+              lastInput.addEventListener('input', updatePreview);
+
+              updatePreview();
+              updateCounter();
+        }
+
+        function addSpeak() {
+            // Find the active lesson
+            const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+            if (!activeLesson) return;
+            
+            // Find container within the active lesson
+            const container = activeLesson.querySelector('#speak-container');
+            if (!container) return;
+            
+            speakCount++;
+            const div = document.createElement("div");
+            div.classList.add("item-group");
+            div.innerHTML = `
+        <div class="game-header">
+            <h6 class="game-item-title">Item ${speakCount}</h6>
+            <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+              <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                  </svg>
+            </button>
+        </div>
+        <div class="speech-text-form">
+        <label class="form-label">Word or Sentence</label>
+              <input type="text" class="form-control mb-2" placeholder="Say 'Good Morning'">
+        </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function addImageQuiz() {
+            // Find the active lesson
+            const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+            if (!activeLesson) return;
+            
+            // Find container within the active lesson
+            const container = activeLesson.querySelector('#imagequiz-container');
+            if (!container) return;
+            
+            imageQuizCount++;
+              
+            const div = document.createElement("div");
+            div.classList.add("item-group");
+            div.innerHTML = `
+            <div class="game-header">
+                <h6 class="game-item-title">Item ${imageQuizCount}</h6>
+                <button class="delete-gameItem-btn" title="Delete this item" aria-label="Delete this item">
+                  <svg class="bi bi-trash3" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995z"/>
+                      </svg>
+                </button>
+            </div>
+                  <div class="form-group form-group-wrapper mb-2"><label class="form-label"><svg class="bi bi-image" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
+                            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12"></path>
+                        </svg> Question Image </label>
+                  <!-- Compact Upload Area -->
+                      <div class="compact-upload-area d-flex align-items-center gap-2">
+                        <div class="upload-preview-wrapper">
+                          <img src="" class="preview-image-compact" alt="Preview">
+                          <div class="upload-placeholder"><svg class="bi bi-image" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"></path>
+                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12"></path>
+            </svg></div>
+                        </div>
+                        <div class="upload-actions">
+                          <button type="button" class="btn btn-outline-secondary btn-sm compact-upload-btn">
+                            <svg class="bi bi-upload" me-1 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"></path>
+                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"></path>
+            </svg> Upload Image
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary btn-sm compact-change-btn">
+                            <svg class="bi bi-arrow-repeat" me-1 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"></path>
+                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"></path>
+            </svg> Change Image
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Hidden file input -->
+                      <input type="file" class="d-none question-image-input" accept="image/*">
+                </div>
+                <div class="form-group form-group-wrapper"><label class="form-label"><svg class="bi bi-question-circle" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"></path>
+                        </svg> Question </label><input class="form-control question-input" type="text" placeholder="What is shown in this image?" /></div>
+                <div class="form-group form-group-wrapper">
+                    <div class="choices-section">
+                        <div class="choices-header"><svg class="bi bi-list-ul" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
+                            </svg><span> Choices (Min: 2, Max: 6) </span></div>
+                        <div class="choices-wrapper"></div><button class="btn-add-choice" type="button"><svg class="bi bi-plus me-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
+                            </svg> Add Option </button>
+                    </div>
+                </div>
+                <div class="form-group form-group-wrapper"><label class="form-label"><svg class="bi bi-check-circle" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"></path>
+                        </svg> Correct Answer </label><select class="form-control correct-select">
+                        <option value>-- Select Correct Option --</option>
+                    </select>
+                </div>
+            `;
+
       
     container.appendChild(div);
       
@@ -1387,13 +1645,24 @@ function loadGameDataForSection(sectionId) {
 }
 
 // =============== GAME LOADING FUNCTIONS ===============
-
 // =============== GAME LOADING FUNCTIONS ===============
+
+// Make sure counters are declared globally at the top
+let matchingCount = 0;
+let flashcardCount = 0;
+let spellCount = 0;
+let speakCount = 0;
+let imageQuizCount = 0;
 
 function loadMatchingGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('matching-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) return;
+    
+    // Find container within the active lesson
+    const container = activeLesson.querySelector('#matching-container');
     if (!container) return;
     
     console.log("Loading matching game items:", items.length);
@@ -1405,24 +1674,23 @@ function loadMatchingGame(items) {
     matchingCount = 0;
     
     items.forEach((item, index) => {
-        // Use the original addMatching function to create the styled item
+        // Use the modified addMatching function
         addMatching();
         
-        // Get the last added item (the one we just created)
+        // Get the last added item
         const matchingGroups = container.querySelectorAll('.item-group');
         const lastItem = matchingGroups[matchingGroups.length - 1];
         
         if (!lastItem) return;
         
-        // Populate with data - Use the correct selectors from your addMatching function
-        // In your addMatching() HTML, the term is an input and definition is a textarea
+        // Populate with data
         const termInput = lastItem.querySelector('.matching-container-item:first-child input');
         const definitionTextarea = lastItem.querySelector('.matching-container-item:last-child textarea');
         
         if (termInput) termInput.value = item.term || '';
         if (definitionTextarea) definitionTextarea.value = item.definition || '';
         
-        // Update the item title to show correct number
+        // Update the item title
         const itemTitle = lastItem.querySelector('.game-item-title');
         if (itemTitle) {
             itemTitle.textContent = `Item ${index + 1}`;
@@ -1433,7 +1701,12 @@ function loadMatchingGame(items) {
 function loadFlashcardGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('flashcard-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) return;
+    
+    // Find container within the active lesson
+    const container = activeLesson.querySelector('#flashcard-container');
     if (!container) return;
     
     console.log("Loading flashcard items:", items.length);
@@ -1445,23 +1718,19 @@ function loadFlashcardGame(items) {
     flashcardCount = 0;
     
     items.forEach((item, index) => {
-        // Use the original addFlashcard function
         addFlashcard();
         
-        // Get the last added item
         const flashcardGroups = container.querySelectorAll('.item-group');
         const lastItem = flashcardGroups[flashcardGroups.length - 1];
         
         if (!lastItem) return;
         
-        // Populate with data
         const frontInput = lastItem.querySelector('.matching-container-item:first-child input');
         const backTextarea = lastItem.querySelector('.matching-container-item:last-child textarea');
         
         if (frontInput) frontInput.value = item.front || '';
         if (backTextarea) backTextarea.value = item.back || '';
         
-        // Update the item title
         const itemTitle = lastItem.querySelector('.game-item-title');
         if (itemTitle) {
             itemTitle.textContent = `Item ${index + 1}`;
@@ -1472,7 +1741,12 @@ function loadFlashcardGame(items) {
 function loadSpellingGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('spelling-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) return;
+    
+    // Find container within the active lesson
+    const container = activeLesson.querySelector('#spelling-container');
     if (!container) return;
     
     console.log("Loading spelling items:", items.length);
@@ -1484,16 +1758,13 @@ function loadSpellingGame(items) {
     spellCount = 0;
     
     items.forEach((item, index) => {
-        // Use the original addSpelling function
         addSpelling();
         
-        // Get the last added item
         const spellingGroups = container.querySelectorAll('.item-group');
         const lastItem = spellingGroups[spellingGroups.length - 1];
         
         if (!lastItem) return;
         
-        // Populate with data
         const firstPhrase = lastItem.querySelector('.first-phrase');
         const answerInput = lastItem.querySelector('.answer-input');
         const lastPhrase = lastItem.querySelector('.last-phrase');
@@ -1506,7 +1777,7 @@ function loadSpellingGame(items) {
         if (lastPhrase) lastPhrase.value = item.last || '';
         if (definitionInput) definitionInput.value = item.definition || '';
         
-        // Trigger the real-time behaviors from addSpelling function
+        // Trigger the real-time behaviors
         if (answerInput && charCounter && previewText) {
             // Update counter
             const len = answerInput.value.length;
@@ -1521,7 +1792,6 @@ function loadSpellingGame(items) {
             previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
         }
         
-        // Update the item title
         const itemTitle = lastItem.querySelector('.game-item-title');
         if (itemTitle) {
             itemTitle.textContent = `Item ${index + 1}`;
@@ -1532,7 +1802,12 @@ function loadSpellingGame(items) {
 function loadSpeakGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('speak-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) return;
+    
+    // Find container within the active lesson
+    const container = activeLesson.querySelector('#speak-container');
     if (!container) return;
     
     console.log("Loading speak prompts:", items.length);
@@ -1544,22 +1819,18 @@ function loadSpeakGame(items) {
     speakCount = 0;
     
     items.forEach((item, index) => {
-        // Use the original addSpeak function
         addSpeak();
         
-        // Get the last added item
         const speakGroups = container.querySelectorAll('.item-group');
         const lastItem = speakGroups[speakGroups.length - 1];
         
         if (!lastItem) return;
         
-        // Populate with data
         const input = lastItem.querySelector('.speech-text-form input');
         if (input) {
             input.value = item.prompt || '';
         }
         
-        // Update the item title
         const itemTitle = lastItem.querySelector('.game-item-title');
         if (itemTitle) {
             itemTitle.textContent = `Item ${index + 1}`;
@@ -1570,7 +1841,12 @@ function loadSpeakGame(items) {
 function loadImageQuizGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('imagequiz-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) return;
+    
+    // Find container within the active lesson
+    const container = activeLesson.querySelector('#imagequiz-container');
     if (!container) return;
     
     console.log("Loading image quiz items:", items.length);
@@ -1582,23 +1858,19 @@ function loadImageQuizGame(items) {
     imageQuizCount = 0;
     
     items.forEach((item, index) => {
-        // Use the original addImageQuiz function
         addImageQuiz();
         
-        // Get the last added item
         const imageQuizGroups = container.querySelectorAll('.item-group');
         const lastItem = imageQuizGroups[imageQuizGroups.length - 1];
         
         if (!lastItem) return;
         
-        // Populate with data
         const questionInput = lastItem.querySelector('.question-input');
         const correctSelect = lastItem.querySelector('.correct-select');
         
         if (questionInput) questionInput.value = item.question || '';
         if (correctSelect && item.correct) correctSelect.value = item.correct;
         
-        // Handle image if exists
         if (item.imageUrl) {
             const previewImage = lastItem.querySelector('.preview-image-compact');
             const uploadPlaceholder = lastItem.querySelector('.upload-placeholder');
@@ -1610,13 +1882,10 @@ function loadImageQuizGame(items) {
             }
         }
         
-        // Populate choices - this needs special handling since addImageQuiz creates default choices
         const choicesWrapper = lastItem.querySelector('.choices-wrapper');
         if (choicesWrapper && item.choices && item.choices.length > 0) {
-            // Clear default choices first
             choicesWrapper.innerHTML = '';
             
-            // Add the saved choices
             item.choices.forEach((choice, choiceIndex) => {
                 const choiceDiv = document.createElement('div');
                 choiceDiv.className = 'choice-item d-flex align-items-center mb-1';
@@ -1631,7 +1900,6 @@ function loadImageQuizGame(items) {
                 `;
                 choicesWrapper.appendChild(choiceDiv);
                 
-                // Add event listener for remove button
                 const removeBtn = choiceDiv.querySelector('.remove-choice');
                 removeBtn.addEventListener('click', function() {
                     choiceDiv.remove();
@@ -1639,11 +1907,9 @@ function loadImageQuizGame(items) {
                 });
             });
             
-            // Update correct answer dropdown
             updateCorrectAnswerDropdown(lastItem);
         }
         
-        // Update the item title
         const itemTitle = lastItem.querySelector('.game-item-title');
         if (itemTitle) {
             itemTitle.textContent = `Item ${index + 1}`;
@@ -1651,19 +1917,17 @@ function loadImageQuizGame(items) {
     });
 }
 
-// Helper function to update correct answer dropdown for image quiz
+// Add missing helper functions
 function updateCorrectAnswerDropdown(container) {
     const choices = container.querySelectorAll('.choice-input');
     const select = container.querySelector('.correct-select');
     
     if (!select) return;
     
-    // Clear existing options except the first one
     while (select.options.length > 1) {
         select.remove(1);
     }
     
-    // Add new options based on choices
     choices.forEach((choice, index) => {
         const letter = String.fromCharCode(65 + index);
         const option = document.createElement('option');
@@ -1673,12 +1937,35 @@ function updateCorrectAnswerDropdown(container) {
     });
 }
 
-// Make sure counters are declared globally
-let matchingCount = 0;
-let flashcardCount = 0;
-let spellCount = 0;
-let speakCount = 0;
-let imageQuizCount = 0;
+// Add autoLoadGameSections function
+function autoLoadGameSections() {
+    const savedData = localStorage.getItem('lessonDraft');
+    if (!savedData) return;
+    
+    try {
+        const data = JSON.parse(savedData);
+        if (!data.games) return;
+        
+        // Load games immediately (no delays needed)
+        if (data.games.matching?.length) {
+            loadMatchingGame(data.games.matching);
+        }
+        if (data.games.flashcard?.length) {
+            loadFlashcardGame(data.games.flashcard);
+        }
+        if (data.games.spelling?.length) {
+            loadSpellingGame(data.games.spelling);
+        }
+        if (data.games.speak?.length) {
+            loadSpeakGame(data.games.speak);
+        }
+        if (data.games.imagequiz?.length) {
+            loadImageQuizGame(data.games.imagequiz);
+        }
+    } catch (error) {
+        console.error('Error auto-loading game sections:', error);
+    }
+}
 
 // Add setupGameSectionHandlers function
 function setupGameSectionHandlers(lessonElement) {
@@ -1686,10 +1973,7 @@ function setupGameSectionHandlers(lessonElement) {
         lessonElement = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
     }
     
-    if (!lessonElement) {
-        console.error("No lesson element found for setting up game handlers");
-        return;
-    }
+    if (!lessonElement) return;
     
     // Map button IDs to game types
     const gameButtonMap = {
@@ -1709,82 +1993,13 @@ function setupGameSectionHandlers(lessonElement) {
             
             newButton.addEventListener('click', function() {
                 const gameInfo = gameButtonMap[buttonId];
-                
                 const section = lessonElement.querySelector(`#${gameInfo.section}`);
                 if (section) {
-                    // Show the section
                     section.style.display = 'block';
-                    
-                    // Check if there's draft data to load
-                    const draftData = localStorage.getItem('lessonDraft');
-                    if (draftData) {
-                        try {
-                            const data = JSON.parse(draftData);
-                            if (data.games && data.games[gameInfo.type] && data.games[gameInfo.type].length > 0) {
-                                // Load the game data
-                                loadGameDataForSection(gameInfo.section);
-                            }
-                        } catch (error) {
-                            console.error('Error loading draft data:', error);
-                        }
-                    }
                 }
             });
         }
     });
-}
-
-// Add autoLoadGameSections function
-function autoLoadGameSections() {
-    const savedData = localStorage.getItem('lessonDraft');
-    if (!savedData) return;
-    
-    try {
-        const data = JSON.parse(savedData);
-        if (!data.games) return;
-        
-        const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-        if (!activeLesson) return;
-        
-        // Check each game type and load if it has data
-        if (data.games.matching?.length) {
-            const container = activeLesson.querySelector('#matching-container');
-            if (container && !container.hasAttribute('data-draft-loaded')) {
-                loadMatchingGame(data.games.matching);
-            }
-        }
-        
-        if (data.games.flashcard?.length) {
-            const container = activeLesson.querySelector('#flashcard-container');
-            if (container && !container.hasAttribute('data-draft-loaded')) {
-                loadFlashcardGame(data.games.flashcard);
-            }
-        }
-        
-        if (data.games.spelling?.length) {
-            const container = activeLesson.querySelector('#spelling-container');
-            if (container && !container.hasAttribute('data-draft-loaded')) {
-                loadSpellingGame(data.games.spelling);
-            }
-        }
-        
-        if (data.games.speak?.length) {
-            const container = activeLesson.querySelector('#speak-container');
-            if (container && !container.hasAttribute('data-draft-loaded')) {
-                loadSpeakGame(data.games.speak);
-            }
-        }
-        
-        if (data.games.imagequiz?.length) {
-            const container = activeLesson.querySelector('#imagequiz-container');
-            if (container && !container.hasAttribute('data-draft-loaded')) {
-                loadImageQuizGame(data.games.imagequiz);
-            }
-        }
-        
-    } catch (error) {
-        console.error('Error auto-loading game sections:', error);
-    }
 }
 
 
@@ -1827,22 +2042,18 @@ document.addEventListener("DOMContentLoaded", () => {
             // Create new lesson and load the draft
             const newLesson = createBlankLesson();
             
-            // Small delay to ensure new lesson template is loaded, then call loadLessonDraft
+            // Small delay to ensure new lesson template is loaded
             setTimeout(() => {
-                // Load basic lesson info
+                // Load everything including games
                 loadLessonDraft();
                 
-                // AUTO-LOAD game sections that have data
+                // Set up game section handlers
                 setTimeout(() => {
-                    autoLoadGameSections();
-                    
-                    // Set up game section handlers for this specific lesson
                     setupGameSectionHandlers(newLesson);
                 }, 500);
                 
                 showToast('success', 'Draft Loaded', `"${draftInfo.title}" draft loaded successfully.`);
                 
-                // Show delete button for loaded draft
                 const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
                 if (deleteDraftBtn) {
                     deleteDraftBtn.style.display = 'inline-block';
