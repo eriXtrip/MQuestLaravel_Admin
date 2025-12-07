@@ -3275,6 +3275,7 @@ td[data-label="Email"] {
 
 .info-item-value {
   font-weight: 500;
+  font-size: 0.75rem;
 }
 
 .info-item-value span {
