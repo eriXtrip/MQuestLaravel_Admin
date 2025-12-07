@@ -2880,12 +2880,31 @@
                     return;
                 }
                 
-                // Save to localStorage first
-                await saveLessonToLocalDraft('draft');
+                // Show loading modal for draft save
+                const titleEl = document.getElementById('loadingModalTitle');
+                const textEl = document.getElementById('loadingModalText');
+                titleEl.textContent = 'Saving Draft...';
+                textEl.textContent = 'Please wait while we save your lesson as draft.';
+                loadingModal.show();
                 
-                // Then submit to server with loading modal
-                currentStatus = 'draft';
-                await submitLesson('draft');
+                try {
+                    // Save to localStorage
+                    await saveLessonToLocalDraft('draft');
+                    
+                    // Hide loading modal after a short delay
+                    setTimeout(() => {
+                        loadingModal.hide();
+                        
+                        // Show draft success modal
+                        setTimeout(() => {
+                            const draftModal = new bootstrap.Modal(document.getElementById('draftSuccessModal'));
+                            draftModal.show();
+                        }, 300);
+                    }, 800); // Show loading for 0.8 seconds to give user feedback
+                } catch (error) {
+                    loadingModal.hide();
+                    showToast('error', 'Save Failed', 'Could not save draft. Try again.');
+                }
             });
         });
     </script>
