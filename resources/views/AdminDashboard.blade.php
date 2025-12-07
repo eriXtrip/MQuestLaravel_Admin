@@ -2173,35 +2173,42 @@
             }
 
             function fetchUploads() {
-                const fileInput = document.getElementById('fileInput');
+                // Files (PPT / PDF)
+                const fileInput = document.getElementById('fileInput');          // PPT/PDF input
                 const fileTitle = document.getElementById('file-title')?.value.trim() || '';
                 const fileSubtitle = document.getElementById('file-title-1')?.value.trim() || '';
                 const uploadedFile = fileInput?.files[0] || null;
 
+                // Videos
                 const videoInput = document.getElementById('videoInput');
                 const videoTitle = document.getElementById('file-title-2')?.value.trim() || '';
                 const videoSubtitle = document.getElementById('video-title')?.value.trim() || '';
                 const uploadedVideo = videoInput?.files[0] || null;
+
+                // Video URL
                 const videoUrl = document.getElementById('urlInput')?.value.trim() || '';
 
-                 return {
-                    files: uploadedFile ? { 
-                        title: fileTitle, 
-                        subtitle: fileSubtitle, 
-                        name: uploadedFile.name,   // store only filename
-                        path: fileInput.value      // store the input path (local directory)
-                    } : null,
-                    videos: uploadedVideo ? { 
-                        title: videoTitle, 
-                        subtitle: videoSubtitle, 
-                        name: uploadedVideo.name,  // store only filename
-                        path: videoInput.value     // store the input path (local directory)
-                    } : null,
+                // Determine file type (PPT or PDF)
+                let pptFile = null, pdfFile = null;
+                if (uploadedFile) {
+                    const ext = uploadedFile.name.split('.').pop().toLowerCase();
+                    if (ext === 'ppt' || ext === 'pptx') {
+                        pptFile = { title: fileTitle, subtitle: fileSubtitle, name: uploadedFile.name, path: fileInput.value };
+                    } else if (ext === 'pdf') {
+                        pdfFile = { title: fileTitle, subtitle: fileSubtitle, name: uploadedFile.name, path: fileInput.value };
+                    }
+                }
+
+                return {
+                    ppt: pptFile,
+                    pdf: pdfFile,
+                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, name: uploadedVideo.name, path: videoInput.value } : null,
                     video_url: videoUrl || null,
                     video_url_title: videoTitle || '',
                     video_url_subtitle: videoSubtitle || ''
                 };
             }
+
 
             async function getLessonData(status) {
                 const preTestQuestions = typeof fetchPreTestQuestions === 'function' ? fetchPreTestQuestions() : [];
@@ -2415,24 +2422,28 @@
 
             // --- Save lesson to localStorage with timestamp ---
             async function saveLessonToLocalDraft(status = 'draft') {
-                const data = await getLessonData(status);
-                data.saved_at = Date.now(); // add timestamp
-                localStorage.setItem('lessonDraft', JSON.stringify(data));
-                console.log('Lesson saved to localStorage:', data);
-                showToast('info', 'Lesson Draft', 'Lesson saved locally!');
+                try {
+                    const data = await getLessonData(status); // gets title, description, pre/post tests, games, uploads
+                    data.saved_at = Date.now();               // timestamp for expiry
+                    localStorage.setItem('lessonDraft', JSON.stringify(data));
+                    console.log('Draft saved with all content:', data);
+                    showToast('info', 'Lesson Draft', 'Lesson saved locally!');
+                } catch (err) {
+                    console.error('Failed to save draft:', err);
+                    showToast('error', 'Save Failed', 'Could not save draft. Try again.');
+                }
             }
 
 
             // Handle draft button click - no confirmation needed
             draftBtn.addEventListener('click', async () => {
                 console.log('Draft button clicked');
-                const hasData = await hasLessonData();
+                const hasData = await hasLessonData(); // ensures draft is not empty
                 if (!hasData) {
                     showToast('error', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
-                await saveLessonToLocalDraft('draft');
-                await submitLesson('draft');
+                await saveLessonToLocalDraft('draft');  // Save all content
             });
         });
     </script>
