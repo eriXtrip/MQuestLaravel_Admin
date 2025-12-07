@@ -1313,22 +1313,32 @@ document.getElementById('saveAdminPictureBtn')?.addEventListener('click', functi
 // =============================================================
 // =============== GAME LOADING FUNCTIONS (MOVE OUTSIDE DOMContentLoaded) ===============
 
+// =============== GAME LOADING FUNCTIONS (MOVE OUTSIDE DOMContentLoaded) ===============
+
 function loadMatchingGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('matching-container');
+    // First, find the matching container in the CURRENTLY ACTIVE lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) {
+        console.error("No active lesson found!");
+        return;
+    }
+    
+    const container = activeLesson.querySelector('#matching-container');
     if (!container) {
-        console.error("Matching container not found!");
+        console.error("Matching container not found in active lesson!");
         return;
     }
     
     console.log("Loading matching game items:", items.length);
+    console.log("Container found:", container);
     
     // Clear container first
     container.innerHTML = '';
-    matchingCount = 0;
+    matchingCount = 0; // Reset counter
     
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         // Use existing addMatching function
         addMatching();
         
@@ -1341,7 +1351,7 @@ function loadMatchingGame(items) {
             return;
         }
         
-        console.log("Populating item with:", item);
+        console.log(`Populating matching item ${index + 1} with:`, item);
         
         // Use vanilla JS to populate data
         const inputs = lastItem.querySelectorAll('input[type="text"]');
@@ -1352,19 +1362,37 @@ function loadMatchingGame(items) {
         
         if (inputs.length > 0) {
             inputs[0].value = item.term || '';
+            console.log("Set term to:", inputs[0].value);
         }
         if (textareas.length > 0) {
             textareas[0].value = item.definition || '';
+            console.log("Set definition to:", textareas[0].value);
+        }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
         }
     });
+    
+    // Reset counter to actual number of items
+    matchingCount = items.length;
 }
 
 function loadFlashcardGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('flashcard-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) {
+        console.error("No active lesson found!");
+        return;
+    }
+    
+    const container = activeLesson.querySelector('#flashcard-container');
     if (!container) {
-        console.error("Flashcard container not found!");
+        console.error("Flashcard container not found in active lesson!");
         return;
     }
     
@@ -1374,7 +1402,7 @@ function loadFlashcardGame(items) {
     container.innerHTML = '';
     flashcardCount = 0;
     
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         // Use existing addFlashcard function
         addFlashcard();
         
@@ -1394,15 +1422,31 @@ function loadFlashcardGame(items) {
         if (textareas.length > 0) {
             textareas[0].value = item.back || '';
         }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
     });
+    
+    // Reset counter to actual number of items
+    flashcardCount = items.length;
 }
 
 function loadSpellingGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('spelling-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) {
+        console.error("No active lesson found!");
+        return;
+    }
+    
+    const container = activeLesson.querySelector('#spelling-container');
     if (!container) {
-        console.error("Spelling container not found!");
+        console.error("Spelling container not found in active lesson!");
         return;
     }
     
@@ -1412,7 +1456,7 @@ function loadSpellingGame(items) {
     container.innerHTML = '';
     spellCount = 0;
     
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         // Use existing addSpelling function
         addSpelling();
         
@@ -1449,15 +1493,31 @@ function loadSpellingGame(items) {
             const last = lastPhrase ? lastPhrase.value.trim() : '';
             previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
         }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
     });
+    
+    // Reset counter to actual number of items
+    spellCount = items.length;
 }
 
 function loadSpeakGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('speak-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) {
+        console.error("No active lesson found!");
+        return;
+    }
+    
+    const container = activeLesson.querySelector('#speak-container');
     if (!container) {
-        console.error("Speak container not found!");
+        console.error("Speak container not found in active lesson!");
         return;
     }
     
@@ -1467,7 +1527,7 @@ function loadSpeakGame(items) {
     container.innerHTML = '';
     speakCount = 0;
     
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         // Use existing addSpeak function
         addSpeak();
         
@@ -1482,15 +1542,31 @@ function loadSpeakGame(items) {
         if (input) {
             input.value = item.prompt || '';
         }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
     });
+    
+    // Reset counter to actual number of items
+    speakCount = items.length;
 }
 
 function loadImageQuizGame(items) {
     if (!items || !items.length) return;
     
-    const container = document.getElementById('imagequiz-container');
+    // Find the active lesson
+    const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    if (!activeLesson) {
+        console.error("No active lesson found!");
+        return;
+    }
+    
+    const container = activeLesson.querySelector('#imagequiz-container');
     if (!container) {
-        console.error("Image quiz container not found!");
+        console.error("Image quiz container not found in active lesson!");
         return;
     }
     
@@ -1500,7 +1576,7 @@ function loadImageQuizGame(items) {
     container.innerHTML = '';
     imageQuizCount = 0;
     
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         // Use existing addImageQuiz function
         addImageQuiz();
         
@@ -1535,11 +1611,11 @@ function loadImageQuizGame(items) {
             choicesWrapper.innerHTML = ''; // Clear existing choices
             
             if (item.choices && item.choices.length) {
-                item.choices.forEach((choice, index) => {
+                item.choices.forEach((choice, choiceIndex) => {
                     const choiceDiv = document.createElement('div');
                     choiceDiv.className = 'choice-item d-flex align-items-center mb-1';
                     choiceDiv.innerHTML = `
-                        <input type="text" class="form-control choice-input" value="${choice || ''}" placeholder="Option ${String.fromCharCode(65 + index)}">
+                        <input type="text" class="form-control choice-input" value="${choice || ''}" placeholder="Option ${String.fromCharCode(65 + choiceIndex)}">
                         <button type="button" class="btn btn-sm btn-outline-danger ms-1 remove-choice">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -1561,7 +1637,16 @@ function loadImageQuizGame(items) {
                 updateCorrectAnswerDropdown(lastItem);
             }
         }
+        
+        // Update the item title
+        const itemTitle = lastItem.querySelector('.game-item-title');
+        if (itemTitle) {
+            itemTitle.textContent = `Item ${index + 1}`;
+        }
     });
+    
+    // Reset counter to actual number of items
+    imageQuizCount = items.length;
 }
 
 // Helper function to update correct answer dropdown for image quiz
