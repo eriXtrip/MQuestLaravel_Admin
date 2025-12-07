@@ -2872,12 +2872,20 @@
             // Handle draft button click - no confirmation needed
             draftBtn.addEventListener('click', async () => {
                 console.log('Draft button clicked');
-                const hasData = await hasLessonData(); // ensures draft is not empty
+                
+                // First check if there's content
+                const hasData = await hasLessonData();
                 if (!hasData) {
                     showToast('error', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
-                await saveLessonToLocalDraft('draft');  // Save all content
+                
+                // Save to localStorage first
+                await saveLessonToLocalDraft('draft');
+                
+                // Then submit to server with loading modal
+                currentStatus = 'draft';
+                await submitLesson('draft');
             });
         });
     </script>
