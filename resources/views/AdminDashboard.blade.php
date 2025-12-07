@@ -2025,6 +2025,40 @@
                     lessonDescription.value = data.lesson_description || '';
                     selectedQuarter.value = data.selected_quarter || '';
                     selectedSubject.value = data.selected_subject || '';
+
+                    // Restore pretest questions
+                    if (data.pretest_questions && data.pretest_questions.length) {
+                        data.pretest_questions.forEach(q => addPreTestQuestion(q)); // implement addPreTestQuestion to render in UI
+                    }
+
+                    // Restore posttest questions
+                    if (data.posttest_questions && data.posttest_questions.length) {
+                        data.posttest_questions.forEach(q => addPostTestQuestion(q)); // implement addPostTestQuestion
+                    }
+
+                    // Restore flashcards
+                    if (data.games?.flashcard && data.games.flashcard.length) {
+                        data.games.flashcard.forEach(f => addFlashcard(f.front, f.back));
+                    }
+
+                    // Restore other games similarly
+                    // matching, spelling, speak, imagequiz...
+                    // for imagequiz, handle image URLs or Files
+
+                    // Restore uploads
+                    if (data.uploads) {
+                        if (data.uploads.ppt) populatePPTInput(data.uploads.ppt);
+                        if (data.uploads.pdf) populatePDFInput(data.uploads.pdf);
+                        if (data.uploads.videos) populateVideoInput(data.uploads.videos);
+                        if (data.uploads.video_url) populateVideoURL(data.uploads.video_url, data.uploads.video_url_title, data.uploads.video_url_subtitle);
+                    }
+
+                    // Restore badges
+                    if (data.badges) {
+                        Object.keys(data.badges).forEach(type => applyBadge(type, data.badges[type]));
+                    }
+
+
                     console.log('Lesson restored from localStorage:', data);
                 }
             }
