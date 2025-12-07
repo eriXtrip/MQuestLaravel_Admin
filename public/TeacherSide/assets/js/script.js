@@ -1789,6 +1789,7 @@ window.fillPupilModal = function(pupil) {
         new Date(pupil.enrollment_date).toLocaleDateString();
 
     populateStars(pupil.total_stars || 0);
+    initAssessments(pupil.pupil_tests || NULL);
 
    // CSS variables
     const rootStyles = getComputedStyle(document.documentElement);
@@ -2343,155 +2344,11 @@ function initStudentsTable(pupils) {
 /* ===========================
    Assessment Tab - View Pupil Modal -Teacher Side
 =========================== */
-function initAssessments() {
-    // Sample test data
-    const testData = [
-        {
-            id: 1,
-            title: "Numbers and Operations",
-            type: "pretest",
-            subject: "math",
-            quarter: "q1",
-            date: "2025-09-15",
-            timeSpent: "18mins",
-            score: 75,
-            totalQuestions: 10,
-            correctAnswers: 8,
-            attempts: 1,
-            status: "passed"
-        },
-        {
-            id: 2,
-            title: "Numbers and Operations 2",
-            type: "pretest",
-            subject: "english",
-            quarter: "q3",
-            date: "2025-09-15",
-            timeSpent: "18mins",
-            score: 75,
-            totalQuestions: 10,
-            correctAnswers: 8,
-            attempts: 1,
-            status: "passed"
-        },
-        {
-            id: 3,
-            title: "Cell Biology",
-            type: "posttest",
-            subject: "science",
-            quarter: "q2",
-            date: "2025-09-15",
-            timeSpent: "18mins",
-            score: 75,
-            totalQuestions: 10,
-            correctAnswers: 8,
-            attempts: 1,
-            status: "passed"
-        },
-        {
-            id: 4,
-            title: "Algebra Basics",
-            type: "pretest",
-            subject: "math",
-            quarter: "q2",
-            date: "2025-10-05",
-            timeSpent: "20mins",
-            score: 60,
-            totalQuestions: 15,
-            correctAnswers: 9,
-            attempts: 2,
-            status: "needs-review"
-        },
-        {
-            id: 5,
-            title: "Cell Biology",
-            type: "posttest",
-            subject: "science",
-            quarter: "q1",
-            date: "2025-09-27",
-            timeSpent: "22mins",
-            score: 85,
-            totalQuestions: 20,
-            correctAnswers: 17,
-            attempts: 1,
-            status: "passed"
-        },
-        {
-            id: 6,
-            title: "Grammar Rules",
-            type: "pretest",
-            subject: "english",
-            quarter: "q3",
-            date: "2025-11-01",
-            timeSpent: "15mins",
-            score: 90,
-            totalQuestions: 10,
-            correctAnswers: 9,
-            attempts: 1,
-            status: "passed"
-        },
-        {
-            id: 7,
-            title: "Philippine History",
-            type: "posttest",
-            subject: "filipino",
-            quarter: "q4",
-            date: "2025-11-22",
-            timeSpent: "18mins",
-            score: 70,
-            totalQuestions: 10,
-            correctAnswers: 7,
-            attempts: 1,
-            status: "passed"
-        },
-        {
-            id: 8,
-            title: "Geometry Basics",
-            type: "pretest",
-            subject: "math",
-            quarter: "q3",
-            date: "2025-10-10",
-            timeSpent: "22mins",
-            score: 55,
-            totalQuestions: 20,
-            correctAnswers: 11,
-            attempts: 2,
-            status: "needs-review"
-        },
-        {
-            id: 9,
-            title: "Ecosystems",
-            type: "posttest",
-            subject: "science",
-            quarter: "q4",
-            date: "2025-12-01",
-            timeSpent: "25mins",
-            score: 65,
-            totalQuestions: 15,
-            correctAnswers: 10,
-            attempts: 1,
-            status: "needs-review"
-        },
-        {
-            id: 10,
-            title: "Reading Comprehension",
-            type: "pretest",
-            subject: "english",
-            quarter: "q1",
-            date: "2025-08-15",
-            timeSpent: "20mins",
-            score: 80,
-            totalQuestions: 10,
-            correctAnswers: 8,
-            attempts: 1,
-            status: "passed"
-        }
-    ];
-
+function initAssessments(pupilTests = []) {
     // Config
     let currentPage = 1;
     const itemsPerPage = 3;
-    let filteredData = [...testData];
+    let filteredData = [...pupilTests]; // Use actual pupil tests
 
     // Helper
     const $ = (id) => document.getElementById(id);
@@ -2500,6 +2357,7 @@ function initAssessments() {
     const searchInput = $('searchTest');
     const subjectFilter = $('testSubjectFilter');
     const quarterFilter = $('testQuarterFilter');
+    const typeFilter = $('testTypeFilter'); // optional dropdown for PRE/POST
     const fromDate = $('fromDate');
     const clearFiltersBtn = $('testClearFilter');
     const testCardsContainer = $('testCardsContainer');
@@ -2519,15 +2377,17 @@ function initAssessments() {
         if (searchInput) searchInput.addEventListener('input', handleFilterChange);
         if (subjectFilter) subjectFilter.addEventListener('change', handleFilterChange);
         if (quarterFilter) quarterFilter.addEventListener('change', handleFilterChange);
+        if (typeFilter) typeFilter.addEventListener('change', handleFilterChange);
         if (fromDate) fromDate.addEventListener('change', handleFilterChange);
         if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', clearAllFilters);
         if (paginationNav) paginationNav.addEventListener('click', handlePaginationClick);
     }
 
     function handleFilterChange() {
-        filteredData = testData.filter(test => {
+        filteredData = pupilTests.filter(test => {
             const searchTerm = (searchInput?.value || '').toLowerCase().trim();
 
+            // Search by title, subject, or type
             if (searchTerm &&
                 !test.title.toLowerCase().includes(searchTerm) &&
                 !test.subject.toLowerCase().includes(searchTerm) &&
@@ -2535,9 +2395,25 @@ function initAssessments() {
                 return false;
             }
 
-            if (subjectFilter?.value && test.subject !== subjectFilter.value) return false;
-            if (quarterFilter?.value && test.quarter !== quarterFilter.value) return false;
+            // Filter by subject
+            if (subjectFilter?.value && subjectFilter.value !== '' &&
+                test.subject.toLowerCase() !== subjectFilter.value.toLowerCase()) {
+                return false;
+            }
 
+            // Filter by quarter
+            if (quarterFilter?.value && quarterFilter.value !== '' &&
+                test.quarter !== parseInt(quarterFilter.value)) {
+                return false;
+            }
+
+            // Filter by type (PRE/POST)
+            if (typeFilter?.value && typeFilter.value !== '' &&
+                test.type.toUpperCase() !== typeFilter.value.toUpperCase()) {
+                return false;
+            }
+
+            // Filter by from date
             if (fromDate?.value) {
                 const testDate = new Date(test.date);
                 const fromDateValue = new Date(fromDate.value);
@@ -2557,9 +2433,10 @@ function initAssessments() {
         if (searchInput) searchInput.value = '';
         if (subjectFilter) subjectFilter.value = '';
         if (quarterFilter) quarterFilter.value = '';
+        if (typeFilter) typeFilter.value = '';
         if (fromDate) fromDate.value = '';
 
-        filteredData = [...testData];
+        filteredData = [...pupilTests];
         currentPage = 1;
 
         renderTestCards();
@@ -2596,12 +2473,12 @@ function initAssessments() {
         const card = document.createElement('div');
         card.className = 'test-card';
 
-        let statusBadgeClass = test.status === 'needs-review' ? 'status-needs-review' : 'status-passed';
-        let statusText = test.status === 'needs-review' ? 'Needs Review' : 'Passed';
+        const statusBadgeClass = test.grade >= 75 ? 'status-passed' : 'status-needs-review';
+        const statusText = test.grade >= 75 ? 'Passed' : 'Needs Review';
 
-        const typeTagClass = test.type === 'pretest' ? 'tag-pretest' : 'tag-posttest';
-        const subjectTagClass = `tag-${test.subject}`;
-        const quarterTagClass = `tag-${test.quarter}`;
+        const typeTagClass = test.type.toUpperCase() === 'PRE' ? 'tag-pretest' : 'tag-posttest';
+        const subjectTagClass = `tag-${test.subject.toLowerCase()}`;
+        const quarterTagClass = `tag-q${test.quarter}`;
 
         const formattedDate = new Date(test.date).toLocaleDateString('en-US');
 
@@ -2609,9 +2486,9 @@ function initAssessments() {
             <div class="test-header">
                 <div class="test-title"><span>${test.title}</span></div>
                 <div class="test-tags">
-                    <span class="tag ${typeTagClass}">${test.type === 'pretest' ? 'Pretest' : 'Post Test'}</span>
+                    <span class="tag ${typeTagClass}">${test.type}</span>
                     <span class="tag ${subjectTagClass}">${test.subject}</span>
-                    <span class="tag ${quarterTagClass}">${test.quarter.toUpperCase()}</span>
+                    <span class="tag ${quarterTagClass}">Q${test.quarter}</span>
                 </div>
             </div>
             <div class="test-meta">
@@ -2621,13 +2498,6 @@ function initAssessments() {
                     </svg>
                     <span>${formattedDate}</span>
                 </div>
-                <div class="text-muted test-meta-item">
-                    <svg class="bi bi-clock" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"></path>
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"></path>
-                    </svg>
-                    <span>${test.timeSpent}</span>
-                </div>
             </div>
             <div class="test-stats">
                 <div class="stat-item">
@@ -2636,16 +2506,15 @@ function initAssessments() {
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Scores</div>
-                    <div class="stat-value-small">${test.score}%</div>
-                    <div class="score-details">${test.correctAnswers}/${test.totalQuestions} correct</div>
+                    <div class="stat-value-small">${test.grade}%</div>
+                    <div class="score-details">${test.score} correct</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Attempts</div>
-                    <div class="stat-value-small">${test.attempts} ${test.attempts === 1 ? 'time' : 'times'}</div>
+                    <div class="stat-value-small">${test.attempt_number} ${test.attempt_number === 1 ? 'time' : 'times'}</div>
                 </div>
             </div>
         `;
-
         return card;
     }
 
@@ -2683,13 +2552,9 @@ function initAssessments() {
         const text = e.target.textContent.trim();
         const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-        if (text === 'Previous' && currentPage > 1) {
-            currentPage--;
-        } else if (text === 'Next' && currentPage < totalPages) {
-            currentPage++;
-        } else if (!isNaN(parseInt(text))) {
-            currentPage = parseInt(text);
-        }
+        if (text === 'Previous' && currentPage > 1) currentPage--;
+        else if (text === 'Next' && currentPage < totalPages) currentPage++;
+        else if (!isNaN(parseInt(text))) currentPage = parseInt(text);
 
         renderTestCards();
         updatePagination();
@@ -2708,9 +2573,9 @@ function initAssessments() {
         totalCount.textContent = total;
     }
 
-    // RUN
     init();
 }
+
 
 
 // ===========================
