@@ -2053,23 +2053,45 @@
                 if (data.uploads) {
                     if (data.uploads.ppt) {
                         document.getElementById('file-title').value = data.uploads.ppt.title || '';
-                        // optionally show file name in UI
-                    }
-                    if (data.uploads.videos) {
-                        document.getElementById('file-title-2').value = data.uploads.videos.title || '';
-                        // optionally show file name in UI
-                    }
-                    if (data.uploads.video_url) {
-                        document.getElementById('urlInput').value = data.uploads.video_url || '';
-                    }
-                }
+                        // optionally show file name in <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const publishBtn = document.querySelector('.publish-btn');
+            const draftBtn = document.querySelector('.save-draft-btn');
+            const lessonTitle = document.getElementById('lesson-title');
+            const lessonDescription = document.getElementById('lesson-description');
+            const selectedQuarter = document.getElementById('selected-quarter-input');
+            const selectedSubject = document.getElementById('selected-subject-input');
 
-                // Restore badges if needed
-                if (data.badges) {
-                    window.loadBadges && window.loadBadges(data.badges);
+            // Initialize modals
+            const confirmModal = new bootstrap.Modal(document.getElementById('confirmPublishModal'));
+            const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            const successModal = new bootstrap.Modal(document.getElementById('publishSuccessModal'));
+
+
+            // Load draft
+            const savedData = localStorage.getItem('lessonDraft');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const oneWeek = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+                const now = Date.now();
+
+                if (!data.saved_at) {
+                    // Remove drafts without a saved_at timestamp
+                    localStorage.removeItem('lessonDraft');
+                    console.log("Removed legacy draft without timestamp");
+                } else if (now - data.saved_at > oneWeek) {
+                    // Remove drafts older than 1 week
+                    localStorage.removeItem('lessonDraft');
+                    console.log("Draft expired and removed from localStorage");
+                } else {
+                    // Draft is still valid, load it
+                    lessonTitle.value = data.lesson_title || '';
+                    lessonDescription.value = data.lesson_description || '';
+                    selectedQuarter.value = data.selected_quarter || '';
+                    selectedSubject.value = data.selected_subject || '';
+                    console.log('Lesson restored from localStorage:', data);
                 }
             }
-
 
 
 
@@ -2485,22 +2507,8 @@
                     showToast('error', 'No Content', 'Cannot save an empty lesson as draft.');
                     return;
                 }
-
-                try {
-                    const data = await getLessonData('draft'); // fetch all lesson data (same as publish)
-                    data.saved_at = Date.now();
-                    localStorage.setItem('lessonDraft', JSON.stringify(data));
-                    console.log('Draft saved with all content:', data);
-
-                    // Show draft success modal
-                    const draftModal = new bootstrap.Modal(document.getElementById('draftSuccessModal'));
-                    draftModal.show();
-                } catch (err) {
-                    console.error('Failed to save draft:', err);
-                    showToast('error', 'Save Failed', 'Could not save draft. Try again.');
-                }
+                await saveLessonToLocalDraft('draft');  // Save all content
             });
-
         });
     </script>
 
