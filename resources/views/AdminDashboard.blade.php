@@ -2866,6 +2866,12 @@
                     data.saved_at = Date.now();               // timestamp for expiry
                     localStorage.setItem('lessonDraft', JSON.stringify(data));
                     console.log('Draft saved with all content:', data);
+
+                    const deleteDraftBtn = document.querySelector('.delete-draft-btn');
+                    if (deleteDraftBtn) {
+                        deleteDraftBtn.style.display = 'inline-flex';
+                    }
+
                     showToast('info', 'Lesson Draft', 'Lesson saved locally!');
                 } catch (err) {
                     console.error('Failed to save draft:', err);
@@ -2936,6 +2942,47 @@
                         }, 1500);
                     }
                 });
+            }
+
+            // Helper function to clear all form fields
+            function clearAllFormFields() {
+                // Clear lesson title and description
+                const lessonTitle = document.getElementById('lesson-title');
+                const lessonDescription = document.getElementById('lesson-description');
+                if (lessonTitle) lessonTitle.value = '';
+                if (lessonDescription) lessonDescription.value = '';
+                
+                // Clear quarter and subject
+                const selectedQuarter = document.getElementById('selected-quarter-input');
+                const selectedSubject = document.getElementById('selected-subject-input');
+                if (selectedQuarter) selectedQuarter.value = '';
+                if (selectedSubject) selectedSubject.value = '';
+                
+                // Clear game containers
+                const gameContainers = [
+                    'matching-container',
+                    'flashcard-container', 
+                    'spelling-container',
+                    'speak-container',
+                    'imagequiz-container'
+                ];
+                
+                gameContainers.forEach(containerId => {
+                    const container = document.getElementById(containerId);
+                    if (container) container.innerHTML = '';
+                });
+                
+                // Clear file inputs
+                const fileInput = document.getElementById('fileInput');
+                const videoInput = document.getElementById('videoInput');
+                const urlInput = document.getElementById('urlInput');
+                if (fileInput) fileInput.value = '';
+                if (videoInput) videoInput.value = '';
+                if (urlInput) urlInput.value = '';
+                
+                // Clear test questions if functions exist
+                if (typeof clearPreTestQuestions === 'function') clearPreTestQuestions();
+                if (typeof clearPostTestQuestions === 'function') clearPostTestQuestions();
             }
         });
     </script>
