@@ -1744,211 +1744,199 @@ document.addEventListener("DOMContentLoaded", () => {
     // =============== GAME LOADING FUNCTIONS ===============
 
     function loadMatchingGame(items) {
-      if (!items || !items.length) return;
-      
-      const container = document.getElementById('matching-container');
-      if (!container) return;
-      
-      console.log("Loading matching game items:", items.length);
-      
-      // Clear container first
-      container.innerHTML = '';
-      
-      items.forEach((item, index) => {
-          const html = `
-              <div class="matching-item mb-2" data-index="${index}">
-                  <div class="row g-2">
-                      <div class="col-12 col-md-5">
-                          <input type="text" class="form-control matching-term" 
-                                placeholder="Term" value="${item.term || ''}">
-                      </div>
-                      <div class="col-12 col-md-5">
-                          <input type="text" class="form-control matching-definition" 
-                                placeholder="Definition" value="${item.definition || ''}">
-                      </div>
-                      <div class="col-12 col-md-2">
-                          <button class="btn btn-sm btn-danger w-100 remove-matching" type="button" onclick="removeMatchingItem(this)">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                              </svg>
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          `;
-          container.insertAdjacentHTML('beforeend', html);
-      });
-  }
+        if (!items || !items.length) return;
+        
+        const container = $("#matching-container");
+        if (!container.length) return;
+        
+        console.log("Loading matching game items:", items.length);
+        
+        // Clear container first
+        container.empty();
+        matchingCount = 0;
+        
+        items.forEach((item) => {
+            // Use existing addMatching function
+            addMatching();
+            
+            // Get the last added item
+            const matchingGroups = container.find('.item-group');
+            const lastItem = matchingGroups.last();
+            
+            // Populate with data
+            lastItem.find('.matching-container-item:first input').val(item.term || '');
+            lastItem.find('.matching-container-item:last textarea').val(item.definition || '');
+        });
+    }
 
     function loadFlashcardGame(items) {
         if (!items || !items.length) return;
         
-        const container = document.getElementById('flashcard-container');
-        if (!container) return;
+        const container = $("#flashcard-container");
+        if (!container.length) return;
         
         console.log("Loading flashcard items:", items.length);
         
         // Clear container first
-        container.innerHTML = '';
+        container.empty();
+        flashcardCount = 0;
         
-        items.forEach((item, index) => {
-            const html = `
-                <div class="flashcard-item mb-2" data-index="${index}">
-                    <div class="row g-2">
-                        <div class="col-12 col-md-5">
-                            <input type="text" class="form-control flashcard-front" 
-                                placeholder="Front" value="${item.front || ''}">
-                        </div>
-                        <div class="col-12 col-md-5">
-                            <input type="text" class="form-control flashcard-back" 
-                                placeholder="Back" value="${item.back || ''}">
-                        </div>
-                        <div class="col-12 col-md-2">
-                            <button class="btn btn-sm btn-danger w-100 remove-flashcard" type="button" onclick="removeFlashcardItem(this)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
+        items.forEach((item) => {
+            // Use existing addFlashcard function
+            addFlashcard();
+            
+            // Get the last added item
+            const flashcardGroups = container.find('.item-group');
+            const lastItem = flashcardGroups.last();
+            
+            // Populate with data
+            lastItem.find('.matching-container-item:first input').val(item.front || '');
+            lastItem.find('.matching-container-item:last textarea').val(item.back || '');
         });
     }
 
     function loadSpellingGame(items) {
         if (!items || !items.length) return;
         
-        const container = document.getElementById('spelling-container');
-        if (!container) return;
+        const container = $("#spelling-container");
+        if (!container.length) return;
         
         console.log("Loading spelling items:", items.length);
         
         // Clear container first
-        container.innerHTML = '';
+        container.empty();
+        spellCount = 0;
         
-        items.forEach((item, index) => {
-            const html = `
-                <div class="spelling-item mb-2" data-index="${index}">
-                    <div class="row g-2">
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control spelling-first" 
-                                placeholder="First part" value="${item.first || ''}">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control spelling-answer" 
-                                placeholder="Answer" value="${item.answer || ''}">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control spelling-last" 
-                                placeholder="Last part" value="${item.last || ''}">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <input type="text" class="form-control spelling-definition" 
-                                placeholder="Definition" value="${item.definition || ''}">
-                            <button class="btn btn-sm btn-danger mt-1 w-100 remove-spelling" type="button" onclick="removeSpellingItem(this)">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
+        items.forEach((item) => {
+            // Use existing addSpelling function
+            addSpelling();
+            
+            // Get the last added item
+            const spellingGroups = container.find('.item-group');
+            const lastItem = spellingGroups.last();
+            
+            // Populate with data
+            lastItem.find('.first-phrase').val(item.first || '');
+            lastItem.find('.answer-input').val(item.answer || '');
+            lastItem.find('.last-phrase').val(item.last || '');
+            lastItem.find('.definition-input').val(item.definition || '');
+            
+            // Trigger the preview update
+            const answerInput = lastItem.find('.answer-input')[0];
+            const counter = lastItem.find('.char-counter')[0];
+            const previewText = lastItem.find('.preview-text')[0];
+            
+            if (answerInput && counter && previewText) {
+                // Update counter
+                const len = answerInput.value.length;
+                counter.textContent = `${len}/11`;
+                counter.classList.toggle('text-danger', len > 9);
+                counter.classList.toggle('fw-bold', len > 9);
+                
+                // Update preview
+                const first = lastItem.find('.first-phrase').val().trim();
+                const answer = answerInput.value.trim() || "_____";
+                const last = lastItem.find('.last-phrase').val().trim();
+                previewText.innerHTML = `"${first} <strong class="text-underline">${answer}</strong> ${last}"`.trim().replace(/\s+/g, ' ');
+            }
         });
     }
 
     function loadSpeakGame(items) {
         if (!items || !items.length) return;
         
-        const container = document.getElementById('speak-container');
-        if (!container) return;
+        const container = $("#speak-container");
+        if (!container.length) return;
         
         console.log("Loading speak prompts:", items.length);
         
         // Clear container first
-        container.innerHTML = '';
+        container.empty();
+        speakCount = 0;
         
-        items.forEach((item, index) => {
-            const html = `
-                <div class="speak-item mb-2" data-index="${index}">
-                    <div class="row g-2">
-                        <div class="col-12 col-md-10">
-                            <input type="text" class="form-control speak-prompt" 
-                                placeholder="Prompt" value="${item.prompt || ''}">
-                        </div>
-                        <div class="col-12 col-md-2">
-                            <button class="btn btn-sm btn-danger w-100 remove-speak" type="button" onclick="removeSpeakItem(this)">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
+        items.forEach((item) => {
+            // Use existing addSpeak function
+            addSpeak();
+            
+            // Get the last added item
+            const speakGroups = container.find('.item-group');
+            const lastItem = speakGroups.last();
+            
+            // Populate with data
+            lastItem.find('.speech-text-form input').val(item.prompt || '');
         });
     }
 
     function loadImageQuizGame(items) {
         if (!items || !items.length) return;
         
-        const container = document.getElementById('imagequiz-container');
-        if (!container) return;
+        const container = $("#imagequiz-container");
+        if (!container.length) return;
         
         console.log("Loading image quiz items:", items.length);
         
         // Clear container first
-        container.innerHTML = '';
+        container.empty();
+        imageQuizCount = 0;
         
-        items.forEach((item, index) => {
-            // Create choices HTML
-            let choicesHtml = '';
-            if (item.choices && item.choices.length > 0) {
-                item.choices.forEach((choice, i) => {
-                    choicesHtml += `
-                        <input type="text" class="form-control mb-1 imagequiz-choice" 
-                            placeholder="Choice ${String.fromCharCode(65 + i)}" 
-                            value="${choice || ''}">
-                    `;
-                });
-            } else {
-                // Default empty choices
-                choicesHtml = `
-                    <input type="text" class="form-control mb-1 imagequiz-choice" placeholder="Choice A" value="">
-                    <input type="text" class="form-control mb-1 imagequiz-choice" placeholder="Choice B" value="">
-                `;
+        items.forEach((item) => {
+            // Use existing addImageQuiz function
+            addImageQuiz();
+            
+            // Get the last added item
+            const imageQuizGroups = container.find('.item-group');
+            const lastItem = imageQuizGroups.last();
+            
+            // Populate with data
+            // Set question
+            lastItem.find('.question-input').val(item.question || '');
+            
+            // Set correct answer
+            const correctSelect = lastItem.find('.correct-select')[0];
+            if (correctSelect && item.correct) {
+                correctSelect.value = item.correct;
             }
             
-            const html = `
-                <div class="imagequiz-item mb-3 p-2 border rounded" data-index="${index}">
-                    <div class="mb-2">
-                        <label class="form-label">Question</label>
-                        <input type="text" class="form-control imagequiz-question" 
-                            value="${item.question || ''}">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Choices</label>
-                        ${choicesHtml}
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Correct Answer</label>
-                        <select class="form-select imagequiz-correct">
-                            <option value="A" ${item.correct === 'A' ? 'selected' : ''}>A</option>
-                            <option value="B" ${item.correct === 'B' ? 'selected' : ''}>B</option>
-                            <option value="C" ${item.correct === 'C' ? 'selected' : ''}>C</option>
-                            <option value="D" ${item.correct === 'D' ? 'selected' : ''}>D</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-sm btn-danger remove-imagequiz" type="button" onclick="removeImageQuizItem(this)">
-                        Remove
-                    </button>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
+            // Handle image if exists
+            if (item.imageUrl) {
+                const previewImage = lastItem.find('.preview-image-compact')[0];
+                const uploadPlaceholder = lastItem.find('.upload-placeholder')[0];
+                
+                if (previewImage && uploadPlaceholder) {
+                    previewImage.src = item.imageUrl;
+                    previewImage.style.display = 'block';
+                    uploadPlaceholder.style.display = 'none';
+                }
+            }
+            
+            // Populate choices
+            const choicesWrapper = lastItem.find('.choices-wrapper')[0];
+            if (choicesWrapper) {
+                choicesWrapper.innerHTML = ''; // Clear existing choices
+                
+                if (item.choices && item.choices.length) {
+                    item.choices.forEach((choice, index) => {
+                        const choiceDiv = document.createElement('div');
+                        choiceDiv.className = 'choice-item d-flex align-items-center mb-1';
+                        choiceDiv.innerHTML = `
+                            <input type="text" class="form-control choice-input" value="${choice || ''}" placeholder="Option ${String.fromCharCode(65 + index)}">
+                            <button type="button" class="btn btn-sm btn-outline-danger ms-1 remove-choice" onclick="removeChoice(this)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </button>
+                        `;
+                        choicesWrapper.appendChild(choiceDiv);
+                    });
+                    
+                    // Update correct answer dropdown
+                    updateCorrectAnswerDropdown(lastItem[0]);
+                }
+            }
         });
     }
+
 
     // =============== REMOVE FUNCTIONS ===============
     function removeMatchingItem(button) {
