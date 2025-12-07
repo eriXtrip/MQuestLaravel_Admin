@@ -1616,6 +1616,29 @@
         </div>
     </div>
 
+    <!-- Draft Saved Successfully Modal -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="draftSuccessModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
+                            viewBox="0 0 16 16" class="bi bi-check-circle-fill text-info">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 
+                            9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 
+                            0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </svg>
+                    </div>
+                    <h4 class="fw-bold mb-2">Draft Saved!</h4>
+                    <p class="text-muted mb-3">Your lesson has been successfully saved as a draft.</p>
+                    <button class="btn btn-info rounded-pill px-4 py-2 close-modal"
+                        type="button" data-bs-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Loading Modal -->
     <div class="modal fade" role="dialog" tabindex="-1" id="loadingModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -2325,8 +2348,15 @@
 
                             
                         } else {
-                            // For draft, show a simple success message
-                            showToast('info', 'Lesson Draft', 'Lesson saved as draft successfully!');
+                            // Hide loading modal first
+                            const loadingModal = bootstrap.Modal.getInstance(document.getElementById('loadingModal'));
+                            if (loadingModal) loadingModal.hide();
+
+                            // Give Bootstrap time to fade-out before showing success modal
+                            setTimeout(() => {
+                                const draftModal = new bootstrap.Modal(document.getElementById('draftSuccessModal'));
+                                draftModal.show();
+                            }, 300); // 300ms = smooth fade
                         }
                     } else {
                         // Show error message
