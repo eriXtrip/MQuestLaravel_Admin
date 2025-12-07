@@ -2402,8 +2402,8 @@ function initAssessments(pupilTests = []) {
         const sortDate = $('sortDate');
         if (sortDate?.value) {
             filteredData.sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
+                const dateA = new Date(a.date).getTime();
+                const dateB = new Date(b.date).getTime();
                 return sortDate.value === 'asc' ? dateA - dateB : dateB - dateA;
             });
         }
