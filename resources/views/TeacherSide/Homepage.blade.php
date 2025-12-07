@@ -2927,7 +2927,7 @@
                                                                         <div class="col-12 col-sm-3"><select id="testSubjectFilter" class="form-select-sm form-select">
                                                                                 <optgroup label="Sort by:">
                                                                                     <option value>All Subjects</option>
-                                                                                    <option value="math">Math</option>
+                                                                                    <option value="mathematics">Mathematics</option>
                                                                                     <option value="english">English</option>
                                                                                     <option value="science">Science</option>
                                                                                     <option value="filipino">Filipino</option>
@@ -2936,10 +2936,10 @@
                                                                         <div class="col-12 col-sm-3"><select id="testQuarterFilter" class="form-select-sm form-select">
                                                                                 <optgroup label="Sort by:">
                                                                                     <option value>All Quarters</option>
-                                                                                    <option value="q1">Q1</option>
-                                                                                    <option value="q2">Q2</option>
-                                                                                    <option value="q3">Q3</option>
-                                                                                    <option value="q4">Q4</option>
+                                                                                    <option value="1">Q1</option>
+                                                                                    <option value="2">Q2</option>
+                                                                                    <option value="3">Q3</option>
+                                                                                    <option value="4">Q4</option>
                                                                                 </optgroup>
                                                                             </select></div>
                                                                         <div class="col-12 col-sm-3"><input id="fromDate" class="form-select form-select-sm" type="date" /></div>
@@ -2965,7 +2965,7 @@
                                                         <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
                                                             <div class="text-muted small"><span> Showing </span><span id="startCount-3">1</span><span> to </span><span id="endCount-3">3</span><span> of </span><span id="totalCount-3">50</span></div>
                                                             <nav aria-label="User list pagination">
-                                                                <ul class="mb-0 pagination pagination-sm">
+                                                                <ul class="mb-0 pagination pagination-sm" id="testPagination">
                                                                     <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
                                                                     <li class="page-item active"><a class="page-link" href="#">1</a></li>
                                                                     <li class="page-item"><a class="page-link" href="#">2</a></li>

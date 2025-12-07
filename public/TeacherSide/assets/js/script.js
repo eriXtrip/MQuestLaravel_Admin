@@ -2360,7 +2360,7 @@ function initAssessments(pupilTests = []) {
     const startCount = $('startCount-3');
     const endCount = $('endCount-3');
     const totalCount = $('totalCount-3');
-    const paginationNav = document.querySelector('.pagination ul');
+    const paginationNav = document.getElementById('testPagination');
 
     if (!testCardsContainer) return;
 
@@ -2374,7 +2374,20 @@ function initAssessments(pupilTests = []) {
         quarterFilter?.addEventListener('change', handleFilterChange);
         fromDate?.addEventListener('change', handleFilterChange);
         clearFiltersBtn?.addEventListener('click', clearAllFilters);
-        paginationNav?.addEventListener('click', handlePaginationClick);
+        paginationContainer.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('page-link')) return;
+            e.preventDefault();
+            const text = e.target.textContent.trim();
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+            if (text === 'Previous' && currentPage > 1) currentPage--;
+            else if (text === 'Next' && currentPage < totalPages) currentPage++;
+            else if (!isNaN(parseInt(text))) currentPage = parseInt(text);
+
+            renderTestCards();
+            updatePagination();
+            updateResultsCount();
+        });
     }
 
     function handleFilterChange() {
@@ -2392,13 +2405,17 @@ function initAssessments(pupilTests = []) {
                 test.subject.toLowerCase() !== subjectFilter.value.toLowerCase()) return false;
 
             if (quarterFilter?.value && quarterFilter.value !== '' &&
-                parseInt(test.quarter) !== parseInt(quarterFilter.value.replace('q',''))) return false;
+                parseInt(test.quarter) !== parseInt(quarterFilter.value)) return false;
 
             if (fromDate?.value) {
                 const testDate = new Date(test.date);
                 const filterDate = new Date(fromDate.value);
-                // Compare only date portion
-                if (testDate.setHours(0,0,0,0) < filterDate.setHours(0,0,0,0)) return false;
+
+                // Normalize both to local midnight
+                testDate.setHours(0,0,0,0);
+                filterDate.setHours(0,0,0,0);
+
+                if (testDate < filterDate) return false;
             }
 
             return true;
