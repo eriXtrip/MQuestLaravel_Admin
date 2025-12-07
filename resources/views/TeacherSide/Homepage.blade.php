@@ -3240,7 +3240,7 @@
             if (firstLessonLink) {
                 // Redirect to a URL based on the data-subject attribute
                 const subject = firstLessonLink.getAttribute('data-subject');
-                window.location.href = `/${subject}`; // e.g., /English
+                window.location.href = `/${English}`; // e.g., /English
             }
         });
     </script>
