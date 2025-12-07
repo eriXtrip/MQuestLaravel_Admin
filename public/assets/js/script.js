@@ -1446,6 +1446,12 @@ function loadMatchingGame(items) {
     
     container.setAttribute('data-draft-loaded', 'true');
     console.log("Matching game loaded successfully");
+    
+    // Show the matching section
+    const matchingSection = activeLesson.querySelector('#matching-section');
+    if (matchingSection) {
+        matchingSection.style.display = 'block';
+    }
 }
 
 function loadFlashcardGame(items) {
@@ -1614,7 +1620,16 @@ function loadSpellingGame(items) {
 }
 
 // Add setupGameSectionHandlers function
-function setupGameSectionHandlers() {
+function setupGameSectionHandlers(lessonElement) {
+    if (!lessonElement) {
+        lessonElement = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+    }
+    
+    if (!lessonElement) {
+        console.error("No lesson element found for setting up game handlers");
+        return;
+    }
+    
     // Map button IDs to game types
     const gameButtonMap = {
         'addMatchingBtn': { type: 'matching', section: 'matching-section' },
@@ -1625,20 +1640,16 @@ function setupGameSectionHandlers() {
     };
     
     Object.keys(gameButtonMap).forEach(buttonId => {
-        const button = document.getElementById(buttonId);
+        const button = lessonElement.querySelector(`#${buttonId}`);
         if (button) {
-            // Remove any existing listeners and add new one
+            // Clone and replace to remove existing listeners
             const newButton = button.cloneNode(true);
             button.parentNode.replaceChild(newButton, button);
             
             newButton.addEventListener('click', function() {
                 const gameInfo = gameButtonMap[buttonId];
                 
-                // Find the game section in the active lesson
-                const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
-                if (!activeLesson) return;
-                
-                const section = activeLesson.querySelector(`#${gameInfo.section}`);
+                const section = lessonElement.querySelector(`#${gameInfo.section}`);
                 if (section) {
                     // Show the section
                     section.style.display = 'block';
@@ -1662,8 +1673,8 @@ function setupGameSectionHandlers() {
     });
 }
 
-// Add loadGameDataForSection function
-function loadGameDataForSection(sectionId) {
+// Add autoLoadGameSections function
+function autoLoadGameSections() {
     const savedData = localStorage.getItem('lessonDraft');
     if (!savedData) return;
     
@@ -1671,38 +1682,50 @@ function loadGameDataForSection(sectionId) {
         const data = JSON.parse(savedData);
         if (!data.games) return;
         
-        const sectionGameMap = {
-            'matching-section': { type: 'matching', data: data.games.matching },
-            'flashcard-section': { type: 'flashcard', data: data.games.flashcard },
-            'spelling-section': { type: 'spelling', data: data.games.spelling },
-            'speak-section': { type: 'speak', data: data.games.speak },
-            'imagequiz-section': { type: 'imagequiz', data: data.games.imagequiz }
-        };
+        const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
+        if (!activeLesson) return;
         
-        const gameInfo = sectionGameMap[sectionId];
-        if (gameInfo && gameInfo.data && gameInfo.data.length > 0) {
-            switch(gameInfo.type) {
-                case 'matching':
-                    loadMatchingGame(gameInfo.data);
-                    break;
-                case 'flashcard':
-                    loadFlashcardGame(gameInfo.data);
-                    break;
-                case 'spelling':
-                    loadSpellingGame(gameInfo.data);
-                    break;
-                case 'speak':
-                    loadSpeakGame(gameInfo.data);
-                    break;
-                case 'imagequiz':
-                    loadImageQuizGame(gameInfo.data);
-                    break;
+        // Check each game type and load if it has data
+        if (data.games.matching?.length) {
+            const container = activeLesson.querySelector('#matching-container');
+            if (container && !container.hasAttribute('data-draft-loaded')) {
+                loadMatchingGame(data.games.matching);
             }
         }
+        
+        if (data.games.flashcard?.length) {
+            const container = activeLesson.querySelector('#flashcard-container');
+            if (container && !container.hasAttribute('data-draft-loaded')) {
+                loadFlashcardGame(data.games.flashcard);
+            }
+        }
+        
+        if (data.games.spelling?.length) {
+            const container = activeLesson.querySelector('#spelling-container');
+            if (container && !container.hasAttribute('data-draft-loaded')) {
+                loadSpellingGame(data.games.spelling);
+            }
+        }
+        
+        if (data.games.speak?.length) {
+            const container = activeLesson.querySelector('#speak-container');
+            if (container && !container.hasAttribute('data-draft-loaded')) {
+                loadSpeakGame(data.games.speak);
+            }
+        }
+        
+        if (data.games.imagequiz?.length) {
+            const container = activeLesson.querySelector('#imagequiz-container');
+            if (container && !container.hasAttribute('data-draft-loaded')) {
+                loadImageQuizGame(data.games.imagequiz);
+            }
+        }
+        
     } catch (error) {
-        console.error('Error loading game data:', error);
+        console.error('Error auto-loading game sections:', error);
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const createBtn = document.getElementById("createLessonBtn");
@@ -1729,39 +1752,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =============== FIX: START FROM DRAFT OPTION ===============
     if (startFromDraftBtn) {
-      startFromDraftBtn.addEventListener("click", () => {
-          if (dialog) dialog.style.display = 'none';
-          
-          const draftInfo = getDraftInfo();
-          
-          if (!draftInfo || !draftInfo.exists) {
-              showToast('info', 'No Draft Found', 'Starting a blank lesson instead.');
-              const newLesson = createBlankLesson();
-              return;
-          }
-          
-          // Create new lesson and load the draft
-          const newLesson = createBlankLesson();
-          
-          // Small delay to ensure new lesson template is loaded, then call loadLessonDraft
-          setTimeout(() => {
-              loadLessonDraft();
-              
-              // Set up game section handlers after loading
-              setTimeout(() => {
-                  setupGameSectionHandlers();
-              }, 500);
-              
-              showToast('success', 'Draft Loaded', `"${draftInfo.title}" draft loaded successfully.`);
-              
-              // Show delete button for loaded draft
-              const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
-              if (deleteDraftBtn) {
-                  deleteDraftBtn.style.display = 'inline-block';
-              }
-          }, 300);
-      });
-  }
+        startFromDraftBtn.addEventListener("click", () => {
+            if (dialog) dialog.style.display = 'none';
+            
+            const draftInfo = getDraftInfo();
+            
+            if (!draftInfo || !draftInfo.exists) {
+                showToast('info', 'No Draft Found', 'Starting a blank lesson instead.');
+                const newLesson = createBlankLesson();
+                return;
+            }
+            
+            // Create new lesson and load the draft
+            const newLesson = createBlankLesson();
+            
+            // Small delay to ensure new lesson template is loaded, then call loadLessonDraft
+            setTimeout(() => {
+                // Load basic lesson info
+                loadLessonDraft();
+                
+                // AUTO-LOAD game sections that have data
+                setTimeout(() => {
+                    autoLoadGameSections();
+                    
+                    // Set up game section handlers for this specific lesson
+                    setupGameSectionHandlers(newLesson);
+                }, 500);
+                
+                showToast('success', 'Draft Loaded', `"${draftInfo.title}" draft loaded successfully.`);
+                
+                // Show delete button for loaded draft
+                const deleteDraftBtn = newLesson.querySelector(".delete-draft-btn");
+                if (deleteDraftBtn) {
+                    deleteDraftBtn.style.display = 'inline-block';
+                }
+            }, 300);
+        });
+    }
+
 
     // =============== FIX: START BLANK OPTION ===============
     if (startBlankBtn) {
@@ -2034,6 +2062,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const activeLesson = document.querySelector('.new-lesson-template') || document.querySelector('.lesson-template:last-of-type');
             if (activeLesson) {
                 activeLesson.setAttribute('data-draft-games', JSON.stringify(data.games));
+                 console.log("Games data stored on lesson element");
             }
         }
 
