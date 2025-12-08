@@ -1781,6 +1781,13 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
     filterStudents(null);
 }
 
+function maskEmail(email) {
+    if (!email) return "-";
+    const [user, domain] = email.split("@");
+
+    return user[0] + "***@" + domain;
+}
+
 window.fillPupilModal = function(pupil) {
 
     //console.log('raw pupil data: ',pupil);
@@ -1794,7 +1801,8 @@ window.fillPupilModal = function(pupil) {
     document.getElementById("badgeGender").textContent = pupil.gender;
     
 
-    document.getElementById("pupilEmail").textContent = pupil.email;
+    //document.getElementById("pupilEmail").textContent = pupil.email;
+    document.getElementById("pupilEmail").textContent = maskEmail(pupil.email);
     document.getElementById("pupilEnrollmentDate").textContent =
         new Date(pupil.enrollment_date).toLocaleDateString();
 
