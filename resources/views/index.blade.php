@@ -35,7 +35,6 @@
         border-radius: 16px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
         overflow: hidden;
-        max-height: 90vh;
         }
 
         @media (min-width: 768px) {
@@ -100,7 +99,8 @@
         }
 
         /* =============== INPUT GROUP =============== */
-        .input-group {
+        .secret-input-group {
+        position: relative;
         margin-bottom: 24px;
         }
 
