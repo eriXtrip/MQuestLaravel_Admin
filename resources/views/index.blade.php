@@ -412,12 +412,18 @@
                         const container = document.querySelector('.secret-modal-overlay');
                         const input = document.getElementById('secretKey');
                         const submitBtn = document.querySelector('.submit-secret-btn');
+                        const toggleBtn = document.getElementById('toggleSecretKey');
                         const image = document.getElementById('auth-image');
                         const fallback = document.getElementById('fallback');
 
                         // Reset input and error state
+                        /*input.value = '';
+                        input.focus();*/
+                        // Reset state
                         input.value = '';
+                        input.type = 'password';
                         input.focus();
+                        //modal.style.display = 'flex';
 
                         // Show modal
                         container.style.display = 'flex';
@@ -428,9 +434,24 @@
                         fallback.style.display = 'flex';
                         };
 
+                        // Toggle visibility
+                        function toggleVisibility() {
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                        } else {
+                            input.type = 'password';
+                        }
+                        input.focus();
+                        }
+
                         // Close modal and resolve
                         function closeAndResolve(value) {
                         container.style.display = 'none';
+                        // Cleanup
+                        toggleBtn.removeEventListener('click', toggleVisibility);
+                        submitBtn.removeEventListener('click', handleInput);
+                        input.removeEventListener('keypress', handleInput);
+                        modal.removeEventListener('click', handleOutsideClick);
                         resolve(value);
                         }
 
@@ -523,7 +544,7 @@
                         }
                         }, 2000);
                     }
-                    }, 1200);
+                }, 1200);
 
             } catch (error) {
                 console.error("Login error:", error);
