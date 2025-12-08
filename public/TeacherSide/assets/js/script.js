@@ -1537,8 +1537,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
 
             // Mask LRN → shows first 4 digits only
             const maskedLRN = pupil.LRN
-                ? pupil.LRN.slice(0, 4) + "****"
-                : "****";
+                ? "*".repeat(pupil.LRN.length - 3) + pupil.LRN.slice(-3)
+                : "***";
 
             // Mask Email → shows first 2 letters + ***
             const maskedEmail = pupil.email
