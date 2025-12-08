@@ -3987,6 +3987,18 @@
 
 
         // Assuming combinedUsers is your array of pupils + teachers
+
+        function maskEmail(email) {
+            if (!email) return '-';
+            const [user, domain] = email.split("@");
+            if (!domain) return email;
+
+            const maskedUser = user.length <= 2
+                ? user[0] + "*"
+                : user[0] + "*".repeat(user.length - 2) + user[user.length - 1];
+
+            return maskedUser + "@" + domain;
+        }
         function openProfile(userId, userType) {
             const user = combinedUsers.find(u => u.id === userId && u.type === userType);
             if (!user) return;
@@ -4006,7 +4018,7 @@
 
             // Personal info
             document.getElementById("createdAt").textContent = new Date(user.created_at).toLocaleDateString() || '-';
-            document.getElementById("email").textContent = user.email || '-';
+            document.getElementById("email").textContent = maskEmail(user.email);
             document.getElementById("bday").textContent = new Date(user.birthdate).toLocaleDateString() || '-';
             document.getElementById("schoolName").textContent = user.schoolName || 'No School';
 
