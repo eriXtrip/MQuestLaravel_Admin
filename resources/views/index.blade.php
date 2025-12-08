@@ -9,6 +9,178 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    <style>
+        /* === Secret Key Modal Styles === */
+        .secret-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        }
+
+        /* =============== SECRET KEY CONTAINER =============== */
+        .secret-key-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 900px;
+        width: 100%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+        .secret-key-container {
+            flex-direction: row;
+        }
+        }
+
+        /* =============== IMAGE SECTION =============== */
+        .image-section {
+        flex: 1;
+        background: #f8fafc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        }
+
+        .image-section img {
+        max-width: 100%;
+        max-height: 300px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 12px;
+        }
+
+        .placeholder-image {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #e2e8f0;
+        border-radius: 12px;
+        color: #94a3b8;
+        font-size: 14px;
+        text-align: center;
+        padding: 16px;
+        }
+
+        /* =============== FORM SECTION =============== */
+        .form-section {
+        flex: 1;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        }
+
+        .form-section h1 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 8px;
+        }
+
+        .form-section p {
+        color: #64748b;
+        font-size: 15px;
+        margin-bottom: 24px;
+        }
+
+        /* =============== INPUT GROUP =============== */
+        .secret-input-group {
+        position: relative;
+        margin-bottom: 24px;
+        }
+
+        .input-group-text {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #334155;
+        margin-bottom: 8px;
+        }
+
+        .input-with-toggle {
+        position: relative;
+        width: 100%;
+        }
+
+        .secret-input {
+        width: 100%;
+        padding: 14px 44px 14px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: monospace;
+        background-color: #f8fafc;
+        transition: border-color 0.3s;
+        }
+
+        .secret-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .toggle-visibility-btn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #94a3b8;
+        padding: 4px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .toggle-visibility-btn:hover,
+        .toggle-visibility-btn:focus {
+        color: #3b82f6;
+        background: #f1f5f9;
+        outline: none;
+        }
+
+        /* =============== BUTTONS =============== */
+        .submit-secret-btn {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .submit-secret-btn:hover {
+        background-color: #2563eb;
+        }
+
+        .submit-secret-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+    </style>
+
 </head>
 <body>
     <div class="login-container">
@@ -37,6 +209,55 @@
         <button class="login-button" onclick="handleLogin()">Login</button>
         <p class="register-link">Don't have an account? <a href="{{ route('register') }}">Register Instead</a></p>
     </div>
+
+    <!--Custom enter secret key -->
+    <div class="secret-modal-overlay" id="secretKeyModal">
+        <div class="container secret-key-container">
+        <div class="image-section">
+            <img 
+            id="auth-image" 
+            alt="Secure authentication illustration" 
+            src="{{ asset('assets/img/girl.png') }}" 
+            />
+            <div id="fallback" class="placeholder-image" style="display: none;">
+            <span>🔒 Secure Access</span><br />
+            <small>Illustration</small>
+            </div>
+        </div>
+        <div class="form-section">
+            <h1>Enter The Secret Key</h1>
+            <p>For security purposes, please provide your unique secret key to continue.</p>
+            <div class="input-group secret-input-group">
+                <label class="input-group-text" for="secretKey">Secret Key</label>
+                    <div class="input-with-toggle">
+                        <input 
+                        id="secretKey" 
+                        class="secret-input" 
+                        type="password" 
+                        autocomplete="off" 
+                        maxlength="64" 
+                        placeholder="••••••••" 
+                        spellcheck="false" 
+                        />
+                        <button 
+                        type="button" 
+                        id="toggleSecretKey" 
+                        class="toggle-visibility-btn" 
+                        aria-label="Toggle secret key visibility"
+                        >
+                        <!-- Eye icon (open) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+                <button class="submit-secret-btn" type="button">Continue</button>
+            </div>
+        </div>
+    </div>
+
     <div id="customAlert" style="display:none; position:fixed; top:20px; right:20px; background-color:#f8d7da; color:#842029; border:1px solid #f5c2c7; padding:15px 20px; border-radius:5px; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:1000; font-family:Arial, sans-serif;">
         <span id="customAlertMessage"></span>
         <button id="customAlertClose" style="margin-left:15px; background:none; border:none; font-weight:bold; cursor:pointer;">&times;</button>
@@ -126,7 +347,7 @@
                 console.log(sessionStorage.getItem("token"));
                 console.log(sessionStorage.getItem("user"));
 
-                setTimeout(async () => {
+                /*setTimeout(async () => {
                     if (user.role_id === 1) {
                         // Admin needs secret key
                         const secretKey = prompt("Please enter your secret key.");
@@ -181,6 +402,205 @@
                                 // Redirect to Play Store or show instructions
                                 window.location.href = "https://drive.google.com/file/d/1Ln41eRgFXVSN1QmVrTgg-jr59RbZXerT/view";
                             }
+                        }, 2000);
+                    }
+                }, 1200);*/
+
+                // ─── New: Show Secret Key Modal (Matches Your HTML) ───────────────
+                /*function showSecretKeyPrompt() {
+                    return new Promise((resolve) => {
+                        const container = document.querySelector('.secret-modal-overlay');
+                        const input = document.getElementById('secretKey');
+                        const submitBtn = document.querySelector('.submit-secret-btn');
+                        const image = document.getElementById('auth-image');
+                        const fallback = document.getElementById('fallback');
+
+                        // Reset input and error state
+                        input.value = '';
+                        input.focus();
+
+                        // Show modal
+                        container.style.display = 'flex';
+
+                        // Handle image load error
+                        image.onerror = () => {
+                        image.style.display = 'none';
+                        fallback.style.display = 'flex';
+                        };
+
+                        // Close modal and resolve
+                        function closeAndResolve(value) {
+                        container.style.display = 'none';
+                        resolve(value);
+                        }
+
+                        // Submit handler
+                        function handleInput(e) {
+                        if (e.type === 'click' || e.key === 'Enter') {
+                            const key = input.value.trim();
+                            if (key) {
+                            closeAndResolve(key);
+                            } else {
+                            input.focus();
+                            // Optional: show error message if you add one
+                            }
+                        }
+                        }
+
+                        // Cancel on outside click (optional)
+                        function handleOutsideClick(e) {
+                        if (e.target === container) {
+                            closeAndResolve(null);
+                        }
+                        }
+
+                        // Bind events
+                        submitBtn.addEventListener('click', handleInput);
+                        input.addEventListener('keypress', handleInput);
+                        container.addEventListener('click', handleOutsideClick);
+
+                        // Cleanup function (for safety)
+                        const cleanup = () => {
+                        submitBtn.removeEventListener('click', handleInput);
+                        input.removeEventListener('keypress', handleInput);
+                        container.removeEventListener('click', handleOutsideClick);
+                        };
+
+                        // Override resolve to include cleanup
+                        const originalResolve = resolve;
+                        resolve = (value) => {
+                        cleanup();
+                        originalResolve(value);
+                        };
+                    });
+                }*/
+                function showSecretKeyPrompt() {
+                    return new Promise((resolve) => {
+                        const container = document.querySelector('.secret-modal-overlay');
+                        const input = document.getElementById('secretKey');
+                        const submitBtn = document.querySelector('.submit-secret-btn');
+                        const toggleBtn = document.getElementById('toggleSecretKey'); // ← NEW
+                        const image = document.getElementById('auth-image');
+                        const fallback = document.getElementById('fallback');
+
+                        // Reset input
+                        input.value = '';
+                        input.type = 'password'; // Start masked
+                        input.focus();
+
+                        // Show modal
+                        container.style.display = 'flex';
+
+                        // Handle image load error
+                        image.onerror = () => {
+                        image.style.display = 'none';
+                        fallback.style.display = 'flex';
+                        };
+
+                        // 🔑 Toggle password visibility
+                        function togglePasswordVisibility() {
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                        } else {
+                            input.type = 'password';
+                        }
+                        input.focus(); // Keep focus on input after toggle
+                        }
+
+                        // Close modal and resolve
+                        function closeAndResolve(value) {
+                        container.style.display = 'none';
+                        resolve(value);
+                        }
+
+                        // Submit handler
+                        function handleInput(e) {
+                        if (e.type === 'click' || e.key === 'Enter') {
+                            const key = input.value.trim();
+                            if (key) {
+                            closeAndResolve(key);
+                            } else {
+                            input.focus();
+                            }
+                        }
+                        }
+
+                        // Close on outside click
+                        function handleOutsideClick(e) {
+                        if (e.target === container) {
+                            closeAndResolve(null);
+                        }
+                        }
+
+                        // Bind events
+                        submitBtn.addEventListener('click', handleInput);
+                        input.addEventListener('keypress', handleInput);
+                        container.addEventListener('click', handleOutsideClick);
+                        toggleBtn.addEventListener('click', togglePasswordVisibility); 
+
+                        // Cleanup function
+                        const cleanup = () => {
+                        submitBtn.removeEventListener('click', handleInput);
+                        input.removeEventListener('keypress', handleInput);
+                        container.removeEventListener('click', handleOutsideClick);
+                        toggleBtn.removeEventListener('click', togglePasswordVisibility); 
+                        };
+
+                        // Override resolve to include cleanup
+                        const originalResolve = resolve;
+                        resolve = (value) => {
+                        cleanup();
+                        originalResolve(value);
+                        };
+                    });
+                }
+
+                setTimeout(async () => {
+                    if (user.role_id === 1) {
+                        // Show custom secret key modal (your HTML)
+                        const secretKey = await showSecretKeyPrompt();
+                        if (!secretKey) {
+                        showCustomAlert("Secret key is required for admin access.");
+                        return;
+                        }
+
+                        // Proceed with confirmation
+                        const confirmRes = await fetch("{{ route('admin.confirm') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            userId: user.server_id,
+                            secret_key: secretKey
+                        })
+                        });
+
+                        const confirmData = await confirmRes.json();
+                        if (confirmData.success) {
+                        showCustomAlert(`Login successful! Welcome, ${user.first_name}!`, 'success');
+                        window.location.href = "{{ route('AdminDashboard') }}";
+                        } else {
+                        showCustomAlert(confirmData.error || "Admin confirmation failed.");
+                        }
+
+                    } else if (user.role_id === 2) {
+                        showCustomAlert(`Login successful! Welcome, ${user.first_name}!`, 'success');
+                        window.location.href = "{{ route('teacher.homepage') }}";
+                    } else if (user.role_id === 3) {
+                        const userId = user.server_id;
+                        const token = data.token;
+
+                        // Android deep link
+                        const appPackage = 'com.anonymous.MQuest';
+                        const androidIntent = `intent://open?userId=${userId}&token=${token}#Intent;package=${appPackage};scheme=${appScheme.slice(0, -2)};end;`;
+                        window.location.href = androidIntent;
+
+                        setTimeout(() => {
+                        if (!(document.hidden || document.webkitHidden)) {
+                            window.location.href = "https://drive.google.com/file/d/1Ln41eRgFXVSN1QmVrTgg-jr59RbZXerT/view";
+                        }
                         }, 2000);
                     }
                 }, 1200);

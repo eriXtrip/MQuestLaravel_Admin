@@ -1534,6 +1534,16 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
         userTableBody.innerHTML = '';
         pupilsToShow.forEach(pupil => {
             const status = pupil.active_status === 1 ? 'Active' : 'Inactive';
+
+            // Mask LRN → shows first 4 digits only
+            const maskedLRN = pupil.LRN
+                ? pupil.LRN.slice(0, 4) + "****"
+                : "****";
+
+            // Mask Email → shows first 2 letters + ***
+            const maskedEmail = pupil.email
+                ? pupil.email.replace(/(.{2}).+(@.+)/, "$1***$2")
+                : "***";
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td></td>
@@ -1541,13 +1551,13 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                     <img class="img-fluid pupil-avatar" width="200" height="200" src="${pupil.thumbnail || '/path/to/default.png'}">
                 </td>
                 <td data-label="Name">${pupil.fullname}</td>
-                <td data-label="LRN">${pupil.LRN}</td>
+                <td data-label="LRN">${maskedLRN}</td>
                 <td data-label="Grade">Grade 4</td>
-                <td data-label="Age">${pupil.age}</td>
+                <!--<td data-label="Age">${pupil.age}</td>-->
                 <td data-label="Status">
                     <span class="status-badge status-${status.toLowerCase()}">${status}</span>
                 </td>
-                <td data-label="Email">${pupil.email}</td>
+                <td data-label="Email">${maskedEmail}</td>
                 <td data-label="Section">${pupil.section_name}</td>
                 <td data-label="Enrollment Date">${new Date(pupil.enrollment_date).toLocaleDateString()}</td>
                 <td data-label="Actions">

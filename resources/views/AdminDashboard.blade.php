@@ -1513,6 +1513,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- This is for pupil na footer -->
                             <div class="stats-row">
                                 <div class="stat-item">
                                     <div class="stat-value" ><span id="avgScore">0%</span></div>
@@ -1525,6 +1526,22 @@
                                 <div class="stat-item">
                                     <div class="stat-value"><span id="badgeEarn">0</span></div>
                                     <div class="stat-label"><span>Badges Earned</span></div>
+                                </div>
+                            </div>
+                            
+                            <!-- para sa teacher na footer -->
+                            <div class="stats-row d-none">
+                                <div class="stat-item">
+                                    <div class="stat-value"><span>34</span></div>
+                                    <div class="stat-label"><span>Total Pupils</span></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value"><span>13%</span></div>
+                                    <div class="stat-label"><span>Class Performance</span></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value"><span>13%</span></div>
+                                    <div class="stat-label"><span>Completion Rate</span></div>
                                 </div>
                             </div>
                         </div>
@@ -1600,16 +1617,17 @@
             
             <div class="d-flex flex-column gap-2">
                 <button class="btn btn-primary" id="startFromDraftBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-2">
-                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zM13 4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1z"/>
+                    <svg class="bi bi-pencil-square me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
                     </svg>
                     Start from Draft
                 </button>
                 
                 <button class="btn btn-outline-primary" id="startBlankBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-2">
-                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    <svg class="bi bi-file-earmark-plus me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"></path>
+                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"></path>
                     </svg>
                     Start Blank
                 </button>
@@ -1659,7 +1677,7 @@
                 <div class="modal-body text-center p-4">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
-                            viewBox="0 0 16 16" class="bi bi-check-circle-fill text-info">
+                            viewBox="0 0 16 16" class="bi bi-check-circle-fill text-success">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 
                             9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 
                             0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -1667,7 +1685,7 @@
                     </div>
                     <h4 class="fw-bold mb-2">Draft Saved!</h4>
                     <p class="text-muted mb-3">Your lesson has been successfully saved as a draft.</p>
-                    <button class="btn btn-info rounded-pill px-4 py-2 close-modal"
+                    <button class="btn btn-success rounded-pill px-4 py-2 close-modal"
                         type="button" data-bs-dismiss="modal">Okay</button>
                 </div>
             </div>
@@ -1717,6 +1735,25 @@
                         <button class="btn btn-outline-success rounded-pill px-4 py-2 btn-sm" type="button" id="confirmPublishBtn">
                             Publish Lesson
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Delete Draft Confirmation Modal-->
+    <div id="deleteDraftLesson" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3"><svg class="bi bi-exclamation-triangle-fill text-danger" xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
+                        </svg></div>
+                    <h4 class="fw-bold mb-2">Delete draft?</h4>
+                    <p class="text-muted mb-3">Are you sure you want to delete this draft? This action cannot be undone.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2" type="button" data-bs-dismiss="modal"> Cancel </button>
+                        <button id="deleteDraft" class="btn btn-outline-success btn-sm rounded-pill px-4 py-2" type="button">Delete</button>
                     </div>
                 </div>
             </div>
@@ -1881,7 +1918,7 @@
         });
     </script>
 
-    <script>
+    <!--<script>
         document.addEventListener('DOMContentLoaded', () => {
             const studentsModal = document.getElementById('studentsModal');
             const studentsContainer = studentsModal.querySelector('.modal-student-list');
@@ -1954,7 +1991,72 @@
                 }
             });
         });
+    </script>-->
+
+    <!-- View Enrolled Pupils -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentsModal = document.getElementById('studentsModal');
+            const studentsContainer = studentsModal.querySelector('.modal-student-list');
+
+            studentsModal.addEventListener('show.bs.modal', async (event) => {
+                // The element that triggered the modal
+                const button = event.relatedTarget;
+                const subjectId = button.getAttribute('data-subject-id');
+                if (!subjectId) return;
+
+                // Clear existing content
+                studentsContainer.innerHTML = '<p class="text-center text-muted">Loading...</p>';
+
+                try {
+                    // Fetch enrolled students by subject_id
+                    const response = await fetch(`/usersBySubject/${subjectId}`);
+                    const students = await response.json();
+
+                    // Clear container before inserting new data
+                    studentsContainer.innerHTML = '';
+
+                    if (students.length === 0) {
+                        studentsContainer.innerHTML = `<p class="text-center text-muted">No enrolled students for this subject.</p>`;
+                        return;
+                    }
+
+                    // Populate the modal with the fetched data
+                    students.forEach(student => {
+                        const avatar = student.avatar_thumbnail || 'assets/img/default-avatar.png';
+                        const fullname = `${student.first_name ?? ''} ${student.last_name ?? ''}`.trim();
+                        const lrn = student.lrn ?? 'N/A';
+
+                        // Mask LRN for security (show last 4 digits)
+                        let maskedLrn = 'N/A';
+                        if (lrn !== 'N/A') {
+                            maskedLrn = lrn.length > 4
+                                ? '*'.repeat(lrn.length - 4) + lrn.slice(-4)
+                                : '*'.repeat(lrn.length);
+                        }
+
+                        const card = `
+                            <div class="student-card">
+                                <div class="student-info">
+                                    <img class="img-fluid" width="200" height="200" src="${avatar}">
+                                    <div class="student-details">
+                                        <strong>${fullname}</strong>
+                                        <p class="text-muted mb-0">LRN:&nbsp;<span>${maskedLrn}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        studentsContainer.insertAdjacentHTML('beforeend', card);
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching students:', error);
+                    studentsContainer.innerHTML = `<p class="text-center text-danger">Failed to load data.</p>`;
+                }
+            });
+        });
     </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -2920,7 +3022,7 @@
 
             // Delete Draft button functionality
             const deleteDraftBtn = document.querySelector('.delete-draft-btn');
-            if (deleteDraftBtn) {
+            /*if (deleteDraftBtn) {
                 deleteDraftBtn.addEventListener('click', function() {
                     // Confirm before deleting
                     if (confirm('Are you sure you want to delete this draft? This action cannot be undone.')) {
@@ -2942,7 +3044,40 @@
                         }, 1500);
                     }
                 });
+            }*/
+            if (deleteDraftBtn) {
+                deleteDraftBtn.addEventListener('click', function() {
+                    // Show custom modal instead of confirm()
+                    const modal = new bootstrap.Modal(document.getElementById('deleteDraftLesson'));
+                    modal.show();
+
+                    const confirmDeleteBtn = document.getElementById('deleteDraft');
+
+                    // Confirm delete action
+                    confirmDeleteBtn.onclick = function () {
+
+                        // Remove the draft
+                        localStorage.removeItem('lessonDraft');
+
+                        // Toast alert
+                        showToast('success', 'Draft Deleted', 'Your draft has been successfully deleted.');
+
+                        // Hide button
+                        deleteDraftBtn.style.display = 'none';
+
+                        // Clear form
+                        clearAllFormFields();
+
+                        // Reload
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+
+                        modal.hide();
+                    };
+                });
             }
+
 
             // Helper function to clear all form fields
             function clearAllFormFields() {
@@ -3671,7 +3806,7 @@
 
 
         // Render to table
-        function renderUserTable(list) {
+        /*function renderUserTable(list) {
             const body = document.getElementById("userTableBody");
             body.innerHTML = "";
 
@@ -3721,7 +3856,70 @@
 
                 body.insertAdjacentHTML("beforeend", row);
             });
+        }*/
+        function maskEmail(email) {
+            if (!email || !email.includes("@")) return email;
+
+            const [local, domain] = email.split("@");
+
+            const visible = local.slice(0, 3);
+            const masked = "*".repeat(Math.max(local.length - 3, 3));
+
+            return `${visible}${masked}@${domain}`;
         }
+
+        function renderUserTable(list) {
+            const body = document.getElementById("userTableBody");
+            body.innerHTML = "";
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            const pageItems = list.slice(start, end);
+
+            document.getElementById("startCount").textContent = start + 1;
+            document.getElementById("endCount").textContent = Math.min(end, list.length);
+
+            pageItems.forEach(user => {
+                const activeBadge = user.active 
+                    ? `<span class="status-badge status-active">Active</span>`
+                    : `<span class="status-badge status-inactive">Inactive</span>`;
+
+                const dotClass = user.active ? "online" : "offline";
+
+                const typeBadge =
+                    user.type === "Teacher"
+                        ? `<span class="text-success bg-success-subtle user-badge badge">Teacher</span>`
+                        : `<span class="text-info bg-info-subtle user-badge badge">Pupil</span>`;
+
+                const lastSeenText = user.active ? "Now" : timeAgo(user.lastActive);
+
+                const row = `
+                    <tr data-active="${user.active}">
+                        <td data-label="Online"><div class="status-dot ${dotClass}"></div></td>
+                        <td data-label="Name">${user.name}</td>
+                        <td data-label="Email">${maskEmail(user.email)}</td>
+                        <td data-label="Type">${typeBadge}</td>
+                        <td data-label="Grade/Class">${user.schoolName}</td>
+                        <td data-label="Status">${activeBadge}</td>
+                        <td data-label="Last Seen">${lastSeenText}</td>
+                        <td data-label="Actions">
+                            <button class="btn action-btn view" title="View Profile"
+                                    data-bs-toggle="modal" data-bs-target="#viewProfile"
+                                    onclick="openProfile(${user.id}, '${user.type}')">
+                                <svg class="bi bi-eye" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+
+                body.insertAdjacentHTML("beforeend", row);
+            });
+        }
+
 
         function updateUI() {
             renderUserTable(activeList);
@@ -3789,6 +3987,18 @@
 
 
         // Assuming combinedUsers is your array of pupils + teachers
+
+        function maskEmail(email) {
+            if (!email) return '-';
+            const [user, domain] = email.split("@");
+            if (!domain) return email;
+
+            const maskedUser = user.length <= 2
+                ? user[0] + "*"
+                : user[0] + "*".repeat(user.length - 2) + user[user.length - 1];
+
+            return maskedUser + "@" + domain;
+        }
         function openProfile(userId, userType) {
             const user = combinedUsers.find(u => u.id === userId && u.type === userType);
             if (!user) return;
@@ -3808,7 +4018,7 @@
 
             // Personal info
             document.getElementById("createdAt").textContent = new Date(user.created_at).toLocaleDateString() || '-';
-            document.getElementById("email").textContent = user.email || '-';
+            document.getElementById("email").textContent = maskEmail(user.email);
             document.getElementById("bday").textContent = new Date(user.birthdate).toLocaleDateString() || '-';
             document.getElementById("schoolName").textContent = user.schoolName || 'No School';
 
