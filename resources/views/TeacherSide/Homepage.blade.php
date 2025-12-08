@@ -3237,7 +3237,7 @@
 
     <!-- Recent Enrollees -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        /*document.addEventListener('DOMContentLoaded', () => {
             const enrollmentList = document.getElementById('enrollmentList');
             const recentEnrollees = window.dashboardData?.recent_enrollees ?? [];
 
@@ -3304,6 +3304,63 @@
             // Update enrollment count badge
             const countBadge = document.querySelector('.enrollment-count-bagde');
             if (countBadge) countBadge.textContent = recentEnrollees.length;
+        });*/
+        document.addEventListener('DOMContentLoaded', () => {
+            const enrollmentList = document.getElementById('enrollmentList');
+            const recentEnrollees = window.dashboardData?.recent_enrollees ?? [];
+
+            // Clear existing dummy items
+            enrollmentList.innerHTML = '';
+
+            // Filter enrollees enrolled within the last 7 days
+            const daysVisible = 7;
+            const now = new Date();
+            const filteredEnrollees = recentEnrollees.filter(enrollee => {
+                const enrolledDate = new Date(enrollee.enrollment_date);
+                const daysPassed = (now - enrolledDate) / (1000 * 60 * 60 * 24);
+                return daysPassed <= daysVisible;
+            });
+
+            if (filteredEnrollees.length === 0) {
+                document.querySelector('.enrollment-empty-state').classList.remove('d-none');
+                return;
+            }
+
+            document.querySelector('.enrollment-empty-state').classList.add('d-none');
+
+            filteredEnrollees.forEach(enrollee => {
+                // Format date nicely
+                const submittedDate = new Date(enrollee.enrollment_date);
+                const formattedDate = submittedDate.toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: '2-digit'
+                }) + ' · ' + submittedDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                const enrollmentItem = document.createElement('div');
+                enrollmentItem.classList.add('enrollment-item', 'flex');
+
+                enrollmentItem.innerHTML = `
+                    <div class="pupil-information">
+                        <div class="pupil-profile">
+                            <img class="img-fluid" width="200" height="200" src="${enrollee.thumbnail ?? '{{ asset('TeacherSide/assets/img/default.png') }}'}">
+                        </div>
+                        <div class="pupil-details">
+                            <h5>${enrollee.fullname}</h5>
+                            <p>LRN: ${enrollee.lrn ?? 'N/A'}</p>
+                            <p class="text-muted mb-0">
+                                <small>Enrolled date: <span class="submission-time" data-timestamp="${enrollee.enrollment_date}">${formattedDate}</span></small>
+                            </p>
+                        </div>
+                    </div>
+                `;
+
+                enrollmentList.appendChild(enrollmentItem);
+            });
+
+            // Update enrollment count badge
+            const countBadge = document.querySelector('.enrollment-count-bagde');
+            if (countBadge) countBadge.textContent = filteredEnrollees.length;
         });
     </script>
 
