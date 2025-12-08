@@ -504,7 +504,7 @@
                         } else {
                             input.type = 'password';
                         }
-                        input.focus(); // Keep focus on input after toggle
+                        input.focus(); 
                         }
 
                         // Close modal and resolve
