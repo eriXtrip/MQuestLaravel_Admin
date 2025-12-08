@@ -3430,7 +3430,7 @@
 
     <!-- Recent Activity -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        /*document.addEventListener("DOMContentLoaded", () => {
             const activities = window.dashboardData.recentActivity || [];
             const feed = document.getElementById("activityFeed");
 
@@ -3468,7 +3468,50 @@
 
                 feed.insertAdjacentHTML("beforeend", html);
             });
+        });*/
+        document.addEventListener("DOMContentLoaded", () => {
+            const activities = window.dashboardData.recentActivity || [];
+            const feed = document.getElementById("activityFeed");
+
+            if (!feed) return;
+
+            feed.innerHTML = ""; 
+
+            activities
+                .slice(0, 6) // 👈 Show only first 6 items
+                .forEach(item => {
+
+                    const iconClass = getIconClass(item.type);
+                    const badgeClass = getBadgeClass(item.type);
+                    const formattedDate = formatDate(item.date);
+
+                    const html = `
+                        <div class="activity-item">
+                            <div class="activity-icon ${iconClass}">
+                                ${getIconSVG(item.type)}
+                            </div>
+
+                            <div class="activity-content">
+                                <div class="activity-header">
+                                    <span class="activity-title-text">${item.title}</span>
+                                    <span class="activity-type ${badgeClass}">${capitalize(item.type)}</span>
+                                </div>
+
+                                <div class="activity-description">
+                                    <span>${item.fullname} — ${item.subtitle ?? ''}</span>
+                                </div>
+
+                                <div class="activity-time">
+                                    <span>${formattedDate}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    feed.insertAdjacentHTML("beforeend", html);
+                });
         });
+
 
         // -------------------
         // HELPER FUNCTIONS
