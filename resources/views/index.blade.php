@@ -12,19 +12,20 @@
     <style>
         /* === Secret Key Modal Styles === */
         .secret-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
         }
 
+        /* =============== SECRET KEY CONTAINER =============== */
         .secret-key-container {
         display: flex;
         flex-direction: column;
@@ -32,8 +33,9 @@
         width: 100%;
         background: white;
         border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
         overflow: hidden;
+        max-height: 90vh;
         }
 
         @media (min-width: 768px) {
@@ -42,6 +44,7 @@
         }
         }
 
+        /* =============== IMAGE SECTION =============== */
         .image-section {
         flex: 1;
         background: #f8fafc;
@@ -59,6 +62,22 @@
         border-radius: 12px;
         }
 
+        .placeholder-image {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #e2e8f0;
+        border-radius: 12px;
+        color: #94a3b8;
+        font-size: 14px;
+        text-align: center;
+        padding: 16px;
+        }
+
+        /* =============== FORM SECTION =============== */
         .form-section {
         flex: 1;
         padding: 40px 30px;
@@ -80,12 +99,12 @@
         margin-bottom: 24px;
         }
 
-        .secret-input-group {
-        position: relative;
+        /* =============== INPUT GROUP =============== */
+        .input-group {
         margin-bottom: 24px;
         }
 
-        .secret-input-group label {
+        .input-group-text {
         display: block;
         font-size: 14px;
         font-weight: 500;
@@ -93,17 +112,19 @@
         margin-bottom: 8px;
         }
 
+        .input-with-toggle {
+        position: relative;
+        width: 100%;
+        }
+
         .secret-input {
         width: 100%;
-        padding: 14px 16px;
+        padding: 14px 44px 14px 16px;
         border: 2px solid #e2e8f0;
         border-radius: 10px;
         font-size: 16px;
         font-family: monospace;
-        letter-spacing: 8px;
         background-color: #f8fafc;
-        color: transparent;
-        text-shadow: 0 0 0 #475569;
         transition: border-color 0.3s;
         }
 
@@ -113,6 +134,30 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
+        .toggle-visibility-btn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #94a3b8;
+        padding: 4px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .toggle-visibility-btn:hover,
+        .toggle-visibility-btn:focus {
+        color: #3b82f6;
+        background: #f1f5f9;
+        outline: none;
+        }
+
+        /* =============== BUTTONS =============== */
         .submit-secret-btn {
         background-color: #3b82f6;
         color: white;
@@ -132,22 +177,6 @@
         .submit-secret-btn:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        /* Placeholder image fallback */
-
-        .placeholder-image {
-        width: 200px;
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #e2e8f0;
-        border-radius: 12px;
-        color: #94a3b8;
-        font-size: 14px;
-        text-align: center;
-        padding: 16px;
         }
 
     </style>
@@ -182,15 +211,49 @@
     </div>
 
     <!--Custom enter secret key -->
-    <div class="secret-modal-overlay" style="display: none;">
+    <div class="secret-modal-overlay" id="secretKeyModal">
         <div class="container secret-key-container">
-            <div class="image-section"><img id="auth-image" alt="Secure authentication illustration" src="{{ asset('assets/img/girl.png') }}" />
-                <div id="fallback" class="placeholder-image" style="display: none;"><span> 🔒 Secure Access</span><br /><small>Illustration</small></div>
+        <div class="image-section">
+            <img 
+            id="auth-image" 
+            alt="Secure authentication illustration" 
+            src="ChatGPT Image Dec 8, 2025, 01_49_58 AM.png" 
+            />
+            <div id="fallback" class="placeholder-image" style="display: none;">
+            <span>🔒 Secure Access</span><br />
+            <small>Illustration</small>
             </div>
-            <div class="form-section">
-                <h1>Enter The Secret Key</h1>
-                <p>For security purposes, please provide your unique secret key to continue.</p>
-                <div class="input-group secret-input-group"><label class="input-group-text" for="secretKey">Secret Key</label><input id="secretKey" class="secret-input" type="text" autocomplete="off" maxlength="64" placeholder="••••••••" spellcheck="false" /></div><button class="submit-secret-btn" type="button">Continue</button>
+        </div>
+        <div class="form-section">
+            <h1>Enter The Secret Key</h1>
+            <p>For security purposes, please provide your unique secret key to continue.</p>
+            <div class="input-group secret-input-group">
+                <label class="input-group-text" for="secretKey">Secret Key</label>
+                    <div class="input-with-toggle">
+                        <input 
+                        id="secretKey" 
+                        class="secret-input" 
+                        type="password" 
+                        autocomplete="off" 
+                        maxlength="64" 
+                        placeholder="••••••••" 
+                        spellcheck="false" 
+                        />
+                        <button 
+                        type="button" 
+                        id="toggleSecretKey" 
+                        class="toggle-visibility-btn" 
+                        aria-label="Toggle secret key visibility"
+                        >
+                        <!-- Eye icon (open) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+                <button class="submit-secret-btn" type="button">Continue</button>
             </div>
         </div>
     </div>
