@@ -2062,7 +2062,7 @@
                                                     <th>Name</th>
                                                     <th>LRN</th>
                                                     <th>Grade</th>
-                                                    <th>Age</th>
+                                                    <!--<th>Age</th>-->
                                                     <th>Status</th>
                                                     <th>Email</th>
                                                     <th>Section</th>
