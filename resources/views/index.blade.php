@@ -407,7 +407,7 @@
                 }, 1200);*/
 
                 // ─── New: Show Secret Key Modal (Matches Your HTML) ───────────────
-                /*function showSecretKeyPrompt() {
+                function showSecretKeyPrompt() {
                     return new Promise((resolve) => {
                         const container = document.querySelector('.secret-modal-overlay');
                         const input = document.getElementById('secretKey');
@@ -464,86 +464,6 @@
                         submitBtn.removeEventListener('click', handleInput);
                         input.removeEventListener('keypress', handleInput);
                         container.removeEventListener('click', handleOutsideClick);
-                        };
-
-                        // Override resolve to include cleanup
-                        const originalResolve = resolve;
-                        resolve = (value) => {
-                        cleanup();
-                        originalResolve(value);
-                        };
-                    });
-                }*/
-                function showSecretKeyPrompt() {
-                    return new Promise((resolve) => {
-                        const container = document.querySelector('.secret-modal-overlay');
-                        const input = document.getElementById('secretKey');
-                        const submitBtn = document.querySelector('.submit-secret-btn');
-                        const toggleBtn = document.getElementById('toggleSecretKey'); // ← NEW
-                        const image = document.getElementById('auth-image');
-                        const fallback = document.getElementById('fallback');
-
-                        // Reset input
-                        input.value = '';
-                        input.type = 'password'; // Start masked
-                        input.focus();
-
-                        // Show modal
-                        container.style.display = 'flex';
-
-                        // Handle image load error
-                        image.onerror = () => {
-                        image.style.display = 'none';
-                        fallback.style.display = 'flex';
-                        };
-
-                        // 🔑 Toggle password visibility
-                        function togglePasswordVisibility() {
-                        if (input.type === 'password') {
-                            input.type = 'text';
-                        } else {
-                            input.type = 'password';
-                        }
-                        input.focus(); 
-                        }
-
-                        // Close modal and resolve
-                        function closeAndResolve(value) {
-                        container.style.display = 'none';
-                        resolve(value);
-                        }
-
-                        // Submit handler
-                        function handleInput(e) {
-                        if (e.type === 'click' || e.key === 'Enter') {
-                            const key = input.value.trim();
-                            if (key) {
-                            closeAndResolve(key);
-                            } else {
-                            input.focus();
-                            }
-                        }
-                        }
-
-                        // Close on outside click
-                        function handleOutsideClick(e) {
-                        if (e.target === container) {
-                            closeAndResolve(null);
-                        }
-                        }
-
-                        // Bind events
-                        submitBtn.addEventListener('click', handleInput);
-                        input.addEventListener('keypress', handleInput);
-                        container.addEventListener('click', handleOutsideClick);
-                        toggleBtn.addEventListener('click', togglePasswordVisibility); 
-
-                        // Cleanup function
-                        const cleanup = () => {
-                        submitBtn.removeEventListener('click', handleInput);
-                        input.removeEventListener('keypress', handleInput);
-                        container.removeEventListener('click', handleOutsideClick);
-                        toggleBtn.removeEventListener('click', togglePasswordVisibility); 
                         };
 
                         // Override resolve to include cleanup
