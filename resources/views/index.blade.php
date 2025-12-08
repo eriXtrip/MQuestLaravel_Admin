@@ -536,14 +536,14 @@
                         submitBtn.addEventListener('click', handleInput);
                         input.addEventListener('keypress', handleInput);
                         container.addEventListener('click', handleOutsideClick);
-                        toggleBtn.addEventListener('click', togglePasswordVisibility); // ← NEW
+                        toggleBtn.addEventListener('click', togglePasswordVisibility); 
 
                         // Cleanup function
                         const cleanup = () => {
                         submitBtn.removeEventListener('click', handleInput);
                         input.removeEventListener('keypress', handleInput);
                         container.removeEventListener('click', handleOutsideClick);
-                        toggleBtn.removeEventListener('click', togglePasswordVisibility); // ← NEW
+                        toggleBtn.removeEventListener('click', togglePasswordVisibility); 
                         };
 
                         // Override resolve to include cleanup
