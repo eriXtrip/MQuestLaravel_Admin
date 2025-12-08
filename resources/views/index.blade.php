@@ -217,7 +217,7 @@
             <img 
             id="auth-image" 
             alt="Secure authentication illustration" 
-            src="ChatGPT Image Dec 8, 2025, 01_49_58 AM.png" 
+            src="{{ asset('assets/img/girl.png') }}" 
             />
             <div id="fallback" class="placeholder-image" style="display: none;">
             <span>🔒 Secure Access</span><br />
