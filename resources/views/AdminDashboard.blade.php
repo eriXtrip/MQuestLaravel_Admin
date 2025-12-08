@@ -3989,16 +3989,12 @@
         // Assuming combinedUsers is your array of pupils + teachers
 
         function maskEmail(email) {
-            if (!email) return '-';
+            if (!email) return "-";
             const [user, domain] = email.split("@");
-            if (!domain) return email;
 
-            const maskedUser = user.length <= 2
-                ? user[0] + "*"
-                : user[0] + "*".repeat(user.length - 2) + user[user.length - 1];
-
-            return maskedUser + "@" + domain;
+            return user[0] + "***@" + domain;
         }
+
         function openProfile(userId, userType) {
             const user = combinedUsers.find(u => u.id === userId && u.type === userType);
             if (!user) return;
