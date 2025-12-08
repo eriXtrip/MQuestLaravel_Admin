@@ -407,7 +407,7 @@
                 }, 1200);*/
 
                 // ─── New: Show Secret Key Modal (Matches Your HTML) ───────────────
-                function showSecretKeyPrompt() {
+                /*function showSecretKeyPrompt() {
                     return new Promise((resolve) => {
                         const container = document.querySelector('.secret-modal-overlay');
                         const input = document.getElementById('secretKey');
@@ -473,8 +473,8 @@
                         originalResolve(value);
                         };
                     });
-                }
-                /*function showSecretKeyPrompt() {
+                }*/
+                function showSecretKeyPrompt() {
                     return new Promise((resolve) => {
                         const container = document.querySelector('.secret-modal-overlay');
                         const input = document.getElementById('secretKey');
@@ -553,7 +553,7 @@
                         originalResolve(value);
                         };
                     });
-                }*/
+                }
 
                 setTimeout(async () => {
                     if (user.role_id === 1) {
