@@ -1513,6 +1513,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- This is for pupil na footer -->
                             <div class="stats-row">
                                 <div class="stat-item">
                                     <div class="stat-value" ><span id="avgScore">0%</span></div>
@@ -1525,6 +1526,22 @@
                                 <div class="stat-item">
                                     <div class="stat-value"><span id="badgeEarn">0</span></div>
                                     <div class="stat-label"><span>Badges Earned</span></div>
+                                </div>
+                            </div>
+                            
+                            <!-- para sa teacher na footer -->
+                            <div class="stats-row d-none">
+                                <div class="stat-item">
+                                    <div class="stat-value"><span>34</span></div>
+                                    <div class="stat-label"><span>Total Pupils</span></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value"><span>13%</span></div>
+                                    <div class="stat-label"><span>Class Performance</span></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value"><span>13%</span></div>
+                                    <div class="stat-label"><span>Completion Rate</span></div>
                                 </div>
                             </div>
                         </div>
