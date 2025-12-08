@@ -1441,14 +1441,14 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <h3 class="section-title">Learning Progress</h3>
-                                    <div class="mb-3" class="progress-overview" data-subject="Mathematics">
-                                        <div class="progress-container">
+                                    <div class="mb-3" class="progress-overview">
+                                        <div class="progress-container" data-subject="Mathematics">
                                             <div class="progress-title"><span>Mathematics</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
                                                 <div class="bg-warning progress-bar" id="mathProg" style="width: 0%"></div>
                                             </div>
                                         </div>
-                                        <div class="progress-container" data-subject="Enhlish">
+                                        <div class="progress-container" data-subject="English">
                                             <div class="progress-title"><span>English</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
                                                 <div class="bg-danger progress-bar" id="engProg" style="width: 0%"></div>
@@ -3822,7 +3822,7 @@
                 user.progress.forEach(p => {
                     const container = modal.querySelector(`.progress-container[data-subject="${p.subject_name}"]`);
                     if (container) {
-                        const percent = parseFloat(p.progress_percent).toFixed(2); // format as 2 decimals
+                        const percent = parseFloat(p.progress_percent);
                         container.querySelector('.progress-percentage').textContent = `${percent}%`;
                         container.querySelector('.progress-bar').style.width = `${percent}%`;
                     }
