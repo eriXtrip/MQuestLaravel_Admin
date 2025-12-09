@@ -3348,7 +3348,7 @@
                         </div>
                         <div class="pupil-details">
                             <h5>${enrollee.fullname}</h5>
-                            <p>LRN: ${enrollee.lrn ?? 'N/A'}</p>
+                            <!--<p>LRN: ${enrollee.lrn ?? 'N/A'}</p>-->
                             <p class="text-muted mb-0">
                                 <small>Enrolled date: <span class="submission-time" data-timestamp="${enrollee.enrollment_date}">${formattedDate}</span></small>
                             </p>
