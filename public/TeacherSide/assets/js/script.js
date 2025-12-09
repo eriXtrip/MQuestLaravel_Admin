@@ -1428,7 +1428,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
         return `${String(date.getMonth() + 1).padStart(2,'0')}/${String(date.getDate()).padStart(2,'0')}/${date.getFullYear()}`;
     }
 
-    function createSectionCard(section) {
+    /*function createSectionCard(section) {
         const card = document.createElement('div');
         card.className = 'pupil-section-card';
         card.dataset.subject = section.subject;
@@ -1468,6 +1468,93 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                 <span class="selected-badge" style="display:none;">Selected</span>
             </div>
         `;
+        return card;
+    }*/
+   function createSectionCard(section) {
+        const card = document.createElement('div');
+        card.className = 'pupil-section-card';
+        card.dataset.subject = section.subject;
+
+        card.innerHTML = `
+            <div class="pupil-section-header">
+                <div>
+                    <h6 class="pupil-section-title">${section.section_name}</h6>
+                    <div class="pupil-section-school-year mt-1 d-flex align-items-center gap-2">
+                        <svg class="bi bi-calendar4" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"></path>
+                        </svg>
+                        <span>${section.school_year}</span>
+                    </div>
+                </div>
+                <span class="enrolled-count">${section.noEnrolled} enrolled</span>
+            </div>
+
+            <div class="enrollment-code-container">
+                <div>
+                    <div class="enrollment-code-label">Enrollment Code</div>
+                    <div class="enrollment-code">${section.enrollment_code}</div>
+                </div>
+                <button class="copy-icon" data-code="${section.enrollment_code}" title="Copy to clipboard">
+                    <svg class="bi bi-copy" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="section-created d-flex align-items-center justify-content-between">
+                <span>Created: ${section.created_at.split("T")[0]}</span>
+                <button class="delete-section-btn ms-2" data-section-id="${section.section_id}" title="Delete section">
+                    <svg class="bi bi-trash text-danger" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H12v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H14a1 1 0 0 1 1 1v1zm-13 0V2a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1h-12z"/>
+                    </svg>
+                </button>
+                <span class="selected-badge" style="display:none;">Selected</span>
+            </div>
+        `;
+
+        // Add event listener to the delete button
+        const deleteBtn = card.querySelector('.delete-section-btn');
+        deleteBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const sectionId = section.section_id;
+            const enrolledCount = parseInt(section.noEnrolled, 10);
+
+            if (enrolledCount > 0) {
+                // Show warning: cannot delete
+                alert('Cannot delete this section because it has enrolled pupils.');
+                return;
+            }
+
+            // Confirm deletion
+            if (!confirm(`Are you sure you want to delete the section "${section.section_name}"? This action cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/sections/${sectionId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Add CSRF token if needed, e.g., 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+
+                if (response.ok) {
+                    // Remove card from DOM
+                    card.remove();
+                    // Optional: show success toast or update section count
+                    console.log('Section deleted successfully');
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    alert('Failed to delete section: ' + (errorData.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error deleting section:', error);
+                alert('An error occurred while deleting the section. Please try again.');
+            }
+        });
+
         return card;
     }
 
