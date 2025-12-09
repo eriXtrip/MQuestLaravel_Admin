@@ -3237,6 +3237,7 @@
 
     <!-- Recent Enrollees -->
     <script>
+        //Original
         /*document.addEventListener('DOMContentLoaded', () => {
             const enrollmentList = document.getElementById('enrollmentList');
             const recentEnrollees = window.dashboardData?.recent_enrollees ?? [];
