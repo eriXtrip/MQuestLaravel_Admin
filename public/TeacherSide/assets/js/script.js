@@ -1538,9 +1538,9 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             const status = pupil.active_status === 1 ? 'Active' : 'Inactive';
 
             // Mask LRN → shows first 4 digits only
-            const maskedLRN = pupil.LRN
+            /*const maskedLRN = pupil.LRN
                 ? "*".repeat(pupil.LRN.length - 3) + pupil.LRN.slice(-3)
-                : "***";
+                : "***";*/
 
             // Mask Email → shows first 2 letters + ***
             const maskedEmail = pupil.email
@@ -1553,7 +1553,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                     <img class="img-fluid pupil-avatar" width="200" height="200" src="${pupil.thumbnail || '/path/to/default.png'}">
                 </td>
                 <td data-label="Name">${pupil.fullname}</td>
-                <td data-label="LRN">${maskedLRN}</td>
+                //<td data-label="LRN">${maskedLRN}</td>//
                 <td data-label="Grade">Grade 4</td>
                 <!--<td data-label="Age">${pupil.age}</td>-->
                 <td data-label="Status">
@@ -1802,8 +1802,8 @@ window.fillPupilModal = function(pupil) {
     document.getElementById("pupilProfileImg").src = pupil.thumbnail;
     document.getElementById("pupilProfileName").textContent = pupil.fullname;
     //document.getElementById("pupilProfileLRN").textContent = "LRN: " + pupil.LRN;
-    document.getElementById("pupilProfileLRN").textContent = 
-    "LRN: " + maskLRN(pupil.LRN);
+    /*document.getElementById("pupilProfileLRN").textContent = 
+    "LRN: " + maskLRN(pupil.LRN);*/
 
     document.getElementById("badgeSection").textContent = pupil.section_name;
     document.getElementById("badgeBirthDate").textContent = pupil.birth_date.split("T")[0];
@@ -1812,7 +1812,7 @@ window.fillPupilModal = function(pupil) {
     
 
     //document.getElementById("pupilEmail").textContent = pupil.email;
-    document.getElementById("pupilEmail").textContent = maskEmail(pupil.email);
+    //document.getElementById("pupilEmail").textContent = maskEmail(pupil.email);
     document.getElementById("pupilEnrollmentDate").textContent =
         new Date(pupil.enrollment_date).toLocaleDateString();
 
