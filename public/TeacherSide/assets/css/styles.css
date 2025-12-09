@@ -7383,9 +7383,3 @@ activity-title {
     align-self: flex-start;
   }
 }
-
-
-/* Hide the LRN */
-td[data-label="LRN"] {
-  display: none;
-}
