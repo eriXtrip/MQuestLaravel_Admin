@@ -496,7 +496,7 @@
                     </div>
                 </div>
                 <!-- At Risk Pupil Table -->
-                <div class="user-main-card-list card">
+                <!--<div class="user-main-card-list card">
                     <div class="card-header list-header">
                         <div class="mb-3 at-risk-header">
                             <h4 class="text-muted">At-Risk Pupils</h4>
@@ -568,11 +568,11 @@
                                         <th>subject</th>
                                         <th>avg. session</th>
                                         <th>status</th>
-                                        <!-- <th>actions</th> -->
+                                        <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="userTableBody-1">
-                                    <!-- <tr data-active="true">
+                                    <tr data-active="true">
                                         <td></td>
                                         <td data-label="Name" data-student="Maria Santos">Maria Santos</td>
                                         <td data-label="Last Active" data-last-active="18">18 days ago</td>
@@ -619,14 +619,14 @@
                                                 </svg>
                                             </button>
                                         </td>
-                                    </tr> -->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="text-center text-muted p-4" id="noAtRiskResults" style="display:none;"><span>No At-Risk Pupils found.</span></div>
                     <!-- Pagination -->
-                    <div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
+                    <!--<div class="d-flex flex-column align-items-center flex-md-row justify-content-md-between p-3 pagination-container">
                         <div class="text-muted small"><span> Showing </span><span id="startCount-1">1</span><span> to </span><span id="endCount-1">3</span><span> of </span><span id="totalCount-1">50</span></div>
                         <nav aria-label="User list pagination">
                             <ul class="mb-0 pagination pagination-sm">
@@ -638,8 +638,8 @@
                                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
                             </ul>
                         </nav>
-                    </div>
-                </div>
+                    </div
+                </div>-->
                 <div class="d-none at-risk-data">
                     <div data-student="Juan Dela Cruz" data-last-active="18" data-session-time="5">
                         <div data-quarter="Q1" data-subject="Mathematics">
