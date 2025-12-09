@@ -1503,8 +1503,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
 
             <div class="section-created d-flex align-items-center justify-content-between">
                 <span>Created: ${section.created_at.split("T")[0]}</span>
-                <button class="delete-section-btn ms-2 border-none" data-section-id="${section.section_id}" title="Delete section">
-                    <svg class="bi bi-trash3 ms-2  text-danger" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-family: Poppins, sans-serif;">
+                <button class="delete-section-btn" data-section-id="${section.section_id}" title="Delete section">
+                    <svg class="bi bi-trash3 text-danger" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-family: Poppins, sans-serif;">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"></path>
                     </svg>
                 </button>
@@ -1554,7 +1554,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             }
         });*/
 
-        const deleteBtn = card.querySelector('.delete-section-btn');
+        /*const deleteBtn = card.querySelector('.delete-section-btn');
 
         deleteBtn.addEventListener('click', async (e) => {
             e.stopPropagation();
@@ -1587,6 +1587,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                     if (response.ok) {
                         card.remove();
                         deleteModal.hide();
+                        showToast('success', 'Section Deleted', 'The section has been successfully deleted.');
                     } else {
                         const err = await response.json().catch(() => ({}));
                         alert('Failed to delete section: ' + (err.message || 'Unknown error'));
@@ -1597,8 +1598,79 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                     alert('An error occurred while deleting the section. Please try again.');
                 }
             };
-        });
+        });*/
+        const deleteBtn = card.querySelector('.delete-section-btn');
 
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            const sectionId = section.section_id;
+            const enrolledCount = parseInt(section.noEnrolled, 10);
+
+            const modalEl = document.getElementById('deleteSectionModal');
+            const modal = new bootstrap.Modal(modalEl);
+
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalIconContainer = document.getElementById('modalIconContainer');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteSection');
+
+            // CASE 1: ❌ Section has enrolled pupils → show INFO modal
+            if (enrolledCount > 0) {
+                modalTitle.textContent = "Cannot delete section";
+                modalMessage.textContent = "This section cannot be deleted because it has enrolled pupils.";
+                confirmDeleteBtn.style.display = "none";
+
+                // Icon = red triangle (keep)
+                modalIcon.classList.remove("text-success");
+                modalIcon.classList.add("text-danger");
+
+                modal.show();
+                return;
+            }
+
+            // CASE 2: ✔ Section empty → show CONFIRM deletion modal
+            modalTitle.textContent = "Delete section?";
+            modalMessage.textContent = "Are you sure you want to delete this section? This action cannot be undone.";
+            confirmDeleteBtn.style.display = "inline-block";
+
+            modalIcon.classList.remove("text-danger");
+            modalIcon.classList.add("text-warning");
+
+            modal.show();
+
+            // Remove old handler
+            confirmDeleteBtn.onclick = null;
+
+            // Assign new handler
+            confirmDeleteBtn.onclick = async () => {
+
+                try {
+                    const response = await fetch(`/api/sections/${sectionId}`, {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" }
+                    });
+
+                    if (response.ok) {
+                        card.remove();
+                        modal.hide();
+
+                        showToast(
+                            "success",
+                            "Section Deleted",
+                            `The section "${section.section_name}" has been successfully deleted.`
+                        );
+                    } else {
+                        alert("Failed to delete section.");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("An error occurred.");
+                }
+            };
+        });
+        
         return card;
     }
 

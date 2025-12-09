@@ -3093,7 +3093,7 @@
                 </div>
 
                 <!-- Confirm Delete Section Modal -->
-                 <div id="deleteSectionModal" class="modal fade" tabindex="-1" aria-hidden="true">
+                 <!--<div id="deleteSectionModal" class="modal fade" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body text-center p-4">
@@ -3118,7 +3118,46 @@
                             </div>
                         </div>
                     </div>
+                </div>-->
+                <div id="deleteSectionModal" class="modal fade" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center p-4">
+
+                                <!-- Icon -->
+                                <div class="mb-3" id="modalIconContainer">
+                                    <svg class="bi bi-exclamation-triangle-fill text-danger" id="modalIcon"
+                                        width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8.982 1.566a1.13..."></path>
+                                    </svg>
+                                </div>
+
+                                <!-- Title -->
+                                <h4 class="fw-bold mb-2" id="modalTitle">Delete section?</h4>
+
+                                <!-- Message -->
+                                <p class="text-muted mb-3" id="modalMessage">
+                                    Are you sure you want to delete this section? This action cannot be undone.
+                                </p>
+
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2"
+                                        type="button" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button id="confirmDeleteSection"
+                                        class="btn btn-outline-success btn-sm rounded-pill px-4 py-2"
+                                        type="button">
+                                        Delete
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
 
                 <!--Global Toast Container-->
