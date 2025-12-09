@@ -1553,7 +1553,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                     <img class="img-fluid pupil-avatar" width="200" height="200" src="${pupil.thumbnail || '/path/to/default.png'}">
                 </td>
                 <td data-label="Name">${pupil.fullname}</td>
-                /*<td data-label="LRN">${maskedLRN}</td>*/
+                <!--<td data-label="LRN">${maskedLRN}</td>-->
                 <td data-label="Grade">Grade 4</td>
                 <!--<td data-label="Age">${pupil.age}</td>-->
                 <td data-label="Status">
