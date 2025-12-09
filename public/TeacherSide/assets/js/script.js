@@ -1470,6 +1470,11 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
         `;
         return card;
     }*/
+
+  function injectSvg(container, svg) {
+      if (container) container.innerHTML = svg;
+  }
+
    function createSectionCard(section) {
         const card = document.createElement('div');
         card.className = 'pupil-section-card';
@@ -1612,40 +1617,50 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
 
             const modalTitle = document.getElementById('modalTitle');
             const modalMessage = document.getElementById('modalMessage');
-            const modalIcon = document.getElementById('modalIcon');
             const modalIconContainer = document.getElementById('modalIconContainer');
             const confirmDeleteBtn = document.getElementById('confirmDeleteSection');
 
-            // CASE 1: ❌ Section has enrolled pupils → show INFO modal
+            // -----------------------------------------
+            // CASE 1: ❌ NOT ALLOWED — Has pupils
+            // -----------------------------------------
             if (enrolledCount > 0) {
-                modalTitle.textContent = "Cannot delete section";
+
+                modalTitle.textContent = "Action Not Allowed";
                 modalMessage.textContent = "This section cannot be deleted because it has enrolled pupils.";
                 confirmDeleteBtn.style.display = "none";
 
-                // Icon = red triangle (keep)
-                modalIcon.classList.remove("text-success");
-                modalIcon.classList.add("text-danger");
+                // Inject Warning SVG dynamically
+                injectSvg(modalIconContainer, `
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="#e53935">
+                        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    </svg>
+                `);
 
                 modal.show();
                 return;
             }
 
-            // CASE 2: ✔ Section empty → show CONFIRM deletion modal
+            // -----------------------------------------
+            // CASE 2: ✔ Allowed — Confirm delete
+            // -----------------------------------------
             modalTitle.textContent = "Delete section?";
             modalMessage.textContent = "Are you sure you want to delete this section? This action cannot be undone.";
             confirmDeleteBtn.style.display = "inline-block";
 
-            modalIcon.classList.remove("text-danger");
-            modalIcon.classList.add("text-warning");
+            // Inject Yellow Warning SVG
+            injectSvg(modalIconContainer, `
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="#FFA726">
+                    <path d="M1 21h22L12 2 1 21zm12 14h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                </svg>
+            `);
 
             modal.show();
 
-            // Remove old handler
+            // Clear old handler
             confirmDeleteBtn.onclick = null;
 
-            // Assign new handler
+            // New handler
             confirmDeleteBtn.onclick = async () => {
-
                 try {
                     const response = await fetch(`/api/sections/${sectionId}`, {
                         method: "DELETE",
@@ -1670,7 +1685,6 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                 }
             };
         });
-        
         return card;
     }
 
