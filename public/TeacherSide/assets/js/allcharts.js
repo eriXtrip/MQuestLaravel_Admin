@@ -641,7 +641,7 @@
   }
 
   // Overall Insights - Teacher side Analytics
-  /*document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const progressDataRaw = window.dashboardData.quarterlyProgress || {};
     const subjects = ['Mathematics','Science','English','Filipino'];
 
@@ -688,87 +688,7 @@
     const lastAvg = lastQuarter.length ? Math.round(lastQuarter.reduce((a,b)=>a+b,0)/lastQuarter.length) : 0;
     const trendCardDesc = insightsContainer.querySelector('.progressive-improvement .insight-text .insight-description span');
     if(trendCardDesc) trendCardDesc.textContent = `Quarter-over-quarter analysis shows a ${lastAvg >= firstAvg ? 'positive' : 'negative'} trend in ${bestSubject.subject}. Q4 performance (${lastAvg}%) represents a ${lastAvg - firstAvg} point ${lastAvg >= firstAvg ? 'improvement' : 'decline'} from Q1 (${firstAvg}%). Maintain current teaching methods and continue to provide varied learning materials.`;
-});*/
-
-  document.addEventListener('DOMContentLoaded', () => {
-      const progressDataRaw = window.dashboardData.quarterlyProgress || {};
-      const subjects = ['Mathematics','Science','English','Filipino'];
-      const insightsContainer = document.querySelector('.insights-container');
-
-      if (!insightsContainer) return;
-
-      // Check if there's any data at all
-      const hasData = ['q1','q2','q3','q4'].some(q => {
-          return subjects.some(subject => (progressDataRaw[q]?.[subject]?.length || 0) > 0);
-      });
-
-      if(!hasData){
-          // No data to compute, display fallback
-          const allInsightSpans = insightsContainer.querySelectorAll('.insight-text span');
-          allInsightSpans.forEach(span => {
-              span.textContent = 'No data available to display insights.';
-          });
-          return; // Stop execution
-      }
-
-      // Prepare subject averages
-      const subjectAverages = subjects.map(subject => {
-          let allScores = [];
-          ['q1','q2','q3','q4'].forEach(q => {
-              const scores = progressDataRaw[q]?.[subject] || [];
-              allScores.push(...scores);
-          });
-          // Only compute avg if we have scores > 0
-          const validScores = allScores.filter(s => typeof s === 'number' && s > 0);
-          const avg = validScores.length ? Math.round(validScores.reduce((a,b)=>a+b,0)/validScores.length) : null;
-          return { subject, avg, allScores: validScores };
-      });
-
-      // Determine best subject
-      const subjectsWithData = subjectAverages.filter(s => s.avg !== null);
-      const bestSubject = subjectsWithData.length ? subjectsWithData.reduce((prev,curr) => curr.avg > prev.avg ? curr : prev) : null;
-
-      // 1️⃣ Strong Performance
-      const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
-      const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
-      if(bestSubject){
-          if(strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance in ${bestSubject.subject}`;
-          if(strongPerformanceDesc) strongPerformanceDesc.textContent = `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across the latest lessons. Students are highly engaged and completing lessons on time.`;
-      } else {
-          if(strongPerformanceCard) strongPerformanceCard.textContent = `No data to display`;
-          if(strongPerformanceDesc) strongPerformanceDesc.textContent = `No data available to compute strong performance.`;
-      }
-
-      // 2️⃣ Focus Area
-      const focusCardTitle = insightsContainer.querySelector('.focus-area .insight-text .insight-title span');
-      const focusCardDesc = insightsContainer.querySelector('.focus-area .insight-text .insight-description span');
-      if(bestSubject && bestSubject.allScores.length){
-          let focusLessonIndex = 0;
-          let minScore = Math.min(...bestSubject.allScores);
-          focusLessonIndex = bestSubject.allScores.indexOf(minScore);
-          if(focusCardTitle) focusCardTitle.textContent = `Focus Area: Lesson ${focusLessonIndex+1}`;
-          if(focusCardDesc) focusCardDesc.textContent = `Lesson ${focusLessonIndex+1} shows lower engagement (${minScore}%) compared to other lessons in ${bestSubject.subject}. Recommend adding more interactive activities, practice problems, and providing additional support materials.`;
-      } else {
-          if(focusCardTitle) focusCardTitle.textContent = `Focus Area: No data`;
-          if(focusCardDesc) focusCardDesc.textContent = `No data available to determine focus area.`;
-      }
-
-      // 3️⃣ Progressive Improvement
-      const trendCardDesc = insightsContainer.querySelector('.progressive-improvement .insight-text .insight-description span');
-      if(bestSubject){
-          const firstQuarter = progressDataRaw['q1']?.[bestSubject.subject]?.filter(s => typeof s === 'number' && s > 0) || [];
-          const lastQuarter = progressDataRaw['q4']?.[bestSubject.subject]?.filter(s => typeof s === 'number' && s > 0) || [];
-          if(firstQuarter.length && lastQuarter.length){
-              const firstAvg = Math.round(firstQuarter.reduce((a,b)=>a+b,0)/firstQuarter.length);
-              const lastAvg = Math.round(lastQuarter.reduce((a,b)=>a+b,0)/lastQuarter.length);
-              if(trendCardDesc) trendCardDesc.textContent = `Quarter-over-quarter analysis shows a ${lastAvg >= firstAvg ? 'positive' : 'negative'} trend in ${bestSubject.subject}. Q4 performance (${lastAvg}%) represents a ${lastAvg - firstAvg} point ${lastAvg >= firstAvg ? 'improvement' : 'decline'} from Q1 (${firstAvg}%). Maintain current teaching methods and continue to provide varied learning materials.`;
-          } else {
-              if(trendCardDesc) trendCardDesc.textContent = `No data available to analyze progressive improvement.`;
-          }
-      } else {
-          if(trendCardDesc) trendCardDesc.textContent = `No data available to analyze progressive improvement.`;
-      }
-  });
+});
 
 
 
