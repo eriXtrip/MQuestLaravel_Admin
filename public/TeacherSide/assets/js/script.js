@@ -1801,8 +1801,8 @@ window.fillPupilModal = function(pupil) {
     document.getElementById("pupilProfileImg").src = pupil.thumbnail;
     document.getElementById("pupilProfileName").textContent = pupil.fullname;
     //document.getElementById("pupilProfileLRN").textContent = "LRN: " + pupil.LRN;
-    document.getElementById("pupilProfileLRN").textContent = 
-    "LRN: " + maskLRN(pupil.LRN);
+    /*document.getElementById("pupilProfileLRN").textContent = 
+    "LRN: " + maskLRN(pupil.LRN);*/
 
     document.getElementById("badgeSection").textContent = pupil.section_name;
     document.getElementById("badgeBirthDate").textContent = pupil.birth_date.split("T")[0];
