@@ -7384,4 +7384,7 @@ activity-title {
 }
 
 
-
+/* Hide the LRN */
+td[data-label="LRN"] {
+  display: none;
+}
