@@ -2394,6 +2394,7 @@ btn-hide-filters {
 
 td[data-label="LRN"] {
   color: var(--main-color);
+  display: none;
 }
 
 .status-badge {
