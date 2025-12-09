@@ -2060,7 +2060,7 @@
                                                     <th></th>
                                                     <th>Profile</th>
                                                     <th>Name</th>
-                                                    <!--<th>LRN</th>-->
+                                                    <th>LRN</th>
                                                     <th>Grade</th>
                                                     <!--<th>Age</th>-->
                                                     <th>Status</th>
