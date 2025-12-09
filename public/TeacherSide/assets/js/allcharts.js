@@ -640,7 +640,8 @@
     };
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // Overall Insights - Teacher side Analytics
+  /*document.addEventListener('DOMContentLoaded', () => {
     const progressDataRaw = window.dashboardData.quarterlyProgress || {};
     const subjects = ['Mathematics','Science','English','Filipino'];
 
@@ -659,7 +660,64 @@
         return { subject, avg, allScores };
     });
 
-    // 1️⃣ Strong Performance
+    // 1️⃣ Strong Performance based on Subject
+    const bestSubject = subjectAverages.reduce((prev,curr) => curr.avg > prev.avg ? curr : prev, {avg:0});
+    const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
+    const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
+    if(strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance in ${bestSubject.subject}`;
+    if(strongPerformanceDesc) strongPerformanceDesc.textContent = `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across the latest lessons. Students are highly engaged and completing lessons on time.`;
+
+    // 2️⃣ Focus Area: lesson with lowest average in best subject
+    let focusLessonIndex = 0;
+    let minScore = 101;
+    bestSubject.allScores.forEach((score, i) => {
+        if(score < minScore){
+            minScore = score;
+            focusLessonIndex = i;
+        }
+    });
+    const focusCardTitle = insightsContainer.querySelector('.focus-area .insight-text .insight-title span');
+    const focusCardDesc = insightsContainer.querySelector('.focus-area .insight-text .insight-description span');
+    if(focusCardTitle) focusCardTitle.textContent = `Focus Area: Lesson ${focusLessonIndex+1}`;
+    if(focusCardDesc) focusCardDesc.textContent = `Lesson ${focusLessonIndex+1} shows lower engagement (${minScore}%) compared to other lessons in ${bestSubject.subject}. Recommend adding more interactive activities, practice problems, and providing additional support materials.`;
+
+    // 3️⃣ Progressive Improvement: Q1 vs Q4 trend
+    const firstQuarter = progressDataRaw['q1']?.[bestSubject.subject] || [];
+    const lastQuarter = progressDataRaw['q4']?.[bestSubject.subject] || [];
+    const firstAvg = firstQuarter.length ? Math.round(firstQuarter.reduce((a,b)=>a+b,0)/firstQuarter.length) : 0;
+    const lastAvg = lastQuarter.length ? Math.round(lastQuarter.reduce((a,b)=>a+b,0)/lastQuarter.length) : 0;
+    const trendCardDesc = insightsContainer.querySelector('.progressive-improvement .insight-text .insight-description span');
+    if(trendCardDesc) trendCardDesc.textContent = `Quarter-over-quarter analysis shows a ${lastAvg >= firstAvg ? 'positive' : 'negative'} trend in ${bestSubject.subject}. Q4 performance (${lastAvg}%) represents a ${lastAvg - firstAvg} point ${lastAvg >= firstAvg ? 'improvement' : 'decline'} from Q1 (${firstAvg}%). Maintain current teaching methods and continue to provide varied learning materials.`;
+});*/
+  document.addEventListener('DOMContentLoaded', () => {
+    const progressDataRaw = window.dashboardData.quarterlyProgress || {};
+    const subjects = ['Mathematics','Science','English','Filipino'];
+    const insightsContainer = document.querySelector('.insights-container');
+
+    if (!insightsContainer) return;
+
+    // Check if there's any data to display
+    const hasData = subjects.some(subject => 
+        ['q1','q2','q3','q4'].some(q => (progressDataRaw[q]?.[subject]?.length || 0) > 0)
+    );
+
+    if (!hasData) {
+        insightsContainer.innerHTML = '<div class="no-data">No data to display</div>';
+        return;
+    }
+
+    // Prepare subject averages
+    const subjectAverages = subjects.map(subject => {
+        let allScores = [];
+        ['q1','q2','q3','q4'].forEach(q => {
+            const scores = progressDataRaw[q]?.[subject] || [];
+            allScores.push(...scores);
+        });
+        const avg = allScores.length ? Math.round(allScores.reduce((a,b)=>a+b,0)/allScores.length) : 0;
+        return { subject, avg, allScores };
+    });
+
+    // 1️⃣ Strong Performance based on Subject
     const bestSubject = subjectAverages.reduce((prev,curr) => curr.avg > prev.avg ? curr : prev, {avg:0});
     const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
     const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
@@ -688,6 +746,7 @@
     const trendCardDesc = insightsContainer.querySelector('.progressive-improvement .insight-text .insight-description span');
     if(trendCardDesc) trendCardDesc.textContent = `Quarter-over-quarter analysis shows a ${lastAvg >= firstAvg ? 'positive' : 'negative'} trend in ${bestSubject.subject}. Q4 performance (${lastAvg}%) represents a ${lastAvg - firstAvg} point ${lastAvg >= firstAvg ? 'improvement' : 'decline'} from Q1 (${firstAvg}%). Maintain current teaching methods and continue to provide varied learning materials.`;
 });
+
 
 
   // Export helpers (optional usage by other scripts)
