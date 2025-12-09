@@ -691,30 +691,44 @@
 });*/
 
   document.addEventListener('DOMContentLoaded', () => {
-      const progressDataRaw = window.dashboardData.quarterlyProgress || {};
       const subjects = ['Mathematics','Science','English','Filipino'];
-
       const insightsContainer = document.querySelector('.insights-container');
       if (!insightsContainer) return;
+
+      // Get current teacher ID from your dashboard data
+      const currentTeacherId = window.dashboardData.currentTeacherId;
+
+      // Get pupils enrolled under this teacher
+      const teacherPupils = window.dashboardData.pupils?.filter(p => p.teacherId === currentTeacherId) || [];
+
+      // Build progress data for only this teacher's pupils
+      const progressDataRaw = { q1:{}, q2:{}, q3:{}, q4:{} };
+      ['q1','q2','q3','q4'].forEach(q => {
+          subjects.forEach(subject => {
+              progressDataRaw[q][subject] = teacherPupils
+                  .map(p => p.progress?.[q]?.[subject])
+                  .filter(score => score != null);
+          });
+      });
 
       // Prepare subject averages
       const subjectAverages = subjects.map(subject => {
           let allScores = [];
           ['q1','q2','q3','q4'].forEach(q => {
-              const scores = progressDataRaw[q]?.[subject] || [];
+              const scores = progressDataRaw[q][subject] || [];
               allScores.push(...scores);
           });
-          const avg = allScores.length ? Math.round(allScores.reduce((a,b)=>a+b,0)/allScores.length) : null; // null if no data
+          const avg = allScores.length ? Math.round(allScores.reduce((a,b)=>a+b,0)/allScores.length) : null;
           return { subject, avg, allScores };
       });
 
-      // 1️⃣ Strong Performance based on Subject
+      // Filter subjects with actual data
       const subjectsWithData = subjectAverages.filter(s => s.avg !== null);
       const bestSubject = subjectsWithData.length ? subjectsWithData.reduce((prev,curr) => curr.avg > prev.avg ? curr : prev) : null;
 
+      // 1️⃣ Strong Performance
       const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
       const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
-
       if(bestSubject) {
           if(strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance in ${bestSubject.subject}`;
           if(strongPerformanceDesc) strongPerformanceDesc.textContent = `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across the latest lessons. Students are highly engaged and completing lessons on time.`;
@@ -723,10 +737,9 @@
           if(strongPerformanceDesc) strongPerformanceDesc.textContent = `No data available to compute strong performance.`;
       }
 
-      // 2️⃣ Focus Area: lesson with lowest average in best subject
+      // 2️⃣ Focus Area
       const focusCardTitle = insightsContainer.querySelector('.focus-area .insight-text .insight-title span');
       const focusCardDesc = insightsContainer.querySelector('.focus-area .insight-text .insight-description span');
-
       if(bestSubject && bestSubject.allScores.length) {
           let focusLessonIndex = 0;
           let minScore = 101;
@@ -743,11 +756,11 @@
           if(focusCardDesc) focusCardDesc.textContent = `No data available to determine focus area.`;
       }
 
-      // 3️⃣ Progressive Improvement: Q1 vs Q4 trend for best subject
+      // 3️⃣ Progressive Improvement
       const trendCardDesc = insightsContainer.querySelector('.progressive-improvement .insight-text .insight-description span');
       if(bestSubject) {
-          const firstQuarter = progressDataRaw['q1']?.[bestSubject.subject] || [];
-          const lastQuarter = progressDataRaw['q4']?.[bestSubject.subject] || [];
+          const firstQuarter = progressDataRaw['q1'][bestSubject.subject] || [];
+          const lastQuarter = progressDataRaw['q4'][bestSubject.subject] || [];
           if(firstQuarter.length && lastQuarter.length) {
               const firstAvg = Math.round(firstQuarter.reduce((a,b)=>a+b,0)/firstQuarter.length);
               const lastAvg = Math.round(lastQuarter.reduce((a,b)=>a+b,0)/lastQuarter.length);
@@ -759,6 +772,7 @@
           if(trendCardDesc) trendCardDesc.textContent = `No data available to analyze progressive improvement.`;
       }
   });
+
 
 
   // Export helpers (optional usage by other scripts)
