@@ -2610,7 +2610,7 @@
                             <div class="modal-header teacher-modal-header">
                                 <div>
                                     <h5 class="modal-title">Pupil Details</h5>
-                                    <!--<p class="text-light small" id="pupilProfileLRN"></p>-->
+                                    <p class="text-light small" id="pupilProfileLRN"></p>
                                 </div>
                                 <!-- <button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 12px;"></button> -->
                             </div>
