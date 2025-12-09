@@ -1513,7 +1513,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
         `;
 
         // Add event listener to the delete button
-        const deleteBtn = card.querySelector('.delete-section-btn');
+        /*const deleteBtn = card.querySelector('.delete-section-btn');
         deleteBtn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const sectionId = section.section_id;
@@ -1552,6 +1552,51 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                 console.error('Error deleting section:', error);
                 alert('An error occurred while deleting the section. Please try again.');
             }
+        });*/
+
+        const deleteBtn = card.querySelector('.delete-section-btn');
+
+        deleteBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+
+            const sectionId = section.section_id;
+            const enrolledCount = parseInt(section.noEnrolled, 10);
+
+            if (enrolledCount > 0) {
+                alert('Cannot delete this section because it has enrolled pupils.');
+                return;
+            }
+
+            // Show modal instead of confirm()
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteSectionModal'));
+            deleteModal.show();
+
+            // Attach click handler to confirm delete button
+            const confirmDeleteBtn = document.getElementById('confirmDeleteSection');
+
+            confirmDeleteBtn.onclick = async () => {
+
+                try {
+                    const response = await fetch(`/api/sections/${sectionId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        card.remove();
+                        deleteModal.hide();
+                    } else {
+                        const err = await response.json().catch(() => ({}));
+                        alert('Failed to delete section: ' + (err.message || 'Unknown error'));
+                    }
+
+                } catch (error) {
+                    console.error('Error deleting section:', error);
+                    alert('An error occurred while deleting the section. Please try again.');
+                }
+            };
         });
 
         return card;
