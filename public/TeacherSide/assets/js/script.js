@@ -1610,8 +1610,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             e.stopPropagation();
 
             const sectionId = section.section_id;
-            const token = "{{ session('node_token') }}";
-            const teacherId = "{{ session('user_id') }}";
+            const token = session('node_token');
+            const teacherId = session('user_id');
             const enrolledCount = parseInt(section.noEnrolled, 10);
 
             const modalEl = document.getElementById('deleteSectionModal');
