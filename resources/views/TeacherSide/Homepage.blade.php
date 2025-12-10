@@ -3041,12 +3041,14 @@
                                                 <div class="create-section-part">
                                                     <label class="form-label" for="sectionName">School Name</label>
                                                     <input class="form-control" type="text" id="schoolName" placeholder="e.g., ABC School" required="">
+                                                    <small id="schoolNameError" class="text-danger error-text d-none">Text</small>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="create-section-part">
                                                     <label class="form-label" for="sectionName-1">School Year</label>
                                                     <input class="form-control" type="text" id="schoolYear" placeholder="e.g., 2024-2025" required="">
+                                                    <small id="schoolYearError" class="text-danger error-text d-none">Text</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -3057,6 +3059,7 @@
                                                 <div class="mb-3 create-section-part">
                                                     <label class="form-label" for="sectionName-3">Section Name</label>
                                                     <input class="form-control" type="text" id="sectionName" placeholder="e.g., Grade 7-A Morning Class" required="">
+                                                    <small class="error-text text-danger d-none" id="sectionNameError"></small>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -3833,55 +3836,85 @@
         }
     });*/
     document.getElementById('createSectionSubmit').addEventListener('click', async () => {
-        const school_name_raw  = document.getElementById('schoolName').value.trim();
-        const school_year      = document.getElementById('schoolYear').value.trim();
-        const section_raw      = document.getElementById('sectionName').value.trim();
+        // Input values
+        const schoolNameInput = document.getElementById('schoolName');
+        const schoolYearInput = document.getElementById('schoolYear');
+        const sectionNameInput = document.getElementById('sectionName');
 
-        // === VALIDATIONS ===
+        const school_name_raw = schoolNameInput.value.trim();
+        const school_year = schoolYearInput.value.trim();
+        const section_raw = sectionNameInput.value.trim();
 
-        // 1. Required fields
-        if (!school_name_raw || !school_year || !section_raw) {
-            alert("All fields are required.");
-            return;
+        // Error elements
+        const schoolNameErr = document.getElementById('schoolNameError');
+        const schoolYearErr = document.getElementById('schoolYearError');
+        const sectionNameErr = document.getElementById('sectionNameError');
+
+        // Reset errors before validation
+        [schoolNameErr, schoolYearErr, sectionNameErr].forEach(err => {
+            err.classList.add('d-none');
+            err.textContent = "";
+        });
+
+        let hasError = false;
+
+        // === VALIDATION ===
+
+        // 1. SCHOOL NAME MUST CONTAIN "Elementary School"
+        if (!school_name_raw) {
+            schoolNameErr.textContent = "School Name is required.";
+            schoolNameErr.classList.remove("d-none");
+            hasError = true;
+        } else if (!school_name_raw.toLowerCase().includes("elementary school")) {
+            schoolNameErr.textContent = "The name must include 'Elementary School'.";
+            schoolNameErr.classList.remove("d-none");
+            hasError = true;
         }
 
-        // 2. School Name must contain "Elementary School"
-        if (!school_name_raw.toLowerCase().includes("elementary school")) {
-            alert("School Name must contain 'Elementary School'.");
-            return;
-        }
-
-        // 3. School Year format & recency validation
-        // Expected format: YYYY-YYYY
+        // 2. SCHOOL YEAR VALIDATION
         const syPattern = /^(\d{4})-(\d{4})$/;
         const match = school_year.match(syPattern);
-
-        if (!match) {
-            alert("School Year must be in the format YYYY-YYYY.");
-            return;
-        }
-
-        const startYear = parseInt(match[1], 10);
-        const endYear = parseInt(match[2], 10);
         const currentYear = new Date().getFullYear();
 
-        // End year must be exactly +1 from start
-        if (endYear !== startYear + 1) {
-            alert("School Year must be consecutive years (e.g., 2024-2025).");
-            return;
+        if (!school_year) {
+            schoolYearErr.textContent = "School Year is required.";
+            schoolYearErr.classList.remove("d-none");
+            hasError = true;
+        } else if (!match) {
+            schoolYearErr.textContent = "Format must be YYYY-YYYY.";
+            schoolYearErr.classList.remove("d-none");
+            hasError = true;
+        } else {
+            const startYear = parseInt(match[1]);
+            const endYear = parseInt(match[2]);
+
+            if (endYear !== startYear + 1) {
+                schoolYearErr.textContent = "Years must be consecutive (e.g., 2024-2025).";
+                schoolYearErr.classList.remove("d-none");
+                hasError = true;
+            }
+
+            if (endYear < currentYear) {
+                schoolYearErr.textContent = "That school year has already passed.";
+                schoolYearErr.classList.remove("d-none");
+                hasError = true;
+            }
         }
 
-        // Prevent selecting past school years
-        if (endYear < currentYear) {
-            alert("School Year is already finished. Please select a recent/valid school year.");
-            return;
+        // 3. SECTION NAME VALIDATION + AUTO FORMAT
+        if (!section_raw) {
+            sectionNameErr.textContent = "Section Name is required.";
+            sectionNameErr.classList.remove("d-none");
+            hasError = true;
         }
 
-        // 4. Auto-format Section Name
+        if (hasError) return; // stop submission until valid
+
+
+        // Auto-format: Grade 4-SectionName (Capitalized)
         const formatted_section =
             `Grade 4-${section_raw.charAt(0).toUpperCase() + section_raw.slice(1).toLowerCase()}`;
 
-        // === PREP FINAL VALUES ===
         const school_name = school_name_raw.replace(/\s+/g, " ").trim();
         const section_name = formatted_section;
 
@@ -3906,23 +3939,22 @@
             const data = await response.json();
 
             if (!response.ok) {
-                alert(data.error || "Failed to create section.");
+                sectionNameErr.textContent = data.error || "Failed to create section.";
+                sectionNameErr.classList.remove("d-none");
                 return;
             }
 
-            // Hide modal
+            // CLOSE MODAL
             const modal = bootstrap.Modal.getInstance(document.getElementById('createSectionModal'));
             if (modal) modal.hide();
 
-            // Reset form
             document.getElementById('createSectionForm').reset();
-
-            // Refresh UI
             await fetchSections();
 
         } catch (err) {
             console.error(err);
-            alert("Something went wrong.");
+            sectionNameErr.textContent = "Something went wrong.";
+            sectionNameErr.classList.remove("d-none");
         }
     });
 
