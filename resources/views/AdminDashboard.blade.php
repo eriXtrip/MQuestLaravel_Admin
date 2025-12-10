@@ -1451,7 +1451,7 @@
                                         <div class="progress-container" data-subject="English">
                                             <div class="progress-title"><span>English</span><span class="progress-percentage">0%</span></div>
                                             <div class="progress">
-                                                <div class="bg-danger progress-bar" id="engProg" style="width: 0%"></div>
+                                                <div class="bg-primary progress-bar" id="engProg" style="width: 0%"></div>
                                             </div>
                                         </div>
                                         <div class="progress-container" data-subject="Science">
