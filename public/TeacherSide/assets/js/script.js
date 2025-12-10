@@ -1664,7 +1664,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             // New handler
             confirmDeleteBtn.onclick = async () => {
               try {
-                  const response = await fetch("{{ env('API_URL') }}/teacher/delete/section", {
+                  const response = await fetch("{{ env('API_URL') }}/teacher/deleteSection", {
                       method: "POST", // your Laravel deleteSection expects POST
                       headers: {
                           "Authorization": `Bearer ${token}`,
