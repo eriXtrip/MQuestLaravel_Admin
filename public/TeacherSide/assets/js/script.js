@@ -1661,6 +1661,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             // Clear old handler
             confirmDeleteBtn.onclick = null;
 
+            console.log("params deleteSection: ", teacherId, sectionId)
+
             // New handler
             confirmDeleteBtn.onclick = async () => {
               try {
@@ -1675,6 +1677,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                           sectionId: section.section_id
                       })
                   });
+
+                  console.log(response);
 
                   const data = await response.json();
 
