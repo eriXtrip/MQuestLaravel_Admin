@@ -1679,7 +1679,6 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
                       })
                   });
 
-                  console.log(response);
 
                   const data = await response.json();
 
