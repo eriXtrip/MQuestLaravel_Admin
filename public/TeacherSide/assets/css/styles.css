@@ -7411,3 +7411,8 @@ activity-title {
     transform: scale(1.15);
     color: #dc3545; /* Ensure the icon stays red on hover */
 }
+
+
+.error-text{
+  font-size: 0.75rem;
+}

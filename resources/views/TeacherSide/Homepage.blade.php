@@ -3040,14 +3040,14 @@
                                             <div class="col-md-6">
                                                 <div class="create-section-part">
                                                     <label class="form-label" for="sectionName">School Name</label>
-                                                    <input class="form-control" type="text" id="schoolName" placeholder="e.g., ABC School" required="">
+                                                    <input class="form-control mb-2" type="text" id="schoolName" placeholder="e.g., ABC School" required="">
                                                     <small id="schoolNameError" class="text-danger error-text d-none">Text</small>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="create-section-part">
                                                     <label class="form-label" for="sectionName-1">School Year</label>
-                                                    <input class="form-control" type="text" id="schoolYear" placeholder="e.g., 2024-2025" required="">
+                                                    <input class="form-control mb-2" type="text" id="schoolYear" placeholder="e.g., 2024-2025" required="">
                                                     <small id="schoolYearError" class="text-danger error-text d-none">Text</small>
                                                 </div>
                                             </div>
@@ -3058,7 +3058,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3 create-section-part">
                                                     <label class="form-label" for="sectionName-3">Section Name</label>
-                                                    <input class="form-control" type="text" id="sectionName" placeholder="e.g., Grade 7-A Morning Class" required="">
+                                                    <input class="form-control mb-2" type="text" id="sectionName" placeholder="e.g., Grade 7-A Morning Class" required="">
                                                     <small class="error-text text-danger d-none" id="sectionNameError"></small>
                                                 </div>
                                             </div>
@@ -3949,6 +3949,7 @@
             if (modal) modal.hide();
 
             document.getElementById('createSectionForm').reset();
+            showToast('success', 'Saved', 'Section created successfully!');
             await fetchSections();
 
         } catch (err) {
