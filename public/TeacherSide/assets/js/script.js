@@ -1610,6 +1610,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             e.stopPropagation();
 
             const sectionId = section.section_id;
+            const token = "{{ session('node_token') }}";
+            const teacherId = "{{ session('user_id') }}";
             const enrolledCount = parseInt(section.noEnrolled, 10);
 
             const modalEl = document.getElementById('deleteSectionModal');
@@ -1661,29 +1663,39 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
 
             // New handler
             confirmDeleteBtn.onclick = async () => {
-                try {
-                    const response = await fetch(`/api/sections/${sectionId}`, {
-                        method: "DELETE",
-                        headers: { "Content-Type": "application/json" }
-                    });
+              try {
+                  const response = await fetch("{{ env('API_URL') }}/teacher/delete/section", {
+                      method: "POST", // your Laravel deleteSection expects POST
+                      headers: {
+                          "Authorization": `Bearer ${token}`,
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({
+                          teacherId: teacherId,
+                          sectionId: section.section_id
+                      })
+                  });
 
-                    if (response.ok) {
-                        card.remove();
-                        modal.hide();
+                  const data = await response.json();
 
-                        showToast(
-                            "success",
-                            "Section Deleted",
-                            `The section "${section.section_name}" has been successfully deleted.`
-                        );
-                    } else {
-                        alert("Failed to delete section.");
-                    }
-                } catch (err) {
-                    console.error(err);
-                    alert("An error occurred.");
-                }
-            };
+                  // Check result (your API returns 1 if success, 0 if fail)
+                  if (data === 1) {
+                      card.remove();
+                      modal.hide();
+                      showToast(
+                          "success",
+                          "Section Deleted",
+                          `The section "${section.section_name}" has been successfully deleted.`
+                      );
+                      await fetchSections();
+                  } else {
+                      alert("Failed to delete section.");
+                  }
+              } catch (err) {
+                  console.error(err);
+                  alert("An error occurred.");
+              }
+          };
         });
         return card;
     }

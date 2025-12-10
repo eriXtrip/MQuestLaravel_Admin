@@ -87,33 +87,6 @@ class TeacherDashboardController extends Controller
         }
     }
 
-    public function deleteSection(Request $request)
-    {
-        $token = $request->input('token');
-        $teacherId = $request->input('teacherId');
-        $sectionId = $request->input('sectionId');
-
-        if (!$token || !$teacherId || !$sectionId) {
-            return response()->json(["error" => "Missing token, teacherId, or sectionId"], 400);
-        }
-
-        try {
-            $response = Http::withToken($token)->post("{$this->apiUrl}/teacher/deleteSection", [
-                "teacherId" => $teacherId,
-                "sectionId" => $sectionId
-            ]);
-
-            Log::info('Delete Section Response: ', $response->json());
-
-            // Returns 1 or 0 directly from the API
-            return response()->json($response->json(), $response->status());
-
-        } catch (\Exception $e) {
-            Log::error("Delete Section Error: " . $e->getMessage());
-            return response()->json(["error" => "Server error"], 500);
-        }
-    }
-
 
 
 
