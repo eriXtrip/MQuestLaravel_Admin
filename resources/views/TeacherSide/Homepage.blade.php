@@ -3058,7 +3058,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3 create-section-part">
                                                     <label class="form-label" for="sectionName-3">Section Name</label>
-                                                    <input class="form-control mb-2" type="text" id="sectionName" placeholder="e.g., Grade 7-A Morning Class" required="">
+                                                    <input class="form-control mb-2" type="text" id="sectionName" placeholder="e.g., Aristotle" required="">
                                                     <small class="error-text text-danger d-none" id="sectionNameError"></small>
                                                 </div>
                                             </div>
