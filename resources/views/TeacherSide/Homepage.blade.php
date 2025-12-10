@@ -3777,7 +3777,7 @@
     });
 
     // Your existing create section code
-    document.getElementById('createSectionSubmit').addEventListener('click', async () => {
+    /*document.getElementById('createSectionSubmit').addEventListener('click', async () => {
         const school_name  = document.getElementById('schoolName').value.trim();
         const school_year  = document.getElementById('schoolYear').value.trim();
         const section_name = document.getElementById('sectionName').value.trim();
@@ -3822,7 +3822,7 @@
             document.getElementById('createSectionForm').reset();
 
             // Show success message
-            alert("Section created successfully!");
+            //alert("Section created successfully!");
 
             // Fetch updated sections
             await fetchSections();
@@ -3831,7 +3831,101 @@
             console.error(err);
             alert("Something went wrong.");
         }
+    });*/
+    document.getElementById('createSectionSubmit').addEventListener('click', async () => {
+        const school_name_raw  = document.getElementById('schoolName').value.trim();
+        const school_year      = document.getElementById('schoolYear').value.trim();
+        const section_raw      = document.getElementById('sectionName').value.trim();
+
+        // === VALIDATIONS ===
+
+        // 1. Required fields
+        if (!school_name_raw || !school_year || !section_raw) {
+            alert("All fields are required.");
+            return;
+        }
+
+        // 2. School Name must contain "Elementary School"
+        if (!school_name_raw.toLowerCase().includes("elementary school")) {
+            alert("School Name must contain 'Elementary School'.");
+            return;
+        }
+
+        // 3. School Year format & recency validation
+        // Expected format: YYYY-YYYY
+        const syPattern = /^(\d{4})-(\d{4})$/;
+        const match = school_year.match(syPattern);
+
+        if (!match) {
+            alert("School Year must be in the format YYYY-YYYY.");
+            return;
+        }
+
+        const startYear = parseInt(match[1], 10);
+        const endYear = parseInt(match[2], 10);
+        const currentYear = new Date().getFullYear();
+
+        // End year must be exactly +1 from start
+        if (endYear !== startYear + 1) {
+            alert("School Year must be consecutive years (e.g., 2024-2025).");
+            return;
+        }
+
+        // Prevent selecting past school years
+        if (endYear < currentYear) {
+            alert("School Year is already finished. Please select a recent/valid school year.");
+            return;
+        }
+
+        // 4. Auto-format Section Name
+        const formatted_section =
+            `Grade 4-${section_raw.charAt(0).toUpperCase() + section_raw.slice(1).toLowerCase()}`;
+
+        // === PREP FINAL VALUES ===
+        const school_name = school_name_raw.replace(/\s+/g, " ").trim();
+        const section_name = formatted_section;
+
+        const token = "{{ session('node_token') }}";
+        const teacherId = "{{ session('user_id') }}";
+
+        try {
+            const response = await fetch("{{ env('API_URL') }}/teacher/create/section", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    teacherId,
+                    school_name,
+                    school_year,
+                    section_name
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.error || "Failed to create section.");
+                return;
+            }
+
+            // Hide modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('createSectionModal'));
+            if (modal) modal.hide();
+
+            // Reset form
+            document.getElementById('createSectionForm').reset();
+
+            // Refresh UI
+            await fetchSections();
+
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong.");
+        }
     });
+
 </script>
 
     <script>
