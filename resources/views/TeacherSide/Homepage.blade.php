@@ -1916,7 +1916,7 @@
                                         </svg>
                                     </div>
                                     <div class="insight-text">
-                                        <div class="insight-title"><span>Strong Performance in Mathematics</span></div>
+                                        <div class="insight-title"><span>Strongest Subject Performance</span></div>
                                         <div class="insight-description">
                                             <span> No data to display</span>
                                         </div>
@@ -1934,7 +1934,7 @@
                                         </svg>
                                     </div>
                                     <div class="insight-text">
-                                        <div class="insight-title"><span>Focus Area: Lesson 5 (Algebra)</span></div>
+                                        <div class="insight-title"><span>Focus Area</span></div>
                                         <div class="insight-description">
                                             <span> No data available to determine focus area. </span>
                                         </div>
