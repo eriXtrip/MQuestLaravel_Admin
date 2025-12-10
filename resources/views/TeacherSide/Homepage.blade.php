@@ -1918,7 +1918,7 @@
                                     <div class="insight-text">
                                         <div class="insight-title"><span>Strong Performance in Mathematics</span></div>
                                         <div class="insight-description">
-                                            <span> Mathematics shows consistent improvement with 92% average score across the latest lessons. Students are highly engaged and completing lessons on time.&nbsp;</span>
+                                            <span> No data to display</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1936,7 +1936,7 @@
                                     <div class="insight-text">
                                         <div class="insight-title"><span>Focus Area: Lesson 5 (Algebra)</span></div>
                                         <div class="insight-description">
-                                            <span> Lesson 5 shows lower engagement (78%) and mastery (75%) compared to other lessons in Mathematics. Recommend adding more interactive activities, practice problems, and providing additional support materials. </span>
+                                            <span> No data available to determine focus area. </span>
                                         </div>
                                     </div>
                                 </div>
@@ -1951,7 +1951,7 @@
                                     <div class="insight-text">
                                         <div class="insight-title"><span>Progressive Improvement Trend</span></div>
                                         <div class="insight-description">
-                                            <span> Quarter-over-quarter analysis shows a positive trend in Mathematics. Q4 performance (90%) represents a 5-point improvement from Q1 (85%). Maintain current teaching methods and continue to provide varied learning materials. </span>
+                                            <span>No data available to analyze progressive improvement.</span>
                                         </div>
                                     </div>
                                 </div>
