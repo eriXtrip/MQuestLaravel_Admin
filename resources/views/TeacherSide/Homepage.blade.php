@@ -3173,6 +3173,13 @@
     <script> window.dashboardData = @json($stats ?? []); </script>
     <script src="{{ asset('TeacherSide/assets/js/allcharts.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/time.js') }}"></script>
+    <script>
+        window.Laravel = {
+            teacherId: {{ session('user_id') }},
+            token: "{{ session('node_token') }}",
+            apiUrl: "{{ env('API_URL') }}"
+        };
+    </script>
     <script src="{{ asset('TeacherSide/assets/js/script.js') }}"></script>
     <script src="{{ asset('TeacherSide/assets/js/toast-manager.js') }}"></script>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>

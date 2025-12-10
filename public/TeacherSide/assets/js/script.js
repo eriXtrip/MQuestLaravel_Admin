@@ -1610,8 +1610,9 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             e.stopPropagation();
 
             const sectionId = section.section_id;
-            const token = sessionStorage.getItem('node_token');
-            const teacherId = sessionStorage.getItem('user_id');
+            const token = window.Laravel.token;
+            const teacherId = window.Laravel.teacherId;
+            const apiUrl = window.Laravel.apiUrl;
             const enrolledCount = parseInt(section.noEnrolled, 10);
 
             const modalEl = document.getElementById('deleteSectionModal');
@@ -1666,7 +1667,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             // New handler
             confirmDeleteBtn.onclick = async () => {
               try {
-                  const response = await fetch("{{ env('API_URL') }}/teacher/deleteSection", {
+                  const response = await fetch(`${apiUrl}/teacher/deleteSection`, {
                       method: "POST", // your Laravel deleteSection expects POST
                       headers: {
                           "Authorization": `Bearer ${token}`,
