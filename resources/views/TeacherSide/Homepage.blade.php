@@ -3040,7 +3040,7 @@
                                             <div class="col-md-6">
                                                 <div class="create-section-part">
                                                     <label class="form-label" for="sectionName">School Name</label>
-                                                    <input class="form-control mb-2" type="text" id="schoolName" placeholder="e.g., ABC School" required="">
+                                                    <input class="form-control mb-2" type="text" id="schoolName" placeholder="e.g., ABC Elementary School" required="">
                                                     <small id="schoolNameError" class="text-danger error-text d-none">Text</small>
                                                 </div>
                                             </div>
