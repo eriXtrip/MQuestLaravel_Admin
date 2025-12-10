@@ -3037,18 +3037,11 @@
                                 <form id="createSectionForm" class="create-section">
                                     <div class="container mb-2">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="create-section-part">
                                                     <label class="form-label" for="sectionName">School Name</label>
                                                     <input class="form-control mb-2" type="text" id="schoolName" placeholder="e.g., ABC Elementary School" required="">
                                                     <small id="schoolNameError" class="text-danger error-text d-none">Text</small>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="create-section-part">
-                                                    <label class="form-label" for="sectionName-1">School Year</label>
-                                                    <input class="form-control mb-2" type="text" id="schoolYear" placeholder="e.g., 2024-2025" required="">
-                                                    <small id="schoolYearError" class="text-danger error-text d-none">Text</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -3056,21 +3049,17 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <div class="create-section-part">
+                                                    <label class="form-label" for="sectionName-1">School Year</label>
+                                                    <input class="form-control mb-2" type="text" id="schoolYear" placeholder="e.g., 2024-2025" required="">
+                                                    <small id="schoolYearError" class="text-danger error-text d-none">Text</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div class="mb-3 create-section-part">
                                                     <label class="form-label" for="sectionName-3">Section Name</label>
                                                     <input class="form-control mb-2" type="text" id="sectionName" placeholder="e.g., Aristotle" required="">
                                                     <small class="error-text text-danger d-none" id="sectionNameError"></small>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3 create-section-part" style="display:none">
-                                                    <label class="form-label" for="sectionName-1">Subject</label>
-                                                    <select class="form-select form-control" id="pupil-subject">
-                                                        <option value="Mathematics" selected="">Mathematics</option>
-                                                        <option value="English">English</option>
-                                                        <option value="Science">Science</option>
-                                                        <option value="Filipino">Filipino</option>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
