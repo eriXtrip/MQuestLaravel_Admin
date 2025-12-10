@@ -640,6 +640,7 @@
     };
   }
 
+  // Overall Insights - Teacher side Analytics
   document.addEventListener('DOMContentLoaded', () => {
     const progressDataRaw = window.dashboardData.quarterlyProgress || {};
     const subjects = ['Mathematics','Science','English','Filipino'];
@@ -659,7 +660,7 @@
         return { subject, avg, allScores };
     });
 
-    // 1️⃣ Strong Performance
+    // 1️⃣ Strong Performance based on Subject
     const bestSubject = subjectAverages.reduce((prev,curr) => curr.avg > prev.avg ? curr : prev, {avg:0});
     const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
     const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
@@ -688,6 +689,9 @@
     const trendCardDesc = insightsContainer.querySelector('.progressive-improvement .insight-text .insight-description span');
     if(trendCardDesc) trendCardDesc.textContent = `Quarter-over-quarter analysis shows a ${lastAvg >= firstAvg ? 'positive' : 'negative'} trend in ${bestSubject.subject}. Q4 performance (${lastAvg}%) represents a ${lastAvg - firstAvg} point ${lastAvg >= firstAvg ? 'improvement' : 'decline'} from Q1 (${firstAvg}%). Maintain current teaching methods and continue to provide varied learning materials.`;
 });
+
+
+
 
 
   // Export helpers (optional usage by other scripts)

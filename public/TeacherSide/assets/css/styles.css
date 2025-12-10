@@ -2394,6 +2394,7 @@ btn-hide-filters {
 
 td[data-label="LRN"] {
   color: var(--main-color);
+  display: none;
 }
 
 .status-badge {
@@ -7385,3 +7386,28 @@ activity-title {
 
 
 
+/* Section delete button */
+.delete-section-btn {
+    background: transparent;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+}
+
+.delete-section-btn:hover {
+    background: rgba(220, 53, 69, 0.12); /* Light red hover background */
+    transform: translateY(-2px); /* Small lift effect */
+}
+
+.delete-section-btn svg {
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.delete-section-btn:hover svg {
+    transform: scale(1.15);
+    color: #dc3545; /* Ensure the icon stays red on hover */
+}
