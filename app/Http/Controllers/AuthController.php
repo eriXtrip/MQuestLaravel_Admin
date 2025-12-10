@@ -152,6 +152,9 @@ class AuthController extends Controller
                 session(['user_id' => $user['id']]);
             }
 
+            sessionStorage.setItem('node_token', data.token);
+            sessionStorage.setItem('user_id', data.user.server_id);
+
             $userDataForSync = [
                 'server_id'   => $user['id'] ?? null,
                 'email'       => $user['email'] ?? null,

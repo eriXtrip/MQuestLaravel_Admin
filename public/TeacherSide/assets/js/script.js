@@ -1610,8 +1610,8 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             e.stopPropagation();
 
             const sectionId = section.section_id;
-            const token = session('node_token');
-            const teacherId = session('user_id');
+            const token = sessionStorage.getItem('node_token');
+            const teacherId = sessionStorage.getItem('user_id');
             const enrolledCount = parseInt(section.noEnrolled, 10);
 
             const modalEl = document.getElementById('deleteSectionModal');
@@ -1661,7 +1661,7 @@ function initSectionsManager(fetchedSections = [], fetchedPupils = []) {
             // Clear old handler
             confirmDeleteBtn.onclick = null;
 
-            console.log("params deleteSection: ", teacherId, sectionId)
+            //console.log("params deleteSection: ", teacherId, sectionId)
 
             // New handler
             confirmDeleteBtn.onclick = async () => {
