@@ -48,6 +48,14 @@
     filipino: '#607D8B'
   };
 
+  const subjectKeyMap = {
+    mathematics: 'Mathematics',
+    english: 'English',
+    science: 'Science',
+    filipino: 'Filipino'
+  };
+
+
   function hexToRgb(hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
@@ -253,7 +261,7 @@
                 });
             });
         } else {
-            datasets.push({
+            /*datasets.push({
                 label: selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1),
                 data: progressData[currentQuarter][selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)] || [],
                 borderColor: subjectColors[selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)],
@@ -261,6 +269,19 @@
                 borderWidth: 4,
                 pointBackgroundColor: '#fff',
                 pointBorderColor: subjectColors[selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)],
+                pointRadius: 5,
+                tension: 0.4
+            });*/
+            const mappedSubject = subjectKeyMap[selectedSubject];
+
+            datasets.push({
+                label: mappedSubject,
+                data: progressData[currentQuarter][mappedSubject] || [],
+                borderColor: subjectColors[mappedSubject],
+                backgroundColor: 'transparent',
+                borderWidth: 4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: subjectColors[mappedSubject],
                 pointRadius: 5,
                 tension: 0.4
             });
@@ -304,15 +325,16 @@
               insights.textContent = generateLessonInsight(formatted, data);
           }
       }*/
-     const insights = document.getElementById('chartInsights')?.querySelector('span');
+     const insightsSpan = document.querySelector('#chartInsights span');
 
-      if (insights) {
+      if (insightsSpan) {
           if (selectedSubject === 'all') {
-              insights.textContent = `Viewing all subjects for Quarter ${currentQuarter}. Select a subject to view detailed insights.`;
+              insightsSpan.textContent = `Viewing all subjects for Quarter ${currentQuarter}. Select a subject to view detailed insights.`;
           } else {
-              const formatted = selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1);
-              const data = progressData[currentQuarter][formatted] || [];
-              insights.textContent = generateLessonInsight(formatted, data);
+              const mappedSubject = subjectKeyMap[selectedSubject]; // <--- FIX HERE
+              const data = progressData[currentQuarter][mappedSubject] || [];
+
+              insightsSpan.textContent = generateLessonInsight(mappedSubject, data);
           }
       }
     }
