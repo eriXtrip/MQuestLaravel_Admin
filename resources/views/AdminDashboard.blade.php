@@ -3394,13 +3394,12 @@
 
             const teachers = window.teachersWithSections || [];
             const pupilsBySubject = window.usersBySubject || {};
-            const totalPupils = window.totalPupils || 0;
 
             /* ============================================================
-            1. DISTINCT TEACHERS
+            1. DISTINCT TEACHERS BY user_id
             ============================================================ */
             const distinctTeachers = Array.from(
-                new Map(teachers.map(t => [t.teacher_id, t])).values()
+                new Map(teachers.map(t => [t.user_id, t])).values()
             );
 
             if (distinctTeachers.length === 0) {
@@ -3429,12 +3428,12 @@
             }
 
             /* ============================================================
-            2. DISTINCT PUPILS
+            2. DISTINCT PUPILS BY user_id
             ============================================================ */
             const allPupils = Object.values(pupilsBySubject).flat();
 
             const distinctPupils = Array.from(
-                new Map(allPupils.map(p => [p.pupil_id, p])).values()
+                new Map(allPupils.map(p => [p.user_id, p])).values()
             );
 
             const pupilHeader = `
