@@ -2859,11 +2859,21 @@
                     formData.append('status', data.status);
 
                     // Uploads
-                    if (data.uploads.files) {
-                        formData.append('fileTitle', data.uploads.files.title || '');
-                        formData.append('fileSubtitle', data.uploads.files.subtitle || '');
-                        if (data.uploads.files.file) formData.append('fileInput', data.uploads.files.file);
+                    if (data.uploads.ppt) {
+                        console.log('PPT file being uploaded:', data.uploads.ppt);
+                        formData.append('fileTitle', data.uploads.ppt.title || '');
+                        formData.append('fileSubtitle', data.uploads.ppt.subtitle || '');
+                        formData.append('fileInput', data.uploads.ppt.file);
                     }
+
+                    // Upload PDF
+                    if (data.uploads.pdf) {
+                        console.log('PDF file being uploaded:', data.uploads.pdf);
+                        formData.append('fileTitle', data.uploads.pdf.title || '');
+                        formData.append('fileSubtitle', data.uploads.pdf.subtitle || '');
+                        formData.append('fileInput', data.uploads.pdf.file);
+                    }
+
 
                     if (data.uploads.videos) {
                         formData.append('videoTitle', data.uploads.videos.title || '');
