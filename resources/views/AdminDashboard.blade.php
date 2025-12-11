@@ -3480,94 +3480,94 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const teachersContainer = document.getElementById('teachersContainer');
-            const pupilsContainer   = document.getElementById('pupilsContainer');
-            const selectedInput     = document.getElementById('selected-subject-input');
+document.addEventListener('DOMContentLoaded', () => {
+    const teachersContainer = document.getElementById('teachersContainer');
+    const pupilsContainer   = document.getElementById('pupilsContainer');
+    const selectedInput     = document.getElementById('selected-subject-input');
 
-            if (!selectedInput) return;
+    if (!selectedInput) return;
 
-            const teachers = window.teachersWithSections || [];
-            const pupilsBySubject = window.usersBySubject || {};
-            const subjectIdMap = window.subjectIdToName || {};
+    const teachers = window.teachersWithSections || [];
+    const pupilsBySubject = window.usersBySubject || {};
+    const subjectIdMap = window.subjectIdToName || {};
 
-            function renderPeople() {
-                const selectedSubject = selectedInput.value.trim();
-                if (!selectedSubject) return;
+    function renderPeople() {
+        const selectedSubject = selectedInput.value.trim();
+        if (!selectedSubject) return;
 
-                const selectedSubjectId = Object.keys(subjectIdMap).find(id => 
-                    subjectIdMap[id].toLowerCase() === selectedSubject.toLowerCase()
-                );
+        const selectedSubjectId = Object.keys(subjectIdMap).find(id => 
+            subjectIdMap[id].toLowerCase() === selectedSubject.toLowerCase()
+        );
 
-                // === TEACHERS ===
-                let matchingTeachers = selectedSubjectId
-                    ? teachers.filter(t => String(t.subject_id) === selectedSubjectId)
-                    : [];
+        // === TEACHERS ===
+        let matchingTeachers = selectedSubjectId
+            ? teachers.filter(t => String(t.subject_id) === selectedSubjectId)
+            : [];
 
-                // Remove duplicate names
-                const seenTeacherNames = new Set();
-                matchingTeachers = matchingTeachers.filter(t => {
-                    const name = t.teacher_name?.trim();
-                    if (!name || seenTeacherNames.has(name)) return false;
-                    seenTeacherNames.add(name);
-                    return true;
-                });
-
-                const teacherHeader = `<div class="student-header"><div style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Teachers</h2></div></div>`;
-
-                if (matchingTeachers.length === 0) {
-                    teachersContainer.innerHTML = teacherHeader + `<p class="text-muted">No teachers assigned to ${selectedSubject}.</p>`;
-                } else {
-                    const items = matchingTeachers.map(t => `
-                        <div class="teacher-item">
-                            <img class="img-fluid avatar-teacher" src="${t.thumbnail || 'assets/img/default-avatar.png'}" alt="${t.teacher_name}">
-                            <p class="mb-0 teacher-name">${t.teacher_name}</p>
-                            <a href="mailto:${t.email}" class="email-link" title="Email ${t.teacher_name}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
-                                </svg>
-                            </a>
-                        </div>`).join('');
-                    teachersContainer.innerHTML = teacherHeader + items;
-                }
-
-                // === PUPILS ===
-                let pupils = pupilsBySubject[selectedSubjectId] || [];
-
-                // Remove duplicate names
-                const seenPupilNames = new Set();
-                pupils = pupils.filter(p => {
-                    const name = `${p.first_name?.trim()} ${p.last_name?.trim()}`;
-                    if (!name || seenPupilNames.has(name)) return false;
-                    seenPupilNames.add(name);
-                    return true;
-                });
-
-                const total = pupils.length;
-                const pupilHeader = `<div class="student-header"><div class="justify-content-between" style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Pupils Enrolled</h2><div class="text-muted" style="padding-right:1rem;"><p>${total} Pupil${total !== 1 ? 's' : ''}</p></div></div></div>`;
-
-                if (pupils.length === 0) {
-                    pupilsContainer.innerHTML = pupilHeader + `<p class="text-muted">No pupils enrolled in ${selectedSubject}.</p>`;
-                } else {
-                    const items = pupils.map(p => `
-                        <div class="pupil-item">
-                            <img class="img-fluid avatar-pupil" src="${p.avatar_thumbnail || 'assets/img/default-pupil.png'}" alt="${p.first_name} ${p.last_name}">
-                            <p class="mb-0 student-name">${p.first_name} ${p.last_name}</p>
-                            <a href="mailto:${p.email}" class="email-link" title="Email ${p.first_name} ${p.last_name}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
-                                </svg>
-                            </a>
-                        </div>`).join('');
-                    pupilsContainer.innerHTML = pupilHeader + items;
-                }
-            }
-
-            renderPeople();
-            selectedInput.addEventListener('change', renderPeople);
-            new MutationObserver(renderPeople).observe(selectedInput, { attributes: true, attributeFilter: ['value'] });
+        // Remove duplicate names
+        const seenTeacherNames = new Set();
+        matchingTeachers = matchingTeachers.filter(t => {
+            const name = t.teacher_name?.trim();
+            if (!name || seenTeacherNames.has(name)) return false;
+            seenTeacherNames.add(name);
+            return true;
         });
-    </script>
+
+        const teacherHeader = `<div class="student-header"><div style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Teachers</h2></div></div>`;
+
+        if (matchingTeachers.length === 0) {
+            teachersContainer.innerHTML = teacherHeader + `<p class="text-muted">No teachers assigned to ${selectedSubject}.</p>`;
+        } else {
+            const items = matchingTeachers.map(t => `
+                <div class="teacher-item">
+                    <img class="img-fluid avatar-teacher" src="${t.thumbnail || 'assets/img/default-avatar.png'}" alt="${t.teacher_name}">
+                    <p class="mb-0 teacher-name">${t.teacher_name}</p>
+                    <a href="mailto:${t.email}" class="email-link" title="Email ${t.teacher_name}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                        </svg>
+                    </a>
+                </div>`).join('');
+            teachersContainer.innerHTML = teacherHeader + items;
+        }
+
+        // === PUPILS ===
+        let pupils = pupilsBySubject[selectedSubjectId] || [];
+
+        // Remove duplicate names
+        const seenPupilNames = new Set();
+        pupils = pupils.filter(p => {
+            const name = `${p.first_name?.trim()} ${p.last_name?.trim()}`;
+            if (!name || seenPupilNames.has(name)) return false;
+            seenPupilNames.add(name);
+            return true;
+        });
+
+        const total = pupils.length;
+        const pupilHeader = `<div class="student-header"><div class="justify-content-between" style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Pupils Enrolled</h2><div class="text-muted" style="padding-right:1rem;"><p>${total} Pupil${total !== 1 ? 's' : ''}</p></div></div></div>`;
+
+        if (pupils.length === 0) {
+            pupilsContainer.innerHTML = pupilHeader + `<p class="text-muted">No pupils enrolled in ${selectedSubject}.</p>`;
+        } else {
+            const items = pupils.map(p => `
+                <div class="pupil-item">
+                    <img class="img-fluid avatar-pupil" src="${p.avatar_thumbnail || 'assets/img/default-pupil.png'}" alt="${p.first_name} ${p.last_name}">
+                    <p class="mb-0 student-name">${p.first_name} ${p.last_name}</p>
+                    <a href="mailto:${p.email}" class="email-link" title="Email ${p.first_name} ${p.last_name}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-envelope email-icon">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path>
+                        </svg>
+                    </a>
+                </div>`).join('');
+            pupilsContainer.innerHTML = pupilHeader + items;
+        }
+    }
+
+    renderPeople();
+    selectedInput.addEventListener('change', renderPeople);
+    new MutationObserver(renderPeople).observe(selectedInput, { attributes: true, attributeFilter: ['value'] });
+});
+</script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
