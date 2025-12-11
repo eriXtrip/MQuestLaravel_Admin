@@ -192,6 +192,30 @@
   // ================================
   // 3) Lesson Progress Trend Chart (Dynamic demo)
   // ================================
+  
+  //Get the lesson with highest progress and display it in the insight
+    function generateLessonInsight(subjectName, progressArray) {
+      if (!progressArray || progressArray.length === 0) {
+          return `No progress data available for ${subjectName}.`;
+      }
+
+      // Find highest progress value
+      let maxValue = Math.max(...progressArray);
+
+      // If max is 0 = no real progress yet
+      if (maxValue === 0) {
+          return `${subjectName} has no recorded progress yet for this quarter.`;
+      }
+
+      // Find the lesson index of the highest value
+      let maxIndex = progressArray.indexOf(maxValue);
+
+      // Convert index → Lesson number
+      let lessonName = `Lesson ${maxIndex + 1}`;
+
+      return `${subjectName} shows its highest progress in ${lessonName} with ${maxValue}%.`;
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     const canvasId = 'lessonProgressChart';
     if (!document.getElementById(canvasId)) return;
@@ -264,13 +288,22 @@
         chartManager.createChart(canvasId, config);
 
         const insights = document.getElementById('chartInsights');
-        if (insights) {
+        /*if (insights) {
             if (selectedSubject === 'all') {
                 insights.textContent = `Viewing all subjects for Quarter ${currentQuarter}.`;
             } else {
                 insights.textContent = `${selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)} shows improvement in Quarter ${currentQuarter}.`;
             }
-        }
+        }*/
+       if (insights) {
+          if (selectedSubject === 'all') {
+              insights.textContent = `Viewing all subjects for Quarter ${currentQuarter}. Select a subject to view detailed insights.`;
+          } else {
+              const formatted = selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1);
+              const data = progressData[currentQuarter][formatted] || [];
+              insights.textContent = generateLessonInsight(formatted, data);
+          }
+      }
     }
 
     // Filters
