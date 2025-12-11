@@ -27,7 +27,7 @@
             <button class="back-button" onclick="window.location.href='{{ route('login') }}'">&larr;</button>
             <h2>Who are you registering as?</h2>
             <p>Please choose your role to continue the registration.</p>
-            <button class="register-button" onclick="goToStep(1, 'Pupil')">I am a Pupil</button>
+            <!-- <button class="register-button" onclick="goToStep(1, 'Pupil')">I am a Pupil</button> -->
             <button class="register-button" onclick="goToStep(1, 'Teacher')">I am a Teacher</button>
         </div>
 
@@ -87,11 +87,11 @@
             <h2>What's your birthday?</h2>
             <p>Choose your date of birth.</p>
             <input type="date" id="birthday" name="birthday" max="2025-09-15" required>
-            <button class="register-button" onclick="validateAndGoToStep(3, 4)">Next</button>
+            <button class="register-button" onclick="validateAndGoToStep(4, 5)">Next</button>
         </div>
 
         <!-- Step 4: LRN or Teacher ID -->
-        <div class="step-content" id="step4-content" style="display: none;">
+        <!-- <div class="step-content" id="step4-content" style="display: none;">
             <button class="back-button" onclick="goToStep(3)">&larr;</button>
             <h2 id="id-title"></h2>
             <p id="id-description"></p>
@@ -100,11 +100,11 @@
                 <input type="text" id="idInput" name="idInput" required>
             </div>
             <button class="register-button" onclick="validateAndGoToStep(4, 5)">Next</button>
-        </div>
+        </div> -->
 
         <!-- Step 5: Email -->
         <div class="step-content" id="step5-content" style="display: none;">
-            <button class="back-button" onclick="goToStep(4)">&larr;</button>
+            <button class="back-button" onclick="goToStep(3)">&larr;</button>
             <h2>What's your email?</h2>
             <p>Enter your active email where you can be contacted.</p>
             <div class="input-group">
@@ -479,8 +479,8 @@
             suffix: '',
             gender: '',
             birthday: '',
-            lrn: '',
-            teacherId: '',
+            lrn: '000000000000',
+            teacherId: '0000000000',
             email: '',
             password: '',
             confirmPassword: ''
