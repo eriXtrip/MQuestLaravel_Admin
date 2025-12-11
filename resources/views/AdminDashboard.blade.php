@@ -3914,7 +3914,7 @@
                         <td data-label="Grade/Class">${user.schoolName}</td>
                         <td data-label="Status">${activeBadge}</td>
                         <td data-label="Last Seen">${lastSeenText}</td>
-                        <td data-label="Actions">
+                        <!--<td data-label="Actions">
                             <button class="btn action-btn view" title="View Profile"
                                     data-bs-toggle="modal" data-bs-target="#viewProfile"
                                     onclick="openProfile(${user.id}, '${user.type}')">
@@ -3923,7 +3923,7 @@
                                     <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"></path>
                                 </svg>
                             </button>
-                        </td>
+                        </td>-->
                     </tr>
                 `;
 
