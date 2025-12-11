@@ -342,9 +342,10 @@
     </div>
 
     <div class="alert" id="alert" style="display: none;">
+        <button class="close-btn" onclick="closeAlert()">×</button>
         <p id="alert-message"></p>
-        <button onclick="closeAlert()">OK</button>
     </div>
+
 
     
     <script>
