@@ -2751,7 +2751,7 @@
                 return {
                     ppt: pptFile,
                     pdf: pdfFile,
-                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, name: uploadedVideo.name, file: uploadedVideo } : null
+                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, name: uploadedVideo.name, file: uploadedVideo } : null,
                     video_url: videoUrl || null,
                     video_url_title: videoTitle || '',
                     video_url_subtitle: videoSubtitle || ''
