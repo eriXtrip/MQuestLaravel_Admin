@@ -341,6 +341,11 @@
         <button id="customAlertClose" style="margin-left:15px; background:none; border:none; font-weight:bold; cursor:pointer;">&times;</button>
     </div>
 
+    <div class="alert" id="alert" style="display: none;">
+        <p id="alert-message"></p>
+        <button onclick="closeAlert()">OK</button>
+    </div>
+
     
     <script>
         /* ---------- Proxy helpers (call Laravel controller routes) ---------- */
@@ -728,12 +733,17 @@
             }, 1000);
         }
 
+        function showAlert(message) {
+            document.getElementById('alert-message').textContent = message;
+            document.getElementById('alert').style.display = 'flex';
+        }
+
         function closeAlert() {
             document.getElementById('alert').style.display = 'none';
         }
 
         function showPasswordHint() {
-            showCustomAlert(
+            showAlert(
                 'Tips for a strong password:\n\n' +
                 '• Combine upper and lower case letters, numbers, and special characters (e.g., $, #, &, etc.).\n\n' +
                 '• Keep your password at least 8 to 12 characters long.\n\n' +
