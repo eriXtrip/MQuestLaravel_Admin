@@ -745,22 +745,24 @@
     const strongTitle = document.querySelector('.strong-performance .insight-title span');
     const strongDesc = document.querySelector('.strong-performance .insight-description span');
 
-    if (!subjectAverages || subjectAverages.length === 0) {
+    // check if there is valid subject data
+    const validSubjects = (subjectAverages || []).filter(s => s.subject && s.avg > 0);
 
+    if (validSubjects.length === 0) {
+        // ❌ No valid data
         if (strongTitle) strongTitle.textContent = "Strong Performance";
         if (strongDesc) strongDesc.textContent = "No data available to determine strong performance.";
-
     } else {
-
-        const bestSubject = subjectAverages.reduce(
-            (prev, curr) => (curr.avg > prev.avg ? curr : prev),
-            { avg: 0 }
+        // ✅ Use valid subjects only
+        const bestSubject = validSubjects.reduce(
+            (prev, curr) => curr.avg > prev.avg ? curr : prev
         );
 
         if (strongTitle) strongTitle.textContent = `Strong Performance in ${bestSubject.subject}`;
         if (strongDesc) strongDesc.textContent =
             `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across recent lessons.`;
     }
+
 
 
 
