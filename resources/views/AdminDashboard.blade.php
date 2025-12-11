@@ -3398,9 +3398,16 @@
             /* ============================================================
             1. DISTINCT TEACHERS BY user_id
             ============================================================ */
-            const distinctTeachers = Array.from(
-                new Map(teachers.map(t => [String(t.user_id), t])).values()
-            );
+            const distinctTeachers = [];
+            const teacherIds = new Set();
+
+            teachers.forEach(t => {
+                const id = t.user_id ?? t.id ?? null;
+                if (id && !teacherIds.has(id)) {
+                    teacherIds.add(id);
+                    distinctTeachers.push(t);
+                }
+            });
 
             if (distinctTeachers.length === 0) {
                 teachersContainer.innerHTML = `<p class="text-muted">No teachers assigned.</p>`;
@@ -3411,12 +3418,10 @@
                             <h2 class="student-title">Teachers</h2>
                         </div>
                     </div>`;
-
+                
                 const teacherItems = distinctTeachers.map(t => `
                     <div class="teacher-item">
-                        <img class="img-fluid avatar-teacher" 
-                            src="${t.thumbnail}" 
-                            alt="${t.teacher_name}">
+                        <img class="img-fluid avatar-teacher" src="${t.thumbnail}" alt="${t.teacher_name}">
                         <p class="mb-0 teacher-name">${t.teacher_name}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                             viewBox="0 0 16 16" class="bi bi-envelope email-icon">
@@ -3432,9 +3437,16 @@
             ============================================================ */
             const allPupils = Object.values(pupilsBySubject).flat();
 
-            const distinctPupils = Array.from(
-                new Map(allPupils.map(p => [String(p.user_id), p])).values()
-            );
+            const distinctPupils = [];
+            const pupilIds = new Set();
+
+            allPupils.forEach(p => {
+                const id = p.user_id ?? p.id ?? null;
+                if (id && !pupilIds.has(id)) {
+                    pupilIds.add(id);
+                    distinctPupils.push(p);
+                }
+            });
 
             const pupilHeader = `
                 <div class="student-header">
@@ -3451,9 +3463,7 @@
             } else {
                 const pupilItems = distinctPupils.map(p => `
                     <div class="pupil-item">
-                        <img class="img-fluid avatar-pupil" 
-                            src="${p.avatar_thumbnail}" 
-                            alt="${p.first_name} ${p.last_name}">
+                        <img class="img-fluid avatar-pupil" src="${p.avatar_thumbnail}" alt="${p.first_name} ${p.last_name}">
                         <p class="mb-0 student-name">${p.first_name} ${p.last_name}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                             viewBox="0 0 16 16" class="bi bi-envelope email-icon">
@@ -3465,6 +3475,7 @@
             }
         });
     </script>
+
 
 
 
