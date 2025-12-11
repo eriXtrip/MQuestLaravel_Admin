@@ -3399,7 +3399,7 @@
             1. DISTINCT TEACHERS BY user_id
             ============================================================ */
             const distinctTeachers = Array.from(
-                new Map(teachers.map(t => [t.user_id, t])).values()
+                new Map(teachers.map(t => [String(t.user_id), t])).values()
             );
 
             if (distinctTeachers.length === 0) {
@@ -3433,7 +3433,7 @@
             const allPupils = Object.values(pupilsBySubject).flat();
 
             const distinctPupils = Array.from(
-                new Map(allPupils.map(p => [p.user_id, p])).values()
+                new Map(allPupils.map(p => [String(p.user_id), p])).values()
             );
 
             const pupilHeader = `
@@ -3465,6 +3465,7 @@
             }
         });
     </script>
+
 
 
     <script>
