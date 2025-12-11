@@ -743,11 +743,24 @@
     });
 
     // 1️⃣ Strong Performance based on Subject
-    const bestSubject = subjectAverages.reduce((prev,curr) => curr.avg > prev.avg ? curr : prev, {avg:0});
     const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
     const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
-    if(strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance in ${bestSubject.subject}`;
-    if(strongPerformanceDesc) strongPerformanceDesc.textContent = `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across the latest lessons. Students are highly engaged and completing lessons on time.`;
+
+    if (!subjectAverages || subjectAverages.length === 0) {
+        // No data available
+        if (strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance`;
+        if (strongPerformanceDesc) strongPerformanceDesc.textContent = `No data available to determine strong performance.`;
+    } else {
+        // Normal logic
+        const bestSubject = subjectAverages.reduce(
+            (prev, curr) => curr.avg > prev.avg ? curr : prev,
+            { avg: 0 }
+        );
+
+        if (strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance in ${bestSubject.subject}`;
+        if (strongPerformanceDesc) strongPerformanceDesc.textContent = `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across the latest lessons. Students are highly engaged and completing lessons on time.`;
+    }
+
 
     // 2️⃣ Focus Area: lesson with lowest average in best subject
     let focusLessonIndex = 0;
