@@ -91,7 +91,7 @@
         </div>
 
         <!-- Step 4: LRN or Teacher ID -->
-        <!-- <div class="step-content" id="step4-content" style="display: none;">
+        <div class="step-content" id="step4-content" style="display: none;">
             <button class="back-button" onclick="goToStep(3)">&larr;</button>
             <h2 id="id-title"></h2>
             <p id="id-description"></p>
@@ -100,7 +100,7 @@
                 <input type="text" id="idInput" name="idInput" required>
             </div>
             <button class="register-button" onclick="validateAndGoToStep(4, 5)">Next</button>
-        </div> -->
+        </div>
 
         <!-- Step 5: Email -->
         <div class="step-content" id="step5-content" style="display: none;">
