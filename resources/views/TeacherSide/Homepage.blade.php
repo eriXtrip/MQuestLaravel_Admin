@@ -1619,7 +1619,7 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span id="performanceValue">84%</span></div>
+                                    <div class="metric-value"><span id="performanceValue"></span></div>
                                     <div class="metric-label"><span>Overall Performance</span></div>
                                     <div class="metric-sublabel"><span>Subject average peformance</span></div>
                                 </div>
@@ -1627,7 +1627,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up" id="performanceTrendIcon">
                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                     </svg>
-                                    <span id="performanceTrendText"> +6% </span>
+                                    <span id="performanceTrendText">  </span>
                                 </div>
                             </div>
                             <div class="metric-card">
@@ -1637,7 +1637,7 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span id="engagementValue">89%</span></div>
+                                    <div class="metric-value"><span id="engagementValue"></span></div>
                                     <div class="metric-label"><span>Engagement Rate</span></div>
                                     <div class="metric-sublabel"><span>Students actively participating</span></div>
                                 </div>
@@ -1645,7 +1645,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up" id="engagementTrendIcon">
                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                     </svg>
-                                    <span id="engagementTrendText"> +3% </span>
+                                    <span id="engagementTrendText">  </span>
                                 </div>
                             </div>
                             <div class="metric-card">
@@ -1656,7 +1656,7 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span id="completionValue">76%</span></div>
+                                    <div class="metric-value"><span id="completionValue"></span></div>
                                     <div class="metric-label"><span>Completion Rate</span></div>
                                     <div class="metric-sublabel"><span>Lessons completed on time</span></div>
                                 </div>
@@ -1664,7 +1664,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-down" id="completionTrendIcon">
                                         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"></path>
                                     </svg>
-                                    <span id="completionTrendText"> -2% </span>
+                                    <span id="completionTrendText"> </span>
                                 </div>
                             </div>
                             <div class="metric-card">
@@ -1675,7 +1675,7 @@
                                     </svg>
                                 </div>
                                 <div class="metric-content">
-                                    <div class="metric-value"><span id="studyTimeValue">42 min</span></div>
+                                    <div class="metric-value"><span id="studyTimeValue"></span></div>
                                     <div class="metric-label"><span>Avg. Study Time</span></div>
                                     <div class="metric-sublabel"><span>Per student per day</span></div>
                                 </div>
@@ -1683,7 +1683,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up" id="studyTrendIcon">
                                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"></path>
                                     </svg>
-                                    <span id="studyTrendText"> +5 min</span>
+                                    <span id="studyTrendText"> </span>
                                 </div>
                             </div>
                         </div>
