@@ -3500,9 +3500,18 @@
                 );
 
                 // === TEACHERS ===
-                const matchingTeachers = selectedSubjectId
+                let matchingTeachers = selectedSubjectId
                     ? teachers.filter(t => String(t.subject_id) === selectedSubjectId)
                     : [];
+
+                // Remove duplicate names
+                const seenTeacherNames = new Set();
+                matchingTeachers = matchingTeachers.filter(t => {
+                    const name = t.teacher_name?.trim();
+                    if (!name || seenTeacherNames.has(name)) return false;
+                    seenTeacherNames.add(name);
+                    return true;
+                });
 
                 const teacherHeader = `<div class="student-header"><div style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Teachers</h2></div></div>`;
 
@@ -3523,7 +3532,17 @@
                 }
 
                 // === PUPILS ===
-                const pupils = pupilsBySubject[selectedSubjectId] || [];
+                let pupils = pupilsBySubject[selectedSubjectId] || [];
+
+                // Remove duplicate names
+                const seenPupilNames = new Set();
+                pupils = pupils.filter(p => {
+                    const name = `${p.first_name?.trim()} ${p.last_name?.trim()}`;
+                    if (!name || seenPupilNames.has(name)) return false;
+                    seenPupilNames.add(name);
+                    return true;
+                });
+
                 const total = pupils.length;
                 const pupilHeader = `<div class="student-header"><div class="justify-content-between" style="display:flex; flex-grow:1; flex-wrap:wrap; align-items:baseline;"><h2 class="student-title">Pupils Enrolled</h2><div class="text-muted" style="padding-right:1rem;"><p>${total} Pupil${total !== 1 ? 's' : ''}</p></div></div></div>`;
 
