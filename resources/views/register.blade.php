@@ -86,7 +86,7 @@
             <button class="back-button" onclick="goToStep(2)">&larr;</button>
             <h2>What's your birthday?</h2>
             <p>Choose your date of birth.</p>
-            <input type="date" id="birthday" name="birthday" max="2025-09-15" required>
+            <input type="date" id="birthday" name="birthday" required>
             <button class="register-button" onclick="validateAndGoToStep(3, 5)">Next</button>
         </div>
 
@@ -785,6 +785,17 @@
                 closePrivacyModal();
             }
         }
+    </script>
+
+    <script>
+        // Set the max date to yesterday
+        const birthdayInput = document.getElementById('birthday');
+        const today = new Date();
+        today.setDate(today.getDate() - 1); // yesterday
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        birthdayInput.max = `${yyyy}-${mm}-${dd}`;
     </script>
 </body>
 </html>
