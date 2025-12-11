@@ -1024,7 +1024,7 @@
                                 <div class="recently-added-container h-100">
                                     <div class="recently-added-header">
                                         <h4 class="text-muted d-flex align-items-center">
-                                            Recently Added Materials&nbsp;<span class="new-materials-count-bagde">5</span>
+                                            Recently Added Materials&nbsp;<span class="new-materials-count-bagde" id="newMaterialsCount"></span>
                                         </h4>
                                     </div>
                                     <div class="material-lists" id="materialLists"></div>
@@ -3502,6 +3502,13 @@
             `;
             container.insertAdjacentHTML('beforeend', itemHTML);
         });
+
+        // Update materials count
+        const newMaterialsCount = document.getElementById('newMaterialsCount');
+        if (newMaterialsCount) {
+            newMaterialsCount.textContent = materials.length;
+        }
+
     </script>
 
     <!-- Leaderboard -->

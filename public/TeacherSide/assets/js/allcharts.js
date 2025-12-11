@@ -742,24 +742,26 @@
         return { subject, avg, allScores };
     });
 
-    // 1️⃣ Strong Performance based on Subject
-    const strongPerformanceCard = insightsContainer.querySelector('.strong-performance .insight-text .insight-title span');
-    const strongPerformanceDesc = insightsContainer.querySelector('.strong-performance .insight-text .insight-description span');
+    const strongTitle = document.querySelector('.strong-performance .insight-title span');
+    const strongDesc = document.querySelector('.strong-performance .insight-description span');
 
     if (!subjectAverages || subjectAverages.length === 0) {
-        // No data available
-        if (strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance`;
-        if (strongPerformanceDesc) strongPerformanceDesc.textContent = `No data available to determine strong performance.`;
+
+        if (strongTitle) strongTitle.textContent = "Strong Performance";
+        if (strongDesc) strongDesc.textContent = "No data available to determine strong performance.";
+
     } else {
-        // Normal logic
+
         const bestSubject = subjectAverages.reduce(
-            (prev, curr) => curr.avg > prev.avg ? curr : prev,
+            (prev, curr) => (curr.avg > prev.avg ? curr : prev),
             { avg: 0 }
         );
 
-        if (strongPerformanceCard) strongPerformanceCard.textContent = `Strong Performance in ${bestSubject.subject}`;
-        if (strongPerformanceDesc) strongPerformanceDesc.textContent = `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across the latest lessons. Students are highly engaged and completing lessons on time.`;
+        if (strongTitle) strongTitle.textContent = `Strong Performance in ${bestSubject.subject}`;
+        if (strongDesc) strongDesc.textContent =
+            `${bestSubject.subject} shows consistent improvement with ${bestSubject.avg}% average score across recent lessons.`;
     }
+
 
 
     // 2️⃣ Focus Area: lesson with lowest average in best subject
