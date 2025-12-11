@@ -727,7 +727,7 @@
                                         <th>School</th>
                                         <th>Status</th>
                                         <th>Last seen</th>
-                                        <th>actions</th>
+                                        <!--<th>actions</th>-->
                                     </tr>
                                 </thead>
                                 <tbody id="userTableBody">
