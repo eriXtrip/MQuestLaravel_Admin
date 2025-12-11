@@ -430,26 +430,42 @@
 
         const insights = document.getElementById('bar-chartInsights');
         if (insights) {
-            if (currentView !== 'all') {
-                const sub = subjectData.find(s => s.subject.toLowerCase() === currentView);
-                const maxVal = Math.max(...sub.quarters);
-                const quarterIndex = sub.quarters.indexOf(maxVal);
-                const quarterName = ['Q1', 'Q2', 'Q3', 'Q4'][quarterIndex];
-                insights.innerHTML = `${quarterName} shows the highest performance in <span>${sub.subject}</span>.`;
+          if (currentView !== 'all') {
+            const sub = subjectData.find(s => s.subject.toLowerCase() === currentView);
+            const availableQuarters = sub.quarters
+              .map((val, idx) => ({ val, idx }))
+              .filter(q => q.val != null && q.val > 0);
+
+            if (availableQuarters.length) {
+              const maxQuarter = availableQuarters.reduce((a, b) => (b.val > a.val ? b : a));
+              const quarterName = ['Q1', 'Q2', 'Q3', 'Q4'][maxQuarter.idx];
+              insights.innerHTML = `${quarterName} shows the highest performance in <span>${sub.subject}</span>.`;
             } else {
-                const qMax = [0, 1, 2, 3].map(i => {
-                    let maxSub = subjects[0];
-                    let maxVal = subjectData[0].quarters[i] || 0;
-                    subjectData.forEach(sub => {
-                        if ((sub.quarters[i] || 0) > maxVal) {
-                            maxVal = sub.quarters[i];
-                            maxSub = sub.subject;
-                        }
-                    });
-                    return maxSub;
-                });
-                insights.innerHTML = `Highest subject per quarter: Q1-${qMax[0]}, Q2-${qMax[1]}, Q3-${qMax[2]}, Q4-${qMax[3]}.`;
+              insights.innerHTML = `No data available for ${sub.subject}.`;
             }
+          } else {
+            const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+            const qMax = [];
+
+            for (let i = 0; i < 4; i++) {
+              let maxVal = 0;
+              let maxSub = null;
+              subjectData.forEach(sub => {
+                const val = sub.quarters[i] || 0;
+                if (val > maxVal) {
+                  maxVal = val;
+                  maxSub = sub.subject;
+                }
+              });
+              if (maxVal > 0 && maxSub) qMax.push(`${quarters[i]}-${maxSub}`);
+            }
+
+            if (qMax.length) {
+              insights.innerHTML = `Highest subject per quarter: ${qMax.join(', ')}.`;
+            } else {
+              insights.innerHTML = 'No quarter data available.';
+            }
+          }
         }
     }
 

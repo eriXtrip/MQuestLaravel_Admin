@@ -1871,7 +1871,7 @@
                             </div>
                             <div class="line-bar-radar-container"><canvas id="lessonProgressChart"></canvas></div>
                             <div class="chart-insights" id="chartInsights">
-                                <span> Viewing Mathematics progress for Quarter 1 — steady improvement observed from Lesson 1 to Lesson 8. </span>
+                                <span> No data available. </span>
                             </div>
                         </div>
                         <div class="bar-radar-row">
@@ -1895,7 +1895,7 @@
                                 </div>
                                 <div class="line-bar-radar-container"><canvas id="quarterComparisonChart"></canvas></div>
                                 <div id="bar-chartInsights" class="chart-insights">
-                                    <span> Viewing Mathematics progress for Quarter 1 — steady improvement observed from Lesson 1 to Lesson 8. </span>
+                                    <span> No data available </span>
                                 </div>
                             </div>
 
