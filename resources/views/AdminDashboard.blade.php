@@ -2741,16 +2741,17 @@
                 if (uploadedFile) {
                     const ext = uploadedFile.name.split('.').pop().toLowerCase();
                     if (ext === 'ppt' || ext === 'pptx') {
-                        pptFile = { title: fileTitle, subtitle: fileSubtitle, name: uploadedFile.name, path: fileInput.value };
+                        pptFile = { title: fileTitle, subtitle: fileSubtitle, name: uploadedFile.name, file: uploadedFile };
                     } else if (ext === 'pdf') {
-                        pdfFile = { title: fileTitle, subtitle: fileSubtitle, name: uploadedFile.name, path: fileInput.value };
+                        pdfFile = { title: fileTitle, subtitle: fileSubtitle, name: uploadedFile.name, file: uploadedFile };
                     }
                 }
+
 
                 return {
                     ppt: pptFile,
                     pdf: pdfFile,
-                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, name: uploadedVideo.name, path: videoInput.value } : null,
+                    videos: uploadedVideo ? { title: videoTitle, subtitle: videoSubtitle, name: uploadedVideo.name, file: uploadedVideo } : null
                     video_url: videoUrl || null,
                     video_url_title: videoTitle || '',
                     video_url_subtitle: videoSubtitle || ''
