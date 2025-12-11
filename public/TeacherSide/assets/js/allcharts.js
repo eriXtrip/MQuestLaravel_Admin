@@ -228,7 +228,7 @@
     const canvasId = 'lessonProgressChart';
     if (!document.getElementById(canvasId)) return;
 
-    const lessonLabels = ['Lesson 1','Lesson 2','Lesson 3','Lesson 4','Lesson 5','Lesson 6','Lesson 7','Lesson 8','Lesson 9','Lesson 10','Lesson 11'];
+    const lessonLabels = ['Lesson 1','Lesson 2','Lesson 3','Lesson 4','Lesson 5','Lesson 6','Lesson 7','Lesson 8'];
     const subjectColors = { English: '#2196F3', Filipino: '#607D8B', Mathematics: '#FFC107', Science: '#4CAF50' };
 
     const progressDataRaw = window.dashboardData.quarterlyProgress || {};

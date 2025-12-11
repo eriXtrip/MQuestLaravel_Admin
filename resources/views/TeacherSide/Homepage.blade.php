@@ -1871,11 +1871,7 @@
                             </div>
                             <div class="line-bar-radar-container"><canvas id="lessonProgressChart"></canvas></div>
                             <div class="chart-insights" id="chartInsights">
-<<<<<<< HEAD
                                 <span> No data to display. </span>
-=======
-                                <span> No data available. </span>
->>>>>>> 855d483534eae4bed625ea6fb05d91b236b1bbf3
                             </div>
                         </div>
                         <div class="bar-radar-row">
