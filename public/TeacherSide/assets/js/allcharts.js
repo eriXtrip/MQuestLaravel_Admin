@@ -287,7 +287,7 @@
         };
         chartManager.createChart(canvasId, config);
 
-        const insights = document.getElementById('chartInsights');
+       /*const insights = document.getElementById('chartInsights');
         /*if (insights) {
             if (selectedSubject === 'all') {
                 insights.textContent = `Viewing all subjects for Quarter ${currentQuarter}.`;
@@ -295,7 +295,18 @@
                 insights.textContent = `${selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)} shows improvement in Quarter ${currentQuarter}.`;
             }
         }*/
-       if (insights) {
+       /*if (insights) {
+          if (selectedSubject === 'all') {
+              insights.textContent = `Viewing all subjects for Quarter ${currentQuarter}. Select a subject to view detailed insights.`;
+          } else {
+              const formatted = selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1);
+              const data = progressData[currentQuarter][formatted] || [];
+              insights.textContent = generateLessonInsight(formatted, data);
+          }
+      }*/
+     const insights = document.getElementById('chartInsights')?.querySelector('span');
+
+      if (insights) {
           if (selectedSubject === 'all') {
               insights.textContent = `Viewing all subjects for Quarter ${currentQuarter}. Select a subject to view detailed insights.`;
           } else {
