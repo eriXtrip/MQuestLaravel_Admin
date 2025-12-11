@@ -238,19 +238,19 @@
                         their own terms and privacy policies. We are not responsible for the content or practices of third-party sites.
                     </p>
 
-                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">9. Privacy</h4>
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">7. Privacy</h4>
                     <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
                         Our data practices are described in the Privacy Policy. By using the Service, you agree that we may collect and
                         use your information as outlined there.
                     </p>
 
-                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">10. Disclaimers</h4>
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">8. Disclaimers</h4>
                     <p style="line-height: 1.6; text-align: left; margin-bottom: 15px;">
                         The Service is provided "as is" and "as available" without warranties of any kind, except as required by law.
                         We do not guarantee uninterrupted or error-free operation.
                     </p>
 
-                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">16. Contact</h4>
+                    <h4 style="margin-top: 20px; text-align: left; margin-bottom: 10px;">9. Contact</h4>
                     <p style="line-height: 1.6; text-align: left; margin-bottom: 15px; ">
                         For questions about these Terms, contact us at matatagquest@gmail.com.
                     </p>
@@ -314,19 +314,19 @@
                         limit data collection to what is necessary for learning and app functionality.
                     </p>
 
-                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">9. Your Rights</h4>
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">8. Your Rights</h4>
                     <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
                         Depending on your location, you may have rights to access, correct, delete, or export your data, restrict or
                         object to certain processing, and withdraw consent. To exercise these rights, contact us at matatagquest@gmail.com.
                     </p>
 
-                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">11. Changes to This Policy</h4>
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">9. Changes to This Policy</h4>
                     <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
                         We may update this Policy from time to time. Significant changes will be communicated in-app or via other
                         reasonable means. Your continued use of the Service after changes indicates your acceptance.
                     </p>
 
-                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">12. Contact Us</h4>
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; text-align: left;">10. Contact Us</h4>
                     <p style="line-height: 1.6; margin-bottom: 15px; text-align: left;">
                         If you have questions or concerns about this Policy, contact us at matatagquest@gmail.com.
                     </p>
